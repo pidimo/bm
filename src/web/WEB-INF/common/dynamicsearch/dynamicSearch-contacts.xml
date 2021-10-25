@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dynamicsearchs PUBLIC "-//jatun/dynamic search DTD //EN"
+        "http://www.jatun.com/dynamicSearch-config.dtd">
+
+<dynamicsearchs>
+    <dynamicsearch name="advancedContactSearch">
+        <fields>
+            <field alias="contactSearchName" type="string" resource="Common.name">
+                <operators>
+                    <operator name="CONTAIN" parametername="contactSearchName" isparameter="true"/>
+                </operators>
+            </field>
+            <field alias="code" type="bitwise" resource="Contact.type">
+                <operators>
+                    <operator name="ANDBIT"/>
+                </operators>
+            </field>
+            <field alias="active" type="constant" resource="Contact.status">
+                <operators>
+                    <operator name="IS" isparameter="true"/>
+                </operators>
+            </field>
+            <field alias="telecomNumber" type="string" resource="Common.telecomNumber">
+                <operators>
+                    <operator name="EQUAL" isdefault="true"/>
+                    <operator name="CONTAIN" isparameter="true" parametername="telecomNumberContain"/>
+                    <operator name="START_WITH"/>
+                    <operator name="END_WITH"/>
+                    <operator name="NOT_EQUAL"/>
+                </operators>
+            </field>
+            <field alias="countryId" type="database" resource="Contact.country"/>
+            <field alias="cityName" type="string" resource="Contact.city"/>
+            <field alias="zip" type="string" resource="City.zip"/>
+            <field alias="street" type="string" resource="Contact.street"/>
+            <field alias="addressTypeA1" type="constant" resource="Common.for"/>
+            <field alias="keywords" type="string" resource="Contact.keywords"/>
+            <field alias="customerNumber" type="string" resource="Customer.number"/>
+            <field alias="employeeId" type="database" resource="Customer.employee"/>
+            <field alias="customerTypeId" type="database" resource="Customer.type"/>
+
+            <field alias="addAddressLine" type="string" resource="Contact.additionalAddressLine"/>
+            <field alias="addAddressName" type="string" resource="Contact.advancedSearch.additionalAddress">
+                <operators>
+                    <operator name="CONTAIN" parametername="addAddressNameContain" isparameter="true"/>
+                </operators>
+            </field>
+
+            <!--customer-->
+            <field alias="priorityId" type="database" resource="Customer.priority"/>
+            <field alias="branchId" type="database" resource="Customer.branch"/>
+            <field alias="sourceId" type="database" resource="Customer.source"/>
+            <field alias="payConditionId" type="database" resource="Customer.payCondition"/>
+            <field alias="payMoralityId" type="database" resource="Customer.payMorality"/>
+            <field alias="expectedTurnOver" type="decimal" resource="Customer.expectedTurnOver"/>
+            <field alias="numberOfEmpl" type="integer" resource="Customer.numberOfEmpoyees"/>
+            <field alias="partnerId" type="database" resource="Customer.partner"/>
+            <field alias="defaultDiscount" type="decimal" resource="Customer.defaultDiscount"/>
+            <!--contact person-->
+            <field alias="departmentId" type="database" resource="ContactPerson.department"/>
+            <field alias="function" type="string" resource="ContactPerson.function"/>
+            <field alias="personTypeId" type="database" resource="ContactPerson.personType"/>
+        </fields>
+        <dynamicfields>
+            <dynamicfield joinfieldalias="addressIdA1" loadfieldclass="com.piramide.elwis.web.common.dynamicsearch.structure.dynamicfield.AddressCategoryFieldLoader"/>
+            <dynamicfield joinfieldalias="contactPersonAddressId" joinfieldalias2="contactPersonId" loadfieldclass="com.piramide.elwis.web.common.dynamicsearch.structure.dynamicfield.ContactPersonCategoryFieldLoader"/>
+            <dynamicfield joinfieldalias="customerId" loadfieldclass="com.piramide.elwis.web.common.dynamicsearch.structure.dynamicfield.CustomerCategoryFieldLoader"/>
+        </dynamicfields>
+    </dynamicsearch>
+</dynamicsearchs>

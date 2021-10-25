@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--created by alvaro-->
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+        name="contactsinglereporttemplate"
+        columnCount="1"
+        printOrder="Vertical"
+        orientation="Portrait"
+        pageWidth="595"
+        pageHeight="792"
+        columnWidth="500"
+        columnSpacing="0"
+        leftMargin="40"
+        rightMargin="40"
+        topMargin="40"
+        bottomMargin="40"
+        whenNoDataType="AllSectionsNoDetail"
+        isTitleNewPage="false"
+        isSummaryNewPage="false"
+        resourceBundle="com.piramide.elwis.web.resources.ApplicationResources">
+    <property name="ireport.scriptlethandling" value="0"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+    <style
+            name="ReportTitle"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="17"
+            isBold="true"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            />
+    <style
+            name="ReportSubTitle"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="true"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            />
+    <style
+            name="ReportDetail"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="9"
+            isStrikeThrough="false"
+            pdfEncoding="Identity-H"
+            pdfFontName="Verdana"
+            isPdfEmbedded="true"
+            />
+    <style
+            name="ReportHeader"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="9"
+            isStrikeThrough="false"
+            pdfEncoding="Identity-H"
+            pdfFontName="Verdana"
+            isPdfEmbedded="true"
+            />
+    <style name="Row_Style" isDefault="true" fontName="Verdana" fontSize="9" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"/>
+    <style name="ColumnHeader_Style" isDefault="true" fontName="Verdana" fontSize="9" isBold="true" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana-Bold" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"/>
+    <style name="PageNumber_Style" isDefault="true" fontName="Verdana" fontSize="9" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"/>
+    <style name="GroupHeader_Style" isDefault="true" fontName="Verdana" fontSize="9" isBold="true" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana-Bold" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"/>
+    <style name="GroupFooter_Style" isDefault="true" fontName="Verdana" fontSize="9" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"/>
+    <style name="Summary_Style" isDefault="true" fontName="Verdana" fontSize="9" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"/>
+    <!--*************TITLE BAND******************-->
+    <title>
+        <band height="0">
+        </band>
+    </title>
+    <pageHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </pageHeader>
+    <!--*********Column Header***********-->
+    <columnHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </columnHeader>
+    <!--***********DETAIL******-->
+    <detail>
+        <band height="200" isSplitAllowed="true">
+            <!--************************Line 1******************-->
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportTitle"
+                        x="0"
+                        y="0"
+                        width="514"
+                        height="15"
+                        key="textField-1"
+                        positionType="Float"
+                        />
+                <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                                $P{COLUMN_FORMAT_title},
+                                (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                    new com.jatun.titus.reportgenerator.util.Pair("title",$F{title})
+                                }),
+                                $P{FANTABULOUS_PARAMETERS})]]></textFieldExpression>
+            </textField>
+            <!--************************Line 2******************-->
+            <frame>
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="15"
+                        width="514"
+                        height="12"
+                        key="MAIN_FRAME_TOP"
+                        positionType="Float">
+                </reportElement>
+                <box />
+
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="0"
+                            y="0"
+                            width="60"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float"/>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$R{Task.taskType}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self"> <!--Receipt number-->
+                    <reportElement
+                            style="ReportDetail"
+                            x="65"
+                            y="0"
+                            width="100"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float"/>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_taskTypeName},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("taskTypeName",$F{taskTypeName})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]>
+                    </textFieldExpression>
+                </textField>
+
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="270"
+                            y="0"
+                            width="70"
+                            height="12"
+                            key="textField-4"
+                            positionType="Float"/>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String">
+                        <![CDATA[$R{Appointment.contact}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self"> <!--Receipt number-->
+                    <reportElement
+                            style="ReportDetail"
+                            x="340"
+                            y="0"
+                            width="170"
+                            height="12"
+                            key="textField-5"
+                            positionType="Float"/>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_contactName},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("addressName1",$F{addressName1}),
+                                new com.jatun.titus.reportgenerator.util.Pair("addressName2",$F{addressName2}),
+                                new com.jatun.titus.reportgenerator.util.Pair("addressName3",$F{addressName3}),
+                                new com.jatun.titus.reportgenerator.util.Pair("addressType",$F{addressType})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]>
+                    </textFieldExpression>
+                </textField>
+            </frame>
+
+            <!--******************************Line 3 ********************************-->
+            <frame>
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="27"
+                        width="514"
+                        height="12"
+                        key="MAIN_FRAME_TOP"
+                        positionType="Float">
+                </reportElement>
+                <box/>
+
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="0"
+                            y="0"
+                            width="60"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float"/>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$R{Task.priority}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="65"
+                            y="0"
+                            width="100"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float"/>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_priorityName},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("priorityName",$F{priorityName})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]>
+                    </textFieldExpression>
+                </textField>
+
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="270"
+                            y="0"
+                            width="70"
+                            height="12"
+                            key="textField-4"
+                            positionType="Float"/>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String">
+                        <![CDATA[$R{Appointment.contactPerson}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self"> <!--Receipt number-->
+                    <reportElement
+                            style="ReportDetail"
+                            x="340"
+                            y="0"
+                            width="170"
+                            height="12"
+                            key="textField-5"
+                            positionType="Float"/>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_contactPersonName},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("addressNameCP1",$F{addressNameCP1}),
+                                new com.jatun.titus.reportgenerator.util.Pair("addressNameCP2",$F{addressNameCP2}),
+                                new com.jatun.titus.reportgenerator.util.Pair("addressNameCP3",$F{addressNameCP3}),
+                                new com.jatun.titus.reportgenerator.util.Pair("addressTypeCP",$F{addressTypeCP})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]>
+                    </textFieldExpression>
+                </textField>
+            </frame>
+            <!--********************************Line 4**************************-->
+            <frame>
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="40"
+                        width="514"
+                        height="12"
+                        key="MAIN_FRAME_TOP"
+                        positionType="Float">
+                </reportElement>
+                <box />
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="0"
+                            y="0"
+                            width="60"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$R{Task.startDate}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="65"
+                            y="0"
+                            width="100"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatDate(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_DATELONG,
+                                ($F{startDate}),
+                                $R{dateTimePattern},
+                                $P{REPORT_LOCALE}.toString(),
+                                $P{REPORT_TIMEZONE}.toString())]]>
+                    </textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="270"
+                            y="0"
+                            width="70"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$R{Task.status}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="340"
+                            y="0"
+                            width="150"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String">
+                        <![CDATA[((HashMap)$P{TASK_STATUS_MAP}).get($F{status}.toString())]]>
+                    </textFieldExpression>
+                </textField>
+            </frame>
+            <!--********************************Line 5**************************-->
+            <frame>
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="53"
+                        width="514"
+                        height="12"
+                        key="MAIN_FRAME_TOP"
+                        positionType="Float">
+                </reportElement>
+                <box />
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="0"
+                            y="0"
+                            width="60"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$R{Task.expireDate}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="65"
+                            y="0"
+                            width="100"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatDate(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_DATELONG,
+                                ($F{expireDate}),
+                                $R{dateTimePattern},
+                                $P{REPORT_LOCALE}.toString(),
+                                $P{REPORT_TIMEZONE}.toString())]]>
+                    </textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="270"
+                            y="0"
+                            width="70"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$R{Task.percent}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="340"
+                            y="0"
+                            width="150"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String">
+                        <![CDATA[com.piramide.elwis.utils.ReportHelper.getConcatenatedString($F{percent}, "%")]]>
+                    </textFieldExpression>
+                </textField>
+            </frame>
+            <!--********************************Line 6**************************-->
+            <frame>
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="70"
+                        width="514"
+                        height="12"
+                        key="MAIN_FRAME_TOP"
+                        positionType="Float">
+                </reportElement>
+                <box/>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="0"
+                            y="0"
+                            width="78"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String">
+                        <![CDATA[$R{Document.salesAsociated}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="80"
+                            y="0"
+                            width="150"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_salesProcessName}, 
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("salesProcessName",$F{salesProcessName})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]>
+                    </textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="270"
+                            y="0"
+                            width="70"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$R{Task.createdBy}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="340"
+                            y="0"
+                            width="150"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_ownerName},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("addressName1_",$F{addressName1_}),
+                                new com.jatun.titus.reportgenerator.util.Pair("addressName2_",$F{addressName2_})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]>
+                    </textFieldExpression>
+                </textField>
+            </frame>
+            <!--********************************Line 7**************************-->
+            <frame>
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="83"
+                        width="514"
+                        height="12"
+                        key="MAIN_FRAME_TOP"
+                        positionType="Float">
+                </reportElement>
+                <box/>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="270"
+                            y="0"
+                            width="70"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$R{Campaign}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="340"
+                            y="0"
+                            width="150"
+                            height="12"
+                            key="textField-3"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_campaignName},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("campaignName",$F{campaignName})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]>
+                    </textFieldExpression>
+                </textField>
+            </frame>
+            <!--********************************Line 8**************************-->
+            <frame>
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="97"
+                        width="514"
+                        height="55"
+                        key="MAIN_FRAME_TOP"
+                        positionType="Float">
+                </reportElement>
+                <box />
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportSubTitle"
+                            x="0"
+                            y="0"
+                            width="70"
+                            height="12"
+                            key="textField-2"
+                            positionType="Float">
+                    </reportElement>
+                    <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                    <textElement textAlignment="Left">
+                        <font/>
+                    </textElement>
+                    <textFieldExpression class="java.lang.String">
+                        <![CDATA[$R{Appointment.description}]]></textFieldExpression>
+                </textField>
+                <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                           hyperlinkTarget="Self">
+                    <reportElement
+                            style="ReportDetail"
+                            x="0"
+                            y="14"
+                            width="513"
+                            height="36"
+                            key="textField-3"
+                            positionType="Float">
+                    </reportElement>
+                    <box padding="1">
+                        <pen lineColor="#000000" lineStyle="Solid" lineWidth="1.0"/>
+                    </box>
+                    <textElement textAlignment="Left"/>
+                    <textFieldExpression class="java.lang.String"><![CDATA[$P{TASK_DESCRIPTION}]]>
+                    </textFieldExpression>
+                </textField>
+            </frame>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="0" isSplitAllowed="true"/>
+    </pageFooter>
+    <summary>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </summary>
+</jasperReport>

@@ -1,0 +1,829 @@
+<?xml version="1.0"?>
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+    <formset>
+        <!--Invoice form validation-->
+        <form name="invoiceForm">
+            <field property="type" depends="required">
+                <arg0 key="Invoice.type" resource="true"/>
+            </field>
+            <field property="creditNoteOfId" depends="foreignKey">
+                <arg0 key="Invoice.creditNoteOf" resource="true"/>
+                <arg1 key="table=invoice"/>
+                <arg2 key="column=invoiceid"/>
+            </field>
+            <field property="sequenceRuleId" depends="requiredif, foreignKey">
+                <arg0 key="Invoice.sequenceRule" resource="true"/>
+                <arg1 key="table=sequencerule"/>
+                <arg2 key="column=numberid"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>op</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>create</var-value>
+                </var>
+            </field>
+            <field property="netGross" depends="required">
+                <arg0 key="Invoice.netGross" resource="true"/>
+            </field>
+            <field property="addressId" depends="required, foreignKey">
+                <arg0 key="Invoice.contact" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+            <field property="payConditionId" depends="required, foreignKey">
+                <arg0 key="Invoice.payCondition" resource="true"/>
+                <arg1 key="table=paycondition"/>
+                <arg2 key="column=payconditionid"/>
+            </field>
+            <field property="contactPersonId" depends="compoundForeignKey">
+                <arg0 key="Invoice.contactPerson" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contactperson</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>contactPersonId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>contactpersonid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>addressId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>addressid</var-value>
+                </var>
+            </field>
+            <field property="templateId" depends="required, foreignKey">
+                <arg0 key="Invoice.template" resource="true"/>
+                <arg1 key="table=invoicetemplate"/>
+                <arg2 key="column=templateid"/>
+            </field>
+            <field property="currencyId" depends="required, foreignKey">
+                <arg0 key="Invoice.currency" resource="true"/>
+                <arg1 key="table=currency"/>
+                <arg2 key="column=currencyid"/>
+            </field>
+            <field property="invoiceDate" depends="required, validDate">
+                <arg0 key="Invoice.invoiceDate" resource="true"/>
+            </field>
+            <field property="serviceDate" depends="validDate">
+                <arg0 key="Invoice.serviceDate" resource="true"/>
+            </field>
+        </form>
+        <!--Invoice advanced search form validation-->
+        <form name="invoiceAdvancedListForm">
+            <field property="totalAmountNetFrom" depends="decimalNumbers">
+                <arg0 key="Invoice.totalAmountNet" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>totalAmountNetTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="totalAmountGrossFrom" depends="decimalNumbers">
+                <arg0 key="Invoice.totalAmountGross" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>totalAmountGrossTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="openAmountFrom" depends="decimalNumbers">
+                <arg0 key="Invoice.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>openAmountTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="invoiceDateFrom" depends="validDates">
+                <arg0 key="Invoice.invoiceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>invoiceDateTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="serviceDateFrom" depends="validDates">
+                <arg0 key="Invoice.serviceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>serviceDateTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="paymentDateFrom" depends="validDates">
+                <arg0 key="Invoice.paymentDay" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>paymentDateTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+        <!--Contract to Invoice list form validation-->
+        <form name="contractToInvoiceListForm">
+            <field property="currentDate" depends="validDate">
+                <arg0 key="Contract.toInvoice.date" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+        <!--Reminder Bulk Creation form validation-->
+        <form name="reminderBulkCreationForm">
+            <field property="date" depends="required, validDate">
+                <arg0 key="Reminder.bulkCreation.date" resource="true"/>
+            </field>
+        </form>
+        <!--Reminder List form validation-->
+        <form name="remindersListForm">
+            <field property="reminderDateFrom" depends="validDates">
+                <arg0 key="Invoice.reminders.reminderDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>reminderDateTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+        <!--Invoice to Print form validation-->
+        <form name="invoicePrintListForm">
+            <field property="invoiceDateFrom" depends="validDates">
+                <arg0 key="Invoice.invoiceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>invoiceDateTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="openAmountFrom" depends="decimalNumbers">
+                <arg0 key="Invoice.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>openAmountTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="invoiceSendViaEmailListForm">
+            <field property="invoiceDateFrom" depends="validDates">
+                <arg0 key="Invoice.invoiceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>invoiceDateTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="openAmountFrom" depends="decimalNumbers">
+                <arg0 key="Invoice.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>openAmountTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="invoiceSendViaEmailForm">
+            <field property="telecomTypeId" depends="required">
+                <arg0 key="TelecomType.type.mail" resource="true"/>
+            </field>
+            <field property="mailAccountId" depends="required">
+                <arg0 key="Invoice.sendViaEmail.mailAccount" resource="true"/>
+            </field>
+        </form>
+
+        <!--InvoiceReminder Form validation-->
+        <form name="invoiceReminderForm">
+            <field property="reminderLevelId" depends="required, foreignKey">
+                <arg0 key="InvoiceReminder.level" resource="true"/>
+                <arg1 key="table=reminderlevel"/>
+                <arg2 key="column=reminderlevelid"/>
+            </field>
+            <field property="date" depends="required, validDate">
+                <arg0 key="InvoiceReminder.date" resource="true"/>
+            </field>
+        </form>
+        <!--InvoicePayment Form validation-->
+        <form name="invoicePaymentForm">
+            <field property="payDate" depends="required, validDate">
+                <arg0 key="InvoicePayment.payDate" resource="true"/>
+            </field>
+            <field property="amount" depends="required, decimalNumber">
+                <arg0 key="InvoicePayment.amount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+        </form>
+        <!--InvoicePayment in one step validation-->
+        <form name="invoicePaymentInOneStepForm">
+            <field property="payDate" depends="required, validDate">
+                <arg0 key="InvoicePayment.payDate" resource="true"/>
+            </field>
+            <field property="amount" depends="required, decimalNumber">
+                <arg0 key="InvoicePayment.amount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+        </form>
+        <!--InvoicePosition Form validation-->
+        <form name="invoicePositionForm">
+            <field property="number" depends="required, unsignedInteger, unique">
+                <arg0 key="InvoicePosition.number" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>invoiceposition</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>number</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId, invoiceid=invoiceId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>positionId=positionid</var-value>
+                </var>
+            </field>
+            <field property="productId" depends="required, foreignKey">
+                <arg0 key="InvoicePosition.product" resource="true"/>
+                <arg1 key="table=product"/>
+                <arg2 key="column=productid"/>
+            </field>
+            <field property="unitPrice" depends="requiredif">
+                <arg0 key="InvoicePosition.unitPrice" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>invoiceNetGross</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>1</var-value>
+                </var>
+            </field>
+            <field property="unitPriceGross" depends="requiredif">
+                <arg0 key="InvoicePosition.unitPriceGross" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>invoiceNetGross</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>2</var-value>
+                </var>
+            </field>
+            <field property="quantity" depends="required, decimalNumber">
+                <arg0 key="InvoicePosition.quantity" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="vatId" depends="required, foreignKey">
+                <arg0 key="Invoice.vat" resource="true"/>
+                <arg1 key="table=vat"/>
+                <arg2 key="column=vatid"/>
+            </field>
+            <field property="accountId" depends="required, foreignKey">
+                <arg0 key="InvoicePosition.account" resource="true"/>
+                <arg1 key="table=account"/>
+                <arg2 key="column=accountid"/>
+            </field>
+        </form>
+        <!--Invoice report form validation-->
+        <form name="invoiceReportForm">
+            <field property="startInvoiceDate" depends="validDates">
+                <arg0 key="Invoice.invoiceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endInvoiceDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="startPaymentDate" depends="validDates">
+                <arg0 key="Invoice.paymentDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endPaymentDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="amountNet1" depends="decimalNumbers">
+                <arg0 key="Invoice.totalAmountNet" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>amountNet2</var-value>
+                </var>
+            </field>
+            <field property="amountGross1" depends="decimalNumbers">
+                <arg0 key="Invoice.totalAmountGross" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>amountGross2</var-value>
+                </var>
+            </field>
+            <field property="openAmount1" depends="decimalNumbers">
+                <arg0 key="Invoice.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>openAmount2</var-value>
+                </var>
+            </field>
+        </form>
+        <!--Contract to invoice report form validation-->
+        <form name="contractToInvoiceReportForm">
+            <field property="fromDate" depends="required, validDates">
+                <arg0 key="ContractToInvoice.report.date" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>toDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="toDate" depends="required">
+                <arg0 key="ContractToInvoice.report.endDate" resource="true"/>
+            </field>
+        </form>
+        <!--ProductContract form validation-->
+        <form name="productContractForm">
+            <field property="contractNumber" depends="required, unique">
+                <arg0 key="ProductContract.contractNumber" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>productcontract</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>contractnumber</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>contractId=contractid</var-value>
+                </var>
+            </field>
+            <field property="addressId" depends="required, foreignKey">
+                <arg0 key="Contract.contact" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+            <field property="contactPersonId" depends="compoundForeignKey">
+                <arg0 key="ProductContract.contactPerson" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contactperson</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>contactPersonId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>contactpersonid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>addressId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>addressid</var-value>
+                </var>
+            </field>
+            <field property="sellerId" depends="required, foreignKey">
+                <arg0 key="ProductContract.seller" resource="true"/>
+                <arg1 key="table=employee"/>
+                <arg2 key="column=employeeid"/>
+            </field>
+            <field property="price" depends="required, decimalNumber">
+                <arg0 key="Contract.price" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="currencyId" depends="required, foreignKey">
+                <arg0 key="ProductContract.currency" resource="true"/>
+                <arg1 key="table=currency"/>
+                <arg2 key="column=currencyid"/>
+            </field>
+            <field property="orderDate" depends="validDate">
+                <arg0 key="Contract.orderDate" resource="true"/>
+            </field>
+            <field property="vatId" depends="required, foreignKey">
+                <arg0 key="ProductContract.vat" resource="true"/>
+                <arg1 key="table=vat"/>
+                <arg2 key="column=vatid"/>
+            </field>
+            <field property="contractTypeId" depends="required, foreignKey">
+                <arg0 key="Contract.contractType" resource="true"/>
+                <arg1 key="table=contracttype"/>
+                <arg2 key="column=contracttypeid"/>
+            </field>
+            <field property="payMethod" depends="required">
+                <arg0 key="Contract.payMethod" resource="true"/>
+            </field>
+            <field property="payConditionId" depends="required, foreignKey">
+                <arg0 key="ProductContract.payCondition" resource="true"/>
+                <arg1 key="table=paycondition"/>
+                <arg2 key="column=payconditionid"/>
+            </field>
+            <field property="netGross" depends="required">
+                <arg0 key="ProductContract.netGross" resource="true"/>
+            </field>
+        </form>
+        <!--Contract to invoice create form validation-->
+        <form name="contractInvoiceCreateForm">
+            <field property="type" depends="required">
+                <arg0 key="Invoice.type" resource="true"/>
+            </field>
+            <field property="sequenceRuleId" depends="required, foreignKey">
+                <arg0 key="Invoice.sequenceRule" resource="true"/>
+                <arg1 key="table=sequencerule"/>
+                <arg2 key="column=numberid"/>
+            </field>
+            <field property="templateId" depends="required, foreignKey">
+                <arg0 key="Invoice.template" resource="true"/>
+                <arg1 key="table=invoicetemplate"/>
+                <arg2 key="column=templateid"/>
+            </field>
+            <field property="invoiceDate" depends="required, validDate">
+                <arg0 key="Invoice.invoiceDate" resource="true"/>
+            </field>
+        </form>
+        <form name="incomingInvoiceForm">
+            <field property="type" depends="required">
+                <arg0 key="Finance.incomingInvoice.type" resource="true"/>
+            </field>
+            <field property="invoiceNumber" depends="required">
+                <arg0 key="Finance.incomingInvoice.invoiceNumber" resource="true"/>
+            </field>
+            <field property="currencyId" depends="required">
+                <arg0 key="Finance.incomingInvoice.currency" resource="true"/>
+            </field>
+            <field property="supplierId" depends="required">
+                <arg0 key="Finance.incomingInvoice.supplierName" resource="true"/>
+            </field>
+            <field property="amountGross" depends="required, decimalNumber">
+                <arg0 key="Finance.incomingInvoice.amountGross" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="amountNet" depends="required, decimalNumber">
+                <arg0 key="Finance.incomingInvoice.amountNet" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="openAmount" depends="decimalNumber">
+                <arg0 key="Finance.incomingInvoice.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="receiptDate" depends="required, validDate">
+                <arg0 key="Finance.incomingInvoice.receiptDate" resource="true"/>
+            </field>
+            <field property="invoiceDate" depends="required, validDate">
+                <arg0 key="Finance.incomingInvoice.invoiceDate" resource="true"/>
+            </field>
+            <field property="toBePaidUntil" depends="validDate">
+                <arg0 key="Finance.incomingInvoice.toBePaidUntil" resource="true"/>
+            </field>
+            <field property="paidUntil" depends="validDate">
+                <arg0 key="Finance.incomingInvoice.paidUntil" resource="true"/>
+            </field>
+        </form>
+        <form name="incomingPaymentForm">
+            <field property="amount" depends="required, decimalNumber">
+                <arg0 key="Finance.incomingPayment.amount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="payDate" depends="required, validDate">
+                <arg0 key="Finance.incomingPayment.payDate" resource="true"/>
+            </field>
+        </form>
+        <form name="incomingInvoiceReportForm">
+            <field property="startInvoiceDate" depends="validDates">
+                <arg0 key="Finance.incomingInvoice.invoiceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endInvoiceDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="startReceiptDate" depends="validDates">
+                <arg0 key="Finance.incomingInvoice.receiptDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endReceiptDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="startPaidUntilDate" depends="validDates">
+                <arg0 key="Finance.incomingInvoice.paidUntil" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endPaidUntilDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="amountNet1" depends="decimalNumbers">
+                <arg0 key="Finance.incomingInvoice.amountNet" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>amountNet2</var-value>
+                </var>
+            </field>
+            <field property="amountGross1" depends="decimalNumbers">
+                <arg0 key="Finance.incomingInvoice.amountGross" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>amountGross2</var-value>
+                </var>
+            </field>
+            <field property="openAmount1" depends="decimalNumbers">
+                <arg0 key="Finance.incomingInvoice.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>openAmount2</var-value>
+                </var>
+            </field>
+        </form>
+        <form name="incomingInvoiceAdvancedListForm">
+            <field property="startInvoiceDate" depends="validDates">
+                <arg0 key="Finance.incomingInvoice.invoiceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endInvoiceDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="startReceiptDate" depends="validDates">
+                <arg0 key="Finance.incomingInvoice.receiptDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endReceiptDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="startPaidUntilDate" depends="validDates">
+                <arg0 key="Finance.incomingInvoice.paidUntil" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endPaidUntilDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="amountNet1" depends="decimalNumbers">
+                <arg0 key="Finance.incomingInvoice.amountNet" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>amountNet2</var-value>
+                </var>
+            </field>
+            <field property="amountGross1" depends="decimalNumbers">
+                <arg0 key="Finance.incomingInvoice.amountGross" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>amountGross2</var-value>
+                </var>
+            </field>
+            <field property="openAmount1" depends="decimalNumbers">
+                <arg0 key="Finance.incomingInvoice.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>openAmount2</var-value>
+                </var>
+            </field>
+        </form>
+
+        <!--Incoming invoice to Print form validation-->
+        <form name="incomingInvoicePrintListForm">
+            <field property="startInvoiceDate" depends="validDates">
+                <arg0 key="Finance.incomingInvoice.invoiceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endInvoiceDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="openAmount1" depends="decimalNumbers">
+                <arg0 key="Finance.incomingInvoice.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>openAmount2</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+        <!--Invoice csv export report form validation-->
+        <form name="invoiceCsvExportReportForm">
+            <field property="startInvoiceDate" depends="validDates">
+                <arg0 key="Invoice.invoiceDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endInvoiceDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+    </formset>
+</form-validation>

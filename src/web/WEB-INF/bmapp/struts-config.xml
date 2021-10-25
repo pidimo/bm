@@ -1,0 +1,739 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+
+    <form-beans>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="addressForm" type="com.piramide.elwis.web.contactmanager.form.AddressForm"/>
+        <form-bean name="contactPersonForm" type="com.piramide.elwis.web.contactmanager.form.ContactPersonForm"/>
+        <form-bean name="mailTrayForm" type="com.piramide.elwis.web.webmail.form.MailTrayForm"/>
+        <form-bean name="emailForm" type="com.piramide.elwis.web.webmail.form.EmailForm"/>
+        <form-bean name="appointmentForm" type="com.piramide.elwis.web.schedulermanager.form.AppointmentForm"/>
+        <form-bean name="participantImportForm" type="com.piramide.elwis.web.schedulermanager.form.ParticipantForm"/>
+        <form-bean name="productForm" type="com.piramide.elwis.web.productmanager.form.ProductForm"/>
+        <form-bean name="userChangeAppForm" type="com.piramide.elwis.web.admin.form.UserChangeAppForm"/>
+        <form-bean name="companyInfoForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+    <global-forwards>
+        <forward name="MainSearch" path="/MainSearchJson.jsp"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/LogonBMApp" type="com.piramide.elwis.web.bmapp.action.admin.LogonRESTAction" name="form" scope="request"
+                input="/index.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.LogonCmd">
+            <forward name="Success" path="/LogonJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+            <forward name="ChangePassword" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/LogonBMApp/WVAPP" type="com.piramide.elwis.web.bmapp.action.admin.LogonWVAppRESTAction" name="form" scope="request"
+                input="/index.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.LogonCmd">
+            <forward name="Success" path="/LogonJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+            <forward name="ChangePassword" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/LogoffBMApp" type="com.piramide.elwis.web.admin.action.LogoffAction"
+                name="form"
+                scope="request"
+                validate="false">
+            <forward name="Logoff" path="/SuccessJson.jsp"/>
+        </action>
+
+        <action path="/Reload/UserInfo" type="com.piramide.elwis.web.bmapp.action.admin.ReloadUserInfoRESTAction"
+                name="form"
+                scope="request"
+                validate="false">
+            <forward name="Success" path="/admin/ReloadUserInfoJson.jsp"/>
+            <forward name="Fail" path="/SessionExpiredJson.jsp"/>
+        </action>
+
+        <action path="/Reload/WVApp/UserInfo" type="com.piramide.elwis.web.bmapp.action.admin.ReloadUserInfoWVAppRESTAction"
+                name="form"
+                scope="request"
+                validate="false">
+            <forward name="Success" path="/admin/ReloadUserInfoJson.jsp"/>
+            <forward name="Fail" path="/SessionExpiredJson.jsp"/>
+        </action>
+
+		<action path="/TranslateREST"
+			type="org.apache.struts.actions.ForwardAction"
+			scope="request" parameter="/bmapp/translate.jsp"/>
+
+        <!--start miky-->
+        <action path="/Logon/Company/DownloadLogoImage"
+                type="com.piramide.elwis.web.bmapp.action.DownloadCompanyLogoRESTAction" name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.productmanager.DownloadProductImageCmd">
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Company/Info"
+                type="com.piramide.elwis.web.common.action.DefaultAction" name="companyInfoForm"
+                scope="request" validate="false"
+                input="/FailJson.jsp"
+                parameter="com.piramide.elwis.cmd.admin.CompanyReadLightCmd">
+            <forward name="Success" path="/contacts/CompanyInfo.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Contact/REST" type="com.piramide.elwis.web.bmapp.action.contacts.ContactRESTAction" parameter="dto(addressId)"
+                scope="request" validate="false">
+            <forward name="List" path="/Contact/List.do"/>
+            <forward name="AddressRest" path="/Address/REST.do"/>
+            <forward name="ContactPersonRest" path="/ContactPerson/REST.do"/>
+        </action>
+
+        <action path="/Contact/List"
+                type="com.piramide.elwis.web.bmapp.action.contacts.ContactMainListRESTAction"
+                name="listForm" scope="request" parameter="contacts@allAddressList" roles="CONTACT.VIEW"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="contactSearchName" />
+            <forward name="Success" path="/contacts/ContactJsonList.jsp" />
+        </action>
+
+        <action path="/Contact/Recent/List"
+                type="com.piramide.elwis.web.bmapp.action.ListRESTAction"
+                name="listForm" scope="request" parameter="contacts@contactRecentList" roles="CONTACT.VIEW"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="contactSearchName" />
+            <forward name="Success" path="/contacts/ContactRecentJsonList.jsp" />
+        </action>
+
+        <action path="/Address/REST" type="com.piramide.elwis.web.bmapp.action.DefaultRESTAction" parameter="dto(addressId)"
+                scope="request" validate="false">
+            <forward name="List" path="/Contact/List.do"/>
+            <forward name="Get" path="/Address/Forward/Update.do"/>
+            <!--<forward name="Get" path="/Address/Update.do"/>-->
+            <forward name="Create" path="/error.jsp"/>
+            <forward name="Update" path="/Address/Update.do"/>
+            <forward name="Delete" path="/error.jsp"/>
+        </action>
+
+        <action path="/Address/Forward/Create" type="org.apache.struts.actions.ForwardAction"
+                name="form" parameter="/bmapp/contacts/ContactCatalogsJson.jsp" validate="false" scope="request"/>
+
+        <action path="/Address/Create" type="com.piramide.elwis.web.bmapp.action.contacts.AddressCreateRESTAction"
+                name="addressForm"
+                scope="request" input="/contacts/ContactJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.AddressCreateCmd" roles="CONTACT.CREATE">
+            <!--<forward name="addtelecom" path="/PersonDetailForCreate.jsp"/>-->
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <!--<forward name="Cancel" path="/Search.do" redirect="true"/>-->
+            <!--<forward name="FailModuleEntries" path="/Search.do" redirect="true"/>-->
+        </action>
+
+        <action path="/Address/Forward/Update"
+                type="com.piramide.elwis.web.contactmanager.action.AddressForwardAction"
+                name="addressForm"
+                scope="request"
+                input="/FailJson.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.AddressCmd"
+                roles="CONTACT.VIEW">
+            <forward name="Success" path="/contacts/ContactJson.jsp"/>
+        </action>
+
+        <action path="/Address/Update"
+                type="com.piramide.elwis.web.bmapp.action.contacts.AddressUpdateRESTAction"
+                name="addressForm"
+                scope="request"
+                input="/contacts/ContactJson.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.AddressUpdateCmd" roles="CONTACT.UPDATE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Address/Delete" type="com.piramide.elwis.web.contactmanager.action.AddressDeleteAction"
+                name="addressForm"
+                scope="request" input="/contacts/ContactJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.AddressDeleteCmd" roles="CONTACT.DELETE">
+            <forward name="Success" path="/SuccessJson.jsp" redirect="true"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+            <!--<forward name="Cancel" path="/Person/Forward/Update.do" redirect="true"/>-->
+            <forward name="Referenced" path="/FailJson.jsp"/>
+        </action>
+
+
+        <action path="/ContactPerson/List" type="com.piramide.elwis.web.bmapp.action.contacts.ContactListRESTAction"
+                name="listForm" scope="request" parameter="contacts@contactPersonList" roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/contacts/ContactPersonJsonList.jsp"/>
+        </action>
+
+        <action path="/ContactPerson/REST" type="com.piramide.elwis.web.bmapp.action.DefaultRESTAction" parameter="dto(contactPersonId)"
+                scope="request" validate="false">
+            <forward name="List" path="/Contact/List.do"/>
+            <forward name="Get" path="/ContactPerson/Forward/Update.do"/>
+            <forward name="Create" path="/error.jsp"/>
+            <forward name="Update" path="/error.jsp"/>
+            <forward name="Delete" path="/error.jsp"/>
+        </action>
+
+        <action path="/ContactPerson/Forward/Create" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/bmapp/contacts/ContactPersonCatalogsJson.jsp"/>
+
+        <action path="/ContactPerson/Create" type="com.piramide.elwis.web.bmapp.action.contacts.ContactPersonCreateRESTAction"
+                name="contactPersonForm"
+                scope="request" input="/contacts/ContactPersonJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCreateCmd" roles="CONTACTPERSON.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="address"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+            <forward name="Success" path="/SuccessJson.jsp" redirect="true"/>
+            <forward name="redirect" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/ContactPerson/Forward/Update"
+                type="com.piramide.elwis.web.contactmanager.action.ContactPersonUpdateForwardAction" name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCmd" roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/contacts/ContactPersonJson.jsp"/>
+        </action>
+
+        <action path="/ContactPerson/Update" type="com.piramide.elwis.web.bmapp.action.contacts.ContactPersonUpdateRESTAction"
+                name="contactPersonForm"
+                scope="request" input="/contacts/ContactPersonJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonUpdateCmd" roles="CONTACTPERSON.UPDATE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/ContactPerson/SearchContact"
+                type="com.piramide.elwis.web.bmapp.action.contacts.ContactListRESTAction"
+                name="listForm" scope="request" validate="false"
+                parameter="contacts@personSearchList_CPerson" roles="CONTACTPERSON.CREATE">
+            <forward name="Success" path="/contacts/ContactToAddAsContactPersonJsonList.jsp"/>
+        </action>
+
+        <action path="/ContactPerson/Import"
+                type="com.piramide.elwis.web.contactmanager.action.ContactPersonImportAction" name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ImportPersonAddressCmd" roles="CONTACTPERSON.CREATE">
+            <forward name="Success" path="/contacts/ContactToAddAsContactPersonJson.jsp"/>
+        </action>
+
+        <action path="/ContactPerson/Forward/Delete"
+                type="com.piramide.elwis.web.bmapp.action.contacts.ContactManagerRESTAction" name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCmd" roles="CONTACTPERSON.DELETE">
+            <forward name="Success" path="/contacts/ContactPersonJson.jsp"/>
+        </action>
+        <action path="/ContactPerson/Delete" type="com.piramide.elwis.web.bmapp.action.contacts.ContactManagerRESTAction"
+                name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonDeleteCmd" roles="CONTACTPERSON.DELETE">
+            <forward name="Success" path="/SuccessJson.jsp" redirect="true"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+
+        <!--catalogs-->
+        <action path="/Country/City" type="org.apache.struts.actions.ForwardAction"
+                name="form" parameter="/bmapp/contacts/CountryCityJson.jsp" validate="false" scope="request"/>
+
+        <!--webmail-->
+        <action path="/Webmail/REST" type="com.piramide.elwis.web.bmapp.action.DefaultRESTAction" parameter="dto(mailId)"
+                scope="request" validate="false">
+            <forward name="List" path="/Mail/MailTray.do"/>
+            <forward name="Get" path="/Mail/ReadEmail.do"/>
+            <forward name="Create" path="/error.jsp"/>
+            <forward name="Update" path="/error.jsp"/>
+            <forward name="Delete" path="/error.jsp"/>
+        </action>
+
+        <action path="/Mail/MailTray" type="com.piramide.elwis.web.bmapp.action.webmail.MailTrayRESTAction" name="mailTrayForm"
+                scope="request" validate="false"
+                parameter="webmail@mailTrayList">
+            <forward name="Success" path="/webmail/MailTrayJsonList.jsp"/>
+            <forward name="NoUserMail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Mail/ReadEmail"
+                type="com.piramide.elwis.web.webmail.action.ReadEmailAction"
+                name="emailForm"
+                scope="request"
+                input="/Mail/MailTray.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadEmailCmd">
+            <forward name="Success" path="/webmail/ReadEmailJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Mail/Forward/ComposeEmail"
+                type="com.piramide.elwis.web.bmapp.action.webmail.ComposeEmailForwardRESTAction"
+                name="emailForm"
+                scope="request"
+                validate="false"
+                parameter="/bmapp/webmail/ComposeMailCatalogsJson.jsp"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping"
+                roles="MAIL.EXECUTE">
+            <set-property property="mainTable" value="mail"/>
+            <forward name="NoUserMail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Mail/ComposeEmail"
+                type="com.piramide.elwis.web.bmapp.action.webmail.ComposeEmailRESTAction"
+                name="emailForm"
+                scope="request"
+                input="/webmail/ReadEmailJson.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ComposeMailCmd"
+                roles="MAIL.EXECUTE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="SearchEmail" path="/SuccessJson.jsp"/>
+            <forward name="Draft" path="/SuccessJson.jsp" redirect="true"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Mail/Reply"
+                type="com.piramide.elwis.web.bmapp.action.webmail.ReplyRESTAction"
+                name="emailForm"
+                scope="request"
+                input="/MainSearchJson.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadEmailCmd">
+            <forward name="Success" path="/webmail/ReadEmailJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Mail/Reply/Send"
+                type="com.piramide.elwis.web.bmapp.action.webmail.ReplySendRESTAction"
+                name="emailForm"
+                scope="request"
+                input="/webmail/ReadEmailJson.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ComposeMailCmd"
+                roles="MAIL.EXECUTE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="SearchEmail" path="/SuccessJson.jsp"/>
+            <forward name="Draft" path="/SuccessJson.jsp" redirect="true"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Mail/ReadFolders" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction" name="form"
+                scope="request" validate="false" parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd"
+                roles="MAIL.VIEW">
+            <forward name="Success" path="/webmail/MailFoldersJson.jsp"/>
+            <forward name="NoUserMail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/WebmailNotifier/Read"
+                type="com.piramide.elwis.web.webmail.action.WebmailNotifierDefaultAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailNotifierCmd">
+            <forward name="Success" path="/webmail/WebmailNotifierJson.jsp"/>
+            <forward name="Fail" path="/webmail/WebmailNotifierJson.jsp"/>
+        </action>
+
+        <action path="/Mail/DeleteConfirmation"
+                type="com.piramide.elwis.web.bmapp.action.webmail.DeleteConfirmationRESTAction"
+                name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd"
+                roles="MAIL.DELETE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+        </action>
+        <!-- autocomplete recipients-->
+        <action path="/Mail/Ajax/Find/Recipients"
+                type="com.piramide.elwis.web.webmail.action.MailFindRecipientsAjaxAction"
+                name="form"
+                scope="request"
+                validate="false"
+                roles="MAIL.EXECUTE">
+        </action>
+
+
+        <!--scheduler-->
+        <action path="/Appointment/REST" type="com.piramide.elwis.web.bmapp.action.DefaultRESTAction" parameter="dto(appointmentId)"
+                scope="request" validate="false">
+            <forward name="List" path="/AppointmentView.do"/>
+            <forward name="Get" path="/Appointment/Forward/Update.do"/>
+            <forward name="Create" path="/error.jsp"/>
+            <forward name="Update" path="/error.jsp"/>
+            <forward name="Delete" path="/error.jsp"/>
+        </action>
+
+        <action path="/AppointmentView"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentUIAction"
+                name="form"
+                scope="request"
+                validate="false"
+                roles="APPOINTMENT.VIEW">
+            <forward name="daily" path="/scheduler/AppointmentViewJson.jsp"/>
+            <forward name="weekly" path="/scheduler/AppointmentViewJson.jsp"/>
+            <forward name="monthly" path="/scheduler/AppointmentViewJson.jsp"/>
+            <forward name="yearly" path="/scheduler/AppointmentViewJson.jsp"/>
+            <forward name="fail" path="/AppointmentView.do"/>
+        </action>
+
+        <action path="/Appointment/Forward/Create"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentCreateForwardRESTAction"
+                name="appointmentForm"
+                scope="request"
+                validate="false"
+                input="/FailJson.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="/scheduler/AppointmentDetailForCreate.jsp"
+                roles="APPOINTMENT.CREATE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/scheduler/AppointmentCatalogsJson.jsp"/>
+            <forward name="redirect" path="/FailJson.jsp"/>
+            <forward name="fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Appointment/Create"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentCreateRESTAction"
+                name="appointmentForm"
+                scope="request"
+                input="/scheduler/AppointmentJson.jsp"
+                validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="APPOINTMENT.CREATE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="ReturnSearchList" path="/SuccessJson.jsp"/>
+            <forward name="Reload" path="/scheduler/AppointmentJson.jsp"/>
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="fail" path="/scheduler/AppointmentJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+            <forward name="Search" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Appointment/Forward/Update"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentReadRESTAction"
+                name="appointmentForm" scope="request" input="/AppointmentView.do" validate="false"
+                roles="APPOINTMENT.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/scheduler/AppointmentJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Appointment/Update"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentUpdateRESTAction" name="appointmentForm"
+                scope="request" input="/scheduler/AppointmentJson.jsp" validate="false" roles="APPOINTMENT.UPDATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="ReturnSearchList" path="/SuccessJson.jsp"/>
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="ConcurrencyFail" path="/scheduler/AppointmentJson.jsp"/>
+            <forward name="Reload" path="/scheduler/AppointmentJson.jsp"/>
+            <forward name="fail" path="/scheduler/AppointmentJson.jsp"/>
+            <forward name="Fail" path="/MainSearchJson.jsp"/>
+        </action>
+
+        <action path="/Appointment/Forward/View/Delete"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentForwardDeleteRESTAction"
+                name="appointmentForm"
+                scope="request" input="/FailJson.jsp" validate="false" roles="APPOINTMENT.DELETE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Recurrence" path="/scheduler/AppointmentRecurrenceDeleteJson.jsp"/>
+            <forward name="noRecurrence" path="/Appointment/Forward/Delete.do"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Appointment/View/Delete"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentRecurrenceDeleteRESTAction"
+                name="appointmentForm"
+                scope="request" input="/scheduler/AppointmentJson.jsp" validate="false" roles="APPOINTMENT.DELETE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="Cancel" path="/SuccessJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Appointment/Forward/Delete"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentReadRESTAction"
+                name="appointmentForm"
+                scope="request"
+                input="/FailJson.jsp"
+                validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="APPOINTMENT.DELETE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/scheduler/AppointmentJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Appointment/Delete"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentDeleteRESTAction" name="appointmentForm"
+                scope="request" input="/scheduler/AppointmentJson.jsp" validate="false" roles="APPOINTMENT.DELETE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/SuccessJson.jsp" redirect="true"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+
+        <action path="/Appointment/ParticipantList"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentListRESTAction"
+                name="participantImportForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                roles="APPOINTMENTPARTICIPANT.VIEW"
+                parameter="scheduler@participantList">
+            <forward name="Success" path="/scheduler/ParticipantJsonList.jsp"/>
+            <forward name="fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/AppointmentParticipant/Forward/Create"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentListRESTAction"
+                name="participantImportForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                roles="APPOINTMENTPARTICIPANT.CREATE"
+                parameter="scheduler@userAppointmentImportList">
+            <forward name="Success" path="/scheduler/UserImportJsonList.jsp"/>
+            <forward name="fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/AppointmentParticipant/Create"
+                type="com.piramide.elwis.web.bmapp.action.scheduler.AppointmentParticipantImportRESTAction"
+                name="participantImportForm" scope="request" input="/FailJson.jsp" validate="true"
+                roles="APPOINTMENTPARTICIPANT.CREATE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+            <forward name="importFail" path="/FailJson.jsp"/>
+            <forward name="error" path="/FailJson.jsp"/>
+        </action>
+
+<!--
+        <action path="/AppointmentParticipant/Forward/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.ParticipantForwardAction" name="form"
+                scope="request" validate="false" parameter="/scheduler/AppointmentParticipantDetailForDelete.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="APPOINTMENTPARTICIPANT.DELETE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="DeleteGroup" path="/AppointmentParticipant/Group.do?flag=group"/>
+        </action>
+-->
+
+        <action path="/AppointmentParticipant/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentManagerAction"
+                name="form" scope="request" validate="false" input="/FailJson.jsp"
+                parameter="com.piramide.elwis.cmd.schedulermanager.ParticipantDeleteCmd"
+                roles="APPOINTMENTPARTICIPANT.DELETE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <!-- products -->
+        <action path="/Product/List" type="com.piramide.elwis.web.bmapp.action.ListRESTAction"
+                name="listForm"
+                scope="request" parameter="products@productList" roles="PRODUCT.VIEW">
+            <forward name="Success" path="/product/ProductJsonList.jsp"/>
+        </action>
+
+        <action path="/Product/Forward/Update" type="com.piramide.elwis.web.productmanager.action.ProductAction"
+                name="productForm" scope="request" input="/FailJson.jsp" validate="false" roles="PRODUCT.VIEW"
+                parameter="com.piramide.elwis.cmd.productmanager.ProductReadCmd">
+            <forward name="Success" path="/product/ProductJson.jsp"/>
+        </action>
+
+        <!-- WV app-->
+        <!-- events-->
+        <action path="/Product/Event/List" type="com.piramide.elwis.web.bmapp.action.product.ProductEventListRESTAction"
+                name="listForm"
+                scope="request" parameter="products@productEventList" roles="PRODUCT.VIEW">
+            <forward name="Success" path="/product/ProductEventJsonList.jsp"/>
+        </action>
+        <action path="/Product/Event/Mine/List" type="com.piramide.elwis.web.bmapp.action.product.ProductEventMineListRESTAction"
+                name="listForm"
+                scope="request" parameter="products@productEventMineList" roles="PRODUCT.VIEW">
+            <forward name="Success" path="/product/ProductEventMineJsonList.jsp"/>
+        </action>
+
+        <action path="/Product/Event/Forward/Update" type="com.piramide.elwis.web.productmanager.action.ProductAction"
+                name="productForm" scope="request" input="/FailJson.jsp" validate="false" roles="PRODUCT.VIEW"
+                parameter="com.piramide.elwis.cmd.productmanager.ProductReadCmd">
+            <forward name="Success" path="/product/ProductEventJson.jsp"/>
+        </action>
+
+        <!-- participants-->
+        <action path="/SalePosition/Participant/List" type="com.piramide.elwis.web.bmapp.action.ListRESTAction"
+                name="listForm"
+                scope="request" parameter="sales@salePositionParticipantList" roles="SALEPOSITION.VIEW"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="participantSearch" />
+            <forward name="Success" path="/product/SalePositionParticipantJsonList.jsp"/>
+        </action>
+        <action path="/SalePosition/Participant/Create" type="com.piramide.elwis.web.bmapp.action.product.SalePositionParticipantCreateRESTAction"
+                name="form"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionParticipantCreateCmd" roles="SALEPOSITION.CREATE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/SalePosition/Participant/Forward/Update"
+                type="com.piramide.elwis.web.contactmanager.action.ContactPersonUpdateForwardAction" name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCmd" roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/contacts/ParticipantDetailJson.jsp"/>
+        </action>
+
+        <!-- members-->
+        <action path="/User/Member/List" type="com.piramide.elwis.web.bmapp.action.ListRESTAction"
+                name="listForm"
+                scope="request" parameter="admin@userMemberList" roles="USER.VIEW"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="memberSearch" />
+            <forward name="Success" path="/admin/UserMemberJsonList.jsp"/>
+        </action>
+
+        <action path="/User/Member/Favorite/List" type="com.piramide.elwis.web.bmapp.action.admin.UserMemberFavoriteListRESTAction"
+                name="listForm"
+                scope="request" parameter="admin@userMemberList" roles="USER.VIEW"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="memberSearch" />
+            <forward name="Success" path="/admin/UserMemberJsonList.jsp"/>
+        </action>
+
+        <action path="/User/Member/Forward/Update"
+                type="com.piramide.elwis.web.contactmanager.action.ContactPersonUpdateForwardAction" name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCmd" roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/contacts/MemberDetailJson.jsp"/>
+        </action>
+
+        <action path="/User/Member/Make/Favorite"
+                type="com.piramide.elwis.web.bmapp.action.admin.UserMemberMakeFavoriteRESTAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.UserMemberCmd" roles="USER.UPDATE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <action path="/Member/Organization/Forward/Update"
+                type="com.piramide.elwis.web.contactmanager.action.AddressForwardAction"
+                name="addressForm"
+                scope="request"
+                input="/FailJson.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.AddressCmd"
+                roles="CONTACT.VIEW">
+            <forward name="Success" path="/contacts/MemberOrganizationDetailJson.jsp"/>
+        </action>
+
+        <action path="/Member/Organization/ContactPerson/List"
+                type="com.piramide.elwis.web.bmapp.action.contacts.ContactListRESTAction"
+                name="listForm"
+                scope="request" parameter="contacts@memberOrganizationContactPersonList" roles="CONTACTPERSON.VIEW"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="fullNameSearch"/>
+            <forward name="Success" path="/contacts/OrganizationContactPersonJsonList.jsp"/>
+        </action>
+
+        <!-- branchs members-->
+        <action path="/Branch/List" type="com.piramide.elwis.web.bmapp.action.ListRESTAction"
+                name="listForm"
+                scope="request" parameter="catalogs@branchList" roles="BRANCH.VIEW">
+            <forward name="Success" path="/catalogs/BranchJsonList.jsp"/>
+        </action>
+
+        <action path="/Branch/Member/List" type="com.piramide.elwis.web.bmapp.action.ListRESTAction"
+                name="listForm"
+                scope="request" parameter="admin@branchMemberList" roles="BRANCH.VIEW"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="memberSearch" />
+            <forward name="Success" path="/admin/BranchMemberJsonList.jsp"/>
+        </action>
+
+        <action path="/Branch/Member/Forward/Update"
+                type="com.piramide.elwis.web.contactmanager.action.ContactPersonUpdateForwardAction" name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCmd" roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/contacts/BranchMemberDetailJson.jsp"/>
+        </action>
+
+        <action path="/Branch/Organization/List" type="com.piramide.elwis.web.bmapp.action.ListRESTAction"
+                name="listForm"
+                scope="request" parameter="admin@branchMemberOrganizationList" roles="BRANCH.VIEW"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="memberSearch" />
+            <forward name="Success" path="/admin/BranchOrganizationJsonList.jsp"/>
+        </action>
+
+        <!-- user profile-->
+        <action path="/User/Profile/Forward/Detail"
+                type="com.piramide.elwis.web.bmapp.action.admin.UserProfileDetailRESTAction" name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCmd" roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/User/Profile/Detail.do"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+        <action path="/User/Profile/Detail"
+                type="com.piramide.elwis.web.contactmanager.action.ContactPersonUpdateForwardAction" name="contactPersonForm"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCmd" roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/contacts/UserProfileDetailJson.jsp"/>
+        </action>
+
+        <action path="/User/Change/Forward/Update" type="org.apache.struts.actions.ForwardAction"
+                name="form" parameter="/bmapp/admin/UserChangeInfoJson.jsp" validate="false" scope="request"/>
+
+        <action path="/User/Change/Update"
+                type="com.piramide.elwis.web.bmapp.action.admin.UserChangeRESTAction"
+                name="userChangeAppForm"
+                scope="request"
+                input="/FailJson.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.UserChangeFromAppCmd" roles="CONTACT.UPDATE">
+            <forward name="Success" path="/SuccessJson.jsp"/>
+            <forward name="Fail" path="/FailJson.jsp"/>
+        </action>
+
+        <!-- wvapp layout configuration-->
+        <action path="/UIManager/WVApp/read/StyleSheet"
+                type="com.piramide.elwis.web.bmapp.action.uimanager.ReadStyleSheetWVAppRESTAction" name="form"
+                scope="request" input="/FailJson.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.uimanager.StyleSheetUtilCmd">
+            <forward name="Success" path="/uimanager/StyleSheetWVAppJson.jsp"/>
+        </action>
+
+        <!--end miky-->
+
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+                      /WEB-INF/bmapp/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="contactId"/>
+    </plug-in>
+
+<!--     <plug-in -->
+<!-- 		className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin"> -->
+<!-- 		<set-property property="path" -->
+<!-- 			value="/WEB-INF/bmapp/fantabulous.xml" /> -->
+<!-- 		<set-property property="moduleParams" -->
+<!-- 			value="contactId, index, advancedListForward, secondAdvancedListForward, profileId, dedupliContactId" /> -->
+<!-- 	</plug-in> -->
+
+
+</struts-config>

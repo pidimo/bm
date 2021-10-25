@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+        name="ContactPersonTelecomsSubReport"
+        columnCount="1"
+        printOrder="Vertical"
+        orientation="Portrait"
+        pageWidth="612"
+        pageHeight="792"
+        columnWidth="500"
+        columnSpacing="0"
+        leftMargin="0"
+        rightMargin="0"
+        topMargin="0"
+        bottomMargin="0"
+        whenNoDataType="AllSectionsNoDetail"
+        isTitleNewPage="false"
+        isSummaryNewPage="false"
+        resourceBundle="com.piramide.elwis.web.resources.ApplicationResources">
+    <property name="ireport.scriptlethandling" value="0"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+
+    <style
+            name="ReportTitle"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="14"
+            isBold="true"
+            pdfFontName="Verdana-Bold"
+            />
+    <style
+            name="ReportSubTitle"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="true"
+            pdfFontName="Verdana-Bold"
+            />
+    <style
+            name="ReportDetail"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="9"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            />
+    <style
+            name="ReportHeader"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="9"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            />
+
+
+    <background>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </background>
+    <title>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </title>
+    <pageHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="12" isSplitAllowed="true">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportDetail"
+                        x="115"
+                        y="0"
+                        width="295"
+                        height="12"
+                        key="textField-1"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1">
+                    <leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[((java.util.Map)$P{NUMBERMAP}).get($F{telecomTypeId}).toString()]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="0"
+                        width="115"
+                        height="12"
+                        key="textField-2"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1">
+                    <leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[((java.util.Map)$P{TELECOMTYPE_NAMEMAP}).get($F{telecomTypeId}).toString()]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </summary>
+</jasperReport>

@@ -1,0 +1,57 @@
+'==================DECLARATION=======================
+<%"fields fields_address fields_person fields_employee fields_company fields_salesprocess".each(' ') {|s| p 
+print "\n"
+ mkey=s.strip
+ _mapFields = listFields[english]
+ _fields = _mapFields[mkey] 
+ _fields.each_pair do |fkey, _field| %>
+Dim WithEvents <%= _field.idName.capitalize %> As Office.CommandBarButton<% end }%>
+
+'==================CREATION=======================
+<%"fields_address fields_person fields_employee fields_company fields_salesprocess".each(' ') {|s| p 
+ mkey=s.strip
+ _mapFields = listFields[english]
+ _fields = _mapFields[mkey] 
+ name=mkey.gsub(/fields\_?(.*)/, '\1')
+ popupBar = name+"Fields"
+%>
+Private Sub build<%=mkey%>Bar(ByRef oCommandBars As office.CommandBars, AddInInst As Object)
+Dim <%=popupBar%> As office.CommandBarPopup
+Set  <%=popupBar%> = fieldBar.FindControl(msoControlPopup, , RESOURCE_TOOLBAR.FIELD_<%=name.upcase%>)
+<%=popupBar%>.Delete
+Set <%=popupBar%> = Nothing
+  
+If <%=popupBar%> Is Nothing Then
+Set <%=popupBar%> = fieldBar.Controls.Add(msoControlPopup)
+End If	
+<%=popupBar%>.Caption = i18n(RESOURCE_TOOLBAR.FIELD_<%=name.upcase%>)
+<%=popupBar%>.BeginGroup = True
+<%=popupBar%>.Tag = RESOURCE_TOOLBAR.FIELD_<%=name.upcase%>
+With <%=popupBar%>
+<% 
+ sortKeys = _fields.keys.sort
+ sortKeys.each{ |fkey| 
+_field=_fields[fkey]%>
+    Set <%= _field.idName.capitalize %> = .Controls.Add(msoControlButton, , , , False)
+    With <%= _field.idName.capitalize %>
+         .Caption = i18n(RESOURCE_<%= mkey.upcase %>.<%= _field.idName %>)
+         .FaceId = FACEID_TEMPLATE_FIELD
+         .Style = msoButtonIconAndCaption
+         .Tag = RESOURCE_<%= mkey.upcase %>.<%= _field.idName %>
+         .OnAction = "!<" & AddInInst.ProgId & ">"
+    End With<% }%>
+End With
+End Sub<%}%>
+
+'==================METHOD=======================
+<% 
+
+
+ _mapFields = listFields[english]
+ _fields =  _template = _mapFields["variable"]
+ _fields.each_pair do |fkey, _field|
+  var =_field.idName.gsub(/BTN(\w*)/,'\1')
+%>
+  Private Sub <%= _field.idName.capitalize %>_Click(ByVal Ctrl As Office.CommandBarButton, CancelDefault As Boolean)
+     addField i18n(RESOURCE_VARIABLE.<%= _template[var].idName.upcase%>)
+  End Sub<% end%>

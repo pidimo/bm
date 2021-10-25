@@ -1,0 +1,26 @@
+#set($screenSize = 940)
+#set($tableSize= ($screenSize / 2))
+
+$messages.getMessage($componentName)
+<div class="pull-right">
+    #foreach($wAction in $windowActions)
+        <a href="$wAction.action">
+            #set($image="")
+            #foreach( $stringList in $wAction.iconUrl.split("/"))
+                #set($image=$stringList)
+            #end
+
+            #if( $image == "close.gif" )
+                <span class="glyphicon glyphicon-remove dashboardClose" title="$messages.getMessage($wAction.resourceKey)"></span>
+            #elseif( $image == "configuration.gif" )
+                <span class="glyphicon glyphicon-wrench dashboardConfiguration" title="$messages.getMessage($wAction.resourceKey)"></span>
+            #elseif( $image == "minisearch.gif" )
+                <span class="glyphicon glyphicon-search dashboardSearch" title="$messages.getMessage($wAction.resourceKey)"></span>
+            #else
+                <img height="12" width="14" border="0"
+                     src="$wAction.iconUrl"
+                     title="$messages.getMessage($wAction.resourceKey)">
+            #end
+        </a>
+    #end
+</div>

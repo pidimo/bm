@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalogs PUBLIC "-//elwis/copycatalog Config DTD //EN"
+        "http://www.jatun.com/copycatalog.dtd">
+
+<catalogs>
+    <module path="/contacts">
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyCurrencyCountryCityCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyCustomerTypeCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyLanguageCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyPriorityCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopySalutationCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyTitleCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyCostCenterCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyPersonTypeCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopySupplierTypeCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyAddressSourceCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyBranchCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyPayMoralityCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyPayConditionCatalog"/>
+        <catalog
+                className="com.piramide.elwis.cmd.contactmanager.copycatalog.CopyContactMediaEditorAndTemplateCatalog"/>
+    </module>
+    <module path="/campaign">
+        <catalog className="com.piramide.elwis.cmd.campaignmanager.copycatalog.CopyCampaignTypeCatalog"/>
+    </module>
+    <module path="/sales">
+        <catalog className="com.piramide.elwis.cmd.salesmanager.copycatalog.CopyActionTypeCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.salesmanager.copycatalog.CopyPriorityCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.salesmanager.copycatalog.CopyStatusCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.salesmanager.copycatalog.CopyContractTypeCatalog"/>
+    </module>
+    <module path="/scheduler">
+        <catalog className="com.piramide.elwis.cmd.schedulermanager.copycatalog.CopyAppointmentTypeCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.schedulermanager.copycatalog.CopyPriorityCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.schedulermanager.copycatalog.CopyTaskTypeCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.schedulermanager.copycatalog.CopyHolidayCatalog"/>
+    </module>
+    <module path="/support">
+        <catalog className="com.piramide.elwis.cmd.supportmanager.copycatalog.CopyPriorityCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.supportmanager.copycatalog.CopyStateCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.supportmanager.copycatalog.CopyCategoryCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.supportmanager.copycatalog.CopyCaseTypeCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.supportmanager.copycatalog.CopySeverityCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.supportmanager.copycatalog.CopyWorkLevelCatalog"/>
+    </module>
+    <module path="/products">
+        <catalog className="com.piramide.elwis.cmd.productmanager.copycatalog.CopyProductUnitCatalog"/>
+    </module>
+    <module path="/finance">
+        <catalog className="com.piramide.elwis.cmd.productmanager.copycatalog.CopyVatAndVatRateCatalog"/>
+        <catalog className="com.piramide.elwis.cmd.financemanager.copycatalog.CopyInvoiceTemplateCatalog"/>
+    </module>
+    <module path="/admin">
+        <catalog className="com.piramide.elwis.cmd.admin.copycatalog.CopyUserGroup"/>
+        <catalog className="com.piramide.elwis.cmd.admin.copycatalog.CopyRolesAndAccessright"/>
+    </module>
+    <module path="/" moduleId="10">
+        <catalog className="com.piramide.elwis.cmd.uimanager.copycatalog.CopyStyleSheet"/>
+        <catalog className="com.piramide.elwis.cmd.uimanager.copycatalog.CopyCompanyPreferences"/>
+    </module>
+</catalogs>

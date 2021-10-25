@@ -1,0 +1,527 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <!--begin ivan-->
+        <form-bean name="columnGroupForm" type="com.piramide.elwis.web.reports.form.ColumnGroupForm"/>
+        <form-bean name="totalizeForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="reportRoleForm" type="com.piramide.elwis.web.reports.form.ReportRoleForm"/>
+        <form-bean name="reportRoleDeletedForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <!--end ivan-->
+        <!--begin Alvaro-->
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="reportForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <!--end Alvaro-->
+        <!--begin miky-->
+        <form-bean name="filterListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="columnForm" type="com.piramide.elwis.web.reports.form.ColumnForm"/>
+        <form-bean name="defaultForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="filterCreateForm" type="com.piramide.elwis.web.reports.form.FilterCreateForm"/>
+        <form-bean name="reportExecuteForm" type="com.piramide.elwis.web.reports.form.ReportExecuteForm"/>
+        <form-bean name="importListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="chartForm" type="com.piramide.elwis.web.reports.form.ChartForm"/>
+        <form-bean name="reportJrxmlForm" type="com.piramide.elwis.web.reports.form.ReportJrxmlForm"/>
+        <form-bean name="reportJrxmlExecuteForm" type="com.piramide.elwis.web.reports.form.ReportJrxmlExecuteForm"/>
+        <form-bean name="queryParamListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="queryParamForm" type="com.piramide.elwis.web.reports.form.QueryParamForm"/>
+        <!--end miky-->
+
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainSearch" path="/Report/List.do"/>
+        <forward name="ReportMainSearch" path="/Report/List.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+        <action path="/Report/List" type="com.piramide.elwis.web.common.action.ListAction" name="listForm"
+                scope="request" validate="false" parameter="userReportList" input="/ReportList.jsp">
+            <forward name="Success" path="/ReportList.jsp"/>
+        </action>
+
+        <!--begin Alvaro-->
+        <action path="/Report/Forward/Create" type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction"
+                name="reportForm"
+                scope="request" validate="false" parameter="/reports/ReportDetailForCreate.jsp" roles="REPORT.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="report"/>
+        </action>
+
+        <action path="/Report/Create" type="com.piramide.elwis.web.reports.action.UserReportAction" name="reportForm"
+                scope="request" validate="false" input="/ReportDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportCreateCmd"
+                roles="REPORT.CREATE">
+            <forward name="Success" path="/Report/Forward/Update.do"/>
+            <forward name="Cancel" path="/Report/List.do" redirect="true"/>
+            <forward name="Fail" path="/ReportDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/Report/Forward/Update" type="com.piramide.elwis.web.reports.action.ReportForwardUpdateAction"
+                name="reportForm"
+                scope="request" validate="false" input="/Report/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportReadCmd"
+                roles="REPORT.VIEW">
+            <forward name="Success" path="/ReportDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Report/Update" type="com.piramide.elwis.web.reports.action.ReportUpdateAction" name="reportForm"
+                scope="request" validate="false" input="/ReportDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportUpdateCmd"
+                roles="REPORT.UPDATE">
+            <forward name="Success" path="/Report/Forward/Update.do"/>
+            <forward name="Cancel" path="/Report/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/List.do"/>
+        </action>
+
+        <action path="/Report/Update/Confirmation/Execute"
+                type="com.piramide.elwis.web.reports.action.UserReportAction"
+                name="reportForm"
+                scope="request"
+                validate="false"
+                input="/ReportDetailForConfirmation.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportUpdateCmd" roles="REPORT.UPDATE">
+            <forward name="Success" path="/Report/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/Report/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail" path="/Report/List.do"/>
+        </action>
+
+
+        <action path="/Report/Forward/Delete"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="reportForm"
+                scope="request" validate="false" input="/Report/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportReadCmd"
+                roles="REPORT.DELETE">
+            <forward name="Success" path="/ReportDetailForDelete.jsp"/>
+        </action>
+        <action path="/Report/Delete"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="reportForm"
+                scope="request" validate="false" input="/ReportDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportDeleteCmd"
+                roles="REPORT.DELETE">
+            <forward name="Success" path="/Report/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Report/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/List.do"/>
+        </action>
+        <!--end Alvaro-->
+
+        <!--jrxml report-->
+        <action path="/Report/Jrxml/Forward/Update" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="reportJrxmlForm"
+                scope="request" validate="false" input="/Report/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportReadCmd"
+                roles="REPORT.VIEW">
+            <forward name="Success" path="/ReportJrxmlDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Report/Jrxml/Update" type="com.piramide.elwis.web.reports.action.ReportJrxmlUpdateAction" name="reportJrxmlForm"
+                scope="request" validate="false" input="/ReportJrxmlDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportUpdateCmd"
+                roles="REPORT.UPDATE">
+            <forward name="Success" path="/Report/Jrxml/Forward/Update.do"/>
+            <forward name="Cancel" path="/Report/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/List.do"/>
+        </action>
+
+        <!--execute-->
+        <action path="/Report/Jrxml/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExecuteForwardAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="false" input="/Report/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd"
+                roles="REPORT.EXECUTE">
+            <forward name="Success" path="/ReportJrxmlExecute.jsp"/>
+            <forward name="Fail" path="/Report/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Jrxml/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExecuteAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="true" input="/ReportJrxmlExecute.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd"
+                roles="REPORT.EXECUTE">
+            <forward name="Success" path="/ReportJrxmlExecute.jsp"/>
+            <forward name="Cancel" path="/Report/List.do" redirect="true"/>
+            <forward name="FailButStay" path="/ReportJrxmlExecute.jsp"/>
+        </action>
+
+        <!--query param filters-->
+        <action path="/Report/QueryParam/List" type="com.piramide.elwis.web.reports.action.ReportJrxmlListAction"
+                name="queryParamListForm"
+                scope="request" input="/ReportQueryParamList.jsp" validate="false"
+                parameter="reports@reportQueryParamList"
+                roles="FILTER.VIEW">
+            <forward name="Success" path="/ReportQueryParamList.jsp"/>
+        </action>
+
+        <action path="/Report/QueryParam/Forward/Update" type="com.piramide.elwis.web.reports.action.ReportQueryParamUpdateForwardAction"
+                name="queryParamForm"
+                scope="request" validate="false" input="/Report/QueryParam/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportQueryParamCmd"
+                roles="FILTER.VIEW">
+            <forward name="Success" path="/ReportQueryParamDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Report/QueryParam/List.do"/>
+        </action>
+
+        <action path="/Report/QueryParam/Update" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="queryParamForm"
+                scope="request" validate="true" input="/ReportQueryParamDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportQueryParamUpdateCmd"
+                roles="FILTER.UPDATE">
+            <forward name="Success" path="/Report/QueryParam/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Report/QueryParam/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/QueryParam/List.do"/>
+        </action>
+
+        <!--begin ivan-->
+
+        <action path="/ReportRole/List"
+                type="com.piramide.elwis.web.reports.action.ReportRoleListAction"
+                name="reportRoleForm"
+                scope="request"
+                input="/ReportRoleList.jsp"
+                validate="false"
+                parameter="reportRoleList" roles="REPORTROLE.VIEW">
+            <forward name="Success" path="/ReportRoleList.jsp"/>
+            <forward name="DeleteSelectedItems"
+                     path="/ReportRoleDetailForDeleteSelectedElements.jsp"/>
+            <forward name="Fail" path="/ReportRoleList.jsp"/>
+        </action>
+        <action path="/ReportRole/RolesList"
+                type="com.piramide.elwis.web.reports.action.ReportRoleImportListAction"
+                name="reportRoleForm"
+                scope="request"
+                input="/ReportRoleImportList.jsp"
+                validate="false"
+                parameter="roleList" roles="REPORTROLE.CREATE">
+            <forward name="Success" path="/ReportRoleImportList.jsp"/>
+            <forward name="SuccessAdded" path="/ReportRole/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ReportRole/List.do" redirect="true"/>
+        </action>
+
+        <action path="/ReportRole/Forward/Delete"
+                type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="reportRoleDeletedForm"
+                scope="request"
+                validate="false"
+                input="/ReportRole/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportRoleCmd" roles="REPORTROLE.DELETE">
+            <forward name="Success" path="/ReportRoleDetailForDelete.jsp"/>
+            <forward name="Cancel" path="/ReportRole/List.do" redirect="true"/>
+            <forward name="Fail" path="/ReportRole/List.do"/>
+        </action>
+        <action path="/ReportRole/Delete"
+                type="com.piramide.elwis.web.reports.action.ReportRoleAction"
+                name="reportRoleDeletedForm"
+                scope="request"
+                validate="false"
+                input="/ReportRoleDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportRoleCmd" roles="REPORTROLE.DELETE">
+            <forward name="Success" path="/ReportRole/List.do" redirect="true"/>
+            <forward name="Fail" path="/ReportRole/List.do"/>
+            <forward name="Cancel" path="/ReportRole/List.do" redirect="true"/>
+        </action>
+        <action path="/ReportRole/DeleteSelectedElements"
+                type="com.piramide.elwis.web.reports.action.ReportRoleAction"
+                name="reportRoleDeletedForm"
+                scope="request"
+                validate="false"
+                input="/ReportRoleDetailForDeleteSelectedElements.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportRoleCmd" roles="REPORTROLE.DELETE">
+            <forward name="Success" path="/ReportRole/List.do" redirect="true"/>
+            <forward name="Fail" path="/ReportRole/List.do"/>
+            <forward name="Cancel" path="/ReportRole/List.do" redirect="true"/>
+        </action>
+
+
+        <action path="/Report/Forward/Grouping"
+                type="com.piramide.elwis.web.reports.action.ReportTypeAction"
+                name="columnGroupForm"
+                scope="request"
+                input="/Report/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ColumnGroupCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="GROUP.VIEW">
+            <set-property property="paramReWrite" value="dto(reportId)"/>
+            <forward name="Success" path="/Grouping.jsp"/>
+            <forward name="Fail" path="/Grouping.jsp"/>
+            <forward name="MatrixSuccess" path="/GroupingMatrix.jsp"/>
+            <forward name="Detail" path="/Report/Forward/Update.do?dto(op)=read&amp;index=0"/>
+        </action>
+
+        <action path="/Report/Grouping/Create"
+                type="com.piramide.elwis.web.reports.action.ReportTypeAction"
+                name="columnGroupForm"
+                scope="request"
+                input="/Report/Forward/Grouping.do?dto(op)=read"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.reports.ColumnGroupCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="GROUP.UPDATE">
+            <set-property property="paramReWrite" value="dto(reportId)"/>
+            <forward name="Success" path="/Report/Forward/Grouping.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Forward/Grouping.do?dto(op)=read"/>
+            <forward name="Detail" path="/Report/Forward/Update.do?dto(op)=read&amp;index=0"/>
+        </action>
+
+        <action path="/Report/GroupingMatrix/Create"
+                type="com.piramide.elwis.web.reports.action.ReportTypeAction"
+                name="columnGroupForm"
+                scope="request"
+                input="/Report/Forward/Grouping.do?dto(op)=read"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.reports.ColumnGroupCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="GROUP.UPDATE">
+            <set-property property="paramReWrite" value="dto(reportId)"/>
+            <forward name="Success" path="/Report/Forward/Grouping.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Forward/Grouping.do?dto(op)=read"/>
+            <forward name="Detail" path="/Report/Forward/Update.do?dto(op)=read&amp;index=0"/>
+        </action>
+
+
+        <action path="/Report/Forward/Totalize"
+                type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="totalizeForm"
+                scope="request"
+                input="/Report/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.reports.TotalizeCmd"
+                roles="TOTALIZE.VIEW">
+            <forward name="Success" path="/Totalize.jsp"/>
+            <forward name="Detail" path="/Report/Forward/Update.do"/>
+        </action>
+
+        <action path="/Report/Totalize/Create"
+                type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="totalizeForm"
+                scope="request"
+                input="/Totalize.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.reports.TotalizeCmd"
+                roles="TOTALIZE.UPDATE">
+            <forward name="Success" path="/Report/Forward/Totalize.do?dto(op)=read"/>
+            <forward name="Fail" path="/Report/Forward/Totalize.do?dto(op)=read"/>
+            <forward name="Detail" path="/Report/Forward/Update.do"/>
+        </action>
+
+
+        <!--end ivan-->
+        <!--begin miky-->
+        <!--columns-->
+        <action path="/Report/Forward/Columns"
+                type="com.piramide.elwis.web.reports.action.ColumnForwardAction"
+                name="columnForm"
+                scope="request"
+                validate="false"
+                input="/Report/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ColumnReadCmd"
+                roles="COLUMN.VIEW">
+            <forward name="Success" path="/Columns.jsp"/>
+            <forward name="Fail" path="/Report/List.do"/>
+        </action>
+
+        <action path="/Report/Columns/Create" type="com.piramide.elwis.web.reports.action.ColumnAction"
+                name="columnForm"
+                scope="request" validate="true" input="/Report/Forward/Columns.do"
+                parameter="com.piramide.elwis.cmd.reports.ColumnCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="COLUMN.UPDATE">
+            <set-property property="paramReWrite" value="dto(reportId)"/>
+            <forward name="Success" path="/Report/Forward/Columns.do"/>
+            <forward name="Fail" path="/Report/Forward/Columns.do"/>
+            <forward name="FailReport" path="/Report/List.do"/>
+        </action>
+
+        <action path="/Report/Forward/TreeColumns" type="com.piramide.elwis.web.reports.action.ColumnTreeAction"
+                name="columnForm"
+                scope="request" validate="false" input="/Report/List.do" parameter="/Columns.jsp">
+        </action>
+
+        <!--execute-->
+        <action path="/Report/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExecuteForwardAction"
+                name="reportExecuteForm"
+                scope="request" validate="false" input="/Report/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd"
+                roles="REPORT.EXECUTE">
+            <forward name="Success" path="/ReportExecute.jsp"/>
+            <forward name="Fail" path="/Report/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Execute" type="com.piramide.elwis.web.reports.action.ReportExecuteAction"
+                name="reportExecuteForm"
+                scope="request" validate="true" input="/ReportExecute.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd"
+                roles="REPORT.EXECUTE">
+            <forward name="Success" path="/ReportExecute.jsp"/>
+            <forward name="Cancel" path="/Report/List.do" redirect="true"/>
+
+            <forward name="FailColumn" path="/ReportExecute.jsp"/>
+            <forward name="FailButStay" path="/ReportExecute.jsp"/>
+        </action>
+
+        <!--filters-->
+        <action path="/Report/Filter/List" type="com.piramide.elwis.web.reports.action.ReportListAction"
+                name="filterListForm"
+                scope="request" input="/ReportFilterList.jsp" validate="false" parameter="reportFilterList"
+                roles="FILTER.VIEW">
+            <forward name="Success" path="/ReportFilterList.jsp"/>
+        </action>
+
+        <action path="/Report/Filter/Forward/Create"
+                type="com.piramide.elwis.web.reports.action.FilterCreateForwardAction"
+                name="filterCreateForm"
+                scope="request" validate="false" parameter="/reports/ReportFilterDetailForCreate.jsp"
+                roles="FILTER.CREATE"/>
+
+        <action path="/Report/Filter/Create" type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="filterCreateForm"
+                scope="request" validate="true" input="/ReportFilterDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.FilterCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="FILTER.CREATE">
+            <set-property property="paramReWrite" value="dto(reportId)"/>
+            <forward name="Success" path="/Report/Filter/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Filter/List.do"/>
+            <forward name="Cancel" path="/Report/Filter/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/Report/Filter/Forward/Create.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Filter/TreeColumns" type="com.piramide.elwis.web.reports.action.FilterTreeColumnAction"
+                name="defaultForm"
+                scope="request" validate="false" input="/Report/List.do">
+        </action>
+
+        <action path="/Report/Filter/Forward/Update" type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="filterCreateForm"
+                scope="request" validate="false" input="/Report/Filter/List.do"
+                parameter="com.piramide.elwis.cmd.reports.FilterCmd"
+                roles="FILTER.VIEW">
+            <forward name="Success" path="/ReportFilterDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Report/Filter/List.do"/>
+        </action>
+
+        <action path="/Report/Filter/Update" type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="filterCreateForm"
+                scope="request" validate="true" input="/ReportFilterDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.FilterCmd"
+                roles="FILTER.UPDATE">
+            <forward name="Success" path="/Report/Filter/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Report/Filter/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Filter/List.do"/>
+        </action>
+
+        <action path="/Report/Filter/Forward/Delete" type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="filterCreateForm"
+                scope="request" validate="false" input="/Report/Filter/List.do"
+                parameter="com.piramide.elwis.cmd.reports.FilterCmd"
+                roles="FILTER.DELETE">
+            <forward name="Success" path="/ReportFilterDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Report/Filter/List.do"/>
+        </action>
+
+        <action path="/Report/Filter/Delete" type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="filterCreateForm"
+                scope="request" validate="false" input="/ReportFilterDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.reports.FilterCmd"
+                roles="FILTER.DELETE">
+            <forward name="Success" path="/Report/Filter/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Report/Filter/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Filter/List.do"/>
+        </action>
+
+        <!--popup-->
+        <action path="/Report/Filter/ImportDBFilter"
+                type="com.piramide.elwis.web.reports.action.FilterExternalListAction" name="importListForm"
+                scope="request" input="/DBFilterImportList.jsp" validate="false" parameter="EXTERNALLIST">
+            <forward name="Success" path="/DBFilterImportList.jsp"/>
+        </action>
+
+        <!--test filter-->
+        <action path="/Report/FilterTest" type="org.apache.struts.actions.ForwardAction"
+                name="filterCreateForm"
+                scope="request" validate="false" parameter="/reports/FilterTest.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="iniTableParam"/>
+        </action>
+        <action path="/Report/FilterTestValidate" type="org.apache.struts.actions.ForwardAction"
+                name="filterCreateForm"
+                scope="request" validate="true" input="/FilterTest.jsp" parameter="/reports/FilterTest.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="iniTableParam"/>
+            <forward name="Cancel" path="/Report/FilterTest.do" redirect="true"/>
+        </action>
+        <!--end test filter-->
+
+        <!--chart-->
+        <action path="/ChartType/Forward/Update" type="com.piramide.elwis.web.reports.action.ChartAction"
+                name="chartForm" scope="request" validate="false" input="/Report/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ChartCmd" roles="CHART.VIEW">
+            <forward name="Success" path="/ChartType.jsp"/>
+            <forward name="Fail" path="/Report/Forward/Update.do?dto(op)=read&amp;index=0"/>
+            <forward name="Single" path="/Report/Forward/Update.do?dto(op)=read&amp;index=0"/>
+        </action>
+
+        <action path="/ChartType" type="com.piramide.elwis.web.reports.action.ChartAction" name="chartForm"
+                input="/ChartType.jsp" scope="request" validate="true"
+                parameter="com.piramide.elwis.cmd.reports.ChartCmd"
+                roles="CHART.UPDATE">
+            <forward name="Success" path="/ChartType.jsp"/>
+            <forward name="Fail" path="/ChartType.jsp"/>
+            <forward name="Confirmation" path="/ChartDeleteConfirmation.jsp"/>
+            <forward name="Single" path="/Report/Forward/Update.do?dto(op)=read&amp;index=0"/>
+        </action>
+
+        <action path="/ChartType/Delete" type="com.piramide.elwis.web.reports.action.ReportManagerAction"
+                name="chartForm"
+                input="/ChartType.jsp" scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ChartCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CHART.UPDATE">
+            <set-property property="paramReWrite" value="dto(reportId)"/>
+            <forward name="Success" path="/ChartType.jsp"/>
+            <forward name="Fail" path="/ChartType.jsp"/>
+            <forward name="Cancel" path="/ChartType/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Single" path="/Report/Forward/Update.do?dto(op)=read&amp;index=0"/>
+        </action>
+
+        <action path="/Report/Chart/LoadType" type="com.piramide.elwis.web.reports.action.LoadChartTypeAction"
+                name="defaultForm"
+                scope="request" validate="false" input="/Report/List.do">
+            <forward name="Fail" path="/Report/List.do"/>
+        </action>
+        <action path="/Report/List/AddError" type="com.piramide.elwis.web.reports.action.AddErrorInReportListAction"
+                name="listForm"
+                scope="request" validate="false" parameter="userReportList" input="/ReportList.jsp">
+            <forward name="Success" path="/ReportList.jsp"/>
+        </action>
+        <!--end miky-->
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+                /WEB-INF/reports/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/reports/fantabulous.xml"/>
+        <set-property property="moduleParams" value="reportId, reportType ,index"/>
+    </plug-in>
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="reportId, reportType ,index"/>
+    </plug-in>
+
+</struts-config>

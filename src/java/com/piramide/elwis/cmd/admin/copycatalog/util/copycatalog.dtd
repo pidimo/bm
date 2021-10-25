@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT catalogs (module+)>
+<!ELEMENT module (catalog+)>
+<!ATTLIST module
+    path CDATA #REQUIRED
+    moduleId CDATA #IMPLIED>
+<!ELEMENT catalog (#PCDATA)>
+<!ATTLIST catalog
+    className CDATA #REQUIRED>

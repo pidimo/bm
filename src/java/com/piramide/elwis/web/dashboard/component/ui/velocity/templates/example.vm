@@ -1,0 +1,58 @@
+#set($screenSize = 940)
+#set($tableSize= ($screenSize / 2))
+
+<table cellpadding="0" cellspacing="0" border="0" width="$tableSize px" align="center">
+    <tr>
+        <td class="title" colspan="$sizeOfSelectedColumns">$messages.getMessage($componentName) &nbsp; $resumeMsg</td>
+        <td class="title" style="text-align:right">
+            #foreach($wAction in $windowActions)
+            <a href="$wAction.action">
+                <img height="12" width="14" border="0"
+                     src="$wAction.iconUrl"
+                     title="$messages.getMessage($wAction.resourceKey)">
+            </a>
+            #end
+        </td>
+    </tr>
+</table>
+<table width="$tableSize px" cellpadding="0" cellspacing="0" border="0" align="center" class="dashboard_table">
+
+    <tr>
+
+        #foreach($column in $selectedColumns)
+        #set($width= $messages.calculateSizeColum($column.size))
+        <th width="$width px" class="listHeaderDashBoard">
+            $messages.getMessage($column.resourceKey)
+        </th>
+        #end
+    </tr>
+
+
+    #foreach($element in $elements)
+    #set($obj = $element.remove("dbstyle#3175"))
+    <tr class="listRow">
+
+        #set($i = 0)
+        #set($actual = $element.size())
+        #foreach($val in $element)
+        #set($i = $i+1)
+        #set($style = "listItem")
+
+        #if($i == $actual)
+        #set($style = "listItem2")
+        #end
+        <td class="dashboard_td $style $obj" nowrap>
+            $val
+        </td>
+        #end
+    </tr>
+    #end
+
+    #if($elements.size() == 0)
+    <tr class="listRow">
+        <td colspan="$sizeOfSelectedColumns">
+            $messages.getMessage("Common.list.empty")
+        </td>
+    </tr>
+    #end
+</table>

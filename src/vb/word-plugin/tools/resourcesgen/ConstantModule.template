@@ -1,0 +1,19 @@
+Attribute VB_Name = "ConstantModule"
+
+Enum LANGUAGE<% languages.each_pair do |key, lang| %>
+  <%= key.upcase%> = <%= lang%><% end %>
+End Enum
+
+<% 
+_mapFields = listFields[english]
+FIELDS_RES.each(' ') {|s| p 
+ mkey=s.strip
+ _fields = _mapFields[mkey] 
+ sortKeys = _fields.keys.sort %>
+Enum RESOURCE_<%= mkey.upcase %><% sortKeys.each{ |fkey|
+_field=_fields[fkey] %>
+  <%= _field.idName %> = <%= _field.idSector %><% }%>
+End Enum
+      <% } %>
+
+

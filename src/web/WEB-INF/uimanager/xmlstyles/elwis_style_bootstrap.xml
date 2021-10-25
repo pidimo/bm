@@ -1,0 +1,961 @@
+<?xml version="1.0"?>
+<!DOCTYPE CSS SYSTEM "uimanager.dtd">
+
+<CSS>
+    <file name="src/web/mainCustom.css"/>
+    <!-- general-->
+    <elements name="general" resource="UIManager.Section.general" configurable="true">
+        <element name="everything_BODY" styleClass="body" configurable="true" resource="UIManager.Section.BODY">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="a" styleClass="a" configurable="true" resource="UIManager.Section.Links">
+            <attributes>
+                <attribute name="color" value="#d9230f" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="ahover" styleClass="a:hover, a:focus" configurable="true"
+                 resource="UIManager.Section.LinksFocus">
+            <attributes>
+                <attribute name="color" value="#91170a" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="btn-link" styleClass=".btn-link" extends="a" resource="UIManager.Section.Links">
+            <attributes/>
+        </element>
+        <element name="btn-linkHover" styleClass=".btn-link:hover,.btn-link:focus" extends="ahover"
+                 resource="UIManager.Section.Links">
+            <attributes/>
+        </element>
+
+        <element name="formControl" styleClass=".form-control" resource="UIManager.Section.INPUT_TEXT"
+                 configurable="true">
+            <attributes>
+                <!--text-->
+                <attribute name="background-color" value="#ffffff" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica, Arial, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="border" value="#dddddd" arguments=" 1px solid" resource="UIManager.Attribute.Border"
+                           configurable="true"/>
+                <attribute name="color" value="#777777" resource="UIManager.Attribute.Color" configurable="true"/>
+                <!--end text-->
+            </attributes>
+        </element>
+
+        <element name="formControlFocus" styleClass=".form-control:focus" resource="UIManager.Section.FormControlFocus"
+                 configurable="true">
+            <attributes>
+                <!--text border-color: #66afe9;/*COLOR 4*/-->
+                <attribute name="border-color" value="#66afe9" resource="UIManager.Attribute.BorderColor"
+                           configurable="true"/>
+
+                <attribute name="box-shadow" value="rgba(102, 175, 233, 0.6)" type="BOX_SHADOW_TYPE"
+                           resource="UIManager.Attribute.BoxShadow" configurable="true"/>
+                <!--end text-->
+            </attributes>
+        </element>
+
+
+        <element name="button" styleClass=".btn" resource="UIManager.Section.Button"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif"
+                           resource="UIManager.Attribute.FontFamily" type="FONT" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <!-- settings button default-->
+        <element name="defaultButton" styleClass=".btn-default" resource="UIManager.Section.DefaultButton"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#ffffff" resource="UIManager.Attribute.Color"
+                           configurable="true"/>
+                <attribute name="background-color" value="#3f4141" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="border-color" value="#2e2f2f" resource="UIManager.Attribute.BorderColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="defaultButtonGradient" styleClass=".btn-default, .btn-default:hover"
+                 resource="UIManager.Section.DefaultButtonGradient"
+                 configurable="true" extends="defaultButton">
+            <attributes>
+                <attribute name="background-image" value="#4f5151[VS]#3f4141"
+                           type="GRADIENT_TYPE" resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="defaultButtonFocus" styleClass=".btn-default:focus, .btn-default.focus"
+                 extends="defaultButton" configurable="false" resource="UIManager.Element.INPUT_button">
+            <attributes/>
+        </element>
+        <element name="defaultButtonHover" styleClass=".btn-default:hover"
+                 extends="defaultButton" configurable="false" resource="UIManager.Element.INPUT_button">
+            <attributes/>
+        </element>
+        <element name="defaultButtonActive"
+                 styleClass=".btn-default:active:hover,.btn-default.active:hover,.btn-default:active:focus,.btn-default.active:focus"
+                 extends="defaultButton" configurable="false" resource="UIManager.Element.INPUT_button">
+            <attributes/>
+        </element>
+        <!-- settings button primary-->
+        <element name="primaryButton" styleClass=".btn-primary" resource="UIManager.Section.PrimaryButton"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#ffffff" resource="UIManager.Attribute.Color"
+                           configurable="true"/>
+                <attribute name="background-color" value="#cb210e" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="border-color" value="#a01a0b" resource="UIManager.Attribute.BorderColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="primaryButtonGradient" styleClass=".btn-primary, .btn-primary:hover"
+                 resource="UIManager.Section.PrimaryButtonGradient"
+                 configurable="true" extends="primaryButton">
+            <attributes>
+                <attribute name="background-image" value="#d9230f[VS]#cb210e"
+                           type="GRADIENT_TYPE" resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="primaryButtonFocus" styleClass=".btn-primary:focus, .btn-primary.focus"
+                 extends="primaryButton" configurable="false" resource="UIManager.Element.INPUT_button">
+            <attributes/>
+        </element>
+        <element name="primaryButtonHover" styleClass=".btn-primary:hover"
+                 extends="primaryButton" configurable="false" resource="UIManager.Element.INPUT_button">
+            <attributes/>
+        </element>
+        <element name="primaryButtonActive"
+                 styleClass=".btn-primary:active:hover,.btn-primary.active:hover,.btn-primary:active:focus,.btn-primary.active:focus"
+                 extends="primaryButton" configurable="false" resource="UIManager.Element.INPUT_button">
+            <attributes/>
+        </element>
+    </elements>
+
+    <!-- header info -->
+    <elements name="headerInfo" resource="UIManager.Section.headerMenu" configurable="true">
+        <!--for moduleGeneralTab manuBar info-->
+        <element name="moduleGeneralTabDefault" styleClass=".navbar-default" configurable="true"
+                 resource="UIManager.Element.headerInfo.general">
+            <attributes>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica,Arial,sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="600" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="border-color" value="#eeeeee" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="background-color" value="#ffffff"
+                           resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="background-image" value="#ffffff[VS]#ffffff" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="textColorNavBarDefault" styleClass=".navbar-default .navbar-nav > li > a"
+                 resource="UIManager.Element.headerInfo.colorFont"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#777777"
+                           resource="UIManager.Attribute.Color"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="textColorNavBarDefaultFocus" styleClass=".navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus"
+                 resource="UIManager.Element.headerInfo.colorFontFocus"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#d9230f"
+                           resource="UIManager.Attribute.Color"
+                           configurable="true"/>
+                <attribute name="background-color" value="transparent" overwrite="true"/>
+            </attributes>
+        </element>
+    </elements>
+
+    <!-- Module menus section -->
+    <elements name="moduleMenus" resource="UIManager.Section.ModuleMenus" configurable="true">
+        <!--for moduleGeneralTab-->
+        <element name="moduleGeneralTab" styleClass=".navbar-inverse" configurable="true"
+                 resource="UIManager.Element.ModuleMenu.general">
+            <attributes>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica,Arial,sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="600" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="border-color" value="#a91b0c" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="background-color" value="#d9230f"
+                           resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="background-image" value="#a91b0c[VS]#d9230f" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+            </attributes>
+        </element>
+
+
+
+        <!-- for  inactive tabs -->
+        <element name="moduleTabInactive" styleClass=".navbar-inverse .navbar-nav > li > a"
+                 resource="UIManager.Element.FontColorMenuTab.inactive"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#fac0ba" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="navTabActiveBase" styleClass=".navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus" resource="UIManager.Element.FontColorMenuTab.inactiveFocus"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#ffffff" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="background-color" value="transparent" resource="UIManager.Attribute.BackgroundColor" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="navTabActiveOpen" styleClass=".navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus" extends="navTabActiveBase"
+                 resource="UIManager.Element.ModuleTab.inactive"
+                 configurable="false">
+            <attributes>
+                <!--<attribute name="color" value="#ffffff" resource="UIManager.Attribute.Color" configurable="false"/>-->
+            </attributes>
+        </element>
+        <!-- for  active tabs -->
+        <element name="moduleTabActive" styleClass=".navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus"
+                 resource="UIManager.Element.FontColorMenuTab.active"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#ffffff" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="background-color" value="#c1220f" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <!--for mobile menu-->
+        <element name="MenuTabTooggleHover" styleClass=".navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus"
+                 resource="UIManager.Section.ModuleMenus"
+                 extends="moduleGeneralTab"
+                 configurable="false">
+            <attributes>
+                <!--<attribute name="background-color" value="#a91b0c" resource="UIManager.Attribute.Color" configurable="true"/>-->
+                <attribute name="border-color" value="#d9230f"
+                           resource="UIManager.Attribute.BorderColor"
+                           obviate="true"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica,Arial,sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" obviate="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           obviate="true"/>
+            </attributes>
+        </element>
+        <element name="buttonMenuTabMobile" styleClass=".navbar-inverse .navbar-toggle .icon-bar"
+                 resource="UIManager.Section.ModuleMenusMobileButtonTooggle"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="barraMenuTabMobile" styleClass=".navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form"
+                 resource="UIManager.Section.ModuleMenusMobileSpaceBar"
+                 configurable="true">
+            <attributes>
+                <attribute name="border-color" value="#b81e0d" resource="UIManager.Attribute.BorderColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="MenuTabTooggle" styleClass=".navbar-inverse .navbar-toggle"
+                 resource="UIManager.Section.ModuleMenus"
+                 extends="barraMenuTabMobile"
+                 configurable="false">
+            <attributes>
+                <!--<attribute name="background-color" value="#a91b0c" resource="UIManager.Attribute.Color" configurable="true"/>-->
+            </attributes>
+        </element>
+        <!--for moduleShorcut-->
+        <element name="moduleShorcut" styleClass=".navbar-inverse .navbar-nav .open .dropdown-menu > li > a"
+                 resource="UIManager.Element.ModuleMenuDropdown.general"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica,Arial,sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="600" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="color" value="#444444" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="shorcutLineSeparator" styleClass=".navbar-inverse .navbar-nav .open .dropdown-menu .divider"
+                 resource="UIManager.Element.ModuleMenuDropdown.spacer"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#d2d3c8" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="shorcutOpenDropdownMenu" styleClass=".navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus"
+                 extends="moduleGeneralTab"
+                 resource="UIManager.Element.ModuleMenuDropdown.openFocus"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#ffffff" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="border-color" value="#a91b0c" arguments="1px solid" obviate="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica,Arial,sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" obviate="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           obviate="true"/>
+                <attribute name="font-weight" value="600" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           obviate="true"/>
+            </attributes>
+        </element>
+        <element name="openSubMenuDropdownMenu" styleClass=".nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus"
+                 extends="moduleGeneralTab"
+                 resource="UIManager.Element.ModuleMenuDropdownSubMenu.openColorFocus"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#dddddd"
+                           resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica,Arial,sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" obviate="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           obviate="true"/>
+                <attribute name="font-weight" value="600" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           obviate="true"/>
+                <attribute name="border-color" value="#a91b0c" obviate="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="background-image" value="#a91b0c[VS]#d9230f" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="colorTabHover" styleClass=".dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus"
+                 extends="shorcutOpenDropdownMenu" configurable="false" resource="UIManager.Element.ModuleMenu.generalFocus">
+            <attributes>
+                <!-- this css styles elements -->
+            </attributes>
+        </element>
+
+        <!-- changes to the submenu of a menuBar dropdown tab -->
+        <element name="colorMenuTabDropDownActive" styleClass=".dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus"
+                 extends="moduleTabActive" configurable="false" resource="UIManager.Element.FontColorMenuTab.active">
+            <attributes>
+                <!-- this css styles elements -->
+            </attributes>
+        </element>
+
+    </elements>
+
+    <!--detail tabs-->
+    <elements name="tabs" resource="UIManager.Section.tabs" configurable="true">
+        <!--for general tab attributes-->
+        <element name="tabsGeneral" resource="UIManager.Element.detailTab.general"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica,Arial,sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="600" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="folderGeneralTab" styleClass=".nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus"
+                 resource="UIManager.Element.detailTab.active"
+                 extends="tabsGeneral"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#777777"
+                           resource="UIManager.Attribute.Color"
+                           configurable="true"/>
+                <attribute name="background-color" value="#fcfcfc"
+                           resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="border" value="#dddddd" arguments="1px solid"
+                           resource="UIManager.Attribute.BorderColor"
+                           configurable="true"/>
+                <attribute name="border-bottom-color" value="transparent" overwrite="true"/>
+                <attribute name="background-image" value="#fcfcfc[VS]#fcfcfc" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="navTabs" styleClass=".nav-tabs"
+                 configurable="true"
+                 resource="UIManager.Element.detailTab.colorBorderDown">
+            <attributes>
+                <attribute name="border-bottom" value="#dddddd" arguments="1px solid"
+                           resource="UIManager.Attribute.BorderColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <!--for inactive tabs-->
+        <element name="navTabsDetail" styleClass=".navTabsDetail"
+                 resource="UIManager.Element.detailTab.inactive"
+                 extends="tabsGeneral"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#d9230f" resource="UIManager.Attribute.Color"
+                           configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="tabsFocus" resource="UIManager.Element.tabInactiveFocus"
+                 configurable="true">
+            <attributes>
+                <attribute name="color" value="#91170a" resource="UIManager.Attribute.Color"
+                           configurable="true"/>
+                <attribute name="border-color" value="#dddddd"
+                           resource="UIManager.Attribute.BorderColor"
+                           configurable="true"/>
+                <attribute name="background-color" value="#dddddd" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="background-image" value="#dddddd[VS]#dddddd" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="navTabHover" styleClass=".nav-tabs > li > a:hover"
+                 configurable="false"
+                 extends="tabsFocus"
+                 resource="UIManager.Element.detailTabInactive.colorBorderHover">
+            <attributes>
+                <attribute name="color" value="#91170a" resource="UIManager.Attribute.Color"
+                           obviate="true"/>
+                <attribute name="background-color" value="#dddddd" resource="UIManager.Attribute.BackgroundColor"
+                           obviate="true"/>
+                <attribute name="background-image" value="#dddddd[VS]#dddddd" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="folderTabInactive" styleClass=".nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus"
+                 resource="UIManager.Element.detailTabInactive.backgroundColor"
+                 extends="tabsFocus"
+                 configurable="false">
+            <attributes>
+                <attribute name="color" value="#91170a" resource="UIManager.Attribute.Color"
+                           obviate="true"/>
+                <attribute name="border-color" value="#dddddd"
+                           resource="UIManager.Attribute.BorderColor"
+                           obviate="true"/>
+            </attributes>
+        </element>
+        <element name="navTabsDetailHover" styleClass=".navTabsDetail:hover,
+.navTabsDetail:focus"
+                 resource="UIManager.Element.detailTabInactive.fontColorFocus"
+                 extends="tabsFocus"
+                 configurable="false">
+            <attributes>
+                <attribute name="border-color" value="#dddddd"
+                           resource="UIManager.Attribute.BorderColor"
+                           obviate="true"/>
+                <attribute name="background-color" value="#dddddd" resource="UIManager.Attribute.BackgroundColor"
+                           obviate="true"/>
+                <attribute name="background-image" value="#dddddd[VS]#dddddd" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="dropDownActtiveTabs" styleClass=".dropdownTabsDetail > .active > a,
+.dropdownTabsDetail > .active > a:hover,
+.dropdownTabsDetail > .active > a:focus"
+                 resource="UIManager.Element.dropdownTabsDetail"
+                 configurable="true">
+            <attributes>
+                <!-- this css class for dropdown -->
+                <attribute name="color" value="#ffffff" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="background-color" value="#d9230f"
+                           resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="background-image" value="#d9230f[VS]#d9230f" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+            </attributes>
+        </element>
+
+    </elements>
+
+    <!--lists-->
+    <elements name="list_Elements" resource="UIManager.Section.ListElements" configurable="true">
+        <element styleClass="th.listHeader" name="th_listHeader" configurable="true"
+                 resource="UIManager.ListElements.ListHeader">
+            <attributes>
+                <attribute name="background-image" value="#f9f9f9[VS]#f9f9f9" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica Neue, Helvetica, Arial, sans-serif"
+                           type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="600" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="color" value="#444444" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element styleClass="th.listHeader a" name="th_listHeader_a" configurable="true"
+                 resource="UIManager.ListElements.ListHeaderLink">
+            <attributes>
+                <attribute name="color" value="#d9230f" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="tr_listRow" styleClass=".table > tbody > tr.listRow" configurable="true"
+                 resource="UIManager.ListElements.ListRow">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" configurable="true"
+                           resource="UIManager.Attribute.BackgroundColor"/>
+                <attribute name="border" value="#dddddd" arguments="1px solid" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica Neue, Helvetica, Arial, sans-serif"
+                           type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="color" value="#777777" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="tr_listCell" styleClass=".table > thead > tr > th.listHeader, .table > tbody > tr > th.listHeader,
+.table > tfoot > tr > th.listHeader, .table > thead > tr.listRow > td, .table > tbody > tr.listRow > td,
+.table > tfoot > tr.listRow > td" extends="tr_listRow">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+                <attribute name="color" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element styleClass=".table > tbody > tr.listRow:nth-of-type(2n+1)" name="tr_listRow_odd" configurable="true"
+                 resource="UIManager.ListElements.ListRowOdd">
+            <attributes>
+                <attribute name="background-color" value="#f9f9f9" configurable="true"
+                           resource="UIManager.Attribute.BackgroundColor"/>
+            </attributes>
+        </element>
+
+        <element name="tr_listRowOver" styleClass="tr.listRowOver:hover" configurable="true"
+                 resource="UIManager.ListElements.ListRowOver">
+            <attributes>
+                <attribute name="background-color" value="#f5f5f5" arguments="!important" configurable="true"
+                           resource="UIManager.Attribute.BackgroundColor"/>
+            </attributes>
+        </element>
+
+        <element name="tr_listRowOver:hover_td" styleClass="tr.listRowOver:hover td" extends="tr_listRow">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="tr_listRow:hover" styleClass="tr.listRow:hover" extends="tr_listRowOver">
+            <attributes/>
+        </element>
+
+        <element name="td_listItem" styleClass="td.listItem" extends="tr_listRow">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="td_listItem2Center" styleClass="td.listItem2Center" extends="td_listItem">
+            <attributes/>
+        </element>
+
+        <element name="td_listItem2" styleClass="td.listItem2" extends="td_listItem">
+            <attributes/>
+        </element>
+
+        <element name="td_listItemRight" styleClass="td.listItemRight" extends="td_listItem">
+            <attributes/>
+        </element>
+
+        <element name="td_listItem2Right" styleClass="td.listItem2Right" extends="td_listItem">
+            <attributes/>
+        </element>
+
+        <element name="td_listItemHighlight" styleClass="td.listItemHighlight"
+                 resource="UIManager.ListElements.ListRowHighlight" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffcc99" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+
+        <element styleClass=".table-striped > tbody > tr.listRowLast" name="table_Pagination" configurable="true"
+                 resource="UIManager.ListElements.PagingBar">
+            <attributes>
+                <attribute name="background-color" value="#f9f9f9 !important" configurable="true"
+                           resource="UIManager.Attribute.BackgroundColor"/>
+                <attribute name="border" value="#dddddd" arguments="1px solid" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica Neue, Helvetica, Arial, sans-serif"
+                           type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#777777" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="tr_listRowLast_td" styleClass=".table-striped > tbody > tr.listRowLast td"
+                 extends="table_Pagination">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="color" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="td_pagingBar" styleClass="td.pagingBar" extends="table_Pagination">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="border" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="table_pagingBar" styleClass="table.pagingBar" extends="td_pagingBar">
+            <attributes/>
+        </element>
+
+        <element name="alpha_table_btn" styleClass=".alpha table .btn" resource="UIManager.Element.TD_alpha"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="border" value="#dddddd" arguments="1px solid" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica Neue, Helvetica, Arial, sans-serif"
+                           type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#777777" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="alpha_table_btn_active" styleClass=".alpha table .btn.active" extends="alpha_table_btn">
+            <attributes>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+            </attributes>
+        </element>
+    </elements>
+
+    <!--forms-->
+    <elements name="forms" resource="UIManager.Section.Forms" configurable="true">
+        <element name="forms_title" styleClass="legend.title" resource="UIManager.Element.TD_title" configurable="true">
+            <attributes>
+                <attribute name="background-image" value="transparent[VS]transparent" type="GRADIENT_TYPE"
+                           resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+                <attribute name="border-bottom" value="#e5e5e5" arguments="4px solid" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="color" value="#444444" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica Neue, Helvetica, Arial, sans-serif"
+                           type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="forms_label" styleClass=".control-label" resource="UIManager.Element.TD_label"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Open Sans" arguments="Helvetica Neue, Helvetica, Arial, sans-serif"
+                           type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE_BOOTSTRAP"
+                           resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#777777" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="formPanelBody" styleClass=".formPanelBody" resource="UIManager.form.panelBackground"
+                 configurable="true">
+            <attributes>
+                <attribute name="background" value="#ffffff" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+
+    <!--Web Calendar-->
+
+
+    <!--Scheduler Views Styles-->
+    <elements name="calendars" resource="UIManager.Scheduler.Calendars" configurable="true">
+        <element name=".calendar_table.table-bordered"
+                 styleClass=".calendar_table.table-bordered > tbody > tr > td, .calendar_table.table-bordered > tbody > tr > th"
+                 resource="UIManager.Scheduler.table.calendar_table" configurable="true">
+            <attributes>
+                <attribute name="border" value="#dddddd" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true" arguments="1px solid"/>
+            </attributes>
+        </element>
+
+        <element name="tr.calendar_header" styleClass="tr.calendar_header"
+                 resource="UIManager.Scheduler.tr.calendar_header" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#DDEEFF" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true" arguments="!important"/>
+                <attribute name="background-image" value="#DDEEFF[VS]#DDEEFF"
+                           type="GRADIENT_TYPE" resource="UIManager.Attribute.BackgroundGradient" configurable="true"/>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="height" value="20px" type="SIZE" resource="UIManager.Attribute.Height"
+                           configurable="true"/>
+                <attribute name="color" value="#333333" resource="UIManager.Attribute.Color" configurable="true"/>
+
+            </attributes>
+        </element>
+        <element name="calendar_headerTh" styleClass="tr.calendar_header th" extends="tr.calendar_header">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="height" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="td.calendar_cell" styleClass="td.calendar_cell" resource="UIManager.Scheduler.td.calendar_cell"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#F9F9F9" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="td.day_cell" styleClass="td.day_cell" resource="UIManager.Scheduler.td.day_cell"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="day_cellLink" styleClass="td.day_cell A" extends="td.day_cell">
+            <attributes>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="td.calendar_week_cell" styleClass="td.calendar_week_cell"
+                 resource="UIManager.Scheduler.td.calendar_week_cell" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#E6F6EA" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter" type="FONT_WEIGHT"
+                           resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="calendarWeekCellLink" styleClass="td.calendar_week_cell A" extends="td.calendar_week_cell">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="font-family" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="DIV.month_day_header a" styleClass="DIV.month_day_header a"
+                 resource="UIManager.Scheduler.div.month_day_header" configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="12px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="yearCellLink" styleClass="td.year_cell A" extends="DIV.month_day_header a">
+            <attributes>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="DIV.holiday" styleClass="DIV.holiday div" resource="UIManager.Scheduler.DIV.holiday"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Arial" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter" type="FONT_WEIGHT"
+                           resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="a.smallcalendar_appointment" styleClass=".smallcalendar_appointment"
+                 resource="UIManager.Scheduler.a.smallcalendar_appointment" configurable="true">
+            <attributes>
+                <attribute name="color" value="#ff0000" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name=".appointment_font a" styleClass=".appointment_font a.colorAHref"
+                 resource="UIManager.Scheduler.appointment_font_a" configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="td.calendar_cell#outmonthColor" styleClass="td.calendar_cell#outmonthColor"
+                 resource="UIManager.Scheduler.td.calendarCell_outmonthColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#b5b5b5" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="td.calendar_cell#todayColor" styleClass="td.calendar_cell#todayColor"
+                 resource="UIManager.Scheduler.td.calendarCell_todayColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#DECACA" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="td.calendar_cell#holidayColor" styleClass="td.calendar_cell#holidayColor"
+                 resource="UIManager.Scheduler.td.calendarCell_holidayColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffcc99" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+
+
+    <!-- task-->
+    <elements name="task" resource="UIManager.Scheduler.Task" configurable="true">
+        <element name="td.task_expireColor" styleClass="td.task_expireColor"
+                 resource="UIManager.Scheduler.td.task_expireColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffcc99" resource="UIManager.Attribute.BackgroundColor"
+                           arguments="!important"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+
+    <!-- dashboard-->
+    <elements name="dashboardStyles" resource="UIManager.Dashboard" configurable="true">
+        <element name="div_dashboardbirthday" styleClass=".nowDate" resource="UIManager.Dashboard.highlight"
+                 configurable="true">
+            <attributes>
+                <attribute name="background" value="#ffcc99" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+
+    <!-- project-->
+
+    <elements name="projectStyles" resource="UIManager.Project" configurable="true">
+        <element name="td.projectTime_enteredColor" styleClass="td.projectTime_enteredColor"
+                 resource="UIManager.ProjectTime.Status_enteredColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#BBEEFF" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.projectTime_releasedColor" styleClass="td.projectTime_releasedColor"
+                 resource="UIManager.ProjectTime.Status_releasedColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#FFE786" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.projectTime_confirmedColor" styleClass="td.projectTime_confirmedColor"
+                 resource="UIManager.ProjectTime.Status_confirmedColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#B1EC9E" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.projectTime_notConfirmedColor" styleClass="td.projectTime_notConfirmedColor"
+                 resource="UIManager.ProjectTime.Status_notConfirmedColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#FFAAAA" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.projectTime_invoicedColor" styleClass="td.projectTime_invoicedColor"
+                 resource="UIManager.ProjectTime.Status_invoicedColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#D8D8FF" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+
+    <!-- WVApp layout-->
+    <elements name="wvappStyles" resource="UIManager.wvapp" configurable="true">
+        <element name="wvapp_general" styleClass=".wvappGeneral" resource="UIManager.wvapp.General"
+                 configurable="true">
+            <attributes>
+                <attribute name="background" value="#221577" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+
+</CSS>

@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN"
+    "http://www.jatun.com/titus-config-1.0.dtd">
+
+<databasestructure>
+<database>
+    <table tablename="article" resource="Report.functionality.article">
+        <fields>
+            <field fieldname="articleid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="articletitle" dbtype="string" resource="Article.title"/>
+            <field fieldname="categoryid" dbtype="integer" iscolumnview="false" />
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false" />
+            <field fieldname="contentid" dbtype="integer" iscolumnview="false" />
+            <field fieldname="createdatetime" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="Article.createDate"  />
+            <field fieldname="createuserid" dbtype="integer" iscolumnview="false" />
+            <field fieldname="keywords" dbtype="string" resource="Article.keywords" />
+            <field fieldname="number" dbtype="string" resource="Article.number"/>
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="publishedto" dbtype="integer" columntype="string" converter="publishedValue"  resource="Article.published" iscolumnview="false"  />
+            <field fieldname="rootquestionid" dbtype="integer" iscolumnview="false" />
+            <field fieldname="updateuserid" dbtype="integer" iscolumnview="false" />
+            <field fieldname="updatedatetime" dbtype="long" columntype="datetime" converter="longToDateValue" resource="Article.changeDate" filterer="dateTimeFilter" />
+            <field fieldname="viewtimes" dbtype="integer" columntype="integer" resource="Article.readyBy"  istotalize="true"/>
+            <field fieldname="visitdatetime" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="Article.lastVisit"  />
+            <field fieldname="vote1" dbtype="integer" iscolumnview="false" />
+            <field fieldname="vote2" dbtype="integer" iscolumnview="false" />
+            <field fieldname="vote3" dbtype="integer" iscolumnview="false" />
+            <field fieldname="vote4" dbtype="integer" iscolumnview="false" />
+            <field fieldname="vote5" dbtype="integer" iscolumnview="false" />
+        </fields>
+        <primarykey fields="articleid">
+            <inverserelation relationtype="left-join" tablename="articlecomment" keys="articleid" resource="Report.inverseRelation.articleComment"/>
+            <inverserelation relationtype="left-join" tablename="supportattach" keys="articleid" resource="Report.inverseRelation.supportAttach"/>
+        <!--<inverserelation relationtype="left-join" tablename="articlerelated" keys="relatedarticleid" resource="ArticleRelated.onRelated"/>
+            <inverserelation relationtype="left-join" tablename="articlerelated" keys="articleid" resource="Article"/>
+            <inverserelation relationtype="left-join" tablename="articlerating" keys="articleid" resource="Article.averageRate"/>-->
+            <inverserelation relationtype="left-join" tablename="articlehistory" keys="articleid" resource="Report.inverseRelation.articlehistory"/>
+            <inverserelation relationtype="left-join" tablename="articlelink" keys="articleid" resource="Report.inverseRelation.articleLink"/>
+        </primarykey>
+        <foreignkeys>
+            <foreignkey foreigntableref="articlecategory" relationtype="left-join" resource="Report.foreignRelation.articleCategory" >
+                <keyref fieldref="categoryid" foreignfieldref="categoryid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.lastModifiedby">
+                <keyref fieldref="updateuserid" foreignfieldref="userid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="product" relationtype="left-join" resource="Report.foreignRelation.product">
+                <keyref fieldref="productid" foreignfieldref="productid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="articlequestion" relationtype="left-join" resource="Report.foreignRelation.articleQuestion">
+                <keyref fieldref="rootquestionid" foreignfieldref="questionid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.createdBy">
+                <keyref fieldref="createuserid" foreignfieldref="userid"/>
+            </foreignkey>
+        </foreignkeys>
+        <filters>
+            <constantfilter fieldref="publishedto" resource="Article.published">
+                <values typevalue="resource">
+                    <value key="0" showvalue="Article.owner"/>
+                    <!--<value key="1" showvalue="Article.company"/>-->
+                    <value key="2" showvalue="Article.public"/>
+                </values>
+            </constantfilter>
+            <foreignfilter resource="Article.title" filterfieldref="articletitle">
+                <columns>
+                    <column fieldpath="articletitle" resource="Article.title" order="asc"/>
+                    <column fieldpath="article>>articlecategory:categoryid.categoryname" resource="Article.categoryName"/>
+                    <column fieldpath="article>>product:productid.productname" resource="Product.title"/>
+                    <column fieldpath="article>>elwisuser:createuserid->address:addressid.addressName" resource="Article.ownerName"/>
+                </columns>
+                <conditions>
+                    <condition fieldpath="articletitle" operator="start-with" type="parameter"/>
+                    <!--<andcondition fieldpath="number" operator="contain" type="parameter"/>-->
+                </conditions>
+            </foreignfilter>
+        </filters>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="articlecomment" resource="Report.functionality.articleComment">
+        <fields>
+            <field fieldname="articleid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="commentid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="createdatetime" resource="Common.creationDate" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter"/>
+            <field fieldname="createuserid" dbtype="integer"  iscolumnview="false"/>
+            <field fieldname="descriptionid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="commentid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="article" relationtype="left-join" resource="Report.foreignRelation.article" >
+                <keyref fieldref="articleid" foreignfieldref="articleid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="freetext" relationtype="left-join" resource="Report.foreignRelation.freetext.article.content" strongrelation="true">
+                <keyref fieldref="descriptionid" foreignfieldref="freetextid"/>
+                <overwriteresources>
+                    <overwrite field="freetextvalue" resource="Article.content"/>
+                </overwriteresources>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.createdBy" >
+                <keyref fieldref="createuserid" foreignfieldref="userid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="articlehistory" resource="Report.functionality.articleHistory">
+        <fields>
+            <field fieldname="action" dbtype="integer" columntype="string" resource="History.action" converter="actionHistoryConverter"/>
+            <field fieldname="logdatetime" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="History.date"/>
+            <field fieldname="articleid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="historyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="historyid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.articleHistory.user" >
+                <keyref fieldref="userid" foreignfieldref="userid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="article" relationtype="left-join" resource="Report.foreignRelation.article" >
+                <keyref fieldref="articleid" foreignfieldref="articleid"/>
+            </foreignkey>
+        </foreignkeys>
+        <filters>
+        <constantfilter fieldref="action" resource="Common.action">
+            <values typevalue="resource">
+                <value key="0" showvalue="History.createArticle"/>
+                <value key="1" showvalue="History.updateArticle"/>
+                <value key="3" showvalue="History.createLink"/>
+                <value key="4" showvalue="History.updateLink"/>
+                <value key="5" showvalue="History.deleteLink"/>
+                <value key="6" showvalue="History.createAttach"/>
+                <value key="7" showvalue="History.updateAttach"/>
+                <value key="8" showvalue="History.deleteAttach"/>
+                <value key="9" showvalue="History.createRelation"/>
+                <value key="10" showvalue="History.updateRelation"/>
+                <value key="11" showvalue="History.deleteRelation"/>
+                <value key="12" showvalue="History.createComment"/>
+                <value key="13" showvalue="History.updateComment"/>
+                <value key="14" showvalue="History.deleteComment"/>
+            </values>
+        </constantfilter>
+    </filters>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="articlelink" resource="Report.functionality.articleLink">
+        <fields>
+            <field fieldname="articleid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="comment" dbtype="string" resource="Link.comment"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="createdatetime" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="Link.publishDate"/>
+            <field fieldname="createuserid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="linkid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="url" dbtype="string" resource="Link.url"/>
+        </fields>
+        <primarykey fields="linkid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="article" relationtype="left-join" resource="Report.foreignRelation.article" >
+                <keyref fieldref="articleid" foreignfieldref="articleid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.articleLink.publishBy" >
+                <keyref fieldref="createuserid" foreignfieldref="userid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="articlequestion" resource="Report.functionality.articleQuestion">
+        <fields>
+            <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer"  iscolumnview="false"/>
+            <field fieldname="createdatetime" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="Question.AskedOn"/>
+            <field fieldname="createuserid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="detailid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="published" dbtype="integer" columntype="boolean" converter="questionPublishedConverter" resource="Article.published"/>
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="questionid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="summary" dbtype="string" resource="Question.summary"/>
+        </fields>
+        <primarykey fields="questionid">
+            <inverserelation relationtype="left-join" tablename="article" keys="rootquestionid" resource="Report.inverseRelation.article" />
+        </primarykey>
+        <foreignkeys>
+            <foreignkey foreigntableref="freetext" relationtype="left-join" resource="Report.foreignRelation.freetext.question.detail" strongrelation="true">
+                <keyref fieldref="detailid" foreignfieldref="freetextid"/>
+                <overwriteresources>
+                    <overwrite field="freetextvalue" resource="Question.detail"/>
+                </overwriteresources>
+            </foreignkey>
+            <foreignkey foreigntableref="product" relationtype="left-join" resource="Report.foreignRelation.product">
+                <keyref fieldref="productid" foreignfieldref="productid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="articlecategory" relationtype="left-join" resource="Report.foreignRelation.articleCategory">
+                <keyref fieldref="categoryid" foreignfieldref="categoryid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.question.askedBy" >
+                <keyref fieldref="createuserid" foreignfieldref="userid"/>
+            </foreignkey>
+        </foreignkeys>
+        <filters>
+            <constantfilter fieldref="published" resource="Article.published">
+                <values typevalue="resource">
+                    <value key="0" showvalue="Question.yes"/>
+                    <value key="1" showvalue="Question.no"/>
+                </values>
+            </constantfilter>
+        </filters>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <!--<table tablename="articlerating" resource="ReferencedBy.table.articlerating">
+        <fields>
+            <field fieldname="articleid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="articleid, userid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="article" relationtype="left-join" resource="Article" >
+                <keyref fieldref="articleid" foreignfieldref="articleid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Article.rating.votedBy">
+                <keyref fieldref="userid" foreignfieldref="userid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="articlerelated" resource="Article.Tab.ArticleRelateds">
+        <fields>
+            <field fieldname="articleid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="relatedarticleid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="articleid, relatedarticleid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="article" relationtype="left-join" resource="ArticleRelated.onArticle" strongrelation="true">
+                <keyref fieldref="relatedarticleid" foreignfieldref="articleid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="article" relationtype="left-join" resource="Article" >
+                <keyref fieldref="articleid" foreignfieldref="articleid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>-->
+    <table tablename="caseactivity" resource="Report.functionality.caseActivity">
+        <fields>
+            <field fieldname="activityid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="caseid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="closedate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="Common.closeDate"  />
+            <field fieldname="freetextid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="fromuserid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="isopen" dbtype="integer" columntype="boolean" iscolumnview="false"/>
+            <field fieldname="opendate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="Common.openDate"  />
+            <field fieldname="parentactivityid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="stateid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="touserid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="worklevelid" dbtype="integer" iscolumnview="false"  />
+        </fields>
+        <primarykey fields="activityid">
+            <!--<inverserelation relationtype="left-join" tablename="supportattach" keys="activityid" resource="Webmail.tray.attach"/>-->
+            <inverserelation relationtype="left-join" tablename="supportcontact" keys="activityid" resource="Report.inverseRelation.supportContact.communication"/>
+            <inverserelation relationtype="left-join" tablename="caseactivity" keys="parentactivityid" resource="Report.inverseRelation.caseActivity.parent"/>
+        </primarykey>
+        <foreignkeys>
+            <!--<foreignkey foreigntableref="freetext" relationtype="left-join" resource="SupportCaseActivity.details" strongrelation="true">
+                <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                <overwriteresources>
+                    <overwrite field="freetextvalue" resource="SupportCaseActivity.details"/>
+                </overwriteresources>
+            </foreignkey>-->
+            <foreignkey foreigntableref="supportcase" relationtype="left-join" resource="Report.foreignRelation.supportCase" >
+                <keyref fieldref="caseid" foreignfieldref="caseid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="caseworklevel" relationtype="left-join" resource="Report.foreignRelation.caseWorkLevel" >
+                <keyref fieldref="worklevelid" foreignfieldref="worklevelid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.caseActivity.assignedTo" >
+                <keyref fieldref="touserid" foreignfieldref="userid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.caseActivity.assignedFrom" >
+                <keyref fieldref="fromuserid" foreignfieldref="userid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="state" relationtype="left-join" resource="Report.foreignRelation.state" >
+                <keyref fieldref="stateid" foreignfieldref="stateid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="caseactivity" relationtype="left-join" resource="Report.foreignRelation.caseActivity">
+                <keyref fieldref="parentactivityid" foreignfieldref="activityid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="supportattach" resource="Report.functionality.supportAttach">
+        <fields>
+            <field fieldname="activityid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="articleid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="attachid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="caseid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="comment" dbtype="string" resource="SupportAttach.comment"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="filename" dbtype="string" resource="SupportAttach.fileName"/>
+            <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="size" dbtype="integer" resource="SupportAttach.size" converter="sizeConverter" istotalize="true"/>
+            <field fieldname="uploaddatetime" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="SupportAttach.uploadDate"/>
+            <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="attachid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="article" relationtype="left-join" resource="Report.foreignRelation.article" >
+                <keyref fieldref="articleid" foreignfieldref="articleid"/>
+            </foreignkey>
+            <!--<foreignkey foreigntableref="caseactivity" relationtype="left-join" resource="SupportCaseActivity" >
+                <keyref fieldref="activityid" foreignfieldref="activityid"/>
+            </foreignkey>-->
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.supportAttach.uploadBy" >
+                <keyref fieldref="userid" foreignfieldref="userid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="supportcase" relationtype="left-join" resource="Report.foreignRelation.supportCase">
+                <keyref fieldref="caseid" foreignfieldref="caseid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="supportcase" resource="Report.functionality.supportCase">
+        <fields>
+            <field fieldname="addressid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="caseid" dbtype="integer" iscolumnview="false" />
+            <field fieldname="casetitle" dbtype="string" columntype="string" resource="Common.title"/>
+            <field fieldname="casetypeid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="closedate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="Common.closeDate"  />
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="expiredate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="Common.expireDate"  />
+            <field fieldname="descriptionid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="keywords" dbtype="string" columntype="string" resource="Common.keywords"  />
+            <field fieldname="fromuserid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="number" dbtype="string" columntype="string" resource="Common.number"  />
+            <field fieldname="openbyuserid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="opendate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="Common.openDate"  />
+            <field fieldname="priorityid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="severityid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="stateid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="totalhours" dbtype="integer"  columntype="integer" resource="Common.totalHours"  istotalize="true"/>
+            <field fieldname="touserid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="worklevelid" dbtype="integer" iscolumnview="false"  />
+        </fields>
+        <primarykey fields="caseid">
+            <inverserelation relationtype="left-join" tablename="supportcontact" keys="caseid" resource="Report.inverseRelation.supportContact.communication"/>
+            <inverserelation relationtype="left-join" tablename="caseactivity" keys="caseid" resource="Report.inverseRelation.caseActivity"/>
+            <inverserelation relationtype="left-join" tablename="supportattach" keys="caseid" resource="Report.inverseRelation.supportAttach"/>
+        </primarykey>
+        <foreignkeys>
+            <foreignkey foreigntableref="address" relationtype="left-join" resource="Report.foreignRelation.contact">
+                <keyref fieldref="addressid" foreignfieldref="addressid"/>
+            </foreignkey>
+            <!--<foreignkey foreigntableref="freetext" relationtype="left-join" resource="Common.detail" strongrelation="true">
+                <keyref fieldref="descriptionid" foreignfieldref="freetextid"/>
+                <overwriteresources>
+                    <overwrite field="freetextvalue" resource="Common.detail"/>
+                </overwriteresources>
+            </foreignkey>-->
+            <foreignkey foreigntableref="product" relationtype="left-join" resource="Report.foreignRelation.product" >
+                <keyref fieldref="productid" foreignfieldref="productid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="state" relationtype="left-join" resource="Report.foreignRelation.state" >
+                <keyref fieldref="stateid" foreignfieldref="stateid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="casetype" relationtype="left-join" resource="Report.foreignRelation.caseType">
+                <keyref fieldref="casetypeid" foreignfieldref="casetypeid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.supportCase.assignedFrom" >
+                <keyref fieldref="fromuserid" foreignfieldref="userid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.supportCase.openBy" >
+                <keyref fieldref="openbyuserid" foreignfieldref="userid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.supportCase.assignedTo" >
+                <keyref fieldref="touserid" foreignfieldref="userid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="priority" relationtype="left-join" resource="Report.foreignRelation.priority" >
+                <keyref fieldref="priorityid" foreignfieldref="priorityid"/>
+                <addforeingfiltercondition>
+                    <conditions>
+                        <condition fieldpath="priority.type" operator="equal" type="constant" value="SUPPORT"/>
+                    </conditions>
+                </addforeingfiltercondition>
+            </foreignkey>
+            <foreignkey foreigntableref="contactperson" relationtype="left-join" resource="Report.foreignRelation.contactPerson">
+                <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="caseworklevel" relationtype="left-join" resource="Report.foreignRelation.caseWorkLevel" >
+                <keyref fieldref="worklevelid" foreignfieldref="worklevelid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="caseseverity" relationtype="left-join" resource="Report.foreignRelation.caseSeverity" >
+                <keyref fieldref="severityid" foreignfieldref="severityid"/>
+            </foreignkey>
+        </foreignkeys>
+        <filters>
+            <foreignfilter resource="SupportCase.title" filterfieldref="casetitle">
+                <columns>
+                    <column fieldpath="casetitle" resource="Article.title" order="asc"/>
+                    <column fieldpath="supportcase>>casetype:casetypeid.casetypename" resource="CaseType.title"/>
+                    <column fieldpath="supportcase>>state:stateid.statename" resource="State.title"/>
+                    <column fieldpath="supportcase>>elwisuser:openbyuserid->address:addressid.addressName" resource="Common.openBy"/>
+                    <column fieldpath="supportcase>>elwisuser:touserid->address:addressid.addressName" resource="Common.assignedTo"/>
+                </columns>
+                <conditions>
+                    <condition fieldpath="casetitle" operator="start-with" type="parameter"/>
+                </conditions>
+            </foreignfilter>
+        </filters>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="supportcontact" resource="Report.functionality.supportContact">
+        <fields>
+            <field fieldname="activityid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="contactid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="caseid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="caseid, contactid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="supportcase" relationtype="left-join" resource="Report.foreignRelation.supportCase" >
+                <keyref fieldref="caseid" foreignfieldref="caseid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="contact" relationtype="left-join" resource="Report.foreignRelation.communication">
+                <keyref fieldref="contactid" foreignfieldref="contactid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="caseactivity" relationtype="left-join" resource="Report.foreignRelation.caseActivity" >
+                <keyref fieldref="activityid"  foreignfieldref="activityid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="support"/>
+        </modulefunctionality>
+    </table>
+</database>
+</databasestructure>

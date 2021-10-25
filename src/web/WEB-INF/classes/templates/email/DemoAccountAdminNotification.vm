@@ -1,0 +1,59 @@
+#parse("templates/email/includes/header.vm")
+
+<table border="0" cellpadding="5" cellspacing="5">
+    <tr>
+        <td colspan="2">
+            <p>
+                $messages.getMessage("DemoAccount.adminNotification.bodyMsg")
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p>
+                $messages.getMessage("DemoAccount.adminNotification.accountInfo")
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td width="15%">
+            <strong>$messages.getMessage("DemoAccount.adminNotification.companyName"):</strong>
+        </td>
+        <td width="85%">$demoCompanyName</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("DemoAccount.adminNotification.lastName"):</strong></td>
+        <td>$demoLastName</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("DemoAccount.adminNotification.firstName"):</strong></td>
+        <td>$demoFirstName</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("DemoAccount.adminNotification.email"):</strong></td>
+        <td>$demoEmail</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("DemoAccount.adminNotification.phoneNumber"):</strong></td>
+        <td>$demoPhoneNumber</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("DemoAccount.notification.userLogin"):</strong></td>
+        <td>$demoUserLogin</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("DemoAccount.notification.userPassword"):</strong></td>
+        <td>$demoUserPassword</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("DemoAccount.notification.companyLogin"):</strong></td>
+        <td>$demoCompanyLogin</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p>
+                $messages.getMessage("DemoAccount.adminNotification.footer")
+            </p>
+        </td>
+    </tr>
+</table>

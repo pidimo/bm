@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 4.0//EN" "http://www.jboss.org/j2ee/dtd/jboss_4_0.dtd">
+<jboss>
+    <enterprise-beans>
+        <entity>
+            <ejb-name>AdminComponent</ejb-name>
+            <local-jndi-name>Elwis.AdminComponent</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>DashboardContainer</ejb-name>
+            <local-jndi-name>Elwis.DashboardContainer</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>Component</ejb-name>
+            <local-jndi-name>Elwis.Component</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>Filter</ejb-name>
+            <local-jndi-name>Elwis.Dashboard.Filter</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>ComponentColumn</ejb-name>
+            <local-jndi-name>Elwis.ComponentColumn</local-jndi-name>
+        </entity>
+    </enterprise-beans>
+</jboss>

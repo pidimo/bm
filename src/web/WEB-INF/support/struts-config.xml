@@ -1,0 +1,897 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="articleListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="caseListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="caseForm" type="com.piramide.elwis.web.supportmanager.form.SupportCaseForm"/>
+        <form-bean name="caseActivityForm" type="com.piramide.elwis.web.supportmanager.form.SupportCaseActivityForm"/>
+        <form-bean name="articleForm" type="com.piramide.elwis.web.supportmanager.form.ArticleForm"/>
+        <form-bean name="linkForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="relationForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="questionForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="commentForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="mainCommunicationForm"
+                   type="com.piramide.elwis.web.contactmanager.form.MainCommunicationForm"/>
+        <form-bean name="questionListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="supportAttachForm" type="com.piramide.elwis.web.supportmanager.form.SupportAttachForm"/>
+        <form-bean name="articleReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="questionReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="caseReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="reportExecuteForm" type="com.piramide.elwis.web.reports.form.ReportExecuteForm"/>
+        <form-bean name="reportJrxmlExecuteForm" type="com.piramide.elwis.web.reports.form.ReportJrxmlExecuteForm"/>
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainSearch" path="/ArticleList.do"/>
+        <forward name="CaseMainSearch" path="/CaseList.do"/>
+        <forward name="ArticleAdvancedSearch" path="/Article/AdvancedSearch.do"/>
+        <forward name="QuestionAdvancedSearch" path="/Question/AdvancedSearch.do"/>
+        <forward name="CaseAdvancedSearch" path="/Case/AdvancedSearch.do?t=a"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+        <action path="/ArticleList" type="com.piramide.elwis.web.supportmanager.action.ArticleSimpleAdvancedListAction"
+                name="listForm"
+                scope="request" input="/support/ArticleList.jsp" validate="false"
+                parameter="articleList" roles="ARTICLE.VIEW">
+            <forward name="Success" path="/ArticleList.jsp"/>
+        </action>
+
+        <action path="/Article/AdvancedSearch"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleAdvancedListAction"
+                name="articleListForm" scope="request" input="/ArticleAdvancedSearch.jsp" validate="true"
+                parameter="articleAdvancedSearch" roles="ARTICLE.VIEW">
+            <forward name="Success" path="/ArticleAdvancedSearch.jsp"/>
+        </action>
+
+        <action path="/Article/Forward/Create"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleForwardCreateAction" roles="ARTICLE.CREATE"
+                name="articleForm" scope="request" validate="false" parameter="/support/ArticleDetailForCreate.jsp"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="article"/>
+        </action>
+
+        <action path="/Article/Create" type="com.piramide.elwis.web.supportmanager.action.ArticleCreateAction"
+                name="articleForm"
+                scope="request" input="/ArticleDetailForCreate.jsp" validate="true" roles="ARTICLE.CREATE"
+                parameter="com.piramide.elwis.cmd.supportmanager.ArticleCreateCmd"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="article"/>
+            <set-property property="redirect" value="redirect"/>
+            <forward name="Success" path="/Article/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/Article/Forward/Create.do"/>
+            <forward name="Cancel" path="/ArticleList.do" redirect="true"/>
+            <forward name="redirect" path="/ArticleDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/Article/Forward/Update" type="com.piramide.elwis.web.supportmanager.action.ArticleCreateAction"
+                name="articleForm" roles="ARTICLE.VIEW"
+                scope="request" input="/ArticleList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.ArticleReadCmd">
+            <forward name="Success" path="/ArticleDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Article/Update" type="com.piramide.elwis.web.supportmanager.action.ArticleCreateAction"
+                name="articleForm" roles="ARTICLE.UPDATE"
+                scope="request" input="/ArticleDetailForUpdate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.ArticleUpdateCmd">
+            <forward name="Success" path="/Article/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/ArticleList.do"/>
+            <forward name="Redirect" path="/Article/Forward/Update.do"/>
+            <forward name="Cancel" path="/ArticleList.do" redirect="true"/>
+        </action>
+
+        <action path="/Article/Rating/Update" type="com.piramide.elwis.web.supportmanager.action.ArticleCreateAction"
+                name="articleForm" roles="ARTICLERATING.UPDATE"
+                scope="request" input="/ArticleDetailForUpdate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.ArticleUpdateCmd">
+            <forward name="Success" path="/Article/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/ArticleList.do"/>
+            <forward name="Redirect" path="/Article/Forward/Update.do"/>
+            <forward name="Cancel" path="/ArticleList.do" redirect="true"/>
+        </action>
+
+        <action path="/Article/Forward/Delete" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="articleForm" roles="ARTICLE.DELETE"
+                scope="request" input="/ArticleList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.ArticleReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Article/Delete" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="articleForm" roles="ARTICLE.DELETE"
+                scope="request" input="/ArticleDetailForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.ArticleDeleteCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleList.do" redirect="true"/>
+            <forward name="Fail" path="/ArticleList.do"/>
+            <forward name="Cancel" path="/ArticleList.do" redirect="true"/>
+        </action>
+
+        <!--for Link Article-->
+        <action path="/Article/LinkList" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerListAction"
+                name="listForm" roles="ARTICLELINK.VIEW"
+                scope="request" input="/support/LinkList.jsp" validate="false"
+                parameter="linkList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/LinkList.jsp"/>
+        </action>
+
+        <action path="/Article/Link/Forward/Create" type="org.apache.struts.actions.ForwardAction"
+                roles="ARTICLELINK.CREATE"
+                name="linkForm" scope="request" validate="false" parameter="/support/LinkDetailForCreate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+        </action>
+
+        <action path="/Article/Link/Create" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="linkForm" roles="ARTICLELINK.CREATE"
+                scope="request" input="/LinkDetailForCreate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.LinkCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Article/LinkList.do" redirect="true"/>
+            <forward name="Fail" path="/Article/LinkList.do"/>
+            <forward name="Cancel" path="/Article/LinkList.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/Article/Link/Forward/Create.do" redirect="true"/>
+        </action>
+
+        <action path="/Article/Link/Forward/Update" roles="ARTICLELINK.VIEW"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction" name="linkForm"
+                scope="request" input="/Article/LinkList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.LinkCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/LinkDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Article/Link/Update" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="linkForm" roles="ARTICLELINK.UPDATE"
+                scope="request" input="/LinkDetailForUpdate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.LinkCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Article/LinkList.do" redirect="true"/>
+            <forward name="Fail" path="/Article/LinkList.do"/>
+            <forward name="Cancel" path="/Article/LinkList.do" redirect="true"/>
+        </action>
+
+        <action path="/Article/Link/Forward/Delete" roles="ARTICLELINK.DELETE"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction" name="linkForm"
+                scope="request" input="/Article/LinkList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.LinkCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/LinkDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Article/Link/Delete" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="linkForm" roles="ARTICLELINK.DELETE"
+                scope="request" input="/LinkDetailForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.LinkCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Article/LinkList.do" redirect="true"/>
+            <forward name="Fail" path="/Article/LinkList.do"/>
+            <forward name="Cancel" path="/Article/LinkList.do" redirect="true"/>
+        </action>
+
+        <!--        for History-->
+        <action path="/Article/HistoryList" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerListAction"
+                name="listForm" roles="ARTICLEHISTORY.VIEW"
+                scope="request" input="/support/HistoryList.jsp" validate="false"
+                parameter="historyList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/HistoryList.jsp"/>
+        </action>
+
+        <!--        for Article Related     -->
+        <action path="/Article/RelationList"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerListAction" name="listForm"
+                scope="request" input="/support/RelationList.jsp" validate="false"
+                parameter="relationList" roles="ARTICLERELATED.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/RelationList.jsp"/>
+        </action>
+
+        <action path="/Article/Relation/Forward/Create" roles="ARTICLERELATED.CREATE"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerListAction" name="listForm"
+                scope="request" input="/support/RelationList.jsp" validate="false"
+                parameter="importArticleList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleImportList.jsp"/>
+        </action>
+
+        <action path="/Article/Relation/Create" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="relationForm" roles="ARTICLERELATED.CREATE"
+                scope="request" input="/ArticleImportList.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.RelationCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Article/RelationList.do" redirect="true"/>
+            <forward name="Fail" path="/Article/RelationList.do"/>
+            <forward name="Cancel" path="/Article/RelationList.do" redirect="true"/>
+        </action>
+
+        <action path="/Article/Relation/Forward/Update" roles="ARTICLERELATED.VIEW"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction" name="relationForm"
+                scope="request" input="/Article/RelationList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.RelationCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/RelationDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Article/Relation/Update" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="relationForm" roles="ARTICLERELATED.UPDATE"
+                scope="request" input="/RelationDetailForUpdate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.RelationCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Article/RelationList.do" redirect="true"/>
+            <forward name="Fail" path="/Article/RelationList.do"/>
+            <forward name="Cancel" path="/Article/RelationList.do" redirect="true"/>
+        </action>
+
+        <action path="/Article/Relation/Forward/Delete" roles="ARTICLERELATED.DELETE"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction" name="relationForm"
+                scope="request" input="/Article/RelationList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.RelationCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/RelationDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Article/Relation/Delete" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="relationForm" roles="ARTICLERELATED.DELETE"
+                scope="request" input="/RelationDetailForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.RelationCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Article/RelationList.do" redirect="true"/>
+            <forward name="Fail" path="/Article/RelationList.do"/>
+            <forward name="Cancel" path="/Article/RelationList.do" redirect="true"/>
+        </action>
+
+        <action path="/Article/Relation/Forward/View" roles="ARTICLERELATED.VIEW"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction" name="relationForm"
+                scope="request" input="/Article/RelationList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.RelationCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/RelationDetailForView.jsp"/>
+        </action>
+
+        <!--for Comments-->
+
+        <action path="/Article/Comment" type="com.piramide.elwis.web.supportmanager.action.CommentListAction"
+                name="commentForm" roles="ARTICLECOMMENT.VIEW"
+                scope="request" input="/support/Comment.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Comment.jsp"/>
+        </action>
+
+        <action path="/Article/Comment/Create" type="com.piramide.elwis.web.supportmanager.action.CommentCreateAction"
+                name="commentForm" roles="ARTICLECOMMENT.CREATE"
+                scope="request" input="/Comment.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Article/Comment.do" redirect="true"/>
+            <forward name="Fail" path="/Comment.jsp"/>
+            <forward name="Cancel" path="/Article/Comment.do" redirect="true"/>
+        </action>
+
+        <action path="/Article/Comment/Forward/Delete" roles="ARTICLECOMMENT.DELETE"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction" name="commentForm"
+                scope="request" input="/Article/Comment.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.CommentCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/CommentDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Comment.jsp"/>
+        </action>
+
+        <action path="/Article/Comment/Delete" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="commentForm" roles="ARTICLECOMMENT.DELETE"
+                scope="request" input="/Comment.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.CommentReadListCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/Article/Comment.do" redirect="true"/>
+            <forward name="Fail" path="/Comment.jsp"/>
+            <forward name="Cancel" path="/Article/Comment.do" redirect="true"/>
+        </action>
+
+        <!--    for  Question   -->
+        <action path="/QuestionList"
+                type="com.piramide.elwis.web.supportmanager.action.QuestionSimpleAdvancedListAction" name="listForm"
+                scope="request" input="/support/QuestionList.jsp" validate="false"
+                parameter="questionList" roles="QUESTION.VIEW">
+            <forward name="Success" path="/QuestionList.jsp"/>
+        </action>
+
+        <action path="/Question/AdvancedSearch"
+                type="com.piramide.elwis.web.supportmanager.action.QuestionAdvancedListAction"
+                name="questionListForm" scope="request" input="/QuestionAdvancedSearch.jsp" validate="true"
+                parameter="questionAdvancedList" roles="QUESTION.VIEW">
+            <forward name="Success" path="/QuestionAdvancedSearch.jsp"/>
+            <forward name="Fail" path="/QuestionAdvancedSearch.jsp"/>
+        </action>
+
+        <action path="/Question/Forward/Create" type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction"
+                roles="QUESTION.CREATE"
+                name="questionForm" scope="request" validate="false" parameter="/support/QuestionDetailForCreate.jsp"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="articlequestion"/>
+            <set-property property="redirect" value="Search"/>
+            <forward name="Search" path="/QuestionList.do"/>
+        </action>
+
+        <action path="/Question/Create" type="com.piramide.elwis.web.supportmanager.action.QuestionCreateAction"
+                name="questionForm" scope="request" input="/QuestionDetailForCreate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.QuestionCmd" roles="QUESTION.CREATE">
+            <forward name="Success" path="/QuestionList.do" redirect="true"/>
+            <forward name="Fail" path="/QuestionList.do"/>
+            <forward name="Cancel" path="/QuestionList.do" redirect="true"/>
+        </action>
+
+        <action path="/Question/Forward/Update" type="net.java.dev.strutsejb.web.DefaultAction" name="questionForm"
+                scope="request" input="/QuestionList.do" validate="false" roles="QUESTION.VIEW"
+                parameter="com.piramide.elwis.cmd.supportmanager.QuestionCmd">
+            <forward name="Success" path="/QuestionDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Question/Update" type="com.piramide.elwis.web.supportmanager.action.QuestionCreateAction"
+                name="questionForm"
+                scope="request" input="/QuestionDetailForUpdate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.QuestionCmd" roles="QUESTION.UPDATE">
+            <forward name="Success" path="/QuestionList.do" redirect="true"/>
+            <forward name="Fail" path="/QuestionList.do"/>
+            <forward name="Cancel" path="/QuestionList.do" redirect="true"/>
+        </action>
+
+        <action path="/Question/Forward/Delete" type="net.java.dev.strutsejb.web.DefaultAction" name="questionForm"
+                scope="request" input="/QuestionList.do" validate="false" roles="QUESTION.DELETE"
+                parameter="com.piramide.elwis.cmd.supportmanager.QuestionCmd">
+            <forward name="Success" path="/QuestionDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Question/Delete" type="com.piramide.elwis.web.common.action.DefaultAction" name="questionForm"
+                scope="request" input="/QuestionDetailForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.QuestionCmd" roles="QUESTION.DELETE">
+            <forward name="Success" path="/QuestionList.do" redirect="true"/>
+            <forward name="Fail" path="/QuestionList.do"/>
+            <forward name="Cancel" path="/QuestionList.do" redirect="true"/>
+        </action>
+
+        <action path="/Question/Article" type="com.piramide.elwis.web.supportmanager.action.ArticleCreateAction"
+                name="articleForm"
+                scope="request" input="/QuestionList.do" validate="false" roles="ARTICLE.CREATE"
+                parameter="com.piramide.elwis.cmd.supportmanager.QuestionArticleCmd"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="article"/>
+            <forward name="Error" path="/QuestionList.do"/>
+            <forward name="Success" path="/ArticleQuestionDetailForCreate.jsp"/>
+            <forward name="Search" path="/Question/Forward/Update.do"/>
+        </action>
+
+        <action path="/Question/Article/Create" type="com.piramide.elwis.web.supportmanager.action.ArticleCreateAction"
+                name="articleForm"
+                scope="request" input="/ArticleQuestionDetailForCreate.jsp" validate="false" roles="ARTICLE.CREATE"
+                parameter="com.piramide.elwis.cmd.supportmanager.ArticleCreateCmd"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="article"/>
+            <set-property property="redirect" value="redirect"/>
+            <forward name="Success" path="/Article/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/Article/Forward/Create.do"/>
+            <forward name="Error" path="/QuestionList.do"/>
+            <forward name="Cancel" path="/QuestionList.do" redirect="true"/>
+            <forward name="redirect" path="/ArticleQuestionDetailForCreate.jsp"/>
+        </action>
+
+        <!--begin ivan-->
+        <action path="/ArticleAttach/Download"
+                type="com.piramide.elwis.web.supportmanager.action.DownloadSupportAttachAction" name="form"
+                scope="request" validate="false" roles="SUPPORTATTACH.VIEW"
+                parameter="com.piramide.elwis.cmd.supportmanager.DownloadSupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Fail" path="/ArticleAttach/List.do"/>
+        </action>
+
+        <action path="/ArticleAttach/List" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerListAction"
+                name="listForm"
+                scope="request" input="/support/ArticleAttachtList.jsp" validate="false"
+                parameter="articleAttachList" roles="SUPPORTATTACH.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleAttachList.jsp"/>
+        </action>
+
+        <action path="/ArticleAttach/Forward/Create" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/support/ArticleAttachDetailForCreate.jsp"
+                roles="SUPPORTATTACH.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+        </action>
+
+        <action path="/ArticleAttach/Create" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="supportAttachForm"
+                scope="request" input="/ArticleAttachDetailForCreate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd" roles="SUPPORTATTACH.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleAttach/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ArticleAttach/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/ArticleAttach/Forward/Create.do" redirect="true"/>
+            <forward name="Fail" path="/ArticleAttach/Forward/Create.do"/>
+        </action>
+
+        <action path="/ArticleAttach/Forward/Update"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction" name="supportAttachForm"
+                scope="request" input="/ArticleAttach/List.do" validate="false" roles="SUPPORTATTACH.VIEW"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleAttachDetailForUpdate.jsp"/>
+        </action>
+        <action path="/ArticleAttach/Update" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="supportAttachForm"
+                scope="request" input="/ArticleAttachDetailForUpdate.jsp" validate="true" roles="SUPPORTATTACH.UPDATE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleAttach/List.do"/>
+            <forward name="Cancel" path="/ArticleAttach/List.do" redirect="true"/>
+            <forward name="Fail" path="/ArticleAttach/List.do"/>
+        </action>
+
+        <action path="/ArticleAttach/Forward/Delete"
+                type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction" name="supportAttachForm"
+                scope="request" input="/ArticleAttach/List.do" validate="false" roles="SUPPORTATTACH.DELETE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleAttachDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/ArticleAttach/Delete" type="com.piramide.elwis.web.supportmanager.action.ArticleManagerAction"
+                name="supportAttachForm"
+                scope="request" input="/ArticleAttachDetailForDelete.jsp" validate="false" roles="SUPPORTATTACH.DELETE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(articleTitle)"/>
+            <forward name="Success" path="/ArticleAttach/List.do"/>
+            <forward name="Cancel" path="/ArticleAttach/List.do" redirect="true"/>
+            <forward name="Fail" path="/ArticleAttach/List.do"/>
+        </action>
+        <!--end ivan-->
+
+        <!--Support Case-->
+        <action path="/CaseList" type="com.piramide.elwis.web.supportmanager.action.CaseSimpleAdvancedListAction"
+                name="listForm"
+                scope="request" input="/support/CaseList.jsp" validate="false"
+                parameter="caseList" roles="CASE.VIEW">
+            <forward name="Success" path="/CaseList.jsp"/>
+        </action>
+
+        <action path="/Case/AdvancedSearch" type="com.piramide.elwis.web.supportmanager.action.CaseAdvancedListAction"
+                name="caseListForm" scope="request" input="/CaseAdvancedSearch.jsp" validate="true"
+                parameter="caseAdvancedList" roles="CASE.VIEW">
+            <forward name="Success" path="/CaseAdvancedSearch.jsp"/>
+        </action>
+
+        <action path="/Case/Forward/Create" type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction"
+                name="caseForm" scope="request" validate="false" parameter="/support/CaseDetailForCreate.jsp"
+                roles="CASE.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="supportcase"/>
+            <set-property property="redirect" value="Search"/>
+            <forward name="Search" path="/CaseList.do"/>
+        </action>
+
+        <action path="/Case/Create" type="com.piramide.elwis.web.supportmanager.action.SupportCaseAction"
+                name="caseForm"
+                scope="request" input="/CaseDetailForCreate.jsp" validate="false" roles="CASE.CREATE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCmd">
+            <forward name="Success" path="/Case/Forward/Update.do?index=0"/>
+            <forward name="Cancel" path="/CaseList.do" redirect="true"/>
+            <forward name="GoActivity" path="/CaseActivity/Forward/Update.do?index=1" redirect="true"/>
+            <forward name="Fail" path="/CaseList.do"/>
+        </action>
+
+        <action path="/Case/Forward/Update" type="com.piramide.elwis.web.supportmanager.action.SupportCaseBaseAction"
+                name="caseForm" roles="CASE.VIEW"
+                scope="request" input="/CaseList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCmd">
+            <forward name="Success" path="/CaseDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Case/Update" type="com.piramide.elwis.web.supportmanager.action.SupportCaseAction"
+                name="caseForm" roles="CASE.UPDATE"
+                scope="request" input="/CaseDetailForUpdate.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCmd">
+            <!--  <forward name="Success" path="/CaseList.do" redirect="true"/>-->
+            <forward name="Cancel" path="/CaseList.do" redirect="true"/>
+            <forward name="GoPage" path="/CaseDetailForUpdate.jsp"/>
+            <forward name="Success" path="/Case/Forward/Update.do"/>
+            <forward name="GoActivity" path="/CaseActivity/Forward/Update.do?index=1" redirect="true"/>
+            <forward name="Fail" path="/CaseList.do"/>
+        </action>
+
+        <action path="/Case/Forward/Delete" type="com.piramide.elwis.web.supportmanager.action.SupportCaseAction"
+                name="caseForm" scope="request" input="/CaseList.do" validate="false" roles="CASE.DELETE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCmd">
+            <forward name="Success" path="/CaseDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Case/Delete" type="com.piramide.elwis.web.supportmanager.action.SupportCaseAction"
+                name="caseForm" scope="request" input="/CaseList.do" validate="false" roles="CASE.DELETE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseDeleteCmd">
+            <forward name="Success" path="/CaseList.do" redirect="true"/>
+            <forward name="Cancel" path="/CaseList.do" redirect="true"/>
+            <forward name="Fail" path="/CaseList.do"/>
+        </action>
+
+        <!--Case Activity-->
+        <action path="/CaseActivity/List" type="com.piramide.elwis.web.supportmanager.action.SupportCaseListAction"
+                name="listForm" scope="request" input="/support/CaseActivityList.jsp" parameter="caseActivityList"
+                roles="CASEACTIVITY.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CaseActivityList.jsp"/>
+        </action>
+
+        <action path="/CaseActivity/Forward/Update" roles="CASEACTIVITY.VIEW"
+                type="com.piramide.elwis.web.supportmanager.action.SupportCaseBaseAction" name="caseActivityForm"
+                scope="request" input="/CaseActivity/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseActivityReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CaseActivity.jsp"/>
+            <forward name="Fail" path="/CaseList.do"/>
+        </action>
+
+        <action path="/CaseActivity/Update" roles="CASEACTIVITY.UPDATE"
+                type="com.piramide.elwis.web.supportmanager.action.SupportCaseActivityAction"
+                name="caseActivityForm"
+                scope="request"
+                input="/CaseActivity.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseActivityCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+
+            <forward name="Success" path="/CaseActivity/Forward/Update.do?dto(rebuild)=true"/>
+            <forward name="Cancel" path="/CaseActivity/List.do" redirect="true"/>
+            <forward name="FailCreateActivities" path="/CaseActivity/List.do"/>
+            <forward name="Fail" path="/CaseList.do"/>
+            <forward name="NoUserMail" path="/webmail/Messages.do?index=0" contextRelative="true"/>
+            <forward name="FailSendMail" path="/CaseActivity.jsp"/>
+            <forward name="Fail_validation" path="/CaseActivity.jsp"/>
+        </action>
+
+        <action path="/CaseActivity/Document/Download"
+                type="com.piramide.elwis.web.supportmanager.SupportActivityDocumentDownloadAction"
+                name="caseActivityForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.CommunicationDocumentDownloadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CASEACTIVITY.VIEW">
+            <set-property property="paramReWrite" value="caseId"/>
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Fail" path="/CaseActivity/Forward/Update.do"/>
+        </action>
+
+        <!--COMMUNICATION's-->
+        <action path="/Communication/List" type="com.piramide.elwis.web.supportmanager.action.SupportCaseListAction"
+                name="listForm"
+                scope="request" input="/CommunicationList.jsp" validate="false" parameter="communicationList"
+                roles="COMMUNICATION.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CommunicationList.jsp"/>
+        </action>
+
+        <action path="/MainCommunication/Forward/Create"
+                type="org.apache.struts.actions.ForwardAction"
+                name="mainCommunicationForm"
+                scope="request"
+                validate="false"
+                parameter="/support/CommunicationSupportCreate.jsp"
+                roles="COMMUNICATION.CREATE"/>
+        <action path="/MainCommunication/Create"
+                type="com.piramide.elwis.web.supportmanager.action.CommunicationSupportAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationSupportCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCommunicationCmd"
+                roles="COMMUNICATION.CREATE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+            <forward name="FailSendMail" path="/CommunicationSupportCreate.jsp"/>
+            <forward name="NoUserMail" path="/webmail/Messages.do?index=0" contextRelative="true"/>
+        </action>
+
+        <action path="/MainCommunication/Forward/Update"
+                type="com.piramide.elwis.web.supportmanager.action.CommunicationSupportAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/Communication/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCommunicationCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationSupportUpdate.jsp"/>
+        </action>
+        <action path="/MainCommunication/Update"
+                type="com.piramide.elwis.web.supportmanager.action.CommunicationSupportAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationSupportUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCommunicationCmd"
+                roles="COMMUNICATION.UPDATE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+            <forward name="Redirect" path="/MainCommunication/Forward/Update.do?dto(op)=read"/>
+        </action>
+        <action path="/MainCommunication/Reply"
+                type="com.piramide.elwis.web.supportmanager.action.CommunicationSupportAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationSupportUpdate.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactReadCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationSupportCreate.jsp"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+        <action path="/MainCommunication/Forward/Delete"
+                type="com.piramide.elwis.web.supportmanager.action.CommunicationSupportAction"
+                name="mainCommunicationForm"
+                scope="request" input="/Communication/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCommunicationCmd"
+                roles="COMMUNICATION.DELETE">
+            <forward name="Success" path="/CommunicationSupportDelete.jsp"/>
+        </action>
+        <action path="/MainCommunication/Delete"
+                type="com.piramide.elwis.web.supportmanager.action.CommunicationSupportAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationSupportDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCommunicationCmd"
+                roles="COMMUNICATION.DELETE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+
+        <action path="/MainCommunication/Download"
+                type="com.piramide.elwis.web.supportmanager.action.CommunicationSupportAction"
+                name="mainCommunicationForm" roles="COMMUNICATION.EXECUTE"
+                scope="request" input="/Communication/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(campaignName)"/>
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/MainCommunication/Forward/Update.do"/>
+        </action>
+
+        <action path="/MainCommunication/Document/Download"
+                type="com.piramide.elwis.web.contactmanager.action.CommunicationDocumentDownloadAction"
+                name="mainCommunicationForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.CommunicationDocumentDownloadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="COMMUNICATION.VIEW">
+            <set-property property="paramReWrite" value="caseId"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+
+        <action path="/MainCommunication/ReadToCompose"
+                type="com.piramide.elwis.web.supportmanager.action.CommunicationSupportAction"
+                name="mainCommunicationForm"
+                scope="request" input="/Communication/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportCaseCommunicationCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationSupportCreate.jsp"/>
+        </action>
+
+        <!--Support attach-->
+        <action path="/CaseAttach/Download"
+                type="com.piramide.elwis.web.supportmanager.action.DownloadSupportAttachAction" name="form"
+                scope="request" validate="false" roles="SUPPORTATTACH.VIEW"
+                parameter="com.piramide.elwis.cmd.supportmanager.DownloadSupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Fail" path="/CaseAttach/List.do"/>
+        </action>
+
+        <action path="/CaseAttach/List" type="com.piramide.elwis.web.supportmanager.action.SupportCaseListAction"
+                name="listForm"
+                scope="request" input="/support/CaseAttachtList.jsp" validate="false"
+                parameter="caseAttachList" roles="SUPPORTATTACH.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CaseAttachList.jsp"/>
+        </action>
+
+        <action path="/CaseAttach/Forward/Create" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/support/CaseAttachDetailForCreate.jsp"
+                roles="SUPPORTATTACH.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+        </action>
+
+        <action path="/CaseAttach/Create" type="com.piramide.elwis.web.supportmanager.action.SupportCaseBaseAction"
+                name="supportAttachForm"
+                scope="request" input="/CaseAttachDetailForCreate.jsp" validate="true" roles="SUPPORTATTACH.CREATE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CaseAttach/List.do" redirect="true"/>
+            <forward name="Cancel" path="/CaseAttach/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/CaseAttach/Forward/Create.do" redirect="true"/>
+        </action>
+
+        <action path="/CaseAttach/Forward/Update"
+                type="com.piramide.elwis.web.supportmanager.action.SupportCaseBaseAction" name="supportAttachForm"
+                scope="request" input="/CaseAttach/List.do" validate="false" roles="SUPPORTATTACH.VIEW"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CaseAttachDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/CaseAttach/Update" type="com.piramide.elwis.web.supportmanager.action.SupportCaseBaseAction"
+                name="supportAttachForm"
+                scope="request" input="/CaseAttachDetailForUpdate.jsp" validate="true" roles="SUPPORTATTACH.UPDATE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CaseAttach/List.do"/>
+            <forward name="Cancel" path="/CaseAttach/List.do" redirect="true"/>
+            <forward name="Fail" path="/CaseAttach/List.do"/>
+        </action>
+
+        <action path="/CaseAttach/Forward/Delete"
+                type="com.piramide.elwis.web.supportmanager.action.SupportCaseBaseAction" name="supportAttachForm"
+                scope="request" input="/CaseAttach/List.do" validate="false" roles="SUPPORTATTACH.DELETE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CaseAttachDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/CaseAttach/Delete" type="com.piramide.elwis.web.supportmanager.action.SupportCaseBaseAction"
+                name="supportAttachForm"
+                scope="request" input="/CaseAttachDetailForDelete.jsp" validate="false" roles="SUPPORTATTACH.DELETE"
+                parameter="com.piramide.elwis.cmd.supportmanager.SupportAttachCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(caseTitle)"/>
+            <forward name="Success" path="/CaseAttach/List.do"/>
+            <forward name="Cancel" path="/CaseAttach/List.do" redirect="true"/>
+            <forward name="Fail" path="/CaseAttach/List.do"/>
+        </action>
+
+        <!--        REPORTS          -->
+
+        <action path="/Report/ArticleList" type="org.apache.struts.actions.ForwardAction" name="articleReportListForm"
+                scope="request" parameter="/support/report/ArticleReportList.jsp" validate="false"
+                roles="ARTICLE.VIEW"/>
+
+        <action path="/Report/ArticleList/Execute" input="/report/ArticleReportList.jsp" roles="ARTICLE.VIEW"
+                type="com.piramide.elwis.web.supportmanager.action.report.ArticleReportListAction"
+                name="articleReportListForm"
+                scope="request" parameter="articleReportList" validate="false">
+            <forward name="Success" path="/report/ArticleReportList.jsp"/>
+        </action>
+
+        <action path="/Report/QuestionList" type="org.apache.struts.actions.ForwardAction" name="questionReportListForm"
+                scope="request" parameter="/support/report/QuestionReportList.jsp" validate="false"
+                roles="QUESTION.VIEW"/>
+
+        <action path="/Report/QuestionList/Execute" input="/report/QuestionReportList.jsp" roles="QUESTION.VIEW"
+                type="com.piramide.elwis.web.supportmanager.action.report.QuestionReportListAction"
+                name="questionReportListForm"
+                scope="request" parameter="questionReportList" validate="true">
+            <forward name="Success" path="/report/QuestionReportList.jsp"/>
+        </action>
+
+        <action path="/Report/CaseList" type="org.apache.struts.actions.ForwardAction" name="caseReportListForm"
+                scope="request" parameter="/support/report/CaseReportList.jsp" validate="false" roles="CASE.VIEW"/>
+
+        <action path="/Report/CaseList/Execute" input="/report/CaseReportList.jsp" roles="CASE.VIEW"
+                type="com.piramide.elwis.web.supportmanager.action.report.CaseReportListAction"
+                name="caseReportListForm"
+                scope="request" parameter="caseReportList" validate="false">
+            <forward name="Success" path="/report/CaseReportList.jsp"/>
+        </action>
+
+        <action path="/Report/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportExternalExecute.jsp"/>
+
+        <action path="/Report/Blank" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/common/Blank.jsp"/>
+
+        <action path="/Report/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportExecuteForm" scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteAction"
+                name="reportExecuteForm" scope="request" validate="true" input="/Report/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailColumn" path="/Report/ExecutePage.do"/>
+            <forward name="FailButStay" path="/Report/ExecutePage.do"/>
+        </action>
+
+        <!--jrxml external report-->
+        <action path="/Report/Jrxml/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportJrxmlExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportJrxmlExternalExecute.jsp"/>
+
+        <action path="/Report/Jrxml/External/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+        <action path="/Report/Jrxml/External/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExternalExecuteAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="true" input="/Report/Jrxml/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailButStay" path="/Report/Jrxml/ExecutePage.do"/>
+        </action>
+
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+  /WEB-INF/common/validation.xml,
+  /WEB-INF/support/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="articleId, caseId, index, advancedListForward"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/support/fantabulous.xml"/>
+        <set-property property="moduleParams" value="articleId, caseId, index, advancedListForward"/>
+    </plug-in>
+</struts-config>

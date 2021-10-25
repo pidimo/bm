@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN"
+    "http://www.jatun.com/titus-config-1.0.dtd">
+
+<databasestructure>
+<database>
+
+<!--
+<table tablename="accessrights" resource="ReferencedBy.table.accessrights">
+<fields>
+    <field fieldname="functionid" dbtype="integer" iscolumnview="false"/>
+    <field fieldname="moduleid" dbtype="integer" iscolumnview="false"/>
+    <field fieldname="permission" dbtype="integer"  columntype="integer" iscolumnview ="false" />
+    <field fieldname="roleid" dbtype="integer" iscolumnview="false"/>
+    <field fieldname="active" dbtype="integer"  columntype="boolean"  iscolumnview="false"/>
+    <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+</fields>
+<primarykey fields="functionid, roleid"/>
+<foreignkeys>
+    <foreignkey foreigntableref="role" relationtype="left-join" resource="Admin.Role" strongrelation="true">
+        <keyref fieldref="roleid" foreignfieldref="roleid"/>
+    </foreignkey>
+</foreignkeys>
+    <modulefunctionality>
+      <functionality module="admin"/>
+    </modulefunctionality>
+</table>
+-->
+
+<table tablename="elwisuser" resource="Report.functionality.user">
+<fields>
+    <field fieldname="addressid" dbtype="integer" iscolumnview="false"  />
+    <field fieldname="active" dbtype="integer"  columntype="boolean" converter="activeConverter" resource="Common.active"/>
+    <field fieldname="companyid" dbtype="integer" iscolumnview="false"  />
+    <field fieldname="dayfragmentation" dbtype="integer" resource="Scheduler.dayFragmentation"  iscolumnview="false"/>
+    <field fieldname="defaultview" dbtype="integer" resource="Scheduler.calendarDefaultView"  iscolumnview="false"/>
+    <field fieldname="emailappointment" dbtype="string" resource="Admin.AppointmentEmail"  iscolumnview="false"/>
+    <field fieldname="emailquestion" dbtype="string" resource="Admin.QuestionEmail"  iscolumnview="false"/>
+    <field fieldname="emailschetask" dbtype="string" resource="Admin.TaskEmail"  iscolumnview="false"/>
+    <field fieldname="emailsupportcase" dbtype="string" resource="Admin.CaseEmail"  iscolumnview="false" />
+    <field fieldname="finaldaywork" dbtype="integer" resource="User.workDayEnd"  iscolumnview="false"/>
+    <field fieldname="favoritelanguage" dbtype="string" resource="User.language"/>
+    <field fieldname="hasmailaccount" dbtype="boolean" iscolumnview="false"   /> <!--OJO**no hay este field en db-->
+    <!--<field fieldname="holidaycountryid" dbtype="integer"  iscolumnview="false"   />-->
+    <field fieldname="initialdaywork" dbtype="integer" resource="User.workDayStart" iscolumnview="false"  />
+    <field fieldname="isdefault" dbtype="integer"  columntype="boolean"  iscolumnview="false" />
+    <field fieldname="login" dbtype="string" resource="User.login"  />
+    <field fieldname="maxrecentlist" dbtype="short" resource="User.maxRecentes"  iscolumnview="false"/>
+    <field fieldname="password" dbtype="string" resource="User.password" iscolumnview="false" />
+    <field fieldname="rangebirthdayst" dbtype="integer" resource="User.rangeBirthDayStart"  iscolumnview="false"/>
+    <field fieldname="rangebirthdayfi" dbtype="integer" resource="User.rangeBirthDayFinish"  iscolumnview="false"/>
+    <field fieldname="rowsperpage" dbtype="integer" resource="User.rows"  iscolumnview="false"/>
+    <field fieldname="seeprivatedata" dbtype="boolean"  iscolumnview="false" /> <!--OJO-->
+    <field fieldname="timeout" dbtype="integer" resource="User.timeout" iscolumnview="false" />
+    <field fieldname="timezone" dbtype="string" resource="User.timeZone"  iscolumnview="false"/>
+    <field fieldname="type" dbtype="integer" columntype="string" iscolumnview="true" converter="userTypeConverter" resource="User.typeUser"   />
+    <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+</fields>
+<primarykey fields="userid">
+    <inverserelation relationtype="left-join" tablename="usersessionlog" keys="userid" resource="Report.inverseRelation.userSessionLog"/>
+    <inverserelation relationtype="left-join" tablename="userofgroup" keys="userid" resource="Report.inverseRelation.userOfGroup"/>  <!--OJO-->
+    <inverserelation relationtype="left-join" tablename="userrole" keys="userid" resource="Report.inverseRelation.userRole"/>
+                                <!--ADD-->
+    <inverserelation relationtype="left-join" tablename="address" keys="lastmoduser" resource="Report.inverseRelation.address.asLastModUser"/>
+    <inverserelation relationtype="left-join" tablename="article" keys="updateuserid" resource="Report.inverseRelation.article.asLastModifiedBy"/>
+    <inverserelation relationtype="left-join" tablename="article" keys="createuserid" resource="Report.inverseRelation.article.createdBy" />
+    <inverserelation relationtype="left-join" tablename="address" keys="recorduser" resource="Report.inverseRelation.address.asCretedBy"/>
+    <inverserelation relationtype="left-join" tablename="articlehistory" keys="userid" resource="Report.inverseRelation.articlehistory"/>
+    <!--<inverserelation relationtype="left-join" tablename="articlerating" keys="userid" resource="ReferencedBy.table.articlerating" />-->
+    <inverserelation relationtype="left-join" tablename="supportuser" keys="userid" resource="Report.inverseRelation.supportUser"/>
+    <inverserelation relationtype="left-join" tablename="supportcase" keys="fromuserid" resource="Report.inverseRelation.supportCase.assignedFrom"/>
+    <inverserelation relationtype="left-join" tablename="supportcase" keys="touserid" resource="Report.inverseRelation.supportCase.assignedTo"/>
+    <inverserelation relationtype="left-join" tablename="supportcase" keys="openbyuserid" resource="Report.inverseRelation.supportCase.openBy"/>
+    <inverserelation relationtype="left-join" tablename="articlelink" keys="createuserid" resource="Report.inverseRelation.articleLink" />
+    <inverserelation relationtype="left-join" tablename="supportattach" keys="userid" resource="Report.inverseRelation.supportAttach" />
+    <inverserelation relationtype="left-join" tablename="caseactivity" keys="touserid" resource="Report.inverseRelation.caseActivity.assignedTo"/>
+    <inverserelation relationtype="left-join" tablename="caseactivity" keys="fromuserid" resource="Report.inverseRelation.caseActivity.assignedFrom"/>
+    <inverserelation relationtype="left-join" tablename="articlequestion" keys="createuserid" resource="Report.inverseRelation.articleQuestion"/>
+    <inverserelation relationtype="left-join" tablename="articlecomment" keys="createuserid" resource="Report.inverseRelation.articleComment"/>
+    <!--campaign-->
+    <inverserelation relationtype="left-join" tablename="campactivityuser" keys="userid" resource="Report.inverseRelation.campActivityUser"/>
+    <inverserelation relationtype="left-join" tablename="campactivity" keys="userid" resource="Report.inverseRelation.campaignActivity"/>
+    <inverserelation relationtype="left-join" tablename="campcontact" keys="userid" resource="Report.inverseRelation.campaignContact"/>
+</primarykey>
+<foreignkeys>
+    <foreignkey foreigntableref="address" relationtype="left-join" resource="Report.foreignRelation.contact" strongrelation="true" >
+        <keyref fieldref="addressid" foreignfieldref="addressid"/>
+        <overwriteresources>
+            <overwrite field="addressName" resource="User.userName"/>
+        </overwriteresources>
+        <overwritemerges>
+            <overwritemerge field="addresstype" merge="false"/>
+            <overwritemerge field="lastmoddate" merge="false"/>
+            <overwritemerge field="recorddate" merge="false"/>
+        </overwritemerges>
+    </foreignkey>
+</foreignkeys>
+
+<relationfilter>
+    <columns>
+        <column fieldpath="elwisuser->address:addressid.addressName" order="asc" resource="User.userName"/>
+        <column fieldpath="type" />
+        <column fieldpath="active" />
+        <column fieldpath="login" />
+    </columns>
+    <conditions>
+        <condition fieldpath="elwisuser->address:addressid.addressName" operator="start-with" type="parameter"/>
+    </conditions>
+</relationfilter>
+
+<filters>
+    <constantfilter fieldref="type" resource="User.typeUser">
+        <values typevalue="resource">
+            <value key="0" showvalue="User.externalUser"/>
+            <value key="1" showvalue="User.intenalUser"/>
+        </values>
+    </constantfilter>
+    <constantfilter fieldref="active" resource="Common.active">
+        <values typevalue="resource">
+            <value key="0" showvalue="Common.inactive"/>
+            <value key="1" showvalue="Common.active"/>
+        </values>
+    </constantfilter>
+</filters>
+<modulefunctionality>
+    <functionality module="admin"/>
+</modulefunctionality>
+</table>
+
+<table tablename="role" resource="Report.functionality.role">
+<fields>
+    <field fieldname="companyid" dbtype="integer" iscolumnview="false"  />
+    <field fieldname="isdefault" dbtype="integer" columntype="boolean"  iscolumnview="false" />
+    <field fieldname="descriptionid" dbtype="integer" iscolumnview="false"  />
+    <field fieldname="roleid" dbtype="integer" iscolumnview="false"/>
+    <field fieldname="rolename" dbtype="string" resource="Role.name"/>
+</fields>
+<primarykey fields="roleid">
+    <inverserelation relationtype="left-join" tablename="userrole" keys="roleid" resource="Report.inverseRelation.userRole"/>   <!--OJO-->
+</primarykey>
+<foreignkeys>
+    <foreignkey foreigntableref="freetext" relationtype="left-join" resource="Report.foreignRelation.freetext.role.description" strongrelation="true">
+        <keyref fieldref="descriptionid" foreignfieldref="freetextid"/>
+        <overwriteresources>
+            <overwrite field="freetextvalue" resource="Role.description"/>
+        </overwriteresources>
+    </foreignkey>
+</foreignkeys>
+    <filters>
+    <foreignfilter resource="Role.name" filterfieldref="rolename">
+        <columns>
+            <column fieldpath="rolename" order="asc" resource="Role.name"/>
+        </columns>
+        <conditions>
+            <condition fieldpath="rolename" operator="start-with" type="parameter"/>
+        </conditions>
+    </foreignfilter>
+    </filters>
+    <modulefunctionality>
+      <functionality module="admin"/>
+    </modulefunctionality>
+</table>
+<table tablename="usergroup" resource="Report.functionality.userGroup">
+<fields>
+    <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+    <field fieldname="groupname" dbtype="string" resource="Report.userGroup.name"/>
+    <field fieldname="usergroupid" dbtype="integer" iscolumnview="false"/>
+</fields>
+<primarykey  fields="usergroupid">
+    <inverserelation relationtype="left-join" tablename="userofgroup" keys="usergroupid" resource="Report.inverseRelation.userOfGroup"/> <!--OJO-->
+</primarykey>
+<foreignkeys/>
+<filters>
+<foreignfilter resource="Admin.UserGroup" filterfieldref="groupname">
+    <columns>
+        <column fieldpath="groupname" order="asc" resource="Appointment.groupName"/>
+    </columns>
+    <conditions>
+        <condition fieldpath="groupname" operator="start-with" type="parameter"/>
+    </conditions>
+</foreignfilter>
+</filters>
+    <modulefunctionality>
+      <functionality module="admin"/>
+    </modulefunctionality>
+</table>
+<table tablename="userofgroup" resource="Report.functionality.userOfGroup">
+<fields>
+    <field fieldname="usergroupid" dbtype="integer" iscolumnview="false"/>
+    <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+</fields>
+<primarykey fields="usergroupid, userid"/>
+<foreignkeys>
+    <foreignkey foreigntableref="usergroup" relationtype="left-join" resource="Report.foreignRelation.userGroup" >
+        <keyref fieldref="usergroupid" foreignfieldref="usergroupid"/>
+    </foreignkey>
+    <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.user" >
+        <keyref fieldref="userid" foreignfieldref="userid"/>
+    </foreignkey>
+</foreignkeys>
+    <modulefunctionality>
+      <functionality module="admin"/>
+    </modulefunctionality>
+</table>
+<table tablename="userrole" resource="Report.functionality.UserRole">
+<fields>
+    <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+    <field fieldname="roleid" dbtype="integer" iscolumnview="false"/>
+</fields>
+<primarykey fields="roleid, userid"/>
+<foreignkeys>
+    <foreignkey foreigntableref="role" relationtype="left-join" resource="Report.foreignRelation.role" >
+        <keyref fieldref="roleid" foreignfieldref="roleid"/>
+    </foreignkey>
+    <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.user" >
+        <keyref fieldref="userid" foreignfieldref="userid"/>
+    </foreignkey>
+</foreignkeys>
+    <modulefunctionality>
+      <functionality module="admin"/>
+    </modulefunctionality>
+</table>
+
+<table tablename="usersessionlog" resource="Report.functionality.userSessionLog">
+<fields>
+    <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+    <field fieldname="endconnection" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="User.endConection"/>
+    <field fieldname="ip" dbtype="string" resource="User.ip"/>
+    <field fieldname="lastaction" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="User.lastConection"/>
+    <field fieldname="sessionid" dbtype="string" iscolumnview="false" />
+    <field fieldname="startconnection" dbtype="long" columntype="datetime" converter="longToDateValue" filterer="dateTimeFilter" resource="User.startConection"/>
+    <field fieldname="isconnected" dbtype="integer" columntype="boolean" converter="connectedConverter"   resource="User.connected"/>
+    <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+</fields>
+<primarykey fields="userid"/>
+<foreignkeys>
+    <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.user" ><!--strongrelation="true">-->
+        <keyref fieldref="userid" foreignfieldref="userid"/>
+        <overwriteresources>
+            <overwrite field="addressName" resource="User.userName"/>
+        </overwriteresources>
+    </foreignkey>
+</foreignkeys>
+<relationfilter>
+    <columns>
+        <column fieldpath="usersessionlog->elwisuser:userid->address:addressid.addressName"  resource="User.userName" order="asc"/>
+        <column fieldpath="usersessionlog->elwisuser:userid.type" />
+        <column fieldpath="usersessionlog->elwisuser:userid.active" />
+        <column fieldpath="usersessionlog->elwisuser:userid.login" />
+    </columns>
+    <conditions>
+        <condition fieldpath="usersessionlog->elwisuser:userid->address:addressid.addressName" operator="start-with" type="parameter"/>
+    </conditions>
+</relationfilter>
+<filters>
+    <constantfilter fieldref="isconnected" resource="User.connected">
+        <values typevalue="resource">
+            <value key="0" showvalue="User.disconnected"/>
+            <value key="1" showvalue="User.connected"/>
+        </values>
+    </constantfilter>
+</filters>
+<modulefunctionality>
+  <functionality module="admin"/>
+</modulefunctionality>
+</table>
+</database>
+</databasestructure>
+

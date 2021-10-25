@@ -1,0 +1,98 @@
+
+<ion-view view-title="{{ntitle}}">
+  <ion-content>
+
+    <form >
+      <div class="list">
+<!--            style="height:15px"-->
+        <div class="item item-divider bar bar-header bar-assertive">{{ntitle}}</div>
+          
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Salutation
+          </div>
+          <select name="dto(salutationId)" ng-model="salutation" ng-options="c.name for c in salutations">        
+          </select>    
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Title
+          </div>
+          <select name="dto(titleId)" ng-model="title" ng-options="c.name for c in titles">        
+          </select>    
+        </label>
+
+        <label class="item item-input">
+          <div class="input-label">Last name</div>
+          <input type="text" ng-model="entity.name1" placeholder="Last name" name="dto(name1)" maxlength="60" required="required" validated>
+          <i class="icon ion-alert-circled error"></i>
+        </label>
+
+        <label class="item item-input">
+          <div class="input-label">First name</div>
+          <input type="text" ng-model="entity.name2" placeholder="First name" maxlength="60" name="dto(name2)" required="required" validated>
+          <i class="icon ion-alert-circled error"></i>
+        </label>
+
+        <!-- <label class="item item-input item-select">
+          <div class="input-label">
+            Department
+          </div>
+          <select name="dto(departmentId)" ng-model="country" ng-options="c.name for c in countries"></select>    
+        </label> -->
+
+        <label class="item item-input">
+          <div class="input-label">Function</div>
+          <input type="text" maxlength="40" ng-model="entity.function" placeholder="Function" name="dto(function)" required="required" validated>    
+        </label>
+        
+        <label class="item item-input">
+          <div class="input-label">Additional address</div>
+          <input type="text" maxlength="100" ng-model="entity.addAddressLine" placeholder="Additional address line" name="dto(addAddressLine)" required="required" validated>
+        </label>
+
+ 		<label class="item item-input">
+          <div class="input-label"> Short name </div>
+          <input type="text" maxlength="60" name="dto(searchName)" ng-model="entity.searchName" placeholder=" Short name ">
+        </label>
+
+        <label class="item item-input">
+          <div class="input-label">Keywords</div>
+          <input type="text" maxlength="50" name="dto(keywords)" ng-model="entity.keywords" placeholder="Keywords">
+        </label>
+
+        <label class="item item-input">
+          <div class="input-label">Education</div>
+          <input type="text" maxlength="40" name="dto(education)" ng-model="entity.education" placeholder="Education">
+        </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Language
+          </div>
+          <select name="dto(languageId)" ng-model="language" ng-options="c.name for c in languages"></select>    
+        </label>
+            
+        <label class="item item-input">
+          <div class="input-label">Birthday</div>
+          <input type="date" name="dto(birthday)" maxlength="10" value="{{ birthday | date: 'shortDate' }}">
+        </label>       
+
+        <div class="item item-divider bar bar-header bar-assertive">Customer type</div>
+           
+	        <label class="item item-toggle">
+	          Status
+	          <label class="toggle toggle-assertive">
+	            <input type="checkbox" name="dto(isActive)" ng-checked="entity.isActive == 'true' ? true : false ">
+	            <div class="track">
+	              <div class="handle"></div>
+	            </div>
+	          </label>
+	        </label>
+	        
+      	</div>
+    </form>
+
+  </ion-content>
+</ion-view>

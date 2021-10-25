@@ -1,0 +1,98 @@
+#parse("templates/email/includes/header.vm")
+
+<table>
+    <tr>
+        <td colspan="2">
+            <p>
+                $messages.getMessage("Appointment.notification.added")
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.name"):</strong></td>
+        <td>$appt.title</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.appType"):</strong></td>
+        <td>$appt.typeName</td>
+    </tr>
+
+    #if ($appt.priorityName != "")
+    <tr>
+        <td><strong>$messages.getMessage("Task.priority"):</strong></td>
+        <td>$appt.priorityName</td>
+    </tr>
+    #end
+
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.startDate"):</strong></td>
+        <td>
+            $messages.getDateFormatted($appt.startDate,"datePattern")
+            #if($appt.isAllDay == "true")
+              ($messages.getMessage("Appointment.allDay"))
+            #else
+             $appt.startHour:$appt.startMin
+            #end
+        </td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.endDate"):</strong></td>
+        <td>
+            $messages.getDateFormatted($appt.endDate,"datePattern")
+            #if($appt.isAllDay != "true")
+             $appt.endHour:$appt.endMin
+            #end
+        </td>
+    </tr>
+
+    #if ($appt.contact != "")
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.contact"):</strong></td>
+        <td>$appt.contact</td>
+    </tr>
+    #end
+    #if ($appt.contactPersonName != "")
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.contactPerson"):</strong></td>
+        <td>$appt.contactPersonName</td>
+    </tr>
+    #end
+
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.location"):</strong></td>
+        <td>
+            #if ($appt.location != "")
+            $appt.location
+            #end
+        </td>
+    </tr>
+
+    #if ($appt.reminder == "true")
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.reminder"):</strong></td>
+        <td>$appt.reminderText $messages.getMessage("Appointment.before")</td>
+    </tr>
+    #end
+
+    <tr>
+        <td><strong>$messages.getMessage("Task.createdBy"):</strong></td>
+        <td>$appt.createdByName</td>
+    </tr>
+
+    #if ($appt.isRecurrence == "true")
+    <tr>
+        <td><strong>$messages.getMessage("Appointment.repeat"):</strong></td>
+        <td>$appt.recurrenceText</td>
+    </tr>
+    #end
+    <tr>
+        <td colspan="2"><strong>$messages.getMessage("Appointment.description"):</strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            #if ($appt.descriptionText != "")
+            $appt.descriptionText
+            #end
+        </td>
+    </tr>
+</table>

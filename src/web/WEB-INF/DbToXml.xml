@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN" "http://www.jatun.com/titus-config-1.0.dtd">
+
+<databasestructure>
+    <modules>
+        <module name="contacts" resource="subModule.contacts"/>
+        <module name="sales" resource="module.sales"/>
+    </modules>
+
+    <converters>
+        <converter name="addressCompleteName" class="com.jatun.titus.listgenerator.structure.converter.AddressNameCompleteConverter"/>
+    </converters>
+    <database>
+        <table tablename="address" resource="Contact">
+            <fields>
+                <field fieldname="active" dbtype="boolean" resource="table.address.field.active" />
+                <field fieldname="addressid" dbtype="integer" resource="table.address.field.addressid"
+                       iscolumnview="false"/>
+                <field fieldname="addresstype" dbtype="string" resource="table.address.field.addresstype" />
+            <!--<field fieldname="bankaccountid" dbtype="integer" resource="table.address.field.bankaccountid" iscolumnview="false" />
+            <field fieldname="birthday" dbtype="integer" resource="table.address.field.birthday" />-->
+                <field fieldname="cityid" dbtype="integer" resource="table.address.field.cityid" iscolumnview="false" />
+                <field fieldname="code" dbtype="boolean" resource="table.address.field.code"/>
+                <field fieldname="companyid" dbtype="integer" resource="table.address.field.companyid"
+                       iscolumnview="false"/>
+                <field fieldname="countryid" dbtype="integer" resource="table.address.field.countryid" iscolumnview="false" />
+                <!--<field fieldname="education" dbtype="string" resource="table.address.field.education" />
+                <field fieldname="freetextid" dbtype="integer" resource="table.address.field.freetextid" iscolumnview="false" />
+                <field fieldname="housenumber" dbtype="string" resource="table.address.field.housenumber" />
+                <field fieldname="imageid" dbtype="integer" resource="table.address.field.imageid" iscolumnview="false" />
+                <field fieldname="keywords" dbtype="string" resource="table.address.field.keywords" />
+                <field fieldname="languageid" dbtype="integer" resource="table.address.field.languageid" iscolumnview="false" />
+                <field fieldname="lastmoddate" dbtype="integer" resource="table.address.field.lastmoddate" />
+                -->
+                <field fieldname="lastmoduser" dbtype="integer" resource="table.address.field.lastmoduser"
+                       iscolumnview="false"/>
+                <field fieldname="name1" dbtype="string" resource="table.address.field.name1"/>
+                <field fieldname="name2" dbtype="string" resource="table.address.field.name2"/>
+                <field fieldname="name3" dbtype="string" resource="table.address.field.name3"/>
+                <field fieldname="recorduser" dbtype="integer" resource="table.address.field.recorduser"
+                       iscolumnview="false"/>
+
+                <!--<field fieldname="personal" dbtype="boolean" resource="table.address.field.personal" />
+            <field fieldname="pobox" dbtype="string" resource="table.address.field.pobox" />
+            <field fieldname="recorddate" dbtype="integer" resource="table.address.field.recorddate" />
+
+            <field fieldname="salutationid" dbtype="integer" resource="table.address.field.salutationid" iscolumnview="false" />
+            <field fieldname="searchname" dbtype="string" resource="table.address.field.searchname" />
+            <field fieldname="street" dbtype="string" resource="table.address.field.street" />
+            <field fieldname="taxnumber" dbtype="string" resource="table.address.field.taxnumber" />
+            <field fieldname="titleid" dbtype="integer" resource="table.address.field.titleid" iscolumnview="false" />
+            <field fieldname="waydescriptionid" dbtype="integer" resource="table.address.field.waydescriptionid" iscolumnview="false" />
+            <field fieldname="zipofpobox" dbtype="string" resource="table.address.field.zipofpobox" />-->
+            </fields>
+            <compoundfields>
+                <compoundfield name="nameComplete" columntype="string" resource="address.compoundField.nameComplete"
+                               merge="false"
+                               converter="addressCompleteName">
+                    <fieldref fieldname="name1"/>
+                    <fieldref fieldname="name2"/>
+                </compoundfield>
+            </compoundfields>
+            <primarykey fields="addressid">
+                <inverserelation tablename="employee" keys="healthfund" resource="table.inverse.employee"/>
+                <inverserelation tablename="employee" keys="employeeid" resource="table.inverse.truchoemployee"/>
+                <inverserelation tablename="elwisuser" keys="addressid" resource="table.inverse.addElwisuser"/>
+                <inverserelation tablename="favorite" keys="addressid" resource="table.inverse.favorite"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="table.foreign.elwisuser">
+                    <keyref fieldref="lastmoduser" foreignfieldref="userid"/>
+                </foreignkey>
+                <!--<foreignkey foreigntableref="country" relationtype="left-join" resource="table.foreign.country">
+                  <keyref fieldref="countryid" foreignfieldref="countryid" />
+                </foreignkey>-->
+                <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="table.foreign.elwisuser">
+                    <keyref fieldref="recorduser" foreignfieldref="userid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="city" relationtype="left-join" resource="table.foreign.city" strongrelation="false">
+                    <keyref fieldref="cityid" foreignfieldref="cityid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <constantfilter fieldref="addresstype" resource="address.field.addresstype">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="address.organization"/>
+                        <value key="1" showvalue="address.person"/>
+                    </values>
+                </constantfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="city" resource="Contact.city">
+            <fields>
+                <field fieldname="cityid" dbtype="integer" resource="table.city.field.cityid" iscolumnview="false"/>
+                <field fieldname="cityname" dbtype="string" resource="table.city.field.cityname"/>
+                <field fieldname="companyid" dbtype="integer" resource="table.city.field.companyid"
+                       iscolumnview="false"/>
+                <field fieldname="countryid" dbtype="integer" resource="table.city.field.countryid"
+                       iscolumnview="false"/>
+                <field fieldname="zip" dbtype="string" resource="table.city.field.zip"/>
+            </fields>
+            <primarykey fields="cityid">
+                <!--<inverserelation tablename="elwisuser" keys="userid" resource="table.inverse.InvRelUser"/>-->
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="country" relationtype="left-join" resource="table.foreign.country">
+                    <keyref fieldref="countryid" foreignfieldref="countryid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="city.info.all" filterfieldref="cityname">
+                    <columns>
+                        <column fieldpath="city.cityname" order="asc"/>
+                        <column fieldpath="zip" order="desc"/>
+                        <column fieldpath="city>>country:countryid.countryname"/>
+                        <!--<column fieldpath="city>>country.arecode"/>-->
+                    </columns>
+                    <conditions>
+                        <group>
+                            <condition fieldpath="cityname" operator="start-with" type="parameter"/>
+                            <andcondition fieldpath="companyid" operator="equal" type="parameter" parametername="companyId"/>
+                            <!--<andgroup>
+                                <condition fieldpath="cityid" operator="greater-equal" type="constant" value="15"/>
+                                <andcondition fieldpath="cityid" operator="less-equal" type="constant" value="35"/>
+                            </andgroup>-->
+                        </group>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="country" resource="Contact.country">
+            <fields>
+                <field fieldname="areacode" dbtype="string" resource="table.country.field.areacode"/>
+                <field fieldname="companyId" dbtype="integer" resource="table.country.field.companyId"
+                       iscolumnview="false"/>
+                <field fieldname="countryid" dbtype="integer" resource="table.country.field.countryid"
+                       iscolumnview="false"/>
+                <field fieldname="countryname" dbtype="string" resource="table.country.field.countryname"/>
+                <field fieldname="currencyid" dbtype="integer" resource="table.country.field.currencyid"
+                       iscolumnview="false"/>
+                <field fieldname="prefix" dbtype="integer" resource="table.country.field.prefix"/>
+            </fields>
+
+
+            <primarykey fields="countryid">
+                <inverserelation tablename="address" keys="countryid" resource="table.inverse.address"/>
+                <inverserelation tablename="city" keys="countryid" resource="table.inverse.city"/>
+                <inverserelation tablename="elwisuser" keys="holidaycountryid" resource="table.inverse.elwisuser"/>
+            </primarykey>
+            <foreignkeys/>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="employee" resource="Contact.employee">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" resource="table.employee.field.companyid"
+                       iscolumnview="false"/>
+                <field fieldname="costcenterid" dbtype="integer" resource="table.employee.field.costcenterid"
+                       iscolumnview="false"/>
+                <field fieldname="costhour" dbtype="decimal" resource="table.employee.field.costhour"/>
+                <field fieldname="costposition" dbtype="decimal" resource="table.employee.field.costposition" istotalize="true"/>
+                <field fieldname="dateend" dbtype="integer" columntype="date" resource="table.employee.field.dateend"/>
+                <field fieldname="departmentid" dbtype="integer" resource="table.employee.field.departmentid"
+                       iscolumnview="false"/>
+                <field fieldname="employeeid" dbtype="integer" resource="table.employee.field.employeeid"
+                       iscolumnview="false"/>
+                <field fieldname="function" dbtype="string" resource="table.employee.field.function"/>
+                <field fieldname="healthfund" dbtype="integer" resource="table.employee.field.healthfund"
+                       iscolumnview="false"/>
+                <field fieldname="hiredate" dbtype="integer" columntype="date" resource="table.employee.field.hiredate"/>
+                <field fieldname="hourlyrate" dbtype="decimal" resource="table.employee.field.hourlyrate"/>
+                <field fieldname="initials" dbtype="string" resource="table.employee.field.initials"/>
+                <field fieldname="officeid" dbtype="integer" resource="table.employee.field.officeid"
+                       iscolumnview="false"/>
+                <field fieldname="socialsecnumber" dbtype="string" resource="table.employee.field.socialsecnumber"/>
+            </fields>
+            <primarykey fields="employeeid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="address" relationtype="left-join" resource="table.foreign.address">
+                    <keyref fieldref="healthfund" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join" resource="table.foreign.address"
+                            strongrelation="false">
+                    <keyref fieldref="employeeid" foreignfieldref="addressid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="elwisuser" resource="User.user">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" resource="table.elwisuser.field.addressid"
+                       iscolumnview="false"/>
+                <field fieldname="active" dbtype="boolean" resource="table.elwisuser.field.active"/>
+                <field fieldname="companyid" dbtype="integer" resource="table.elwisuser.field.companyid"
+                       iscolumnview="false"/>
+                <field fieldname="dayfragmentation" dbtype="integer" resource="table.elwisuser.field.dayfragmentation"/>
+                <field fieldname="defaultview" dbtype="integer" resource="table.elwisuser.field.defaultview"/>
+                <field fieldname="emailappointment" dbtype="string" resource="table.elwisuser.field.emailappointment"/>
+                <field fieldname="emailquestion" dbtype="string" resource="table.elwisuser.field.emailquestion"/>
+                <field fieldname="emailschetask" dbtype="string" resource="table.elwisuser.field.emailschetask"/>
+                <field fieldname="emailsupportcase" dbtype="string" resource="table.elwisuser.field.emailsupportcase"/>
+                <field fieldname="finaldaywork" dbtype="integer" resource="table.elwisuser.field.finaldaywork"/>
+                <field fieldname="favoritelanguage" dbtype="string" resource="table.elwisuser.field.favoritelanguage"/>
+                <field fieldname="hasmailaccount" dbtype="boolean" resource="table.elwisuser.field.hasmailaccount"/>
+                <field fieldname="holidaycountryid" dbtype="integer" resource="table.elwisuser.field.holidaycountryid"
+                       iscolumnview="false"/>
+                <field fieldname="initialdaywork" dbtype="integer" resource="table.elwisuser.field.initialdaywork"/>
+                <field fieldname="isdefault" dbtype="boolean" resource="table.elwisuser.field.isdefault"/>
+                <field fieldname="login" dbtype="string" resource="table.elwisuser.field.login"/>
+                <field fieldname="maxrecentlist" dbtype="short" resource="table.elwisuser.field.maxrecentlist"/>
+                <field fieldname="password" dbtype="string" resource="table.elwisuser.field.password"/>
+                <field fieldname="rangebirthdayst" dbtype="integer" resource="table.elwisuser.field.rangebirthdayst"/>
+                <field fieldname="rangebirthdayfi" dbtype="integer" resource="table.elwisuser.field.rangebirthdayfi"/>
+                <field fieldname="rowsperpage" dbtype="integer" resource="table.elwisuser.field.rowsperpage"/>
+                <field fieldname="seeprivatedata" dbtype="boolean" resource="table.elwisuser.field.seeprivatedata"/>
+                <field fieldname="timeout" dbtype="integer" resource="table.elwisuser.field.timeout"/>
+                <field fieldname="timezone" dbtype="string" resource="table.elwisuser.field.timezone"/>
+                <field fieldname="type" dbtype="boolean" resource="table.elwisuser.field.type"/>
+                <field fieldname="userid" dbtype="integer" resource="table.elwisuser.field.userid"
+                       iscolumnview="false"/>
+            </fields>
+            <primarykey fields="userid">
+                <!--<inverserelation tablename="address" keys="lastmoduser" resource="table.inverse.address"/>
+                <inverserelation tablename="favorite" keys="userid" resource="table.inverse.favorite"/>
+                <inverserelation tablename="address" keys="recorduser" resource="table.inverse.address"/>-->
+            </primarykey>
+            <foreignkeys>
+                <!--<foreignkey foreigntableref="address" relationtype="left-join" resource="table.foreign.address">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>-->
+                <foreignkey foreigntableref="country" relationtype="left-join" resource="table.foreign.country">
+                    <keyref fieldref="holidaycountryid" foreignfieldref="countryid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="favorite" resource="Contact.favorites">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" resource="table.favorite.field.addressid"
+                       iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" resource="table.favorite.field.companyid"
+                       iscolumnview="false"/>
+                <field fieldname="userid" dbtype="integer" resource="table.favorite.field.userid" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="addressid, userid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="table.foreign.elwisuser">
+                    <keyref fieldref="userid" foreignfieldref="userid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join" resource="table.foreign.address">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="employee" relationtype="left-join" resource="table.foreign.address">
+                    <keyref fieldref="addressid" foreignfieldref="employeeid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+    </database>
+</databasestructure>
+

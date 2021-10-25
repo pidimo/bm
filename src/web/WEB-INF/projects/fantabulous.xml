@@ -1,0 +1,2259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lists>
+
+    <list listName="projectBaseList" persistence="true">
+        <tables>
+            <table tableName="project" alias="project">
+                <fields>
+                    <field fieldName="projectid" fieldAlias="projectId" key="true" type="integer"/>
+                    <field fieldName="projectname" fieldAlias="projectName"/>
+                    <field fieldName="customerid" fieldAlias="projectCustomerId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="responsibleid" fieldAlias="projectUserId" type="integer"/>
+                    <field fieldName="accountid" fieldAlias="projectAccountId" type="integer"/>
+                    <field fieldName="enddate" fieldAlias="endDate" type="integer"/>
+                    <field fieldName="startdate" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="tobeinvoiced" fieldAlias="toBeInvoiced" type="integer"/>
+                    <field fieldName="plannedinvoice" fieldAlias="plannedInvoice" type="decimal"/>
+                    <field fieldName="plannednoinvoice" fieldAlias="plannedNoInvoice" type="decimal"/>
+                    <field fieldName="totalinvoice" fieldAlias="totalInvoice" type="decimal"/>
+                    <field fieldName="totalnoinvoice" fieldAlias="totalNoInvoice" type="decimal"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="hastimelimit" fieldAlias="hasTimeLimit" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="projectCustomer">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="personalUserAddressId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="userAddress">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="userAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                </fields>
+            </table>
+            <table tableName="account" alias="account">
+                <fields>
+                    <field fieldName="accountid" fieldAlias="accountId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="accountName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>addressId</pK>
+                <fK>projectCustomerId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>userId</pK>
+                <fK>projectUserId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>userAddressId</pK>
+                <fK>personalUserAddressId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>accountId</pK>
+                <fK>projectAccountId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="customerAddressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="customerAddressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="customerName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="customerName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="customerName3">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="projectName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userProjectSecurityAccessINList">
+        <tables>
+            <table tableName="projectassignee" alias="projectAssignee">
+                <fields>
+                    <field fieldName="projectid" fieldAlias="projectId_Assignee" type="integer" key="true"/>
+                    <field fieldName="addressid" fieldAlias="addressId_Assignee" type="integer" key="true"/>
+                    <field fieldName="permission" fieldAlias="permission" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="addressId_Assignee" operator="EQUAL" type="parameter" parameterName="userAddressId"/>
+            <conector>And</conector>
+            <condition fieldReference="permission" operator="GREATER" type="constant" value="0"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="projectId_Assignee"/>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="projectList" persistence="true" executeFirstTime="true" extends="projectBaseList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="projectName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE2" type="parameter" parameterName="projectNameAlpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="projectUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>Or</conector>
+                <condition fieldReference="projectId" operator="IN" type="list" value="userProjectSecurityAccessINList">
+                    <conditions>
+                        <condition fieldReference="projectId_Assignee" operator="EQUAL" type="field" value="projectId"/>
+                    </conditions>
+                </condition>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="customerName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="accountName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>accountName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="endDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>endDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="plannedInvoice">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>plannedInvoice</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="plannedNoInvoice">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>plannedNoInvoice</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="totalInvoice">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>totalInvoice</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="totalNoInvoice">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>totalNoInvoice</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toBeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toBeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Project time List-->
+    <list listName="projectTimeList_newPermission" specialList="true" persistence="true">
+        <tables>
+            <table tableName="projecttime" alias="projecttime">
+                <fields>
+                    <field fieldName="timeid" fieldAlias="timeId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="date" fieldAlias="date" type="integer"/>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId_FK" type="integer"/>
+                    <field fieldName="projectid" fieldAlias="projectId" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId_FK" type="integer"/>
+                    <field fieldName="time" fieldAlias="time" type="decimal"/>
+                    <field fieldName="tobeinvoiced" fieldAlias="tobeInvoiced" type="integer"/>
+                    <field fieldName="confirmedbyid" fieldAlias="confirmedById" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                    <field fieldName="assigneeid" fieldAlias="assigneeId" type="integer"/>
+                    <field fieldName="fromdatetime" fieldAlias="fromDateTime" type="integer"/>
+                    <field fieldName="todatetime" fieldAlias="toDateTime" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="project" alias="project">
+                <fields>
+                    <field fieldName="projectid" fieldAlias="projectId_PK" type="integer" key="true"/>
+                    <field fieldName="projectname" fieldAlias="projectName"/>
+                    <field fieldName="responsibleid" fieldAlias="projectUserId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="subproject" alias="subProject">
+                <fields>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId" type="integer" key="true"/>
+                    <field fieldName="subprojectname" fieldAlias="subProjectName"/>
+                </fields>
+            </table>
+            <table tableName="projectactivity" alias="projectActivity">
+                <fields>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId" type="integer" key="true"/>
+                    <field fieldName="activityname" fieldAlias="activityName"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="ownerUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="ownerUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="ownerAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="ownerName1"/>
+                    <field fieldName="name2" fieldAlias="ownerName2"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="assigneeAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="assigneeAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="assigneeName1"/>
+                    <field fieldName="name2" fieldAlias="assigneeName2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>projectId_PK</pK>
+                <fK>projectId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>subProjectId</pK>
+                <fK>subProjectId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>projectActivityId</pK>
+                <fK>projectActivityId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>ownerUserId</pK>
+                <fK>userId</fK>
+                <conditions>
+                    <conditions>
+                        <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+                        <conector>Or</conector>
+                        <condition fieldReference="assigneeId" operator="EQUAL" type="parameter"/>
+                    </conditions>
+                </conditions>
+            </relationShip>
+            <relationShip>
+                <pK>ownerAddressId</pK>
+                <fK>ownerAddressId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <pK>assigneeAddressId</pK>
+                <fK>assigneeId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE2" type="parameter" parameterName="projectNameAlpha"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="timeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>timeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="date">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>date</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="activityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>activityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="subProjectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="time">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>time</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toBeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tobeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="fromDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>fromDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="projectTimeRegistrationList_newPermission" persistence="true"  specialList="true" extends="projectTimeList_newPermission">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="date" operator="LIKE2" type="parameter" parameterName="invalidLumpCondition"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="projectUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>Or</conector>
+                <condition fieldReference="projectId" operator="IN" type="list" value="userProjectSecurityAccessINList">
+                    <conditions>
+                        <condition fieldReference="projectId_Assignee" operator="EQUAL" type="field" value="projectId"/>
+                    </conditions>
+                </condition>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+
+
+    <list listName="projectTimeList_viewPermission" specialList="true" persistence="true">
+        <tables>
+            <table tableName="projecttime" alias="projecttime">
+                <fields>
+                    <field fieldName="timeid" fieldAlias="timeId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="date" fieldAlias="date" type="integer"/>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId_FK" type="integer"/>
+                    <field fieldName="projectid" fieldAlias="projectId" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId_FK" type="integer"/>
+                    <field fieldName="time" fieldAlias="time" type="decimal"/>
+                    <field fieldName="tobeinvoiced" fieldAlias="tobeInvoiced" type="integer"/>
+                    <field fieldName="confirmedbyid" fieldAlias="confirmedById" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                    <field fieldName="assigneeid" fieldAlias="assigneeId" type="integer"/>
+                    <field fieldName="fromdatetime" fieldAlias="fromDateTime" type="integer"/>
+                    <field fieldName="todatetime" fieldAlias="toDateTime" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="project" alias="project">
+                <fields>
+                    <field fieldName="projectid" fieldAlias="projectId_PK" type="integer" key="true"/>
+                    <field fieldName="projectname" fieldAlias="projectName"/>
+                    <field fieldName="responsibleid" fieldAlias="projectUserId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="subproject" alias="subProject">
+                <fields>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId" type="integer" key="true"/>
+                    <field fieldName="subprojectname" fieldAlias="subProjectName"/>
+                </fields>
+            </table>
+            <table tableName="projectactivity" alias="projectActivity">
+                <fields>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId" type="integer" key="true"/>
+                    <field fieldName="activityname" fieldAlias="activityName"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="ownerUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="ownerUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="ownerAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="ownerName1"/>
+                    <field fieldName="name2" fieldAlias="ownerName2"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="assigneeAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="assigneeAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="assigneeName1"/>
+                    <field fieldName="name2" fieldAlias="assigneeName2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>projectId_PK</pK>
+                <fK>projectId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>subProjectId</pK>
+                <fK>subProjectId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>projectActivityId</pK>
+                <fK>projectActivityId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>ownerUserId</pK>
+                <fK>userId</fK>
+                <conditions>
+                    <condition fieldReference="userId" operator="DISTINCT" type="parameter"/>
+                </conditions>
+            </relationShip>
+            <relationShip>
+                <pK>ownerAddressId</pK>
+                <fK>ownerAddressId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <pK>assigneeAddressId</pK>
+                <fK>assigneeId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="status" operator="DISTINCT" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE2" type="parameter" parameterName="projectNameAlpha"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="timeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>timeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="date">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>date</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="activityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>activityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="subProjectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="time">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>time</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toBeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tobeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="fromDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>fromDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="projectTimeRegistrationList_viewPermission" persistence="true"  specialList="true" extends="projectTimeList_viewPermission">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="date" operator="LIKE2" type="parameter" parameterName="invalidLumpCondition"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="projectUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>Or</conector>
+                <condition fieldReference="projectId" operator="IN" type="list" value="userProjectSecurityAccessINList">
+                    <conditions>
+                        <condition fieldReference="projectId_Assignee" operator="EQUAL" type="field" value="projectId"/>
+                    </conditions>
+                </condition>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+
+    <list listName="projectTimeList" union="true" persistence="true">
+        <union alias="projectTimeUnion">
+            <unionList list="projectTimeList_newPermission"/>
+            <unionList list="projectTimeList_viewPermission"/>
+        </union>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions evaluateIf="new">
+                <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="assigneeId" operator="EQUAL" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="timeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>timeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="date">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>date</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="activityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>activityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="subProjectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="time">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>time</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toBeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tobeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>ownerName1</referenceField>
+                            <referenceField>ownerName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>assigneeName1</referenceField>
+                            <referenceField>assigneeName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="fromDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>fromDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="date"/>
+                <columnOrder columnName="timeId"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="projectTimeRegistrationList" union="true" persistence="true">
+        <union alias="projectTimeUnion">
+            <unionList list="projectTimeRegistrationList_newPermission"/>
+            <unionList list="projectTimeRegistrationList_viewPermission"/>
+        </union>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions evaluateIf="new">
+                <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="assigneeId" operator="EQUAL" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="timeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>timeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="date">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>date</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="activityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>activityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="subProjectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="time">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>time</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toBeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tobeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>ownerName1</referenceField>
+                            <referenceField>ownerName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>assigneeName1</referenceField>
+                            <referenceField>assigneeName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="fromDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>fromDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="date"/>
+                <columnOrder columnName="timeId"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="projectByUserList" extends="projectTimeList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="projectName" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="subProjectTimeList" persistence="true">
+        <tables>
+            <table tableName="projecttime" alias="projecttime">
+                <fields>
+                    <field fieldName="timeid" fieldAlias="timeId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="date" fieldAlias="date" type="integer"/>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId_FK" type="integer"/>
+                    <field fieldName="projectid" fieldAlias="projectId" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId_FK" type="integer"/>
+                    <field fieldName="time" fieldAlias="time" type="decimal"/>
+                    <field fieldName="tobeinvoiced" fieldAlias="tobeInvoiced" type="integer"/>
+                    <field fieldName="confirmedbyid" fieldAlias="confirmedById" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                    <field fieldName="assigneeid" fieldAlias="assigneeId" type="integer"/>
+                    <field fieldName="fromdatetime" fieldAlias="fromDateTime" type="integer"/>
+                    <field fieldName="todatetime" fieldAlias="toDateTime" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="project" alias="project">
+                <fields>
+                    <field fieldName="projectid" fieldAlias="projectId_PK" type="integer" key="true"/>
+                    <field fieldName="projectname" fieldAlias="projectName"/>
+                </fields>
+            </table>
+            <table tableName="subproject" alias="subProject">
+                <fields>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId" type="integer" key="true"/>
+                    <field fieldName="subprojectname" fieldAlias="subProjectName"/>
+                </fields>
+            </table>
+            <table tableName="projectactivity" alias="projectActivity">
+                <fields>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId" type="integer" key="true"/>
+                    <field fieldName="activityname" fieldAlias="activityName"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="ownerUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="ownerUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="ownerAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="ownerName1"/>
+                    <field fieldName="name2" fieldAlias="ownerName2"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="assigneeAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="assigneeAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="assigneeName1"/>
+                    <field fieldName="name2" fieldAlias="assigneeName2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>projectId_PK</pK>
+                <fK>projectId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>subProjectId</pK>
+                <fK>subProjectId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>projectActivityId</pK>
+                <fK>projectActivityId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>ownerUserId</pK>
+                <fK>userId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>ownerAddressId</pK>
+                <fK>ownerAddressId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>assigneeAddressId</pK>
+                <fK>assigneeId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="subProjectId_FK" operator="EQUAL" type="parameter" parameterName="subProjectId"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="timeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>timeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="date">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>date</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="activityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>activityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="subProjectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="time">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>time</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toBeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tobeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>ownerName1</referenceField>
+                            <referenceField>ownerName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>assigneeName1</referenceField>
+                            <referenceField>assigneeName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="fromDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>fromDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="date"/>
+                <columnOrder columnName="timeId"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--ProjectUser List-->
+    <list listName="projectUserList" persistence="true">
+        <tables>
+            <table tableName="projectassignee" alias="projectAssignee">
+                <fields>
+                    <field fieldName="projectid" fieldAlias="projectId" type="integer" key="true"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer" key="true"/>
+                    <field fieldName="permission" fieldAlias="permission" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addressId_PK</pK>
+                <fK>addressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="addressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="name1" operator="LIKE2" type="parameter" parameterName="lastName"/>
+                <conector>Or</conector>
+                <condition fieldReference="name2" operator="LIKE2" type="parameter" parameterName="firstName"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchName" operator="LIKE2" type="parameter"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="permission">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>permission</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--SubProject List-->
+    <list listName="subProjectList" persistence="true">
+        <tables>
+            <table tableName="subproject" alias="subProject">
+                <fields>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId" type="integer" key="true"/>
+                    <field fieldName="projectid" fieldAlias="projectId_FK" type="integer"/>
+                    <field fieldName="subprojectname" fieldAlias="subProjectName"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="subProjectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId_FK" operator="EQUAL" type="parameter" parameterName="projectId"/>
+            <conector>And</conector>
+            <condition fieldReference="subProjectName" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="subProjectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="subProjectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId_FK</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="subProjectName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Project Activity List-->
+    <list listName="projectActivityList" persistence="true">
+        <tables>
+            <table tableName="projectactivity" alias="projectActivity">
+                <fields>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId" type="integer" key="true"/>
+                    <field fieldName="projectid" fieldAlias="projectId_FK" type="integer"/>
+                    <field fieldName="activityname" fieldAlias="activityName"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectActivityId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId_FK" operator="EQUAL" type="parameter" parameterName="projectId"/>
+            <conector>And</conector>
+            <condition fieldReference="activityName" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="activityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>activityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectActivityId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectActivityId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="activityName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="projectTimeLimitList" persistence="true">
+        <tables>
+            <table tableName="projecttimelimit" alias="projectTimeLimit">
+                <fields>
+                    <field fieldName="timelimitid" fieldAlias="timeLimitId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="projectid" fieldAlias="projectId" type="integer"/>
+                    <field fieldName="assigneeid" fieldAlias="assigneeId" type="integer"/>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId" type="integer"/>
+                    <field fieldName="hastimelimit" fieldAlias="hasTimeLimit" type="integer"/>
+                    <field fieldName="invoicelimit" fieldAlias="invoiceLimit" type="decimal"/>
+                    <field fieldName="noinvoicelimit" fieldAlias="noInvoiceLimit" type="decimal"/>
+                </fields>
+            </table>
+            <table tableName="subproject" alias="subProject">
+                <fields>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId_PK" type="integer" key="true"/>
+                    <field fieldName="subprojectname" fieldAlias="subProjectName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>subProjectId_PK</pK>
+                <fK>subProjectId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>addressId</pK>
+                <fK>assigneeId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="timeLimitId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="timeLimitId"/>
+                <column columnName="companyId"/>
+                <column columnName="projectId"/>
+                <column columnName="subProjectName"/>
+                <column columnName="invoiceLimit"/>
+                <column columnName="noInvoiceLimit"/>
+                <column columnName="assigneeName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="assigneeName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--Elwis User List-->
+    <list listName="elwisUserList" persistence="true">
+        <tables>
+            <table tableName="elwisuser" alias="elwisUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId_PK" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addressId_PK</pK>
+                <fK>addressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="name1" operator="LIKE2" type="parameter" parameterName="lastName"/>
+                <conector>Or</conector>
+                <condition fieldReference="name2" operator="LIKE2" type="parameter" parameterName="firstName"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchName" operator="LIKE2" type="parameter"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId_PK</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--begin Alvaro-->
+    <list listName="projectReportList" extends="projectList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="projectUserId" operator="EQUAL" type="parameter" parameterName="responsibleId"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startStartDate"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="endStartDate"/>
+            <conector>And</conector>
+            <condition fieldReference="toBeInvoiced" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="endDate" operator="GREATER_EQUAL" type="parameter" parameterName="startEndDate"/>
+            <conector>And</conector>
+            <condition fieldReference="endDate" operator="LESS_EQUAL" type="parameter" parameterName="endEndDate"/>
+            <conector>And</conector>
+            <condition fieldReference="hasTimeLimit" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="status" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectAccountId" operator="EQUAL" type="parameter" parameterName="accountId"/>
+            <conector>And</conector>
+            <condition fieldReference="plannedInvoice" operator="GREATER_EQUAL" type="parameter" parameterName="plannedAmount1"/>
+            <conector>And</conector>
+            <condition fieldReference="plannedInvoice" operator="LESS_EQUAL" type="parameter" parameterName="plannedAmount2"/>
+            <conector>And</conector>
+            <condition fieldReference="totalInvoice" operator="GREATER_EQUAL" type="parameter" parameterName="totalInvoiceAmount1"/>
+            <conector>And</conector>
+            <condition fieldReference="totalInvoice" operator="LESS_EQUAL" type="parameter" parameterName="totalInvoiceAmount2"/>
+            <conector>And</conector>
+            <condition fieldReference="plannedNoInvoice" operator="GREATER_EQUAL" type="parameter" parameterName="plannedNoAmount1"/>
+            <conector>And</conector>
+            <condition fieldReference="plannedNoInvoice" operator="LESS_EQUAL" type="parameter" parameterName="plannedNoAmount2"/>
+            <conector>And</conector>
+            <condition fieldReference="totalNoInvoice" operator="GREATER_EQUAL" type="parameter" parameterName="totalNoInvoiceAmount1"/>
+            <conector>And</conector>
+            <condition fieldReference="totalNoInvoice" operator="LESS_EQUAL" type="parameter" parameterName="totalNoInvoiceAmount2"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="name1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="name2" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchName" operator="LIKE" type="parameter"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="hasTimeLimit">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>hasTimeLimit</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="startDate"/>
+                <columnOrder columnName="projectName"/>
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="projectListForPopUp" executeFirstTime="true" extends="projectList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+    <list listName="subProjectListForSelect" persistence="true" extends="subProjectList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+    <list listName="projectUserForSelectList" persistence="true" extends="projectUserList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+    <list listName="projectActivityForSelectList" persistence="true" extends="projectActivityList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+    <list listName="projectTimeReportList" persistence="true">
+        <tables>
+            <table tableName="projecttime" alias="projecttime">
+                <fields>
+                    <field fieldName="timeid" fieldAlias="timeId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="date" fieldAlias="projectDate" type="integer"/>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId_FK" type="integer"/>
+                    <field fieldName="projectid" fieldAlias="projectId_FK" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId_FK" type="integer"/>
+                    <field fieldName="time" fieldAlias="time" type="decimal"/>
+                    <field fieldName="tobeinvoiced" fieldAlias="toBeInvoiced" type="integer"/>
+                    <field fieldName="confirmedbyid" fieldAlias="confirmedById" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                    <field fieldName="assigneeid" fieldAlias="assigneeId_FK" type="integer"/>
+                    <field fieldName="descriptionid" fieldAlias="freeTextId_FK" type="integer"/>
+                    <field fieldName="fromdatetime" fieldAlias="fromDateTime" type="integer"/>
+                    <field fieldName="todatetime" fieldAlias="toDateTime" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="subproject" alias="subProject">
+                <fields>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId" type="integer" key="true"/>
+                    <field fieldName="subprojectname" fieldAlias="subProjectName"/>
+                </fields>
+            </table>
+            <table tableName="projectactivity" alias="projectActivity">
+                <fields>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId" type="integer" key="true"/>
+                    <field fieldName="activityname" fieldAlias="activityName"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="ownerUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="ownerUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="assigneeAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="assigneeAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="assigneeName1"/>
+                    <field fieldName="name2" fieldAlias="assigneeName2"/>
+                    <field fieldName="searchname" fieldAlias="assigneeSearchName"/>
+                </fields>
+            </table>
+            <table tableName="project" alias="project">
+                <fields>
+                    <field fieldName="projectid" fieldAlias="projectId" key="true" type="integer"/>
+                    <field fieldName="projectname" fieldAlias="projectName"/>
+                    <field fieldName="responsibleid" fieldAlias="projectUserId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="freetext" alias="descriptionFreeText">
+                <fields>
+                    <field fieldName="freetextid" fieldAlias="freeTextId" key="true" type="integer"/>
+                    <field fieldName="freetextvalue" fieldAlias="freeTextValue" type="binary"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>subProjectId</pK>
+                <fK>subProjectId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>projectActivityId</pK>
+                <fK>projectActivityId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>ownerUserId</pK>
+                <fK>userId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>assigneeAddressId</pK>
+                <fK>assigneeId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <pK>projectId</pK>
+                <fK>projectId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <pK>freeTextId</pK>
+                <fK>freeTextId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="activityName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectDate" operator="GREATER_EQUAL" type="parameter" parameterName="startProjectTime"/>
+            <conector>And</conector>
+            <condition fieldReference="projectDate" operator="LESS_EQUAL" type="parameter" parameterName="endProjectTime"/>
+            <conector>And</conector>
+            <condition fieldReference="time" operator="GREATER_EQUAL" type="parameter" parameterName="timeFrom"/>
+            <conector>And</conector>
+            <condition fieldReference="time" operator="LESS_EQUAL" type="parameter" parameterName="timeTo"/>
+            <conector>And</conector>
+            <condition fieldReference="subProjectName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="toBeInvoiced" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="assigneeAddressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectActivityId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="subProjectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE2" type="parameter" parameterName="projectNameAlpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="assigneeName1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="assigneeName2" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="assigneeSearchName" operator="LIKE" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="projectUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>Or</conector>
+                <condition fieldReference="projectId" operator="IN" type="list" value="userProjectSecurityAccessINList">
+                    <conditions>
+                        <condition fieldReference="projectId_Assignee" operator="EQUAL" type="field" value="projectId"/>
+                    </conditions>
+                </condition>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="timeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>timeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="activityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>activityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="subProjectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="time">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>time</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toBeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toBeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeAddressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>assigneeAddressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="assigneeName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>assigneeName1</referenceField>
+                            <referenceField>assigneeName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="projectActivityId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>projectActivityId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="subProjectId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subProjectId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="freeTextValue">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>freeTextValue</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="fromDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>fromDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="toDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="projectDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="projectTimeSummaryReportList" persistence="true">
+        <tables>
+            <table tableName="projecttime" alias="projecttime">
+                <fields>
+                    <field fieldName="timeid" fieldAlias="timeId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="date" fieldAlias="projectDate" type="integer"/>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId_FK" type="integer"/>
+                    <field fieldName="projectid" fieldAlias="projectId_FK" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId_FK" type="integer"/>
+                    <field fieldName="time" fieldAlias="time" type="decimal"/>
+                    <field fieldName="tobeinvoiced" fieldAlias="toBeInvoiced" type="integer"/>
+                    <field fieldName="confirmedbyid" fieldAlias="confirmedById" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                    <field fieldName="assigneeid" fieldAlias="assigneeId_FK" type="integer"/>
+                    <field fieldName="descriptionid" fieldAlias="freeTextId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="subproject" alias="subProject">
+                <fields>
+                    <field fieldName="subprojectid" fieldAlias="subProjectId" type="integer" key="true"/>
+                    <field fieldName="subprojectname" fieldAlias="subProjectName"/>
+                </fields>
+            </table>
+            <table tableName="projectactivity" alias="projectActivity">
+                <fields>
+                    <field fieldName="projectactivityid" fieldAlias="projectActivityId" type="integer" key="true"/>
+                    <field fieldName="activityname" fieldAlias="activityName"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="ownerUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="ownerUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="assigneeAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="assigneeAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="assigneeName1"/>
+                    <field fieldName="name2" fieldAlias="assigneeName2"/>
+                    <field fieldName="searchname" fieldAlias="assigneeSearchName"/>
+                </fields>
+            </table>
+            <table tableName="project" alias="project">
+                <fields>
+                    <field fieldName="projectid" fieldAlias="projectId" key="true" type="integer"/>
+                    <field fieldName="projectname" fieldAlias="projectName"/>
+                </fields>
+            </table>
+            <table tableName="freetext" alias="descriptionFreeText">
+                <fields>
+                    <field fieldName="freetextid" fieldAlias="freeTextId" key="true" type="integer"/>
+                    <field fieldName="freetextvalue" fieldAlias="freeTextValue" type="binary"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="sum" alias="timeSum">
+                <param type="field" field="time"/>
+            </function>
+        </functions>
+        <relationShips>
+            <relationShip>
+                <pK>subProjectId</pK>
+                <fK>subProjectId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>projectActivityId</pK>
+                <fK>projectActivityId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>ownerUserId</pK>
+                <fK>userId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>assigneeAddressId</pK>
+                <fK>assigneeId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <pK>projectId</pK>
+                <fK>projectId_FK</fK>
+            </relationShip>
+            <relationShip>
+                <pK>freeTextId</pK>
+                <fK>freeTextId_FK</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="activityName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectDate" operator="GREATER_EQUAL" type="parameter" parameterName="startProjectTime"/>
+            <conector>And</conector>
+            <condition fieldReference="projectDate" operator="LESS_EQUAL" type="parameter" parameterName="endProjectTime"/>
+            <conector>And</conector>
+            <condition fieldReference="time" operator="GREATER_EQUAL" type="parameter" parameterName="timeFrom"/>
+            <conector>And</conector>
+            <condition fieldReference="time" operator="LESS_EQUAL" type="parameter" parameterName="timeTo"/>
+            <conector>And</conector>
+            <condition fieldReference="subProjectName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="toBeInvoiced" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="assigneeAddressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectActivityId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="subProjectId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="projectName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="assigneeName1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="assigneeName2" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="assigneeSearchName" operator="LIKE" type="parameter"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="toBeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>toBeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="timeSum">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">timeSum</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="toBeInvoiced"/>
+            </defaultOrder>
+            <groupBy>
+                <columnGroup columnName="toBeInvoiced"/>
+            </groupBy>
+        </configuration>
+    </list>
+
+    <list listName="projectTimeAdvancedSearchList" extends="projectTimeReportList" persistence="true">
+        <tables>
+            <table tableName="address" alias="ownerAddressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="ownerAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="ownerName1"/>
+                    <field fieldName="name2" fieldAlias="ownerName2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>ownerAddressId</pK>
+                <fK>ownerAddressId_FK</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="status" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>ownerName1</referenceField>
+                            <referenceField>ownerName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="projectDate"/>
+                <columnOrder columnName="assigneeName" orderBy="ASC"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--end Alvaro-->
+</lists>

@@ -1,0 +1,12 @@
+<mbean code="org.jboss.varia.scheduler.Scheduler" name=":service=ContractReminderScheduler">
+    <attribute name="StartAtStartup">true</attribute>
+    <attribute name="SchedulableClass">com.piramide.elwis.plugins.jboss.scheduler.SchedulableContractEndReminder</attribute>
+    <attribute name="SchedulableArguments">3600000</attribute>
+    <attribute name="SchedulableArgumentTypes">long</attribute>
+    <attribute name="InitialStartDate">0</attribute>
+    <attribute name="SchedulePeriod">3600000</attribute>
+    <!--schedule every 1 hour-->
+    <attribute name="InitialRepetitions">-1</attribute>
+    <depends>jboss:service=Naming</depends>
+    <depends>jboss.j2ee:jndiName=Elwis.ContractEndReminderService,service=EJB</depends>
+</mbean>

@@ -1,0 +1,14 @@
+ENABLE A NEW LOCALE IN BUSINESS MANAGER
+=======================================
+1. Insert SYSTEMLANGUAGE into systemconstant table. e.g. insert into systemconstant (description, name, resourcekey, type, value) values ('French resource language', 'FRENCH', 'Common.french', 'SYSTEMLANGUAGE', 'fr');
+2. Insert Common.'locale' into the resources.
+2. Put the locale.gif into the /layout/ui/img/locale/ directory in web
+3. Ensure the ApplicationResources_locale.properties is in the classpath (check date and decimal patterns).
+4. Ensure the SalesServiceResources_locale.properties is in the classpath.
+5. Ensure the ReminderResources_locale.properties is in the classpath.
+6. Ensure the WebmailServiceResources_locale.properties is in the classpath.
+7. If you want to integrate AppResources application into the build, modify gen-resources ant task.
+8. Add TITUS language support.
+9. Add Fantabulous language support.
+10. Add the  language support to  Word Plugin source code and Installer.
+

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN"
+    "http://www.jatun.com/titus-config-1.0.dtd">
+
+<databasestructure>
+<database>
+    <table tablename="competitorproduct" resource="Report.functionality.productCompetitor">
+        <fields>
+            <field fieldname="changedate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="Competitor.changeDate"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="competitorid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="compproductid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="entrydate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="Competitor.entryDate"/>
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="productname" dbtype="string" resource="Product.name"/>
+            <field fieldname="description" dbtype="string" resource="Competitor.description"/>
+            <field fieldname="price" dbtype="decimal" resource="Competitor.price" istotalize="true" converter="decimalConverter"/>
+        </fields>
+        <primarykey fields="compproductid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="product" relationtype="left-join" resource="Report.foreignRelation.product" >
+                <keyref fieldref="productid" foreignfieldref="productid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="address" relationtype="left-join" resource="Report.foreignRelation.competitor">
+                <keyref fieldref="competitorid" foreignfieldref="addressid"/>
+                <overwriteresources>
+                <overwrite field="addressName" resource="Competitor.competitorName"/>
+            </overwriteresources>
+            </foreignkey>
+        </foreignkeys>
+        <relationfilter>
+        <columns>
+            <column fieldpath="competitorproduct->address:competitorid.addressName" resource="Competitor.competitorName" order="asc"/>
+            <column fieldpath="entrydate"/>
+            <column fieldpath="price"/>
+            <column fieldpath="productname"/>
+        </columns>
+        <conditions>
+            <condition fieldpath="competitorproduct->address:competitorid.addressName"  operator="start-with" type="parameter"/>
+        </conditions>
+    </relationfilter>
+        <modulefunctionality>
+            <functionality module="products"/>
+        </modulefunctionality>
+    </table>
+
+    <table tablename="pricing" resource="Report.functionality.pricing">
+        <fields>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="price" dbtype="decimal" resource="Product.price" istotalize="true" converter="decimalConverter"/>
+            <field fieldname="quantity" dbtype="integer" resource="Product.quantity" istotalize="true"/>
+        </fields>
+        <primarykey fields="productid, quantity"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="product" relationtype="left-join" resource="Report.foreignRelation.product" >
+                <keyref fieldref="productid" foreignfieldref="productid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="products"/>
+        </modulefunctionality>
+    </table>
+
+    <table tablename="prodsupplier" resource="Report.functionality.productSupplier">
+        <fields>
+            <field fieldname="active" dbtype="integer" columntype="boolean" converter="activeConverter" resource="Common.active"  />
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="discount" dbtype="decimal" resource="SupplierProduct.discount" istotalize="true"  converter="decimalConverter"/>
+            <field fieldname="partnumber" dbtype="string" resource="SupplierProduct.orderNumber"/>
+            <field fieldname="price" dbtype="decimal" resource="SupplierProduct.price" istotalize="true" converter="decimalConverter"/>
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="supplierid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="unitid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="productid, supplierid">
+        </primarykey>
+        <foreignkeys>
+            <foreignkey foreigntableref="supplier" relationtype="left-join" resource="Report.foreignRelation.supplier" >
+                <keyref fieldref="supplierid" foreignfieldref="supplierid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="product" relationtype="left-join" resource="Report.foreignRelation.product"  >
+                <keyref fieldref="productid" foreignfieldref="productid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="contactperson" relationtype="left-join" resource="Report.foreignRelation.contactPerson">
+                <keyref fieldref="supplierid" foreignfieldref="addressid"/>
+                <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="productunit" relationtype="left-join" resource="Report.foreignRelation.productUnit" >
+                <keyref fieldref="unitid" foreignfieldref="unitid"/>
+            </foreignkey>
+        </foreignkeys>
+        <filters>
+            <constantfilter fieldref="active" resource="Common.active">
+                <values typevalue="resource">
+                    <value key="0" showvalue="Common.inactive"/>
+                    <value key="1" showvalue="Common.active"/>
+                </values>
+            </constantfilter>
+        </filters>
+        <modulefunctionality>
+            <functionality module="products"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="product" resource="Report.functionality.product">
+        <fields>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="currentversion" dbtype="string" resource="Product.version"  />
+            <field fieldname="descriptionid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="price" dbtype="decimal" resource="Product.priceNet"  istotalize="true" converter="decimalConverter"/>
+            <field fieldname="pricegross" dbtype="decimal" resource="Product.priceGross"  istotalize="true" converter="decimalConverter"/>
+            <field fieldname="productgroupid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="productname" dbtype="string" resource="Product.name"/>
+            <field fieldname="productnumber" dbtype="string"  resource="Product.number"  />
+            <field fieldname="producttypeid" dbtype="integer" iscolumnview="false"  />
+            <field fieldname="unitid" dbtype="integer"  iscolumnview="false"  />
+            <field fieldname="accountid" dbtype="integer"  iscolumnview="false"  />
+        </fields>
+        <primarykey fields="productid">
+            <inverserelation relationtype="left-join" tablename="productpicture" keys="productid" resource="Report.inverseRelation.productPicture"/>
+            <inverserelation relationtype="left-join" tablename="competitorproduct" keys="productid" resource="Report.inverseRelation.productCompetitor"/>
+            <!--<inverserelation relationtype="left-join" tablename="productcategory" keys="productid" resource="Product.category"/>-->
+            <inverserelation relationtype="left-join" tablename="prodsupplier" keys="productid" resource="Report.inverseRelation.productSupplier"/>
+            <inverserelation relationtype="left-join" tablename="pricing" keys="productid" resource="Report.inverseRelation.pricing"/>
+
+                                                <!--ADD-->
+            <inverserelation relationtype="left-join" tablename="supportcase" keys="productid" resource="Report.inverseRelation.supportCase" />
+            <inverserelation relationtype="left-join" tablename="articlequestion" keys="productid" resource="Report.inverseRelation.articleQuestion" />
+            <inverserelation relationtype="left-join" tablename="actionposition" keys="productid" resource="Report.inverseRelation.actionPosition" />
+            <inverserelation relationtype="left-join" tablename="article" keys="productid" resource="Report.inverseRelation.article" />
+            <inverserelation relationtype="left-join" tablename="supportuser" keys="productid" resource="Report.inverseRelation.supportUser" />
+            <inverserelation relationtype="left-join" tablename="saleposition" keys="productid" resource="Report.inverseRelation.salePosition"/>
+            <inverserelation relationtype="left-join" tablename="invoiceposition" keys="productid"  resource="Report.inverseRelation.invoicePosition"/>
+        </primarykey>
+
+        <foreignkeys>
+            <foreignkey foreigntableref="producttype" relationtype="left-join" resource="Report.foreignRelation.productType" >
+                <keyref fieldref="producttypeid" foreignfieldref="typeid"/>
+                <overwriteresources>
+                    <overwrite field="typename" resource="Product.type"/>
+                </overwriteresources>
+            </foreignkey>
+            <foreignkey foreigntableref="freetext" relationtype="left-join" resource="Report.foreignRelation.freetext.product.description" strongrelation="true">
+                <keyref fieldref="descriptionid" foreignfieldref="freetextid"/>
+            <overwriteresources>
+                <overwrite field="freetextvalue" resource="Product.description"/>
+            </overwriteresources>
+            </foreignkey>
+            <foreignkey foreigntableref="productunit" relationtype="left-join" resource="Report.foreignRelation.productUnit">
+                <keyref fieldref="unitid" foreignfieldref="unitid"/>
+                <overwriteresources>
+                <overwrite field="unitname" resource="Product.unit"/>
+            </overwriteresources>
+            </foreignkey>
+            <foreignkey foreigntableref="productgroup" relationtype="left-join" resource="Report.foreignRelation.productGroup">
+                  <keyref fieldref="productgroupid" foreignfieldref="groupid"/>
+                <overwriteresources>
+                    <overwrite field="groupname" resource="ProductGroup.name"/>
+                </overwriteresources>
+            </foreignkey>
+            <foreignkey foreigntableref="account" relationtype="left-join" resource="Report.foreignRelation.account">
+                <keyref fieldref="accountid" foreignfieldref="accountid"/>
+            </foreignkey>
+        </foreignkeys>
+        <dynamiccolumns>
+            <dynamiccolumn loadcolumnclass="com.piramide.elwis.web.reports.dynamiccolumns.ProductCategoryColumnLoader">
+                <dynamicforeignkey foreigntableref="categfieldvalue" relationtype="left-join" columnkeyfield="categoryid" columnkeyparam="CATEGORY_ID">
+                    <keyref fieldref="productid" foreignfieldref="productid"/>
+                </dynamicforeignkey>
+            </dynamiccolumn>
+        </dynamiccolumns>
+
+         <filters>
+            <foreignfilter resource="Product.title" filterfieldref="productname">
+                <columns>
+                    <column fieldpath="productname" order="asc" />
+                    <column fieldpath="productnumber" order="asc"/>
+                    <column fieldpath="product>>productunit:unitid.unitname" resource="Product.unit"/>
+                    <column fieldpath="product>>productgroup:productgroupid.groupname" resource="ProductGroup.name"/>
+                    <column fieldpath="price" />
+                    <column fieldpath="pricegross" />
+                </columns>
+                <conditions>
+                        <condition fieldpath="productname" operator="start-with" type="parameter"/>
+                </conditions>
+            </foreignfilter>
+        </filters>
+        <modulefunctionality>
+            <functionality module="products"/>
+        </modulefunctionality>
+    </table>
+    <!--<table tablename="productcategory" resource="Product.category">
+        <fields>
+            <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="categoryvalueid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="categoryid, categoryvalueid, productid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="category" relationtype="left-join" resource="CategoryValue.category">
+                <keyref fieldref="categoryid" foreignfieldref="categoryid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="product" relationtype="left-join" resource="Product.title" >
+                <keyref fieldref="productid" foreignfieldref="productid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="categoryvalue" relationtype="left-join" resource="ReferencedBy.table.categoryvalue" >
+                <keyref fieldref="categoryvalueid" foreignfieldref="categoryvalueid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="products"/>
+        </modulefunctionality>
+    </table>-->
+    <table tablename="productpicture" resource="Report.functionality.productPicture">
+        <fields>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="name" dbtype="string" resource="ProductPicture.name"/>
+            <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="size" dbtype="integer" resource="ProductPicture.size" converter="productPictureConverter" istotalize="true"/>
+            <field fieldname="uploaddate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="ProductPicture.uploadDate"/>
+        </fields>
+        <primarykey fields="freetextid, productid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="product" relationtype="left-join" resource="Report.foreignRelation.product" >
+                <keyref fieldref="productid" foreignfieldref="productid"/>
+            </foreignkey>
+        </foreignkeys>
+        <modulefunctionality>
+            <functionality module="products"/>
+        </modulefunctionality>
+    </table>
+
+</database>
+</databasestructure>

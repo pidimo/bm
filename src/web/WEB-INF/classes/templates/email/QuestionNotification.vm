@@ -1,0 +1,29 @@
+#parse("templates/email/includes/header.vm")
+<table>
+    <tr>
+        <td width="15%"><strong>$messages.getMessage("Question.summary"):</strong></td>
+        <td width="85%">$question.summary</td>
+    </tr>
+    <tr>
+        <td width="15%"><strong>$messages.getMessage("Article.productName"):</strong></td>
+        <td width="85%">$question.productName</td>
+    </tr>
+    <tr>
+        <td width="15%"><strong>$messages.getMessage("Article.categoryName"):</strong></td>
+        <td width="85%">$question.category</td>
+    </tr>
+    <tr>
+        <td width="15%"><strong>$messages.getMessage("Question.askedBy"):</strong></td>
+        <td width="85%">$question.askedBy</td>
+    </tr>
+    <tr>
+        <td width="15%"><strong>$messages.getMessage("Question.AskedOn"):</strong></td>
+        <td width="85%">$messages.getDateMillisFormatted($question.askedOn, "dateTimePattern", $question.timeZone)</td>
+    </tr>
+    <tr>
+        <td colspan="2"><strong>$messages.getMessage("Common.detail"):</strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">$question.description</td>
+    </tr>
+</table>

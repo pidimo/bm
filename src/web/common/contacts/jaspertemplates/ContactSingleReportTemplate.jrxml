@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+        name="contactsinglereporttemplate"
+        columnCount="1"
+        printOrder="Vertical"
+        orientation="Portrait"
+        pageWidth="595"
+        pageHeight="792"
+        columnWidth="500"
+        columnSpacing="0"
+        leftMargin="40"
+        rightMargin="40"
+        topMargin="40"
+        bottomMargin="40"
+        whenNoDataType="AllSectionsNoDetail"
+        isTitleNewPage="false"
+        isSummaryNewPage="false"
+        resourceBundle="com.piramide.elwis.web.resources.ApplicationResources">
+    <property name="ireport.scriptlethandling" value="0"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+
+    <style
+            name="ReportTitle"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="17"
+            isBold="true"
+            pdfFontName="Verdana-Bold"
+            />
+    <style
+            name="ReportSubTitle"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="14"
+            isBold="true"
+            pdfFontName="Verdana-Bold"
+            />
+    <style
+            name="ReportDetail"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="9"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            />
+    <style
+            name="ReportHeader"
+            isDefault="false"
+            fontName="Verdana"
+            fontSize="9"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            />
+    <style
+            name="Row_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            />
+    <style
+            name="ColumnHeader_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="true"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            />
+    <style
+            name="PageNumber_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            />
+    <style
+            name="GroupHeader_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="true"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            />
+    <style
+            name="GroupFooter_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            />
+    <style
+            name="Summary_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            />
+
+    <parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+        <defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+    </parameter>
+
+    <background>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </background>
+    <title>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </title>
+    <pageHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="320" isSplitAllowed="true">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportTitle"
+                        x="0"
+                        y="0"
+                        width="400"
+                        height="15"
+                        key="textField-1"
+                        positionType="Float"/>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                                $P{COLUMN_FORMAT_addressName},
+                                (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                    new com.jatun.titus.reportgenerator.util.Pair("name1",$F{name1}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("name2",$F{name2}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("name3",$F{name3}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("addressType",$F{addressType})
+                                }),
+                                $P{FANTABULOUS_PARAMETERS})]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="21"
+                        width="250"
+                        height="12"
+                        key="textField-2"
+                        positionType="Float"/>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{Contact.summary.address}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportDetail"
+                        x="0"
+                        y="61"
+                        width="250"
+                        height="12"
+                        key="textField-3"
+                        positionType="Float"/>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_countryName},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("countryName",$F{countryName})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportDetail"
+                        x="0"
+                        y="49"
+                        width="250"
+                        height="12"
+                        key="textField-3"
+                        positionType="Float"/>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_zip},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("zip",$F{zip})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})
++" "+
+com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_cityName},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("cityName",$F{cityName})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportDetail"
+                        x="0"
+                        y="37"
+                        width="250"
+                        height="12"
+                        key="textField-5"
+                        positionType="Float"/>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                            com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                            $P{COLUMN_FORMAT_streetAddress},
+                            (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                new com.jatun.titus.reportgenerator.util.Pair("street",$F{street}),
+                                new com.jatun.titus.reportgenerator.util.Pair("houseNumber",$F{houseNumber})
+                            }),
+                            $P{FANTABULOUS_PARAMETERS})]]></textFieldExpression>
+            </textField>
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="112"
+                        width="400"
+                        height="40"
+                        key="subreport_telecoms"
+                        positionType="Float">
+                    <printWhenExpression>
+                        <![CDATA[$P{ISCONTACTPERSON}.booleanValue()?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CONTACT_TELECOMS}]]></subreportExpression>
+            </subreport>
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="158"
+                        width="500"
+                        height="40"
+                        key="subreport-addressContactPersons"
+                        positionType="Float">
+                    <printWhenExpression>
+                        <![CDATA[$P{ISCONTACTPERSON}.booleanValue()?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CONTACT_CONTACT_PERSONS}]]></subreportExpression>
+            </subreport>
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="204"
+                        width="500"
+                        height="40"
+                        key="subreport-contactPersonComm"
+                        positionType="Float">
+                    <printWhenExpression>
+                        <![CDATA[Boolean.valueOf($P{ISCONTACTPERSON}.booleanValue() && $P{SHOW_COMMUNICATIONS}.booleanValue())]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CONTACTPERSON_COMMUNICATION}]]></subreportExpression>
+            </subreport>
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="250"
+                        width="500"
+                        height="40"
+                        key="subreport-addressComm"
+                        positionType="Float">
+                    <printWhenExpression>
+                        <![CDATA[Boolean.valueOf(!$P{ISCONTACTPERSON}.booleanValue() && $P{SHOW_COMMUNICATIONS}.booleanValue())]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CONTACT_COMMUNICATIONS}]]></subreportExpression>
+            </subreport>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportSubTitle"
+                        x="0"
+                        y="77"
+                        width="200"
+                        height="12"
+                        key="textField-6"
+                        positionType="Float">
+                    <printWhenExpression>new Boolean(!$P{WAYDESCRIPTION}.equals(""))</printWhenExpression>
+                </reportElement>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{Contact.wayDescription}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ReportDetail"
+                        x="0"
+                        y="93"
+                        width="430"
+                        height="12"
+                        key="textField-7"
+                        positionType="Float"/>
+                <box leftPadding="1" bottomPadding="1" rightPadding="1"/>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{WAYDESCRIPTION}]]></textFieldExpression>
+            </textField>
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="112"
+                        width="419"
+                        height="40"
+                        key="contactPersonInfo_subreport"
+                        positionType="Float">
+                    <printWhenExpression>
+                        <![CDATA[Boolean.valueOf($P{ISCONTACTPERSON}.booleanValue())]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CONTACTPERSON_INFO}]]></subreportExpression>
+            </subreport>
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="158"
+                        width="400"
+                        height="40"
+                        key="subreport_telecoms"
+                        positionType="Float">
+                    <printWhenExpression>
+                        <![CDATA[Boolean.valueOf($P{ISCONTACTPERSON}.booleanValue())]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CP_OWNER_TELECOMS}]]></subreportExpression>
+            </subreport>
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="204"
+                        width="500"
+                        height="40"
+                        key="subreport_addressCategory"
+                        positionType="Float">
+                    <printWhenExpression>
+                        <![CDATA[$P{ISCONTACTPERSON}.booleanValue()?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CATEGORYVALUES}]]></subreportExpression>
+            </subreport>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </summary>
+</jasperReport>

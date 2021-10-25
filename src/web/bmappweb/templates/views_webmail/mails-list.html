@@ -1,0 +1,58 @@
+<ion-view view-title='{{ folderName | translate}}'>
+
+
+  <ion-nav-buttons side="right">
+
+    <button disabled="" class="button" style="border-style: none" ng-click="searchcon()">
+      <i class="icon ion-ios7-search" style="{{colorFont}}"></i>
+    </button>
+
+    <!-- <a href="#/app/newmail">
+      <button class="button" style="border-style: none" >
+        <i class="icon ion-edit" style="{{colorFont}}"></i>
+      </button>  
+
+    </a> -->
+
+  </ion-nav-buttons>
+
+  <ion-content> 
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+    </ion-refresher>
+
+    <ion-list>
+      
+      <ion-item class="item-avatar" ng-click="(item.hasReadState)=!(item.hasReadState)" ng-repeat="item in mailList" type="item-text-wrap"  ng-href="#/app/mail-detail?mailId={{item.mailId}}&folderId={{item.folderId}}&imageFrom={{item.fromImageUrl}}&fromImageId={{item.fromImageId}}">
+
+      
+        <img ng-if="item.fromImageUrl != ''" ng-src="{{apiUrlLocal}}{{item.fromImageUrl}}" style="width: 64px; height: 64px">
+        <img ng-if="item.isFromKnown == 'false' && item.fromImageUrl == ''" ng-src="img/user_default_unknown.png" style="width: 64px; height: 64px">
+        <img ng-if="item.isFromKnown == 'true' && item.fromImageUrl == ''" ng-src="img/user_default_known.png" style="width: 64px; height: 64px">
+        
+        
+        <span class="item-note" style="padding-right: 2px;">
+          
+          <button ng-if="item.hasAttach == '1'" class="button button-small button-clear button-light">
+              <i class="icon ion-paperclip"></i>  
+          </button>
+
+          <button class="button button-small button-clear {{item.hasReadState == 'false' ? 'button-light' : 'button-positive'}}">
+              <i class="icon ion-checkmark-circled"></i>    
+          </button>
+          
+        </span>
+
+
+
+        <h2>{{item.mailToFrom}}</h2>
+        <p>{{item.subject}}</p>
+        <h4>{{getDateMilli(item.sentDateTimeMillis)}}</h4>
+        
+      </ion-item>
+    </ion-list>
+      
+    <ion-infinite-scroll ng-if="_doRefresh" immediate-check="false" on-infinite="loadMore()" distance="1%">
+    </ion-infinite-scroll>  
+
+  </ion-content>
+</ion-view>

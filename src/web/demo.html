@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>business manager - demo account</title>
+
+</head>
+
+<body style="padding:0;margin:0;">
+<div>
+    <table cellpadding="0" cellspacing="0" border="0" width="780" align="center">
+        <tr>
+            <td><img src="layout/ui/img/bm_banner_dev.png" alt="">
+            </td>
+        </tr>
+    </table>
+
+    <table width="800" align="center">
+        <tr>
+            <td align="left" width="70%">
+                &nbsp;
+            </td>
+            <td align="right" width="30%">
+
+
+                <script language="JavaScript">
+
+                    var config = {
+                        "loginPage" :"http://dev.jatun.net/bm/DemoAccount/Front.do",
+                        "locale": "en",  //en, fr, de, es
+                        "width": "320px",
+                        "height": "480px"
+                    };
+
+                    var url = config.loginPage + '?homePage=1&demoLocale=' + config.locale;
+                    var message = getMessage('message');
+                    if (message != null) {
+                        url += "&message=" + message;
+                    }
+
+                    function getMessage(name) {
+                        var url = document.URL,
+                                i = url.indexOf(name += '='),
+                                j = url.indexOf('&', i);
+                        if (-1 == j) {
+                            j = url.length;
+                        }
+                        if (-1 != i) {
+                            return url.substring(i + name.length, j);
+                        }
+                        return null;
+                    }
+
+
+                    document.write('<iframe src="' + url + '" frameborder="0" id="demoIFrame" width="' + config.width + '" height="' + config.height + '" scrolling="no" allowtransparency="true"></iframe>');
+
+                </script>
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+</body>
+</html>

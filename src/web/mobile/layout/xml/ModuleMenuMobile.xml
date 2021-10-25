@@ -1,0 +1,45 @@
+<!--
+Author: Fer�
+Date: 2005-07-21
+Version: 1.0
+
+MODULE MENU STRUCTURE DOCUMENTATION:
+
+<module> module tag allows following attributes:
+    name: the name of the module (struts module name). It's required.
+    titleKey: the resource key for module name
+
+<forward> the forward tag (always into module tag) allows to configure
+where you want action forward depending if it has the access right to do it.
+You can define several forward tags inside the module tag, you only take care
+in one thing "Order" the order is important, because depending if the access right
+is given, the forward will be the first which has the access right. In the other hand
+if there is no any access right the whole module is hidden.
+    action: the action to forward. It's required.
+    functionality: the security funcionality. It's only required if you want to configure the security.
+    permission: the security funcionality permission (always both functionality and permission must be together.
+    It's only required if you want to configure the security.
+
+<shortCuts>  the shortcut tag (always into module tag) define the URL of module shorcuts.
+this tag is always required.
+    url: the url of the tile containing the templates.
+
+
+<catalogMenu> this tag is an special tag, which can be used only in the configuration module, because
+such module have categories and an special way to validate the security.
+So, all module tag wich has the catalogMenu has an special behavior. (Consult
+the owner to ask about details)
+
+ -->
+
+<modules>
+    <!--<module name="home" titleKey="Common.home">
+        <forward action="/mobile/Home.do"/>
+    </module>-->
+
+    <module name="contacts" titleKey="subModule.contacts">
+        <forward action="/mobile/contacts/Search.do" functionality="CONTACT" permission="VIEW"/>
+        <shortCuts>/mobile/layout/tiles/ContactShortCuts.jsp</shortCuts>
+    </module>
+</modules>
+

@@ -1,0 +1,714 @@
+<elwis-config>
+<toolbar key="bar_fields" position="top" protection="1" visible="true">
+<!-- Date -->
+	<control type="button">
+		<gui key="btndate" tooltip="tipdate" faceid="1096" style="icon-caption" />	
+		<operation name="addField">
+			<parameters>
+				<parameter name="field" value="date"/>
+			</parameters>
+		</operation>
+	</control>
+
+<!-- Contacts -->
+	<control type="popup">
+		<gui key="btncontactfields" tooltip="" style="caption" faceid=""/>	
+
+		<!-- Address_Names -->
+		<subcontrol type="button" > 
+			<gui  key="btnaddress_names" tooltip="tipaddress_names" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="address_names"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+
+
+		<!-- Address_Complete -->
+		<subcontrol type="button" > 
+			<gui  key="btnaddress_complete" tooltip="tipaddress_complete" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="address_complete"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		
+		<!-- Address_Street -->
+		<subcontrol type="button" > 
+			<gui  key="btnaddress_street" tooltip="tipaddress_street" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="address_street"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Address_Zip -->
+		<subcontrol type="button" > 
+			<gui  key="btnaddress_zip" tooltip="tipaddress_zip" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="address_zip"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Address_City -->
+		<subcontrol type="button" > 
+			<gui  key="btnaddress_city" tooltip="tipaddress_city" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="address_city"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Address_CountryCode -->
+		<subcontrol type="button" > 
+			<gui  key="btnaddress_countrycode" tooltip="tipaddress_countrycode" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="address_countrycode"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Address_Country -->
+		<subcontrol type="button" > 
+			<gui  key="btnaddress_country" tooltip="tipaddress_country" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="address_country"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- Customer number -->
+		<subcontrol type="button" > 
+			<gui  key="btnaddress_customernumber" tooltip="tipaddress_customernumber" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="customer_number"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		
+
+		<!-- Organiztion Names -->
+		<subcontrol type="popup" >
+			<gui  key="btnaddress_organizations" tooltip="tipaddress_organizations" faceid="464" style="icon-caption" />	
+		    <!-- Address_Name -->
+			<subcontrol type="button" > 
+				<gui  key="btnaddress_name" tooltip="tipaddress_name" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="address_name"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+			<!-- Address_Name1 -->
+			<subcontrol type="button" > 
+				<gui  key="btnaddress_name1" tooltip="tipaddress_name1" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="address_name1"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+			<!-- Address_Name2 -->
+			<subcontrol type="button" > 
+				<gui  key="btnaddress_name2" tooltip="tipaddress_name2" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="address_name2"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+			<!-- Address_Name3 -->
+			<subcontrol type="button" > 
+				<gui  key="btnaddress_name3" tooltip="tipaddress_name3" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="address_name3"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+		</subcontrol>
+
+		<!-- Person -->
+		<subcontrol type="popup">
+			<gui key="btnaddress_person" tooltip="tipaddress_person" style="caption" faceid=""/>	
+			<!-- Person_Name -->
+			<subcontrol type="button" > 
+				<gui  key="btnperson_name" tooltip="tipperson_name" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="person_name"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+			 		<!-- Person_First_Name -->
+			<subcontrol type="button" > 
+				<gui  key="btnperson_firstname" tooltip="tipperson_firstname" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="person_firstname"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+						<!-- Person_Last_Name -->
+			<subcontrol type="button" > 
+				<gui  key="btnperson_lastname" tooltip="tipperson_lastname" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="person_lastname"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+						<!-- Person_TITLE -->
+			<subcontrol type="button" > 
+				<gui  key="btnperson_title" tooltip="tipperson_title" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="person_title"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+			<!-- Address_Salutation -->
+			<subcontrol type="button" > 
+				<gui  key="btnperson_addresssalutation" tooltip="tipperson_addresssalutation" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="person_addresssalutation"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+			<!-- Person_Address_Name -->
+			<subcontrol type="button" > 
+				<gui  key="btnperson_addressname" tooltip="tipperson_addressname" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="person_addressname"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+						<!-- Letter_Salutation -->
+			<subcontrol type="button" > 
+				<gui  key="btnperson_lettersalutation" tooltip="tipperson_lettersalutation" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="person_lettersalutation"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+			
+			<!-- Person_Letter_Name -->
+			<subcontrol type="button" > 
+				<gui  key="btnperson_lettername" tooltip="tipperson_lettername" faceid="464" style="icon-caption" />	
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="person_lettername"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+		</subcontrol>
+		<!-- CONTACT TELECOMS -->
+		<subcontrol type="popup" > 
+			<gui  key="btnaddress_telecoms" tooltip="tipaddress_telecoms" faceid="464" style="icon-caption" />
+		</subcontrol>
+
+	</control>
+
+<!-- COMPANY -->
+	<control type="popup">
+		<gui key="btncompanyfields" tooltip="" style="caption" faceid=""/>	
+		<!-- Company_Name -->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_name" tooltip="tipcompany_name" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_name"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+				<!-- Company_Name1 -->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_name1" tooltip="tipcompany_name1" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_name1"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Company_Name2 -->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_name2" tooltip="tipcompany_name2" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_name2"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Company_Name3-->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_name3" tooltip="tipcompany_name3" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_name3"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- Company_Address -->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_address" tooltip="tipcompany_address" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_address"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Company_Street -->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_street" tooltip="tipcompany_street" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_street"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Company_Zip -->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_zip" tooltip="tipcompany_zip" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_zip"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Company_City -->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_city" tooltip="tipcompany_city" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_city"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<subcontrol type="button" > 
+			<gui  key="btncompany_countrycode" tooltip="tipcompany_countrycode" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_countrycode"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Company_Country -->
+		<subcontrol type="button" > 
+			<gui  key="btncompany_country" tooltip="tipcompany_country" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="company_country"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Company_CountryCode -->
+		
+		<!-- COMPANY TELECOMS -->
+		<subcontrol type="popup" > 
+			<gui  key="btncompany_telecoms" tooltip="tipcompany_telecoms" faceid="464" style="icon-caption" />	
+				<!-- Company_Email -->
+			</subcontrol>
+	</control>
+				
+<!-- EMPLOYEE -->
+	<control type="popup">
+		<gui key="btnemployeefields" tooltip="" style="caption" faceid=""/>	
+		<!-- Employee_Name -->
+		<subcontrol type="button" > 
+			<gui  key="btnemployee_name" tooltip="tipemployee_name" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="employee_name"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Employee_First_Name -->
+		<subcontrol type="button" > 
+			<gui  key="btnemployee_firstname" tooltip="tipemployee_firstname" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="employee_firstname"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Employee_Last_Name -->
+		<subcontrol type="button" > 
+			<gui  key="btnemployee_lastname" tooltip="tipemployee_lastname" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="employee_lastname"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+				<!-- Employee_Title -->
+		<subcontrol type="button" > 
+			<gui  key="btnemployee_title" tooltip="tipemployee_title" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="employee_title"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- Employee_Initials -->
+		<subcontrol type="button" > 
+			<gui  key="btnemployee_initials" tooltip="tipemployee_initials" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="employee_initials"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Employee_Function -->
+		<subcontrol type="button" > 
+			<gui  key="btnemployee_function" tooltip="tipemployee_function" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="employee_function"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<!-- Employee_Department -->
+		<subcontrol type="button" > 
+			<gui  key="btnemployee_department" tooltip="tipemployee_department" faceid="464" style="icon-caption" />	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="employee_department"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- EMPLOYEE TELECOMS -->
+		<subcontrol type="popup" > 
+			<gui  key="btnemployee_telecoms" tooltip="tipemployee_telecoms" faceid="464" style="icon-caption" />
+		</subcontrol>
+	</control>
+
+<!-- SALES PROCESS ACTIONS  -->
+	<control type="popup">
+		<gui key="btnactionfields" tooltip="" style="caption" faceid=""/>
+		
+		 <!-- ACTION NUMBER -->
+		<subcontrol type="button" > 
+			<gui  key="btnaction_number" tooltip="tipaction_number" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="action_number"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		 <!-- ACTION TYPE -->
+		<subcontrol type="button" > 
+			<gui  key="btnaction_type" tooltip="tipaction_type" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="action_type"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+
+		<!-- ACTION DATE -->
+		<subcontrol type="button" > 
+			<gui  key="btnaction_date" tooltip="tipaction_date" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="action_date"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		
+		<!-- ACTION CURRENCY -->
+		<subcontrol type="button" > 
+			<gui  key="btnaction_currency" tooltip="tipaction_currency" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="action_currency"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+
+		<!-- ACTION VALUE-->
+		<subcontrol type="button" > 
+			<gui  key="btnaction_value" tooltip="tipaction_value" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="action_value"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- ACTION TOTAL AMOUNT-->
+		<subcontrol type="button" > 
+			<gui  key="btnaction_totalamount" tooltip="tipaction_totalamount" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="action_total_amount"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+
+    <!-- ACTION POSITION TABLE -->
+	   <subcontrol type="button" >
+			<gui  key="btnaction_positionstable" tooltip="tipaction_positionstable" style="icon-caption" begingroup="true" faceid="852" />	
+			<operation name="addTable">
+				<parameters>
+					<parameter name="name" value="actionpositions"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+		
+	</control>
+
+
+        <!-- INVOICES -->
+	<control type="popup">
+		<gui key="btninvoicefields" tooltip="" style="caption" faceid=""/>
+		 <!-- INVOICE NUMBER -->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_number" tooltip="tipinvoice_number" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_number"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		 <!-- VOUCHER TYPE -->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_vouchertype" tooltip="tipinvoice_vouchertype" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_vouchertype"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+
+		<!-- INVOICE DATE -->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_date" tooltip="tipinvoice_date" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_date"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- INVOICE PAY CONDITION TEXT -->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_paycondition" tooltip="tipinvoice_paycondition" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_pay_condition_text"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- INVOICE CURRENCY -->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_currency" tooltip="tipinvoice_currency" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_currency"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- INVOICE PAYMENT DATE -->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_paymentdate" tooltip="tipinvoice_paymentdate" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_payment_date"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- INVOICE TEXT -->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_text" tooltip="tipinvoice_text" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_text"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- INVOICE OPEN AMOUNT-->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_openamount" tooltip="tipinvoice_openamount" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_open_amount"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		
+
+
+		<!-- INVOICE TOTAL AMOUNT NET-->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_totalamountnet" tooltip="tipinvoice_totalamountnet" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_total_amount_net"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- INVOICE TOTAL AMOUNT GROSS-->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_totalamountgross" tooltip="tipinvoice_totalamountgross" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_total_amount_gross"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+
+    <!-- INVOICE POSITION TABLE -->
+	   <subcontrol type="button" >
+			<gui  key="btninvoice_positionstable" tooltip="tipinvoice_positionstable" style="icon-caption" begingroup="true" faceid="852" />	
+			<operation name="addTable">
+				<parameters>
+					<parameter name="name" value="invoicepositions"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+
+		<!-- INVOICE VAT TABLE -->
+	   <subcontrol type="button" >
+			<gui  key="btninvoice_vatstable" tooltip="tipinvoice_vatstable" style="icon-caption" begingroup="true" faceid="852" />	
+			<operation name="addTable">
+				<parameters>
+					<parameter name="name" value="invoicevats"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		<!-- INVOICE REMINDER OPTIONS -->
+	    <subcontrol type="popup" >
+			<gui  key="btninvoice_reminders" tooltip="tipinvoice_reminders" style="icon-caption" begingroup="true" faceid="852" />	
+
+	   <!-- INVOICE REMINDER LAST LEVEL-->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_reminderlastlevel" tooltip="tipinvoice_reminderlastlevel" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_reminder_last_level"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+
+		<!-- INVOICE REMINDER NEXT DATE-->
+		<subcontrol type="button" > 
+			<gui  key="btninvoice_remindernextdate" tooltip="tipinvoice_remindernextdate" faceid="464" style="icon-caption" />
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="invoice_reminder_next_date"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+
+		    <!-- REMINDER DATE -->
+			<subcontrol type="button" > 
+				<gui  key="btninvoice_reminder_date" tooltip="tipinvoice_reminder_date" faceid="464" style="icon-caption" />
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="invoice_reminder_date"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+			<!-- REMINDER LEVEL TITLE -->
+			<subcontrol type="button" > 
+				<gui  key="btninvoice_reminder_leveltitle" tooltip="tipinvoice_reminder_leveltitle" faceid="464" style="icon-caption" />
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="invoice_reminder_level_title"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+			<!-- REMINDER TEXT -->
+			<subcontrol type="button" > 
+				<gui  key="btninvoice_reminder_text" tooltip="tipinvoice_reminder_text" faceid="464" style="icon-caption" />
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="invoice_reminder_text"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+			<!-- REMINDER NEXT PAYMENT DATE -->
+			<subcontrol type="button" > 
+				<gui  key="btninvoice_reminder_nextpaymentdate" tooltip="tipinvoice_reminder_nextpaymentdate" faceid="464" style="icon-caption" />
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="invoice_reminder_next_payment_date"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+				<!-- REMINDER FEE -->
+			<subcontrol type="button" > 
+				<gui  key="btninvoice_reminder_fee" tooltip="tipinvoice_reminder_fee" faceid="464" style="icon-caption" />
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="invoice_reminder_fee"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+			<!-- INVOICE OPEN AMOUNT PLUS REMINDER FEE -->
+			<subcontrol type="button" > 
+				<gui  key="btninvoice_reminder_openamountplusfee" tooltip="tipinvoice_reminder_openamountplusfee" faceid="464" style="icon-caption" />
+				<operation name="addField">
+					<parameters>
+						<parameter name="field" value="invoice_reminder_openamountplusfee"/>
+					</parameters>
+				</operation>
+			</subcontrol>
+
+		</subcontrol>
+
+
+		
+	</control>
+	<!-- CAMPAIGN -->
+	<control type="popup">
+		<gui key="btncampaignfields" tooltip="" begingroup = "false" style="caption"/>	
+		<subcontrol type="button" > 
+			<gui  key="btnmarkcampaign" tooltip="tipmarkcampaign" style="icon-caption" faceid="53"/>	
+			<operation name="addBookmark">
+				<parameters>
+					<parameter name="type" value="PAGE"/>
+					<parameter name="name" value="campaign"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+	</control>
+</toolbar>
+</elwis-config>

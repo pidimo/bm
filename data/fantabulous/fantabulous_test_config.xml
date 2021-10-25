@@ -1,0 +1,42 @@
+<FantabulousTestConfig>
+    <DataSources>
+        <DataSource id="mysqlDS"
+                    sqlGenerator="org.alfacentauro.fantabulous.sqlgenerator.mysqlgenerator.MySqlGenerator"
+                    connectionUrl="jdbc:mysql://10.0.0.11:3308/elwis2"
+                    driverClass="org.gjt.mm.mysql.Driver"
+                    userName="jatundev"
+                    password="jdev.pwd"/>
+        <DataSource id="informixDS"
+                    sqlGenerator="org.alfacentauro.fantabulous.sqlgenerator.informixgenerator.InformixSqlGenerator"
+                    connectionUrl="jdbc:informix-sqli://10.0.0.11:11980/elwis2:INFORMIXSERVER=ids_server"
+                    driverClass="com.informix.jdbc.IfxDriver"
+                    userName="informixds"
+                    password="idsserver10"/>
+    </DataSources>
+    <TestParams config_files_path="src/web/WEB-INF"
+                config_files_name="fantabulous.xml"
+                run_all_tests="false">
+        <ListDataSources>
+            <ListDataSource id="informixDS" datePattern="yyyy-MM-dd"/>
+            <!--<ListDataSource id="mysqlDS" datePattern="yyyy-MM-dd"/>-->
+        </ListDataSources>
+    </TestParams>
+    <SpecificParams>
+        <ListParams listName="DEFAULT">
+            <!--<OrderParams>
+                   <OrderParam field="name" asc="true"/>
+                   <OrderParam field="name" asc="true"/>
+               </OrderParams>-->
+            <SearchParams>
+                <!--<SearchParam field="lastname" value="Perez"/>-->
+                <!--<SearchParam field="companyId" value="10180"/>-->
+            </SearchParams>
+            <PageParam page_size="5" page_number="1"/>
+        </ListParams>
+        <!--        <ListParams listName="signatureList">
+            <OrderParams>
+                <OrderParam field="name" asc="true"/>
+            </OrderParams>
+        </ListParams>-->
+    </SpecificParams>
+</FantabulousTestConfig>

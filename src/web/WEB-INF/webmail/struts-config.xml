@@ -1,0 +1,1063 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="signatureForm" type="com.piramide.elwis.web.webmail.form.SignatureForm"/>
+        <form-bean name="mailAccountForm" type="com.piramide.elwis.web.webmail.form.MailAccountForm"/>
+
+        <!--<form-bean name="mailForm" type="com.piramide.elwis.web.webmail.form.MailForm"/>-->
+        <form-bean name="emailForm" type="com.piramide.elwis.web.webmail.form.EmailForm"/>
+        <form-bean name="autosaveEmailForm" type="com.piramide.elwis.web.webmail.form.AutosaveEmailForm"/>
+
+        <form-bean name="webmailUser" type="com.piramide.elwis.web.webmail.form.UserMailForm"/>
+        <form-bean name="preferencesForm" type="com.piramide.elwis.web.webmail.form.PreferencesForm"/>
+        <form-bean name="communicationForm" type="com.piramide.elwis.web.webmail.form.CommunicationForm"/>
+        <!--begin alvaro-->
+
+        <form-bean name="listSignatureForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="listContactGroupForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+
+        <form-bean name="mailTrayForm" type="com.piramide.elwis.web.webmail.form.MailTrayForm"/>
+        <form-bean name="searchMailForm" type="com.piramide.elwis.web.webmail.form.SearchResultForm"/>
+
+        <form-bean name="contactGroupForm" type="com.piramide.elwis.web.webmail.form.WebmailDefaultForm"/>
+
+        <form-bean name="addressGroupForm" type="com.piramide.elwis.web.webmail.form.AddressGroupForm"/>
+        <form-bean name="addressGroupDefaultForm" type="com.piramide.elwis.web.webmail.form.AddressGroupDefaultForm"/>
+        <form-bean name="advancedSearchMailForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="advancedSearchMailOperationForm"
+                   type="com.piramide.elwis.web.webmail.form.MailAdvancedSearchOperationForm"/>
+        <!--end alvaro-->
+        <!--begin miky-->
+        <form-bean name="filterForm" type="com.piramide.elwis.web.webmail.form.FilterForm"/>
+        <form-bean name="listFilterForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="FolderForm" type="com.piramide.elwis.web.webmail.form.FolderForm"/>
+        <form-bean name="addressForm" type="com.piramide.elwis.web.webmail.form.MailAddressSentForm"/>
+        <form-bean name="addressAddForm" type="com.piramide.elwis.web.webmail.form.MailAddressAddSentForm"/>
+        <form-bean name="contactAddForm" type="com.piramide.elwis.web.webmail.form.AddressAddForm"/>
+        <form-bean name="DefaultForm" type="com.piramide.elwis.web.webmail.form.WebmailDefaultForm"/>
+        <form-bean name="temporalImageForm" type="com.piramide.elwis.web.webmail.form.TemporalImageForm"/>
+
+        <!--end miky-->
+        <form-bean name="searchMailAdressForm" type="com.piramide.elwis.web.webmail.form.SearchMailAddressForm"/>
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainSearch" path="/Messages.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+
+        <action path="/downloadEmail"
+                type="com.piramide.elwis.web.webmail.action.DownloadEmailAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.DownloadmailCmd">
+            <forward name="Fail" path="/Messages.do"/>
+        </action>
+
+        <action path="/downloadImage" type="com.piramide.elwis.web.webmail.action.DownloadPictureAction" name="form"
+                scope="request" validate="false" parameter="com.piramide.elwis.cmd.webmailmanager.DownloadPictureCmd">
+            <forward name="Fail" path="/Messages"/>
+        </action>
+
+
+        <action path="/Messages" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction" name="form"
+                scope="request" validate="false" parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd"
+                roles="MAIL.VIEW">
+            <forward name="Success" path="/Mail/MailTray.do?orderParam(1)=SENTDATETIME-false"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+
+        <action path="/Settings" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction" name="form"
+                scope="request" validate="false" parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd">
+            <forward name="Success" path="/Mail/ContactGroupList.do"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+
+        <action path="/Preferences/Forward/Update"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="preferencesForm"
+                scope="request"
+                input="/index.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.PreferencesCmd"
+                roles="MAIL.VIEW">
+            <forward name="Success" path="/PreferencesDetailForUpdate.jsp"/>
+            <forward name="Create" path="/PreferencesDetailForCreate.jsp"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+
+        <action path="/Preferences/Update"
+                type="com.piramide.elwis.web.webmail.action.PreferencesAction"
+                name="preferencesForm"
+                scope="request"
+                input="/PreferencesDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.webmailmanager.PreferencesCmd"
+                roles="MAIL.EXECUTE">
+            <forward name="Success" path="/PreferencesDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/NewUserMail"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="mailAccountForm"
+                scope="request" input="/index.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailUserCmd"
+                roles="MAIL.VIEW">
+            <forward name="Success" path="/MailAccount/List.do"/>
+            <forward name="Create" path="/DetailForCreateUserMail.jsp"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+        <action path="/WebmailUser/Create"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="mailAccountForm"
+                scope="request"
+                validate="true"
+                input="/DetailForCreateUserMail.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailUserCmd"
+                roles="MAIL.EXECUTE">
+            <forward name="Success" path="/NewUserMail.do" redirect="true"/>
+        </action>
+
+        <action path="/Mail/Forward/ComposeEmail"
+                type="com.piramide.elwis.web.webmail.action.ComposeForwardAction"
+                name="emailForm"
+                scope="request"
+                validate="false"
+                parameter="/webmail/ComposeEmail.jsp"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping"
+                roles="MAIL.EXECUTE">
+            <set-property property="mainTable" value="mail"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+        <action path="/Mail/ComposeEmail"
+                type="com.piramide.elwis.web.webmail.action.ComposeEmailAction"
+                name="emailForm"
+                scope="request"
+                input="/ComposeEmail.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ComposeMailCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="MAIL.EXECUTE">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <forward name="Success" path="/Mail/Send.do"/>
+            <forward name="SearchEmail" path="/Mail/SearchResult.do"/>
+            <forward name="Cancel" path="/Messages.do" redirect="true"/>
+            <forward name="Draft" path="/Mail/Draft.do" redirect="true"/>
+            <forward name="Fail" path="/Messages.do"/>
+        </action>
+
+        <action path="/Mail/Ajax/Autosave/ComposeEmail"
+                type="com.piramide.elwis.web.webmail.action.ComposeEmailAutoSaveAction"
+                name="autosaveEmailForm"
+                scope="request"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ComposeTemporalMailCmd"
+                roles="MAIL.EXECUTE">
+        </action>
+
+        <action path="/Mail/Send"
+                type="com.piramide.elwis.web.webmail.action.SendForwardAction"
+                name="emailForm"
+                scope="request"
+                input="/ComposeEmail.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.CommunicationManagerCmd">
+            <forward name="Success" path="/Mail/Forward/Send.do"/>
+        </action>
+        <action path="/Mail/Forward/Send"
+                type="com.piramide.elwis.web.webmail.action.SendAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.CommunicationManagerCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <forward name="Success" path="/Send.jsp"/>
+            <forward name="Fail" path="/Messages.do"/>
+        </action>
+        <action path="/Mail/ViewMailBody"
+                type="com.piramide.elwis.web.webmail.action.ViewMailBodyAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadEmailCmd">
+            <forward name="Success" path="/MailBodyDetailForView.jsp"/>
+        </action>
+        <action path="/Mail/ReadEmail"
+                type="com.piramide.elwis.web.webmail.action.ReadEmailAction"
+                name="emailForm"
+                scope="request"
+                input="/webmail/MailTray.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadEmailCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <forward name="Success" path="/ReadEmail.jsp"/>
+            <forward name="Fail" path="/Messages.do"/>
+        </action>
+        <action path="/Mail/Forward/EditDraftEmail"
+                type="com.piramide.elwis.web.webmail.action.EditEmailForwardAction"
+                name="emailForm"
+                scope="request"
+                input="/webmail/MailTray.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadEmailCmd">
+            <forward name="Success" path="/ComposeEmail.jsp"/>
+        </action>
+        <action path="/Mail/Reply"
+                type="com.piramide.elwis.web.webmail.action.ReplyAction"
+                name="emailForm"
+                scope="request"
+                input="/webmail/MailTray.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadEmailCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <forward name="Success" path="/ComposeEmail.jsp"/>
+            <forward name="Fail" path="/Messages.do"/>
+        </action>
+        <action path="/Mail/ReadOperation"
+                type="com.piramide.elwis.web.webmail.action.ReadOperationAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <forward name="Success" path="/MailTray.jsp"/>
+            <forward name="Next" path="/Mail/ReadEmail.do"/>
+            <forward name="CancelToMailTray" path="/Mail/MailTray.do"/>
+            <forward name="CancelToMailSearch" path="/Mail/SearchResult.do"/>
+            <forward name="CancelToMailAdvancedSearch" path="/Mail/MailAdvancedSearch.do"/>
+        </action>
+        <action path="/Mail/SearchResult"
+                type="com.piramide.elwis.web.webmail.action.SearchMailAction"
+                name="searchMailForm"
+                scope="request"
+                parameter="searchMailList">
+            <forward name="Success" path="/SearchResult.jsp?mailSearch=true"/>
+            <forward name="toMoveAllEmailsConfirmation" path="/MoveAllSearchEmailsTrashConfirmation.jsp"/>
+        </action>
+        <action path="/Mail/Draft"
+                type="com.piramide.elwis.web.webmail.action.DraftForwardAction"
+                name="emailForm"
+                scope="request"
+                input="/Mail/ComposeEmail.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd">
+            <forward name="Success" path="/MailTray.jsp"/>
+        </action>
+
+        <action path="/Mail/Forward/EmailCommunicationAfterSend"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="form" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailCommunicationCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/EmailCommunicationAfterSend.jsp"/>
+        </action>
+
+        <action path="/Mail/CreateEmailCommunicationAfterSend"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="communicationForm" validate="true"
+                scope="request" input="/EmailCommunicationAfterSend.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailCommunicationCmd" roles="COMMUNICATION.CREATE">
+            <forward name="Success" path="/Mail/Forward/Send.do?dto(op)=checkRecipientSent&amp;dto(saveSendItem)=true"/>
+            <forward name="Cancel" path="/Mail/Forward/Send.do?dto(op)=checkRecipientSent&amp;dto(saveSendItem)=true"/>
+        </action>
+
+        <action path="/Mail/Forward/MailCommunication" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="form"
+                scope="request" input="/webmail/MailCommunication.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailCommunicationCmd" roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/MailCommunication.jsp"/>
+        </action>
+        <action path="/Mail/CreateMailCommunication" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="form"
+                scope="request" input="/MailCommunication.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailCommunicationCmd" roles="COMMUNICATION.CREATE">
+            <forward name="Success" path="/MailCommunication.jsp"/>
+        </action>
+
+        <action path="/Mail/Forward/EmailCommunication"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="form" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailCommunicationCmd"
+                roles="COMMUNICATION.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <forward name="Success" path="/EmailCommunication.jsp"/>
+        </action>
+
+        <action path="/Mail/CreateEmailCommunication"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="communicationForm"
+                scope="request" input="/EmailCommunication.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailCommunicationCmd"
+                roles="COMMUNICATION.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <forward name="Success" path="/Mail/Forward/MailRecipientList.do"/>
+            <forward name="Cancel" path="/Mail/Forward/MailRecipientList.do"/>
+        </action>
+
+        <action path="/Mail/SearchAddress" type="com.piramide.elwis.web.webmail.action.WebmailListAction"
+                name="searchMailAdressForm" scope="request" input="/webmail/AddressImportList.jsp" validate="false"
+                parameter="allAddressList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="contactSearchName@_contactPersonOfSearchName"/>
+            <forward name="Success" path="/AddressImportList.jsp"/>
+        </action>
+
+
+        <action path="/Mail/Forward/MailRecipientList" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="form"
+                scope="request" input="/webmail/MailRecipientList.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailRecipientCmd" roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/MailRecipientList.jsp"/>
+        </action>
+        <action path="/Mail/CreateWebCommunications" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="form"
+                scope="request" input="/MailRecipientList.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailRecipientCmd">
+            <forward name="Cancel" path="/Mail/MailTray.do" redirect="true"/>
+        </action>
+
+        <action path="/Mail/UploadAndDownloadEmail"
+                type="com.piramide.elwis.web.webmail.action.UploadAndDownloadEmailAction"
+                name="form"
+                scope="request"
+                input="/Index.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd"
+                roles="MAIL.EXECUTE">
+            <forward name="Success" path="/Messages.do"/>
+            <forward name="Fail" path="/Messages.do"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+
+
+        <!--Mail Accounts configuration-->
+        <action path="/MailAccount/List"
+                type="com.piramide.elwis.web.webmail.action.WebmailListAction"
+                name="listForm"
+                scope="request"
+                parameter="mailAccountList" roles="MAIL.VIEW">
+            <forward name="Success" path="/MailAccountList.jsp"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+
+        <action path="/MailAccount/Forward/Create"
+                type="com.piramide.elwis.web.webmail.action.MailAccountCreateForwardAction"
+                name="mailAccountForm"
+                scope="request"
+                validate="false"
+                parameter="/webmail/MailAccountDetailForCreate.jsp"
+                roles="MAIL.EXECUTE"/>
+        <action path="/MailAccount/Create"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="mailAccountForm"
+                scope="request"
+                validate="true" input="/MailAccountDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailAccountCmd" roles="MAIL.EXECUTE">
+            <forward name="Success" path="/MailAccount/List.do" redirect="true"/>
+            <forward name="Cancel" path="/MailAccount/List.do" redirect="true"/>
+        </action>
+
+        <action path="/MailAccount/Forward/Update"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="mailAccountForm"
+                scope="request"
+                validate="false" input="/MailAccount/List.do"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailAccountCmd" roles="MAIL.VIEW">
+            <forward name="Success" path="/MailAccountDetailForUpdate.jsp"/>
+        </action>
+        <action path="/MailAccount/Update"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="mailAccountForm"
+                scope="request"
+                validate="true" input="/MailAccountDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailAccountCmd" roles="MAIL.EXECUTE">
+            <forward name="Success" path="/MailAccount/List.do" redirect="true"/>
+            <forward name="Cancel" path="/MailAccount/List.do" redirect="true"/>
+            <forward name="Fail" path="/MailAccount/List.do"/>
+        </action>
+
+        <action path="/MailAccount/Forward/Delete"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="mailAccountForm"
+                scope="request"
+                validate="false" input="/MailAccount/List.do"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailAccountCmd" roles="MAIL.DELETE">
+            <forward name="Success" path="/MailAccountDetailForDelete.jsp"/>
+        </action>
+        <action path="/MailAccount/Delete"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="mailAccountForm"
+                scope="request"
+                validate="false" input="/MailAccountDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailAccountCmd" roles="MAIL.DELETE">
+            <forward name="Success" path="/MailAccount/List.do" redirect="true"/>
+            <forward name="Cancel" path="/MailAccount/List.do" redirect="true"/>
+            <forward name="Fail" path="/MailAccount/List.do"/>
+        </action>
+        <!--begin alvaro-->
+        <!--Signature-->
+        <action path="/Mail/Forward/CreateSignature" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/webmail/SignatureDetailForCreate.jsp"/>
+
+        <action path="/Mail/CreateSignature" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="signatureForm"
+                scope="request" validate="true" input="/SignatureDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.SignatureCmd" roles="WEBMAILSIGNATURE.CREATE">
+            <forward name="Success" path="/Mail/SignatureList.do" redirect="true"/>
+            <forward name="Cancel" path="/Mail/SignatureList.do" redirect="true"/>
+            <forward name="Failure" path="/SignatureDetailForCreate.jsp"/>
+            <forward name="SaveAndNew" path="/SignatureDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/Mail/Forward/UpdateSignature" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="signatureForm"
+                scope="request" validate="false" input="/webmail/Settings.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.SignatureCmd" roles="WEBMAILSIGNATURE.VIEW">
+            <forward name="Success" path="/SignatureDetailForUpdate.jsp"/>
+        </action>
+        <action path="/Mail/UpdateSignature" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="signatureForm"
+                scope="request" validate="true" input="/SignatureDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.SignatureCmd" roles="WEBMAILSIGNATURE.UPDATE">
+            <forward name="Success" path="/Mail/SignatureList.do" redirect="true"/>
+            <forward name="Cancel" path="/Mail/SignatureList.do" redirect="true"/>
+            <forward name="Failure" path="/SignatureDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/Mail/Forward/DeleteSignature" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="signatureForm"
+                scope="request" validate="false" input="/webmail/Settings.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.SignatureCmd" roles="WEBMAILSIGNATURE.DELETE">
+            <forward name="Success" path="/SignatureDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Mail/DeleteSignature" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="signatureForm"
+                scope="request" validate="false" input="/SignatureDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.SignatureCmd" roles="WEBMAILSIGNATURE.DELETE">
+            <forward name="Success" path="/Mail/SignatureList.do" redirect="true"/>
+            <forward name="Cancel" path="/Mail/SignatureList.do" redirect="true"/>
+        </action>
+        <action path="/Mail/SignatureList" type="com.piramide.elwis.web.webmail.action.WebmailListAction"
+                name="listForm"
+                scope="request"
+                parameter="signatureList" roles="WEBMAILSIGNATURE.VIEW">
+            <forward name="Success" path="/SignatureDetailForList.jsp"/>
+            <forward name="GoBack" path="/Mail/SignatureList.do"/>
+        </action>
+
+        <!--ContactGroup-->
+
+        <action path="/Mail/Forward/CreateContactGroup"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction" name="contactGroupForm"
+                scope="request" validate="false" parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd"
+                roles="WEBMAILGROUP.CREATE">
+            <forward name="Success" path="/ContactGroupDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/Mail/CreateContactGroup" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="contactGroupForm"
+                scope="request" validate="true" input="/ContactGroupDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailGroupAddrCmd" roles="WEBMAILGROUP.CREATE">
+            <forward name="Success" path="/Mail/ContactGroupList.do" redirect="true"/>
+            <forward name="Cancel" path="/Mail/ContactGroupList.do" redirect="true"/>
+        </action>
+
+        <action path="/Mail/Forward/UpdateContactGroup"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction" name="contactGroupForm"
+                scope="request" validate="false" input="/webmail/Settings.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailGroupAddrCmd" roles="WEBMAILGROUP.VIEW">
+            <forward name="Success" path="/ContactGroupDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Mail/UpdateContactGroup" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="contactGroupForm"
+                scope="request" validate="true" input="/ContactGroupDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailGroupAddrCmd" roles="WEBMAILGROUP.UPDATE">
+            <forward name="Success" path="/Mail/ContactGroupList.do" redirect="true"/>
+            <forward name="Cancel" path="/Mail/ContactGroupList.do" redirect="true"/>
+        </action>
+
+        <action path="/Mail/Forward/DeleteContactGroup"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction" name="contactGroupForm"
+                scope="request" validate="false" input="/webmail/Settings.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailGroupAddrCmd" roles="WEBMAILGROUP.DELETE">
+            <forward name="Success" path="/ContactGroupDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Mail/DeleteContactGroup" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="contactGroupForm"
+                scope="request" validate="false" input="/ContactGroupDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailGroupAddrCmd" roles="WEBMAILGROUP.DELETE">
+            <forward name="Success" path="/Mail/ContactGroupList.do"/>
+            <forward name="Cancel" path="/Mail/ContactGroupList.do" redirect="true"/>
+        </action>
+
+        <action path="/Mail/ContactGroupList" type="com.piramide.elwis.web.webmail.action.WebmailListAction"
+                name="listContactGroupForm"
+                scope="request" input="/webmail/Settings.jsp" validate="false"
+                parameter="contactGroupList" roles="WEBMAILGROUP.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <forward name="Success" path="/ContactGroupDetailForList.jsp"/>
+            <forward name="GoBack" path="/Mail/ContactGroupList.do"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+
+        <action path="/WebmailNotifier/Read"
+                type="com.piramide.elwis.web.webmail.action.WebmailNotifierDefaultAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailNotifierCmd">
+            <forward name="Success" path="/WebmailNotifierResponse.jsp"/>
+            <forward name="Fail" path="/WebmailNotifierResponse.jsp"/>
+        </action>
+
+        <action path="/Mail/ReadList"
+                type="com.piramide.elwis.web.webmail.action.MailTrayAction"
+                name="mailTrayForm"
+                scope="request"
+                validate="false"
+                parameter="mailTrayList">
+            <forward name="Success" path="/WebmailListFragment.jsp"/>
+        </action>
+
+
+        <!--MailTray-->
+        <action path="/Mail/MailTray" type="com.piramide.elwis.web.webmail.action.MailTrayAction" name="mailTrayForm"
+                scope="request" input="/webmail/Settings.jsp" validate="false"
+                parameter="mailTrayList">
+            <forward name="Success" path="/MailTray.jsp"/>
+            <forward name="toDeleteConfirmation" path="/DeleteConfirmation.jsp"/>
+            <forward name="toMoveAllEmailsConfirmation" path="/MoveAllEmailsTrashConfirmation.jsp"/>
+        </action>
+        <action path="/Mail/MailDelete" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="mailTrayForm"
+                scope="request" input="/webmail/MailTray.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd" roles="MAIL.DELETE">
+            <forward name="Success" path="/MailTray.jsp"/>
+        </action>
+        <!--Read-->
+        <action path="/Mail/Forward/ReadToCompose"
+                type="com.piramide.elwis.web.webmail.action.ReadMailAction"
+                name="emailForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadMailCmd"
+                roles="MAIL.VIEW">
+            <forward name="Success" path="/ComposeEmail.jsp"/>
+            <forward name="Cancel" path="/Messages.do" redirect="true"/>
+            <forward name="NoUserMail" path="/DetailForCreateUserMail.jsp"/>
+        </action>
+        <!--print-->
+        <action path="/Mail/Print"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="emailForm"
+                scope="request"
+                input="/webmail/MailTray.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadEmailCmd">
+            <forward name="Success" path="/PrintMail.jsp"/>
+        </action>
+        <!--full screen-->
+        <action path="/Mail/FullScreen"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="emailForm"
+                scope="request"
+                input="/webmail/MailTray.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ReadEmailCmd">
+            <forward name="Success" path="/FullScreenMail.jsp"/>
+        </action>
+        <!--Download attach-->
+        <action path="/Mail/Download" type="com.piramide.elwis.web.webmail.action.ReadAttachAction" name="form"
+                scope="request" input="/webmail/MailTray.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd">
+            <forward name="Success" path="/Messages.do" redirect="true"/>
+        </action>
+        <!--Search mail-->
+        <action path="/Mail/Search" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="searchMailForm"
+                scope="request" input="/webmail/MailTray.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd">
+            <forward name="Success" path="/Search.jsp"/>
+        </action>
+
+
+        <action path="/Mail/MailAdvancedSearch"
+                type="com.piramide.elwis.web.webmail.action.MailAdvancedSearchAction"
+                name="advancedSearchMailForm"
+                scope="request"
+                validate="true"
+                input="/MailAdvancedSearch.jsp"
+                parameter="advancedSearchMailList" roles="MAIL.VIEW">
+            <forward name="Success" path="/MailAdvancedSearch.jsp?mailSearch=true"/>
+            <forward name="Fail" path="/MailAdvancedSearch.jsp"/>
+            <forward name="Cancel" path="/Messages.do"/>
+        </action>
+
+        <action path="/Mail/MailAdvancedSearchOperation"
+                type="com.piramide.elwis.web.webmail.action.MailAdvancedSearchOperationAction"
+                name="advancedSearchMailOperationForm"
+                scope="request"
+                validate="true"
+                input="/MailAdvancedSearch.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd" roles="MAIL.VIEW">
+            <forward name="Success" path="/Mail/MailAdvancedSearch.do" redirect="true"/>
+            <forward name="Fail" path="/MailAdvancedSearch.jsp"/>
+            <forward name="Cancel" path="/Messages.do"/>
+            <forward name="toMoveAllEmailsConfirmation" path="/MoveAllAdvancedSearchEmailsTrashConfirmation.jsp"/>
+        </action>
+
+        <!--AddressGroup-->
+        <action path="/Mail/Forward/AddAddressGroup" type="com.piramide.elwis.web.webmail.action.AddAddressGroupAction"
+                name="addressGroupForm" scope="request" input="/AddressGroupDetailForAdd.jsp" validate="false"
+                parameter="allAddressList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="contactSearchName@_contactPersonOfSearchName"/>
+            <forward name="Success" path="/AddressGroupDetailForAdd.jsp"/>
+            <forward name="ToAddressGroupList"
+                     path="/Mail/AddressGroupList.do?parameter(name1A1@_name2A1@_searchNameA1)="/>
+            <forward name="Cancel" path="/Mail/AddressGroupList.do"/>
+        </action>
+
+        <action path="/Mail/AddressGroupList" type="com.piramide.elwis.web.webmail.action.AddressGroupListAction"
+                name="listForm" scope="request" input="/webmail/AddressGroupList.jsp" validate="false"
+                parameter="groupList">
+            <forward name="Success" path="/AddressGroupDetailForList.jsp"/>
+            <forward name="Cancel" path="/Mail/ContactGroupList.do"/>
+        </action>
+        <action path="/Mail/Forward/UpdateAddressGroup"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction" name="addressGroupDefaultForm"
+                scope="request" validate="false" input="/webmail/Settings.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.AddressGroupCmd" roles="WEBMAILGROUP.VIEW">
+            <forward name="Success" path="/AddressGroupDetailForUpdate.jsp"/>
+        </action>
+        <action path="/Mail/UpdateAddressGroup" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="addressGroupDefaultForm"
+                scope="request" validate="true" input="/Mail/Forward/UpdateAddressGroup.do?dto(op)=read"
+                parameter="com.piramide.elwis.cmd.webmailmanager.AddressGroupCmd" roles="WEBMAILGROUP.UPDATE">
+            <forward name="Success" path="/Mail/AddressGroupList.do"/>
+        </action>
+
+        <action path="/Mail/Forward/DeleteAddressGroup"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction" name="addressGroupDefaultForm"
+                scope="request" validate="false" parameter="com.piramide.elwis.cmd.webmailmanager.AddressGroupCmd"
+                roles="WEBMAILGROUP.DELETE">
+            <forward name="Success" path="/AddressGroupDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Mail/DeleteAddressGroup" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="addressGroupDefaultForm"
+                scope="request" validate="true" parameter="com.piramide.elwis.cmd.webmailmanager.AddressGroupCmd"
+                roles="WEBMAILGROUP.DELETE">
+            <forward name="Success" path="/Mail/AddressGroupList.do"/>
+        </action>
+
+        <!--Delete confirmation-->
+        <action path="/Mail/DeleteConfirmation"
+                type="com.piramide.elwis.web.webmail.action.DeleteConfirmationAction"
+                name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd"
+                roles="MAIL.DELETE">
+            <forward name="Success" path="/Messages.do"/>
+            <forward name="Cancel" path="/Messages.do"/>
+        </action>
+        <action path="/Mail/MoveAllEmailsConfirmation"
+                type="com.piramide.elwis.web.webmail.action.MoveAllEmailToTrashConfirmation"
+                name="form" scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd" roles="MAIL.DELETE">
+            <forward name="Success" path="/Mail/MailTray.do"/>
+            <forward name="Cancel" path="/Messages.do"/>
+        </action>
+        <action path="/Mail/MoveAllSearchEmailsConfirmation"
+                type="com.piramide.elwis.web.webmail.action.MoveAllSearchEmailsToTrashAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd"
+                roles="MAIL.DELETE">
+            <forward name="Success" path="/Mail/SearchResult.do"/>
+        </action>
+        <action path="/Mail/MoveAllAdvancedSearchEmailsConfirmation"
+                type="com.piramide.elwis.web.webmail.action.MoveAllAdvancedSearchEmailsToTrashAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.MailTrayCmd"
+                roles="MAIL.DELETE">
+            <forward name="Success" path="/Mail/MailAdvancedSearch.do"/>
+        </action>
+
+        <action path="/Mail/ChangeFolderOpenStatus"
+                type="com.piramide.elwis.web.webmail.action.ChangeFolderOpenStatusAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.FolderCmd">
+            <forward name="Success" path="/Messages.do"/>
+        </action>
+        <!--end alvaro-->
+        <!--begin miky-->
+
+
+        <!--  Filter  -->
+        <action path="/Mail/Forward/CreateFilter" type="com.piramide.elwis.web.webmail.action.FilterAction"
+                name="filterForm"
+                scope="request" parameter="com.piramide.elwis.cmd.webmailmanager.FilterCmd" validate="false"
+                roles="WEBMAILFILTER.CREATE">
+            <forward name="Success" path="/FilterDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/Mail/CreateFilter" type="com.piramide.elwis.web.webmail.action.FilterAction" name="filterForm"
+                scope="request" parameter="com.piramide.elwis.cmd.webmailmanager.FilterCmd"
+                validate="true" input="/FilterDetailForCreate.jsp" roles="WEBMAILFILTER.CREATE">
+            <forward name="Success" path="/Mail/Forward/ListFilter.do"/>
+            <forward name="Cancel" path="/Mail/Forward/ListFilter.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/Mail/Forward/CreateFilter.do" redirect="true"/>
+        </action>
+
+        <action path="/Mail/Forward/ListFilter" type="com.piramide.elwis.web.webmail.action.WebmailListAction"
+                name="listFilterForm"
+                scope="request" parameter="filterList" roles="WEBMAILFILTER.VIEW">
+            <forward name="Success" path="/FilterDetailForList.jsp"/>
+        </action>
+
+        <action path="/Mail/Forward/UpdateFilter" type="com.piramide.elwis.web.webmail.action.FilterAction"
+                name="filterForm"
+                scope="request" parameter="com.piramide.elwis.cmd.webmailmanager.FilterCmd" validate="false"
+                roles="WEBMAILFILTER.VIEW">
+            <forward name="Success" path="/FilterDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Mail/UpdateFilter" type="com.piramide.elwis.web.webmail.action.FilterAction" name="filterForm"
+                scope="request" parameter="com.piramide.elwis.cmd.webmailmanager.FilterCmd"
+                validate="true" input="/Mail/Forward/UpdateFilter.do?dto(op)=read" roles="WEBMAILFILTER.UPDATE">
+            <forward name="Success" path="/Mail/Forward/ListFilter.do"/>
+            <forward name="Cancel" path="/Mail/Forward/ListFilter.do" redirect="true"/>
+        </action>
+
+        <action path="/Mail/Forward/DeleteFilter" type="com.piramide.elwis.web.webmail.action.FilterAction"
+                name="filterForm"
+                scope="request" parameter="com.piramide.elwis.cmd.webmailmanager.FilterCmd" validate="false"
+                roles="WEBMAILFILTER.DELETE">
+            <forward name="Success" path="/FilterDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Mail/DeleteFilter" type="com.piramide.elwis.web.webmail.action.FilterAction" name="filterForm"
+                scope="request" parameter="com.piramide.elwis.cmd.webmailmanager.FilterCmd" validate="false"
+                roles="WEBMAILFILTER.DELETE">
+
+            <forward name="Success" path="/Mail/Forward/ListFilter.do" redirect="true"/>
+            <forward name="Cancel" path="/Mail/Forward/ListFilter.do" redirect="true"/>
+        </action>
+
+        <!-- Folder  -->
+        <action path="/Mail/Forward/CreateFolder" type="org.apache.struts.actions.ForwardAction" name="FolderForm"
+                scope="request" parameter="/webmail/FolderDetailForCreate.jsp" validate="false">
+        </action>
+
+        <action path="/Mail/CreateFolder" type="com.piramide.elwis.web.common.action.DefaultAction" name="FolderForm"
+                scope="request" validate="true" input="/FolderDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.FolderCmd" roles="WEBMAILFOLDER.CREATE">
+            <forward name="Success" path="/Mail/Forward/ListFolder.do"/>
+            <forward name="Cancel" path="/Mail/Forward/ListFolder.do" redirect="true"/>
+            <forward name="Compose" path="/Mail/MailTray.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/Mail/Forward/CreateFolder.do" redirect="true"/>
+        </action>
+
+        <action path="/Mail/Forward/UpdateFolder" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="FolderForm" input="/Mail/Forward/ListFolder.do"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.FolderCmd" roles="WEBMAILFOLDER.VIEW">
+            <forward name="Success" path="/FolderDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Mail/UpdateFolder" type="com.piramide.elwis.web.common.action.DefaultAction" name="FolderForm"
+                scope="request" validate="true" input="/FolderDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.FolderCmd">
+            <forward name="Success" path="/Mail/Forward/ListFolder.do"/>
+            <forward name="Cancel" path="/Mail/Forward/ListFolder.do" redirect="true"/>
+            <forward name="Fail" path="/Mail/Forward/ListFolder.do"/>
+        </action>
+
+        <action path="/Mail/Forward/ListFolder" type="com.piramide.elwis.web.webmail.action.FolderListAction"
+                name="listFilterForm"
+                scope="request" parameter="userFoldersGroupedList" roles="WEBMAILFOLDER.VIEW">
+            <forward name="Success" path="/FolderDetailForList.jsp"/>
+        </action>
+
+        <action path="/Mail/Forward/DeleteFolder" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="FolderForm"
+                scope="request" validate="false" input="/Mail/Forward/ListFolder.do"
+                parameter="com.piramide.elwis.cmd.webmailmanager.FolderCmd" roles="WEBMAILFOLDER.DELETE">
+            <forward name="Success" path="/FolderDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Mail/DeleteFolder" type="com.piramide.elwis.web.common.action.DefaultAction" name="FolderForm"
+                scope="request" parameter="com.piramide.elwis.cmd.webmailmanager.FolderCmd" validate="false"
+                input="/Mail/Forward/ListFolder.do" roles="WEBMAILFOLDER.DELETE">
+            <forward name="Success" path="/Mail/Forward/ListFolder.do" redirect="true"/>
+            <forward name="Cancel" path="/Mail/Forward/ListFolder.do" redirect="true"/>
+        </action>
+
+        <!--mailcontact import-->
+        <action path="/Mail/ImportAddress"
+                type="com.piramide.elwis.web.webmail.action.WebmailListAction"
+                name="searchMailAdressForm"
+                scope="request"
+                input="/webmail/SearchAddress.jsp"
+                validate="false"
+                parameter="allAddressList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="contactSearchName@_contactPersonOfSearchName"/>
+            <forward name="Success" path="/SearchAddress.jsp"/>
+        </action>
+        <action path="/Mail/Forward/AddressGroupImportList"
+                type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="DefaultForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.AddressGroupCmd">
+            <forward name="Success" path="/AddressGroupImportList.jsp"/>
+        </action>
+
+        <!-- address import list for update-->
+        <action path="/Mail/Forward/AddressImportListForUpdate"
+                type="com.piramide.elwis.web.webmail.action.WebmailListAction"
+                name="searchMailAdressForm" scope="request" input="/webmail/AddressImportListForUpdate.jsp"
+                validate="false" roles="CONTACT.UPDATE"
+                parameter="allAddressList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="contactSearchName@_contactPersonOfSearchName"/>
+            <forward name="Success" path="/AddressImportListForUpdate.jsp"/>
+        </action>
+
+        <!--sent address to contact-->
+        <action path="/Mail/MailAddressSent"
+                type="com.piramide.elwis.web.webmail.action.MailAddressSentAction"
+                name="addressForm"
+                scope="request" validate="true" input="/Send.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd" roles="CONTACT.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <forward name="Success" path="/AddressSent.jsp"/>
+            <forward name="Cancel" path="/Mail/MailTray.do" redirect="true"/>
+        </action>
+        <action path="/Mail/CreateManyMailContact" type="com.piramide.elwis.web.webmail.action.CreateMailContactAction"
+                name="addressAddForm"
+                scope="request" validate="true" input="/AddressSent.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.AddressAddCmd" roles="CONTACT.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="mailSearch"/>
+            <set-property property="paramReWrite" value="mailAdvancedSearch"/>
+            <set-property property="paramReWrite" value="searchText"/>
+            <set-property property="paramReWrite" value="searchFilter"/>
+            <set-property property="paramReWrite" value="searchFolder"/>
+            <set-property property="paramReWrite" value="mailFilter"/>
+            <set-property property="paramReWrite" value="mailIndex"/>
+            <set-property property="paramReWrite" value="folderId"/>
+            <forward name="Success" path="/Mail/MailTray.do" redirect="true"/>
+            <forward name="SuccessToMailTray" path="/Mail/MailTray.do?returning=true" redirect="true"/>
+            <forward name="SuccessToMailSearch" path="/Mail/SearchResult.do?returning=true" redirect="true"/>
+            <forward name="SuccessToMailAdvancedSearch" path="/Mail/MailAdvancedSearch.do?returning=true"
+                     redirect="true"/>
+            <forward name="Cancel" path="/Mail/MailTray.do" redirect="true"/>
+        </action>
+
+        <!-- add address -->
+
+        <action path="/Mail/Forward/CreateAddress" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="contactAddForm"
+                scope="request" validate="false" input="/Settings.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.WebmailReadCmd" roles="CONTACT.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="address"/>
+            <set-property property="redirect" value="Search"/>
+            <forward name="Success" path="/AddressAdd.jsp"/>
+            <forward name="Search" path="/Mail/Forward/AddAddressGroup.do"/>
+        </action>
+
+        <action path="/Mail/CreateAddress" type="com.piramide.elwis.web.webmail.action.WebmailDefaultAction"
+                name="contactAddForm"
+                scope="request" validate="true" input="/AddressAdd.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.AddressAddCmd" roles="CONTACT.CREATE">
+            <forward name="Success" path="/Mail/AddressGroupList.do"/>
+            <forward name="Cancel" path="/Mail/Forward/AddAddressGroup.do"/>
+        </action>
+
+        <!--import html template action-->
+        <action path="/Mail/Ajax/ImportTemplate"
+                type="com.piramide.elwis.web.webmail.action.ImportHtmlTemplateAjaxAction"
+                name="form"
+                scope="request"
+                validate="false">
+        </action>
+
+        <!--temporal images-->
+        <action path="/TemporalImage/Forward/Create" type="org.apache.struts.actions.ForwardAction"
+                name="temporalImageForm"
+                scope="request" parameter="/webmail/ImageBrowse.jsp" validate="false">
+        </action>
+
+        <action path="/TemporalImage/Create" type="com.piramide.elwis.web.webmail.action.TemporalImageCreateAction"
+                name="temporalImageForm"
+                scope="request" validate="true" input="/ImageBrowse.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ImageStoreCmd">
+            <forward name="Success" path="/ImageBrowse.jsp"/>
+        </action>
+
+        <action path="/TemporalImage/Download"
+                type="com.piramide.elwis.web.webmail.action.DownloadTemporalImageAction"
+                name="form"
+                scope="request"
+                validate="false">
+        </action>
+
+        <!--temporal images for tinyMCE 4-->
+        <action path="/TinyMCE4/TemporalImage/Forward/Create" type="org.apache.struts.actions.ForwardAction"
+                name="temporalImageForm"
+                scope="request" parameter="/webmail/TinyMCE4UploadImage.jsp" validate="false">
+        </action>
+
+        <action path="/TinyMCE4/TemporalImage/Create" type="com.piramide.elwis.web.webmail.action.TemporalImageCreateAction"
+                name="temporalImageForm"
+                scope="request" validate="true" input="/TinyMCE4UploadImage.jsp"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ImageStoreCmd">
+            <forward name="Success" path="/TinyMCE4UploadImage.jsp"/>
+        </action>
+
+        <!-- mail temporal attach-->
+        <action path="/Mail/Ajax/Save/TemporalAttach"
+                type="com.piramide.elwis.web.webmail.action.MailAttachTemporalSaveAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ComposeTemporalMailCmd"
+                roles="MAIL.EXECUTE">
+        </action>
+        <action path="/Mail/Ajax/Delete/TemporalAttach"
+                type="com.piramide.elwis.web.webmail.action.MailAttachTemporalDeleteAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ComposeTemporalMailCmd"
+                roles="MAIL.EXECUTE">
+        </action>
+
+        <!-- autocomplete recipients-->
+        <action path="/Mail/Ajax/Find/Recipients"
+                type="com.piramide.elwis.web.webmail.action.MailFindRecipientsAjaxAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.webmailmanager.ComposeTemporalMailCmd"
+                roles="MAIL.EXECUTE">
+        </action>
+
+        <!-- Move mail -->
+        <action path="/Mail/Ajax/MoveToFolder"
+                type="com.piramide.elwis.web.webmail.action.MailMoveToFolderAjaxAction"
+                name="form"
+                scope="request"
+                validate="false"
+                roles="MAIL.VIEW">
+        </action>
+
+        <!--end miky-->
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+            /WEB-INF/common/validation.xml,
+            /WEB-INF/webmail/validation.xml"/>
+    </plug-in>
+
+    <!-- add Fantabulous-->
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/webmail/fantabulous.xml"/>
+        <set-property property="moduleParams" value="index, category"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="index, category"/>
+    </plug-in>
+
+</struts-config>

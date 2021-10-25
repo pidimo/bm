@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<!DOCTYPE  lists PUBLIC "-//Alfacentaurto//DTD AC" "../dtd/DTDConfiguration.dtd">-->
+
+
+<lists>
+    <list listName="Address-ContactPerson" distinct="true">
+        <tables>
+            <table tableName="contactperson" alias="contactPerson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="personId" key="true"/>
+                    <field fieldName="addressid" fieldAlias="bossId" key="true"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="personName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="personNameId" key="true"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="organization">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="companyid" fieldAlias="company"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>personNameId</pK>
+                <fK>personId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>bossId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="personId" operator="GREATER" type="constant" value="0"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="name1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="name2" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="name3" operator="LIKE" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="company" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="ORGANIZATIONNAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="PERSONNAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="ORGANIZATIONNAME"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="ADVANCEDSEARCH" distinct="true" persistence="true" executeFirstTime="false" alwaysRead="false">
+        <tables>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressid" key="true"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="code" fieldAlias="code"/>
+                    <field fieldName="countryid" fieldAlias="country"/>
+                    <field fieldName="cityid" fieldAlias="city"/>
+                    <field fieldName="addresstype" fieldAlias="type"/>
+                    <field fieldName="active" fieldAlias="active"/>
+                    <field fieldName="street" fieldAlias="street"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true"/>
+                    <field fieldName="countryname" fieldAlias="countryName"/>
+                </fields>
+            </table>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                </fields>
+            </table>
+            <table tableName="telecom" alias="telecom">
+                <fields>
+                    <field fieldName="telecomid" fieldAlias="telecomId" key="true"/>
+                    <field fieldName="addressid" fieldAlias="addressTelecom"/>
+                    <field fieldName="telecomnumber" fieldAlias="telecomNumber"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="countryName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="name1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="name2" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="name3" operator="LIKE" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="code" operator="ANDBIT" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="street" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="cityName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="telecomNumber" operator="LIKE" type="parameter"/>
+
+        </conditions>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <fK>country</fK>
+                <pK>countryId</pK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <fK>city</fK>
+                <pK>cityId</pK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <fK>addressid</fK>
+                <pK>addressTelecom</pK>
+            </relationShip>
+        </relationShips>
+        <configuration>
+            <columns>
+                <column columnName="NAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="CITY">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="NAME"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+</lists>
+
+

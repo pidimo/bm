@@ -1,0 +1,12 @@
+
+
+.elwisButton{
+    display:block;
+    height:13px;
+/*
+    border:1px solid #F0F0EE;
+    margin-right:1px;
+    text-align: center;
+*/
+	vertical-align: middle;
+}

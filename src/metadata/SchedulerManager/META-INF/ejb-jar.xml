@@ -1,0 +1,1330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ejb-jar xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd"
+         version="2.1">
+
+    <enterprise-beans>
+        <entity>
+            <ejb-name>Task</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.TaskHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.Task</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.TaskBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>Task</abstract-schema-name>
+            <cmp-field>
+                <field-name>taskId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>title</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>startDate</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>expireDate</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>expireTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>status</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>priorityId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>freeTextId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>userId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>version</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>expireDateTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>notification</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>startTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>startDateTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>percent</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>taskTypeId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>addressId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>contactPersonId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>processId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>activityId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>createDateTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>updateDateTime</field-name>
+            </cmp-field>
+            <primkey-field>taskId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByActivityId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(t) FROM Task as t WHERE t.activityId = ?1]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByAddress</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(t) FROM Task as t WHERE t.addressId = ?1 AND t.contactPersonId IS NULL]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByContactPerson</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(t) FROM Task as t WHERE t.addressId = ?1 AND t.contactPersonId = ?2]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>Reminder</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.ReminderHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.Reminder</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.ReminderBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>Reminder</abstract-schema-name>
+            <cmp-field>
+                <field-name>appointmentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>timeBefore</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>reminderType</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>data</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>nextTime</field-name>
+            </cmp-field>
+            <primkey-field>appointmentId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findAllBetweenDate</method-name>
+                    <method-params>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Long</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(r) FROM Reminder as r WHERE r.nextTime <> 0 and r.nextTime>=?1 and r.nextTime < ?2]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllLesserThanDate</method-name>
+                    <method-params>
+                        <method-param>java.lang.Long</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(r) FROM Reminder as r WHERE r.nextTime <> 0 and r.nextTime < ?1]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>Appointment</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.AppointmentHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.Appointment</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.AppointmentBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>Appointment</abstract-schema-name>
+            <cmp-field>
+                <field-name>appointmentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>addressId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>contactPersonId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>userId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>freeTextId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>title</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>startDate</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>startTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>endDate</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>endTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>appointmentTypeId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>location</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>isPrivate</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>priorityId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>version</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>isRecurrence</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>startDateTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>endDateTime</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>isAllDay</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>createdById</field-name>
+            </cmp-field>
+            <primkey-field>appointmentId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findAllAppointmentWithoutRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <!--<ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                    WHERE su.userId = ?3 and
+                        (ap.isRecurrence = False or (ap.isRecurrence = True and ap.recurrence.ruleType IS NULL)) and
+                        ((ap.startDateTime >= ?1 and ap.endDateTime <= ?2) or
+                        (ap.startDateTime <= ?1 and ap.endDateTime >= ?2) or
+                        (ap.startDateTime >= ?1 and ap.startDateTime <= ?2 and ap.endDateTime >= ?2) or
+                        (ap.startDateTime <= ?1 and ap.endDateTime >= ?1 and ap.endDateTime <= ?2))
+                        ORDER BY ap.startDate, ap.endDate ASC
+                     ]]>
+                </ejb-ql>-->
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                    WHERE su.userId = ?3 and
+                        ap.isRecurrence = False and
+                        (ap.startDateTime <= ?2 and ap.endDateTime >= ?1)
+                        ORDER BY ap.startDate, ap.endDate ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllPublicAppointmentWithoutRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                    WHERE su.userId = ?3 and ap.isPrivate=False and
+                        ap.isRecurrence = False and
+                        (ap.startDateTime <= ?2 and ap.endDateTime >= ?1)
+                        ORDER BY ap.startDate, ap.endDate ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllPublicOrPrivateAppointmentWithoutRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Boolean</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                    WHERE su.userId = ?3 and ap.isPrivate=?4 and
+                        ap.isRecurrence = False and
+                        (ap.startDateTime <= ?2 and ap.endDateTime >= ?1)
+                        ORDER BY ap.startDate, ap.endDate ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllAppointmentWithRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                        WHERE su.userId = ?2 and ap.isRecurrence = True and
+                        ((ap.recurrence.rangeType = 1 ) or
+                        (ap.recurrence.rangeType = 2 ) or
+                        (ap.recurrence.rangeType = 3 and ap.recurrence.rangeValue >= ?1))
+                        ORDER BY ap.startDateTime, ap.endDateTime ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllPublicAppointmentWithRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <!--<ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                        WHERE su.userId = ?2 and ap.isPrivate = False and
+                        ap.isRecurrence = True and ap.recurrence.ruleType IS NOT NULL and
+                        ((ap.recurrence.rangeType = 1 ) or
+                        (ap.recurrence.rangeType = 2 ) or
+                        (ap.recurrence.rangeType = 3 and ap.recurrence.rangeValue >= ?1))
+                        ORDER BY ap.startDateTime, ap.endDateTime ASC
+                     ]]>
+                </ejb-ql>-->
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                        WHERE su.userId = ?2 and ap.isPrivate = False and ap.isRecurrence = True and
+                        ((ap.recurrence.rangeType = 1 ) or
+                        (ap.recurrence.rangeType = 2 ) or
+                        (ap.recurrence.rangeType = 3 and ap.recurrence.rangeValue >= ?1))
+                        ORDER BY ap.startDateTime, ap.endDateTime ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllPublicOrPrivateAppointmentWithRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Boolean</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                        WHERE su.userId = ?2 and ap.isPrivate = ?3 and ap.isRecurrence = True and
+                        ((ap.recurrence.rangeType = 1 ) or
+                        (ap.recurrence.rangeType = 2 ) or
+                        (ap.recurrence.rangeType = 3 and ap.recurrence.rangeValue >= ?1))
+                        ORDER BY ap.startDateTime, ap.endDateTime ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <!--find by appointment type-->
+            <query>
+                <query-method>
+                    <method-name>findByAppointmentTypeWithoutRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                    WHERE su.userId = ?3 and ap.appointmentTypeId = ?4 and
+                        ap.isRecurrence = False and
+                        (ap.startDateTime <= ?2 and ap.endDateTime >= ?1)
+                        ORDER BY ap.startDate, ap.endDate ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByAppointmentTypeWithRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                        WHERE su.userId = ?2 and ap.isRecurrence = True and ap.appointmentTypeId = ?3 and
+                        ((ap.recurrence.rangeType = 1 ) or
+                        (ap.recurrence.rangeType = 2 ) or
+                        (ap.recurrence.rangeType = 3 and ap.recurrence.rangeValue >= ?1))
+                        ORDER BY ap.startDateTime, ap.endDateTime ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByAppointmentTypePublicOrPrivateWithRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Boolean</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                        WHERE su.userId = ?2 and ap.isPrivate = ?3 and ap.isRecurrence = True and ap.appointmentTypeId = ?4 and
+                        ((ap.recurrence.rangeType = 1 ) or
+                        (ap.recurrence.rangeType = 2 ) or
+                        (ap.recurrence.rangeType = 3 and ap.recurrence.rangeValue >= ?1))
+                        ORDER BY ap.startDateTime, ap.endDateTime ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByAppointmentTypePublicOrPrivateWithoutRecurrence</method-name>
+                    <method-params>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Long</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Boolean</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT DISTINCT OBJECT(ap) FROM Appointment as ap, IN (ap.scheludedUsers) as su
+                    WHERE su.userId = ?3 and ap.isPrivate=?4 and ap.appointmentTypeId = ?5 and
+                        ap.isRecurrence = False and
+                        (ap.startDateTime <= ?2 and ap.endDateTime >= ?1)
+                        ORDER BY ap.startDate, ap.endDate ASC
+                     ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByAddress</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(ap) FROM Appointment as ap WHERE ap.addressId= ?1 AND ap.contactPersonId IS NULL]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByContactPerson</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(ap) FROM Appointment as ap WHERE ap.addressId= ?1 AND ap.contactPersonId = ?2]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>AppointmentType</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.AppointmentTypeHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.AppointmentType</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.AppointmentTypeBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>AppointmentType</abstract-schema-name>
+            <cmp-field>
+                <field-name>appointmentTypeId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>name</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>color</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>version</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>appointmentTypeId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByCompanyId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM AppointmentType as su WHERE su.companyId=?1]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>SchedulerFreeText</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.SchedulerFreeTextHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.SchedulerFreeText</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.SchedulerFreeTextBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>SchedulerFreeText</abstract-schema-name>
+            <cmp-field>
+                <field-name>freeTextId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>type</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>value</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>version</field-name>
+            </cmp-field>
+            <primkey-field>freeTextId</primkey-field>
+        </entity>
+        <entity>
+            <ejb-name>RecurException</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.RecurExceptionHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.RecurException</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.RecurExceptionBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>RecurException</abstract-schema-name>
+            <cmp-field>
+                <field-name>recurExceptionId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>appointmentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>dateValue</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>recurExceptionId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByAppointmentId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM RecurException as su WHERE su.appointmentId=?1]]>
+                </ejb-ql>
+            </query>
+        </entity>
+
+        <entity>
+            <ejb-name>ScheduledUser</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.ScheduledUserHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.ScheduledUser</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.ScheduledUserBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>ScheduledUser</abstract-schema-name>
+            <cmp-field>
+                <field-name>scheduledUserId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>appointmentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>taskId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>userGroupId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>userId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>scheduledUserId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByUserIdAndAppId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM ScheduledUser as su WHERE su.userId=?1 and su.appointmentId=?2]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByAppointmentId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM ScheduledUser as su WHERE su.appointmentId=?1]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByTaskId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM ScheduledUser as su WHERE su.taskId=?1]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByUserGroupIdAndAppId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM ScheduledUser as su WHERE su.userGroupId=?1 AND su.appointmentId=?2]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByUserIdAndTaskId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM ScheduledUser as su WHERE su.userId=?1 and su.taskId=?2]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByUserGroupIdAndTaskId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM ScheduledUser as su WHERE su.userGroupId=?1 AND su.taskId=?2]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByUserGroupId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM ScheduledUser as su WHERE su.userGroupId=?1 AND su.companyId=?2]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>SchedulerAccess</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.SchedulerAccessHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.SchedulerAccess</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.SchedulerAccessBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>com.piramide.elwis.domain.schedulermanager.SchedulerAccessPK</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>SchedulerAccess</abstract-schema-name>
+            <cmp-field>
+                <field-name>ownerUserId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>userId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>permission</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>privatePermission</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+
+            <query>
+                <description></description>
+                <query-method>
+                    <method-name>findUsersViewCalendar</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(sc) FROM SchedulerAccess as sc WHERE sc.userId = ?1 ]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>Recurrence</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.RecurrenceHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.Recurrence</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.RecurrenceBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>Recurrence</abstract-schema-name>
+            <cmp-field>
+                <field-name>appointmentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>recurEvery</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>rangeType</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>rangeValue</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>ruleType</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>ruleValue</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>ruleValueType</field-name>
+            </cmp-field>
+            <primkey-field>appointmentId</primkey-field>
+        </entity>
+        <entity>
+            <ejb-name>UserTask</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.UserTaskHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.UserTask</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.UserTaskBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>UserTask</abstract-schema-name>
+            <cmp-field>
+                <field-name>scheduledUserId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>statusId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>noteId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>version</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>scheduledUserId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>ejbSelectCountByStatus</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT COUNT(ut) FROM UserTask AS ut WHERE ut.scheduledUser.taskId=?1  AND ut.statusId= ?2]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>TaskType</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.TaskTypeHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.TaskType</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.TaskTypeBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>TaskType</abstract-schema-name>
+            <cmp-field>
+                <field-name>taskTypeId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>name</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>version</field-name>
+            </cmp-field>
+            <primkey-field>taskTypeId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByCompanyId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(su) FROM TaskType as su WHERE su.companyId=?1]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>Holiday</ejb-name>
+            <local-home>com.piramide.elwis.domain.schedulermanager.HolidayHome</local-home>
+            <local>com.piramide.elwis.domain.schedulermanager.Holiday</local>
+            <ejb-class>com.piramide.elwis.domain.schedulermanager.HolidayBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>Holiday</abstract-schema-name>
+            <cmp-field>
+                <field-name>day</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>holidayId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>holidayType</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>month</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>moveToMonday</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>title</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>occurrence</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>countryId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>version</field-name>
+            </cmp-field>
+            <primkey-field>holidayId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByCompanyId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE h.companyId  = ?1]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findOnlyForJanuaryInDateType</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE (h.countryId=?1 OR h.countryId IS NULL) AND
+                                   (h.month=12 OR h.month=1 OR h.month=2) AND
+                             h.holidayType=0 AND h.companyId=?2]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllOnlyForJanuaryInDateType</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE (h.month=12 OR h.month=1 OR h.month=2) AND
+                             h.holidayType=0 AND h.companyId=?1]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByDateRangeInDateType</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE (h.countryId=?1 OR h.countryId IS NULL) AND
+                                   h.month BETWEEN ?2 and ?3 AND
+                             h.holidayType=0 AND h.companyId=?4]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllByDateRangeInDateType</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE h.month BETWEEN ?1 and ?2 AND
+                             h.holidayType=0 AND h.companyId=?3]]>
+                </ejb-ql>
+            </query>
+            <!--OccurrenceType-->
+            <query>
+                <query-method>
+                    <method-name>findOnlyForJanuaryInOccurrenceType</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE (h.countryId=?1 OR h.countryId IS NULL) AND
+                             (h.month=12 OR h.month=1 OR h.month=2) AND
+                             h.holidayType=1 AND h.companyId=?2]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllOnlyForJanuaryInOccurrenceType</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE (h.month=12 OR h.month=1 OR h.month=2) AND
+                             h.holidayType=1 AND h.companyId=?1]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByMonthRangeInOccurrenceType</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE (h.countryId=?1 OR h.countryId IS NULL) AND
+                             h.month>=?2 AND h.month<=?3 AND
+                             h.holidayType=1 AND h.companyId=?4]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllByMonthRangeInOccurrenceType</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[SELECT OBJECT(h) FROM Holiday AS h
+                             WHERE h.month>=?1 AND h.month<=?2 AND
+                             h.holidayType=1 AND h.companyId=?3]]>
+                </ejb-ql>
+            </query>
+        </entity>
+    </enterprise-beans>
+    <relationships>
+        <ejb-relation>
+            <ejb-relation-name>UserTask - SchedulerFreeText</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>UserTask</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>UserTask</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>schedulerFreeText</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>SchedulerFreeText</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>SchedulerFreeText</ejb-name>
+                </relationship-role-source>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Task - SchedulerFreeText</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>Task</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>Task</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>schedulerFreeText</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>SchedulerFreeText</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>SchedulerFreeText</ejb-name>
+                </relationship-role-source>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Appointment - SchedulerFreeText</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>Appointment</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>Appointment</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>schedulerFreeText</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>SchedulerFreeText</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>SchedulerFreeText</ejb-name>
+                </relationship-role-source>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Appointment - Reminder</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>AppointmentRole</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Appointment</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>reminder</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>ReminderRole</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>Reminder</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>appointment</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Appointment - ScheduledUser</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>AppointmentRole</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Appointment</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>scheludedUsers</cmr-field-name>
+                    <cmr-field-type>java.util.Collection</cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>ScheduledUserRole</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>ScheduledUser</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>appointment</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Task - ScheduledUser</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>TaskRole</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Task</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>scheduledUsers</cmr-field-name>
+                    <cmr-field-type>java.util.Collection</cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>ScheduledUserRole</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>ScheduledUser</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>task</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Appointment - Recurrence</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>Appointment</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Appointment</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>recurrence</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>Recurrence</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>Recurrence</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>appointment</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Recurrence - RecurException</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>Recurrence</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Recurrence</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>exceptions</cmr-field-name>
+                    <cmr-field-type>java.util.Collection</cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>RecurException</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>RecurException</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>recurrence</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>ScheduledUser - UserTask</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>ScheduledUser</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>ScheduledUser</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>userTask</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>UserTask</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>UserTask</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>scheduledUser</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+    </relationships>
+    <assembly-descriptor>
+        <container-transaction>
+            <method>
+                <ejb-name>Appointment</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>AppointmentType</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>RecurException</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>Reminder</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>SchedulerFreeText</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>Task</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>ScheduledUser</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>SchedulerAccess</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>Recurrence</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>UserTask</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>TaskType</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>Holiday</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+    </assembly-descriptor>
+</ejb-jar>

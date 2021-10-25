@@ -1,0 +1,247 @@
+BODY {
+    font-family: Verdana, sans-serif;
+    font-size: 11px;
+    background-color: #BA0808;
+    margin: 0;
+    padding: 0;
+
+}
+
+.center {
+    text-align: center;
+    padding: 2px;
+    margin: 0;
+}
+
+table {
+    font-size: 11px;
+    font-family: Arial, sans-serif;
+}
+
+.expiredMessage {
+    color: Red;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 9pt;
+    vertical-align: top;
+    BACKGROUND-COLOR: #FFFFCC;
+    BORDER: 1px solid #96965E;
+    padding: 3px;
+    margin-top: 2px;
+    text-align: center;
+
+}
+
+A {
+    text-decoration: none;
+}
+
+.copyright {
+    text-align: center;
+    color: #F1F1F1;
+    font-size: smaller;
+    padding-top: 1px;
+    border-top: 1px groove;
+
+}
+
+.copyright A {
+    text-decoration: none;
+    color: #F1F1F1;
+}
+
+.copyright A:hover {
+    text-decoration: underline;
+}
+
+.downloadLink {
+    color: #FFFFFF;
+    font-size: smaller;
+    margin: 0;
+    padding: 0;
+}
+
+.downloadLink A {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.downloadLink A:hover {
+    text-decoration: underline;
+}
+
+TD.title {
+    font-family: Verdana, Helvetica, sans-serif;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: left;
+    padding: 1px;
+    height: 22px;
+    border: 1px solid #F1F8FE;
+    border-width: 1px 1px 1px 1px;
+    background-color: #BA0808;
+
+}
+
+TD.label {
+    background-color: #ffffff;
+    padding: 0 0 0 7px;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #00008B;
+    text-align: left;
+    vertical-align: middle;
+    height: 20px;
+    font-weight: lighter;
+    border-top: 1px solid White;
+    border-bottom: 1px solid #DADEE2;
+}
+
+TD.contain {
+    background-color: #F5F5F5;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 8pt;
+    color: #000000;
+    text-align: left;
+    padding: 2px;
+    vertical-align: middle;
+    height: 23px;
+    font-weight: lighter
+}
+
+TR.mainTitle {
+    background-color: #F1F1F1;
+    font-family: Verdana, Helvetica, sans-serif;
+    color: #000000;
+    font-weight: bold;
+    text-align: left;
+
+}
+
+TD.logonButton {
+    text-align: center;
+    padding: 3px;
+    vertical-align: middle;
+    font-weight: lighter;
+}
+
+INPUT.button {
+    width: 100px;
+    height: 20px;
+    font-family: Verdana, sans-serif;
+    font-size: 11px;
+    color: #212121;
+    background: #F6F6F6 url(layout/ui/img/buttons/button.gif);
+    border: 0;
+    font-weight: bold;
+}
+
+td.line {
+
+    border-left: 1px solid #7BA9CD;
+    border-right: 1px solid #7BA9CD;
+    border-bottom: 1px solid #7BA9CD;
+}
+
+td.menu {
+    border-top: 1px solid #70ABE4;
+    border-bottom: 1px solid #2979C4;
+    color: White;
+    padding-left: 15px;
+    border-right: 1px solid #2979C4;
+    height: 25px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #3470AB;
+}
+
+.title2 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFD700;
+}
+
+td.conten {
+    padding: 5px 10px 0 10px;
+}
+
+.content2 {
+    color: white;
+}
+
+td.conten2 {
+    padding: 5px 10px 0 10px;
+    background: #307CC9;
+}
+
+td.conten3 {
+    padding: 5px 10px 0 10px;
+    border: 1px solid #E4CF7C;
+    background: #FBFCDE;
+}
+
+TD.error {
+    background-color: #FFFFCC;
+    border: #96965E 1px solid;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #000000;
+    text-align: left;
+    vertical-align: top;
+    padding: 5px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+TABLE.container {
+    background-color: transparent;
+    text-align: center;
+}
+
+TD.topLabel {
+    background-color: #ffffff;
+    padding: 5px 5px 0 7px;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #00008B;
+    text-align: left;
+    vertical-align: top;
+    height: 23px;
+    font-weight: lighter;
+    border: #F5F5F5 1px solid;
+    border-top: 0;
+    border-right: 0;
+}
+
+TD.button {
+    text-align: right;
+    padding: 2px;
+    vertical-align: middle;
+    font-weight: lighter;
+}
+
+SPAN.error {
+    color: #ff0000;
+    text-align: left;
+    font-family: Verdana, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+SELECT.shortSelect {
+    width: 100px;
+}
+
+INPUT.mediumText {
+    width: 205px;
+}
+
+INPUT.shortText {
+    width: 100px;
+}
+

@@ -1,0 +1,23 @@
+<% listFields.each_pair do |lkey, _mapFields| 
+FIELDS_RES.each(' ') {|s|  
+ mkey=s.strip
+ _fields = _mapFields[mkey]
+ fkeys = _fields.keys.sort
+   
+fkeys.each{|x|
+_field = _fields[x]
+%>
+ #define IDS_<%=_field.idName %> <%= _field.id %> 
+<% }} end %>
+
+STRINGTABLE
+BEGIN
+<% listFields.each_pair do |lkey, _mapFields| 
+FIELDS_RES.each(' ') {|s|  
+ mkey=s.strip
+ _fields = _mapFields[mkey] 
+ _fields.each_pair do |fkey, _field| 
+%>
+    IDS_<%= _field.idName %>,   "<%= _field.resource %>"
+<% end } end %>
+END

@@ -1,0 +1,40 @@
+<!-- For the STYLES-->
+<!ELEMENT CSS (file,elements*)>
+
+<!ELEMENT file EMPTY>
+	<!ATTLIST file name CDATA #REQUIRED>
+
+<!ELEMENT elements (element)*>
+	<!ATTLIST elements name CDATA #REQUIRED
+			  		   resource CDATA #IMPLIED
+					   configurable (true | false) 'false'>
+
+<!ELEMENT element (attributes)>
+	<!ATTLIST element styleClass CDATA #IMPLIED
+					  name CDATA #REQUIRED
+					  resource CDATA #IMPLIED
+	                  extends CDATA #IMPLIED
+	                  configurable (true | false) 'false'>
+
+<!ELEMENT attributes (attribute)*>
+<!ELEMENT attribute EMPTY>
+	<!ATTLIST attribute name CDATA #REQUIRED
+						resource CDATA #IMPLIED
+						configurable (true | false) 'false'
+						value CDATA #IMPLIED
+						type CDATA #IMPLIED
+						url CDATA #IMPLIED
+                        arguments CDATA #IMPLIED
+                        obviate (true | false) 'false'
+                        overwrite (true | false) 'false'>
+
+<!-- For the ATTRIBUTETYPES-->
+<!ELEMENT ATTRIBUTETYPES (attributeType)*>
+<!ELEMENT attributeType (valueList)>
+	<!ATTLIST attributeType name CDATA #REQUIRED>
+<!ELEMENT valueList (valueItem)*>
+<!ELEMENT valueItem EMPTY>
+	<!ATTLIST valueItem name CDATA #REQUIRED
+						value CDATA #REQUIRED
+						resource CDATA #IMPLIED
+						url CDATA #IMPLIED>

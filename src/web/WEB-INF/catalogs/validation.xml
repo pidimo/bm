@@ -1,0 +1,861 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+    <formset>
+        <form name="languageForm">
+            <field property="languageName" depends="required">
+                <arg0 key="Language.name" resource="true"/>
+            </field>
+            <field property="iso" depends="minlength">
+                <arg0 key="Language.iso" resource="true"/>
+                <arg1 key="Language.size" resource="true"/>
+                <var>
+                    <var-name>minlength</var-name>
+                    <var-value>2</var-value>
+                </var>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="titleForm">
+            <field property="titleName" depends="required">
+                <arg0 key="Title.name" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="bankForm">
+            <field property="bankName" depends="required">
+                <arg0 key="Bank.name" resource="true"/>
+            </field>
+            <field property="bankCode" depends="required">
+                <arg0 key="Bank.code" resource="true"/>
+            </field>
+            <!--<field property="name1" depends="required">
+                <arg0 key="Bank.name" resource="true"/>
+            </field>-->
+        </form>
+    </formset>
+    <formset>
+        <form name="countryForm">
+            <field property="countryName" depends="required">
+                <arg0 key="Country.name" resource="true"/>
+            </field>
+            <field property="countryAreaCode" depends="required">
+                <arg0 key="Country.areaCode" resource="true"/>
+            </field>
+            <field property="countryPrefix" depends="integer, unsignedInteger">
+                <arg0 key="Country.prefix" resource="true"/>
+            </field>
+            <field property="currencyId" depends="foreignKey">
+                <arg0 key="Country.currency" resource="true"/>
+                <arg1 key="table=currency"/>
+                <!--table-->
+                <arg2 key="column=currencyid"/>
+                <!--primary key column-->
+            </field>
+            <!--<field property="currencyId" depends="required">
+                <arg0 key="Country.currency" resource="true"/>
+            </field>-->
+        </form>
+    </formset>
+    <formset>
+        <form name="cityForm">
+            <field property="cityName" depends="required">
+                <arg0 key="City.name" resource="true"/>
+            </field>
+            <field property="countryId" depends="required">
+                <arg0 key="City.country" resource="true"/>
+            </field>
+            <field property="countryId" depends="foreignKey">
+                <arg0 key="City.country" resource="true"/>
+                <arg1 key="table=country"/>
+                <!--table-->
+                <arg2 key="column=countryid"/>
+                <!--primary key column-->
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="personTypeForm">
+            <field property="personTypeName" depends="required">
+                <arg0 key="PersonType.name" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="branchForm">
+            <field property="branchName" depends="required">
+                <arg0 key="Branch.name" resource="true"/>
+            </field>
+            <field property="group" depends="foreignKey">
+                <arg0 key="Branch.group" resource="true"/>
+                <arg1 key="table=branch"/>
+                <!--table-->
+                <arg2 key="column=branchid"/>
+                <!--primary key column-->
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="customerTypeForm">
+            <field property="customerTypeName" depends="required">
+                <arg0 key="CustomerType.name" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="payConditionForm">
+            <field property="payConditionName" depends="required">
+                <arg0 key="PayCondition.name" resource="true"/>
+            </field>
+            <field property="payDays" depends="required,integer,unsignedInteger">
+                <arg0 key="PayCondition.PayDays" resource="true"/>
+            </field>
+            <field property="payDaysDiscount" depends="integer,unsignedInteger">
+                <arg0 key="PayCondition.payDaysDiscount" resource="true"/>
+            </field>
+            <field property="discount" depends="decimalNumber">
+                <arg0 key="PayCondition.Discount" resource="true"/>
+                <arg1 key="maxInt=3"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="languageId" depends="requiredif, foreignKey">
+                <arg0 key="PayCondition.languageForTexts" resource="true"/>
+                <arg1 key="table=language"/>
+                <arg2 key="column=languageid"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>op</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>create</var-value>
+                </var>
+            </field>
+            <field property="payConditionText" depends="requiredif">
+                <arg0 key="PayConditionText.text" resource="true"/>
+                <var>      
+                    <var-name>field[0]</var-name>
+                    <var-value>op</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>create</var-value>
+                </var>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="payMoralityForm">
+            <field property="payMoralityName" depends="required">
+                <arg0 key="PayMorality.name" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="priorityForm">
+            <field property="priorityName" depends="required,">
+                <arg0 key="Priority.name" resource="true"/>
+            </field>
+            <field property="sequence" depends="required, integer, unsignedInteger">
+                <arg0 key="Priority.sequence" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="telecomTypeForm">
+            <field property="telecomTypeName" depends="required">
+                <arg0 key="TelecomType.name" resource="true"/>
+            </field>
+            <field property="position" depends="integer, unsignedInteger">
+                <arg0 key="TelecomType.position" resource="true"/>
+            </field>
+            <field property="type" depends="required">
+                <arg0 key="TelecomType.type" resource="true"/>
+            </field>
+            <field property="languageId" depends="required">
+                <arg0 key="TelecomType.language" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="currencyForm">
+            <field property="currencyName" depends="required">
+                <arg0 key="Currency.name" resource="true"/>
+            </field>
+            <field property="unit" depends="decimalNumber">
+                <arg0 key="Currency.unit" resource="true"/>
+                <arg1 key="maxInt=11"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="categoryGroupForm">
+            <field property="label" depends="required">
+                <arg0 key="CategoryGroup.label" resource="true"/>
+            </field>
+            <field property="sequence" depends="required, unsignedInteger">
+                <arg0 key="CategoryGroup.sequence" resource="true"/>
+            </field>
+            <field property="table" depends="required">
+                <arg0 key="CategoryGroup.table" resource="true"/>
+            </field>
+            <field property="categoryTabId" depends="foreignKey">
+                <arg0 key="CategoryGroup.categoryTabId" resource="true"/>
+                <arg1 key="table=categorytab"/>
+                <arg2 key="column=categorytabid"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="categoryTabForm">
+            <field property="label" depends="required">
+                <arg0 key="CategoryTab.label" resource="true"/>
+            </field>
+            <field property="sequence" depends="required, unsignedInteger">
+                <arg0 key="CategoryTab.sequence" resource="true"/>
+            </field>
+            <field property="table" depends="required">
+                <arg0 key="CategoryTab.table" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="categoryForm">
+            <field property="categoryName" depends="required">
+                <arg0 key="Category.name" resource="true"/>
+            </field>
+            <field property="sequence" depends="required, unsignedInteger">
+                <arg0 key="Category.sequence" resource="true"/>
+            </field>
+            <field property="table" depends="required">
+                <arg0 key="Category.label" resource="true"/>
+            </field>
+            <field property="languageId" depends="required, foreignKey">
+                <arg0 key="TelecomType.language" resource="true"/>
+                <arg1 key="table=language"/>
+                <arg2 key="column=languageid"/>
+            </field>
+            <field property="categoryType" depends="required">
+                <arg0 key="Category.type" resource="true"/>
+            </field>
+            <field property="categoryGroupId" depends="foreignKey">
+                <arg0 key="Category.Group" resource="true"/>
+                <arg1 key="table=categorygroup"/>
+                <arg2 key="column=categorygroupid"/>
+            </field>
+            <field property="secondGroupId" depends="foreignKey">
+                <arg0 key="Category.Group.ContactPerson" resource="true"/>
+                <arg1 key="table=categorygroup"/>
+                <arg2 key="column=categorygroupid"/>
+            </field>
+            <field property="parentCategory" depends="foreignKey">
+                <arg0 key="Category.parentCategory" resource="true"/>
+                <arg1 key="table=category"/>
+                <arg2 key="column=categoryid"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="salutationForm">
+            <field property="salutationLabel" depends="required">
+                <arg0 key="Salutation.label" resource="true"/>
+            </field>
+            <field property="letterText" depends="required">
+                <arg0 key="Salutation.letterText" resource="true"/>
+            </field>
+            <field property="addressText" depends="required">
+                <arg0 key="Salutation.addressText" resource="true"/>
+            </field>
+            <field property="languageId" depends="required">
+                <arg0 key="Salutation.languageForTexts" resource="true"/>
+            </field>
+            <field property="languageId" depends="foreignKey">
+                <arg0 key="Salutation.languageForTexts" resource="true"/>
+                <arg1 key="table=language"/>
+                <!--table-->
+                <arg2 key="column=languageid"/>
+                <!--primary key column-->
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="categoryValueForm">
+            <field property="categoryId" depends="required">
+                <arg0 key="CategoryValue.category" resource="true"/>
+            </field>
+            <field property="categoryValueName" depends="required">
+                <arg0 key="CategoryValue.name" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="supplierTypeForm">
+            <field property="supplierTypeName" depends="required">
+                <arg0 key="SupplierType.name" resource="true"/>
+            </field>
+        </form>
+    </formset>
+
+    <formset>
+        <form name="addressRelationTypeForm">
+            <field property="title" depends="required">
+                <arg0 key="AddressRelationType.title" resource="true"/>
+            </field>
+            <field property="relationType" depends="required">
+                <arg0 key="AddressRelationType.relationType" resource="true"/>
+            </field>
+        </form>
+    </formset>
+
+    <formset>
+        <form name="costCenterForm">
+            <field property="costCenterName" depends="required">
+                <arg0 key="CostCenter.name" resource="true"/>
+            </field>
+            <field property="parentCostCenterId" depends="foreignKey">
+                <arg0 key="CostCenter.group" resource="true"/>
+                <arg1 key="table=costcenter"/>
+                <!--table-->
+                <arg2 key="column=costcenterid"/>
+                <!--primary key column-->
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="templateForm">
+            <field property="description" depends="required">
+                <arg0 key="Template.description" resource="true"/>
+            </field>
+            <field property="mediaType" depends="required">
+                <arg0 key="Template.mediaType" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="addressSourceForm">
+            <field property="addressSourceName" depends="required">
+                <arg0 key="AddressSource.name" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="productGroupForm">
+            <field property="groupName" depends="required">
+                <arg0 key="ProductGroup.name" resource="true"/>
+            </field>
+            <field property="parentGroupId" depends="foreignKey">
+                <arg0 key="ProductGroup.nameParent" resource="true"/>
+                <arg1 key="table=productgroup"/>
+                <!--table-->
+                <arg2 key="column=groupid"/>
+                <!--primary key column-->
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="productTypeForm">
+            <field property="typeName" depends="required">
+                <arg0 key="ProductType.typeName" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="vatForm">
+            <field property="vatLabel" depends="required">
+                <arg0 key="Vat.name" resource="true"/>
+            </field>
+            <field property="taxKey" depends="unsignedInteger">
+                <arg0 key="Vat.taxKey" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="productUnitForm">
+            <field property="unitName" depends="required">
+                <arg0 key="ProductUnit.name" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="vatRateForm">
+            <field property="vatId" depends="required">
+                <arg0 key="VatRate.vat" resource="true"/>
+            </field>
+            <field property="vatId" depends="foreignKey">
+                <arg0 key="VatRate.vat" resource="true"/>
+                <arg1 key="table=vat"/>
+                <!--table-->
+                <arg2 key="column=vatid"/>
+                <!--primary key column-->
+            </field>
+            <field property="validFrom" depends="required, validDate">
+                <arg0 key="VatRate.validFrom" resource="true"/>
+            </field>
+            <field property="vatRate" depends="required, decimalNumber">
+                <arg0 key="VatRate.vatRate" resource="true"/>
+                <arg1 key="maxInt=3"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="statusForm">
+            <field property="statusName" depends="unique">
+                <arg0 key="Status.name"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>processstatus</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>statusname</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>statusId=statusid</var-value>
+                </var>
+            </field>
+            <field property="isFinal" depends="required">
+                <arg0 key="Status.isFinal" resource="true"/>
+            </field>
+        </form>
+        <form name="actionTypeForm">
+            <field property="actionTypeName" depends="unique">
+                <arg0 key="ActionType.name"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>actiontype</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>typename</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>actionTypeId=actiontypeid</var-value>
+                </var>
+            </field>
+            <field property="probability" depends="required">
+                <arg0 key="ActionType.probability" resource="true"/>
+            </field>
+            <field property="sequence" depends="integer, unsignedInteger">
+                <arg0 key="ActionType.sequence" resource="true"/>
+            </field>
+            <field property="format" depends="required">
+                <arg0 key="ActionType.format" resource="true"/>
+            </field>
+            <field property="resetType" depends="required">
+                <arg0 key="ActionType.resetType" resource="true"/>
+            </field>
+            <field property="startNumber" depends="required, unsignedInteger">
+                <arg0 key="ActionType.startNumber" resource="true"/>
+            </field>
+        </form>
+        <form name="sProcessPriorityForm">
+            <field property="priorityName" depends="unique">
+                <arg0 key="Priority.name"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>processpriority</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>priorityname</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>priorityId=priorityid</var-value>
+                </var>
+            </field>
+            <field property="sequence" depends="integer, unsignedInteger">
+                <arg0 key="Priority.sequence" resource="true"/>
+            </field>
+        </form>
+        <form name="appointmentTypeForm">
+            <field property="name" depends="required, unique">
+                <arg0 key="AppointmentType.name" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>appointmenttype</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>name</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>appointmentTypeId=apptypeid</var-value>
+                </var>
+            </field>
+            <field property="color" depends="required">
+                <arg0 key="AppointmentType.color" resource="true"/>
+            </field>
+        </form>
+        <form name="taskTypeForm">
+            <field property="name" depends="required, unique">
+                <arg0 key="AppointmentType.name" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>tasktype</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>name</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>taskTypeId=tasktypeid</var-value>
+                </var>
+            </field>
+        </form>
+        <form name="HolidayForm">
+            <field property="title" depends="required">
+                <arg0 key="Common.title" resource="true"/>
+            </field>
+            <field property="holidayType" depends="required,integer">
+                <arg0 key="holiday.type" resource="true"/>
+            </field>
+        </form>
+        <form name="caseSeverityForm">
+            <field property="severityName" depends="required">
+                <arg0 key="Priority.name" resource="true"/>
+            </field>
+            <field property="sequence" depends="required, integer, unsignedInteger">
+                <arg0 key="Priority.sequence" resource="true"/>
+            </field>
+            <field property="languageId" depends="required, foreignKey">
+                <arg0 key="CaseSeverity.language" resource="true"/>
+                <arg1 key="table=language"/>
+                <arg2 key="column=languageid"/>
+            </field>
+        </form>
+
+        <form name="supportPriorityForm">
+            <field property="languageId" depends="required, foreignKey">
+                <arg0 key="Priority.language" resource="true"/>
+                <arg1 key="table=language"/>
+                <arg2 key="column=languageid"/>
+            </field>
+            <field property="priorityName" depends="required, unique">
+                <arg0 key="Priority.name" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>priority</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>priorityName</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=session.user.companyId,type='SUPPORT'</var-value>
+                </var>
+                <var>
+                    <var-name>constantConditionsDB</var-name>
+                    <var-value>type='SUPPORT'</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>priorityId=priorityid</var-value>
+                </var>
+            </field>
+            <field property="sequence" depends="required, integer, unsignedInteger">
+                <arg0 key="Priority.sequence" resource="true"/>
+            </field>
+        </form>
+
+        <form name="workLevelForm">
+            <field property="languageId" depends="required, foreignKey">
+                <arg0 key="WorkLevel.language" resource="true"/>
+                <arg1 key="table=language"/>
+                <arg2 key="column=languageid"/>
+            </field>
+            <field property="workLevelName" depends="required, unique">
+                <arg0 key="Priority.name" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>caseworklevel</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>workLevelName</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=session.user.companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>workLevelId=worklevelid</var-value>
+                </var>
+            </field>
+            <field property="sequence" depends="required, integer, unsignedInteger">
+                <arg0 key="Priority.sequence" resource="true"/>
+            </field>
+        </form>
+
+        <form name="caseTypeForm">
+            <field property="languageId" depends="required, foreignKey">
+                <arg0 key="CaseType.language" resource="true"/>
+                <arg1 key="table=language"/>
+                <arg2 key="column=languageid"/>
+            </field>
+            <field property="caseTypeName" depends="required">
+                <arg0 key="Priority.name" resource="true"/>
+            </field>
+        </form>
+        <form name="articleCategoryForm">
+            <field property="categoryName" depends="required">
+                <arg0 key="Priority.name" resource="true"/>
+            </field>
+        </form>
+        <form name="stateForm">
+            <field property="languageId" depends="required, foreignKey">
+                <arg0 key="State.language" resource="true"/>
+                <arg1 key="table=language"/>
+                <arg2 key="column=languageid"/>
+            </field>
+            <field property="sequence" depends="required, integer, unsignedInteger">
+                <arg0 key="State.sequence" resource="true"/>
+            </field>
+            <field property="stageType" depends="onlyOne">
+                <arg0 key="State.stageType" resource="true"/>
+                <arg1 key="State.stage.open" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>state</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>stagetype</var-value>
+                </var>
+                <var>
+                    <var-name>validateWhen</var-name>
+                    <var-value><![CDATA[stageType == 0 & oldStageType != stageType]]></var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=session.user.companyId</var-value>
+                </var>
+                <var>
+                    <var-name>constantConditionsDB</var-name>
+                    <var-value>type=1</var-value>
+                </var>
+            </field>
+            <field property="stateName" depends="required, unique">
+                <arg0 key="State.name"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>state</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>statename</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=session.user.companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>stateId=stateid</var-value>
+                </var>
+            </field>
+        </form>
+        <form name="supportUserForm">
+            <field property="userId" depends="required, foreignKey">
+                <arg0 key="SupportUser.supportUser" resource="true"/>
+                <arg1 key="table=elwisuser"/>
+                <arg2 key="column=userid"/>
+            </field>
+            <field property="productId" depends="required, foreignKey">
+                <arg0 key="SupportUser.supportProduct" resource="true"/>
+                <arg1 key="table=product"/>
+                <arg2 key="column=productid"/>
+            </field>
+        </form>
+        <form name="campaignTypeForm">
+            <field property="title" depends="required, unique">
+                <arg0 key="CampaignType.title"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>camptype</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>title</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>campaignTypeId=camptypeid</var-value>
+                </var>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="contractTypeForm">
+            <field property="name" depends="required, unique">
+                <arg0 key="ContractType.name" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contracttype</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>name</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>contractTypeId=contracttypeid</var-value>
+                </var>
+            </field>
+        </form>
+        <form name="accountForm">
+            <field property="number" depends="required">
+                <arg0 key="Account.number" resource="true"/>
+            </field>
+            <field property="name" depends="required">
+                <arg0 key="Account.name" resource="true"/>
+            </field>
+        </form>
+        <form name="invoiceTemplateForm">
+            <field property="title" depends="required">
+                <arg0 key="InvoiceTemplate.title" resource="true"/>
+            </field>
+        </form>
+        <form name="reminderLevelForm">
+            <field property="name" depends="required">
+                <arg0 key="ReminderLevel.name" resource="true"/>
+            </field>
+            <field property="level" depends="required, unsignedInteger, unique">
+                <arg0 key="ReminderLevel.level" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>reminderlevel</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>level</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>reminderLevelId=reminderlevelid</var-value>
+                </var>
+            </field>
+            <field property="numberOfDays" depends="required, unsignedInteger">
+                <arg0 key="ReminderLevel.numberOfDays" resource="true"/>
+            </field>
+            <field property="fee" depends="decimalNumber">
+                <arg0 key="ReminderLevel.fee" resource="true"/>
+                <arg1 key="maxInt=3"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+        </form>
+        <form name="sequenceRuleForm">
+            <field property="label" depends="required, unique">
+                <arg0 key="SequenceRule.label" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>sequencerule</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>label</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId, type=type</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>numberId=numberid</var-value>
+                </var>
+            </field>
+            <field property="type" depends="required">
+                <arg0 key="SequenceRule.type" resource="true"/>
+            </field>
+            <field property="format" depends="required">
+                <arg0 key="SequenceRule.format" resource="true"/>
+            </field>
+            <field property="startNumber" depends="unsignedInteger">
+                <arg0 key="SequenceRule.startNumber" resource="true"/>
+            </field>
+            <!--<field property="resetType" depends="required">
+                <arg0 key="SequenceRule.resetType" resource="true"/>
+            </field>
+            <field property="startNumber" depends="required, unsignedInteger">
+                <arg0 key="SequenceRule.startNumber" resource="true"/>
+            </field>
+            <field property="lastNumber" depends="requiredif, unsignedInteger">
+                <arg0 key="SequenceRule.lastNumber" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>op</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>update</var-value>
+                </var>
+            </field>-->
+        </form>
+        <form name="webDocumentForm">
+            <field property="name" depends="required">
+                <arg0 key="WebDocument.name" resource="true"/>
+            </field>
+            <field property="url" depends="required">
+                <arg0 key="WebDocument.url" resource="true"/>
+            </field>
+        </form>
+    </formset>
+</form-validation>

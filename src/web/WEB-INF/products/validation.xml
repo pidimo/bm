@@ -1,0 +1,687 @@
+<?xml version="1.0"?>
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+    <formset>
+        <!--ProductContract form validation-->
+        <form name="productContractForm">
+            <field property="contractNumber" depends="required, unique">
+                <arg0 key="ProductContract.contractNumber" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>productcontract</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>contractnumber</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>contractId=contractid</var-value>
+                </var>
+            </field>
+            <field property="addressId" depends="required, foreignKey">
+                <arg0 key="Contract.contact" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+            <field property="contactPersonId" depends="compoundForeignKey">
+                <arg0 key="ProductContract.contactPerson" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contactperson</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>contactPersonId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>contactpersonid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>addressId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>addressid</var-value>
+                </var>
+            </field>
+            <field property="sellerId" depends="required, foreignKey">
+                <arg0 key="ProductContract.seller" resource="true"/>
+                <arg1 key="table=employee"/>
+                <arg2 key="column=employeeid"/>
+            </field>
+            <field property="price" depends="required, decimalNumber">
+                <arg0 key="Contract.price" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="currencyId" depends="required, foreignKey">
+                <arg0 key="ProductContract.currency" resource="true"/>
+                <arg1 key="table=currency"/>
+                <arg2 key="column=currencyid"/>
+            </field>
+            <field property="orderDate" depends="validDate">
+                <arg0 key="Contract.orderDate" resource="true"/>
+            </field>
+            <field property="vatId" depends="required, foreignKey">
+                <arg0 key="ProductContract.vat" resource="true"/>
+                <arg1 key="table=vat"/>
+                <arg2 key="column=vatid"/>
+            </field>
+            <field property="contractTypeId" depends="required, foreignKey">
+                <arg0 key="Contract.contractType" resource="true"/>
+                <arg1 key="table=contracttype"/>
+                <arg2 key="column=contracttypeid"/>
+            </field>
+            <field property="payMethod" depends="required">
+                <arg0 key="Contract.payMethod" resource="true"/>
+            </field>
+            <field property="payConditionId" depends="required, foreignKey">
+                <arg0 key="ProductContract.payCondition" resource="true"/>
+                <arg1 key="table=paycondition"/>
+                <arg2 key="column=payconditionid"/>
+            </field>
+            <field property="netGross" depends="required">
+                <arg0 key="ProductContract.netGross" resource="true"/>
+            </field>
+        </form>
+        <!--SalePosition validation-->
+        <form name="salePositionForm">
+            <field property="customerId" depends="required, foreignKey">
+                <arg0 key="Sale.customer" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+            <field property="contactPersonId" depends="compoundForeignKey">
+                <arg0 key="Sale.contactPerson" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contactperson</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>contactPersonId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>contactpersonid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>customerId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>addressid</var-value>
+                </var>
+            </field>
+            <field property="quantity" depends="required, decimalNumber">
+                <arg0 key="SalePosition.quantity" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="unitPrice" depends="requiredif">
+                <arg0 key="SalePosition.unitPrice" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>saleNetGross</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>1</var-value>
+                </var>
+            </field>
+            <field property="unitPriceGross" depends="requiredif">
+                <arg0 key="SalePosition.unitPriceGross" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>saleNetGross</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>2</var-value>
+                </var>
+            </field>
+            <field property="discount" depends="percentage">
+                <arg0 key="SalePosition.discount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="deliveryDate" depends="validDate">
+                <arg0 key="SalePosition.deliveryDate" resource="true"/>
+            </field>
+            <field property="vatId" depends="required, foreignKey">
+                <arg0 key="SalePosition.vat" resource="true"/>
+                <arg1 key="table=vat"/>
+                <arg2 key="column=vatid"/>
+            </field>
+        </form>
+        <form name="productForm">
+            <field property="companyId" depends="checkEntry">
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>product</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>3</var-value>
+                </var>
+            </field>
+            <field property="productName" depends="required">
+                <arg0 key="Product.name" resource="true"/>
+            </field>
+            <field property="price" depends="decimalNumber">
+                <arg0 key="Product.priceNet" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="priceGross" depends="decimalNumber">
+                <arg0 key="Product.priceGross" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="productTypeId" depends="foreignKey">
+                <arg0 key="Product.type" resource="true"/>
+                <arg1 key="table=producttype"/>
+                <!--table-->
+                <arg2 key="column=typeid"/>
+                <!--primary key column-->
+            </field>
+            <field property="unitId" depends="foreignKey">
+                <arg0 key="Product.unit" resource="true"/>
+                <arg1 key="table=productunit"/>
+                <!--table-->
+                <arg2 key="column=unitid"/>
+                <!--primary key column-->
+            </field>
+            <field property="productGroupId" depends="foreignKey">
+                <arg0 key="Product.group" resource="true"/>
+                <arg1 key="table=productgroup"/>
+                <!--table-->
+                <arg2 key="column=groupid"/>
+                <!--primary key column-->
+            </field>
+            <field property="vatId" depends="required, foreignKey">
+                <arg0 key="Product.vat" resource="true"/>
+                <arg1 key="table=vat"/>
+                <arg2 key="column=vatid"/>
+            </field>
+            <field property="initDate" depends="validDate">
+                <arg0 key="Product.startDate" resource="true"/>
+            </field>
+            <field property="endDate" depends="validDate">
+                <arg0 key="Product.endDate" resource="true"/>
+            </field>
+            <field property="closeDate" depends="validDate">
+                <arg0 key="Product.closingDate" resource="true"/>
+            </field>
+            <field property="eventAddress" depends="maxlength">
+                <arg0 key="Product.eventAddress" resource="true"/>
+                <arg1 name="maxlength" key="250" resource="false"/>
+                <var>
+                    <var-name>maxlength</var-name>
+                    <var-value>250</var-value>
+                </var>
+            </field>
+            <field property="eventMaxParticipant" depends="unsignedInteger">
+                <arg0 key="Product.eventMaxParticipant" resource="true"/>
+            </field>
+        </form>
+
+        <form name="productAdvancedListForm">
+            <field property="eventDateFrom" depends="validDates">
+                <arg0 key="Product.eventDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>eventDateTo</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+
+    </formset>
+    <formset>
+        <form name="competitorProductForm">
+            <field property="productName" depends="required">
+                <arg0 key="Competitor.product" resource="true"/>
+            </field>
+            <field property="price" depends="decimalNumber">
+                <arg0 key="Competitor.price" resource="true"/>
+                <arg1 key="maxInt=7"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="competitorId" depends="required, foreignKey">
+                <arg0 key="Competitor.competitorName" resource="true"/>
+                <arg1 key="table=address"/>
+                <!--table-->
+                <arg2 key="column=addressid"/>
+                <!--primary key column-->
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="productPictureForm">
+            <field property="productPictureName" depends="required">
+                <arg0 key="ProductPicture.name" resource="true"/>
+            </field>
+            <field property="uploadDate" depends="required">
+                <arg0 key="ProductPicture.uploadDate" resource="true"/>
+            </field>
+        </form>
+    </formset>
+    <formset>
+        <form name="supplierForm">
+            <field property="supplierId" depends="required">
+                <arg0 key="Supplier" resource="true"/>
+            </field>
+            <field property="price" depends="decimalNumber">
+                <arg0 key="SupplierProduct.price" resource="true"/>
+                <arg1 key="maxInt=7"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="discount" depends="decimalNumber">
+                <arg0 key="SupplierProduct.discount" resource="true"/>
+                <arg1 key="maxInt=7"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="contactPersonId" depends="compoundForeignKey">
+                <arg0 key="ContactPerson" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contactperson</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>contactPersonId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>contactpersonid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>supplierId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>addressid</var-value>
+                </var>
+            </field>
+        </form>
+    </formset>
+
+    <formset>
+        <form name="pricingForm">
+            <field property="quantity" depends="required,unsignedInteger">
+                <arg0 key="Product.quantity" resource="true"/>
+            </field>
+            <field property="price" depends="required,decimalNumber">
+                <arg0 key="Product.price" resource="true"/>
+                <arg1 key="maxInt=7"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+        </form>
+    </formset>
+
+    <formset>
+        <form name="productCustomerForm">
+            <field property="customerId" depends="required">
+                <arg0 key="product.productcustomer.contract.customer" resource="true"/>
+            </field>
+            <field property="amount" depends="required,decimalNumber">
+                <arg0 key="ProductCustomer.amount" resource="true"/>
+                <arg1 key="maxInt=7"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="deliveryDate" depends="validDate">
+                <arg0 key="CustomerProduct.deliveryDate" resource="true"/>
+            </field>
+            <field property="contactPersonId" depends="compoundForeignKey">
+                <arg0 key="ProductCustomer.contactPerson" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contactperson</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>contactPersonId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>contactpersonid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>customerId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>addressid</var-value>
+                </var>
+            </field>
+
+        </form>
+        <form name="contractForm">
+            <field property="achievementId" depends="required, foreignKey">
+                <arg0 key="Contact.Payment.achievement" resource="true"/>
+                <arg1 key="table=achievement"/>
+                <!--table-->
+                <arg2 key="column=achievementid"/>
+                <!--primary key column-->
+            </field>
+            <field property="sellerId" depends="foreignKey">
+                <arg0 key="product.productcustomer.contract.seller" resource="true"/>
+                <arg1 key="table=address"/>
+                <!--table-->
+                <arg2 key="column=addressid"/>
+                <!--primary key column-->
+            </field>
+            <field property="sellPrice" depends="decimalNumber">
+                <arg0 key="Contact.Payment.price" resource="true"/>
+                <arg1 key="maxInt=8"/>
+                <arg2 key="maxFloat=2"/>
+                <arg3 key="Contact.Payment.CustomerInfo"/>
+            </field>
+            <field property="sellOpenAmount" depends="decimalNumber">
+                <arg0 key="Contact.Payment.openAmount" resource="true"/>
+                <arg1 key="maxInt=8"/>
+                <arg2 key="maxFloat=2"/>
+                <arg3 key="Contact.Payment.CustomerInfo"/>
+            </field>
+            <field property="sellInstallment" depends="decimalNumber">
+                <arg0 key="Contact.Payment.installment" resource="true"/>
+                <arg1 key="maxInt=8"/>
+                <arg2 key="maxFloat=2"/>
+                <arg3 key="Contact.Payment.CustomerInfo"/>
+            </field>
+            <field property="buyPrice" depends="decimalNumber">
+                <arg0 key="Contact.Payment.price" resource="true"/>
+                <arg1 key="maxInt=8"/>
+                <arg2 key="maxFloat=2"/>
+                <arg3 key="Contact.Payment.SupplierInfo"/>
+            </field>
+            <field property="buyOpenAmount" depends="decimalNumber">
+                <arg0 key="Contact.Payment.openAmount" resource="true"/>
+                <arg1 key="maxInt=8"/>
+                <arg2 key="maxFloat=2"/>
+                <arg3 key="Contact.Payment.SupplierInfo"/>
+            </field>
+            <field property="buyInstallment" depends="decimalNumber">
+                <arg0 key="Contact.Payment.installment" resource="true"/>
+                <arg1 key="maxInt=8"/>
+                <arg2 key="maxFloat=2"/>
+                <arg3 key="Contact.Payment.SupplierInfo"/>
+            </field>
+            <field property="sellDiscount" depends="decimalNumber">
+                <arg0 key="CustomerProduct.discount" resource="true"/>
+                <arg1 key="maxInt=8"/>
+                <arg2 key="maxFloat=2"/>
+                <arg3 key="Contact.Payment.CustomerInfo"/>
+            </field>
+            <field property="buyDiscount" depends="decimalNumber">
+                <arg0 key="CustomerProduct.discount" resource="true"/>
+                <arg1 key="maxInt=8"/>
+                <arg2 key="maxFloat=2"/>
+                <arg3 key="Contact.Payment.SupplierInfo"/>
+            </field>
+            <field property="sellPayStartDate" depends="validDate">
+                <arg0 key="Contact.Payment.payStartDate" resource="true"/>
+            </field>
+            <field property="sellPayEndDate" depends="validDate">
+                <arg0 key="Contact.Payment.payEndDate" resource="true"/>
+            </field>
+            <field property="sellInvoicedUntil" depends="validDate">
+                <arg0 key="Contact.Payment.invoicedUntil" resource="true"/>
+            </field>
+            <field property="sellOrderDate" depends="validDate">
+                <arg0 key="Contact.Payment.contractDate" resource="true"/>
+            </field>
+            <field property="buyPayStartDate" depends="validDate">
+                <arg0 key="Contact.Payment.payStartDate" resource="true"/>
+            </field>
+            <field property="buyOrderDate" depends="validDate">
+                <arg0 key="Contact.Payment.contractDate" resource="true"/>
+            </field>
+            <field property="buyPayEndDate" depends="validDate">
+                <arg0 key="Contact.Payment.payEndDate" resource="true"/>
+            </field>
+            <field property="buyInvoicedUntil" depends="validDate">
+                <arg0 key="Contact.Payment.invoicedUntil" resource="true"/>
+            </field>
+            <!--<field property="sellPayMethod" depends="required">
+                <arg0 key="Contact.Payment.payMethod" resource="true"/>
+            </field>-->
+            <!--<field property="buyPayMethod" depends="required">
+                <arg0 key="Contact.Payment.payMethod" resource="true"/>
+            </field>-->
+            <field property="supplierId" depends="compoundForeignKey">
+                <arg0 key="Product.supplier" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>prodsupplier</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>productId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>productid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>supplierId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>supplierid</var-value>
+                </var>
+            </field>
+        </form>
+
+
+        <!--for reports-->
+        <form name="productReportListForm">
+            <field property="price1" depends="decimalNumbers">
+                <arg0 key="Product.price" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>price2</var-value>
+                </var>
+            </field>
+            <field property="priceGross1" depends="decimalNumbers">
+                <arg0 key="Product.priceGross" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>priceGross2</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="supplierReportListForm">
+            <field property="price1" depends="decimalNumbers">
+                <arg0 key="Product.price" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>price2</var-value>
+                </var>
+            </field>
+            <field property="discount1" depends="decimalNumbers">
+                <arg0 key="SupplierProduct.discount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>discount2</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="customerReportListForm">
+            <field property="amount1" depends="decimalNumbers">
+                <arg0 key="CustomerProduct.amount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>amount2</var-value>
+                </var>
+            </field>
+            <field property="startRange" depends="validDates">
+                <arg0 key="CustomerProduct.deliveryDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endRange</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="competitorReportListForm">
+            <field property="startRange" depends="validDates">
+                <arg0 key="Competitor.entryDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endRange</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="price1" depends="decimalNumbers">
+                <arg0 key="Product.price" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>price2</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="supplierContractReportForm">
+            <field property="startOrderDate" depends="validDates">
+                <arg0 key="Contact.Payment.contractDate" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endOrderDate</var-value>
+                </var>
+            </field>
+            <field property="startPayRange" depends="validDates">
+                <arg0 key="Contact.Payment.payStartDate" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endPayRange</var-value>
+                </var>
+            </field>
+            <field property="startLastPayRange" depends="validDates">
+                <arg0 key="Contact.Payment.payEndDate" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endLastPayRange</var-value>
+                </var>
+            </field>
+            <field property="startInvoicingRange" depends="validDates">
+                <arg0 key="Product.report.invoicingDate" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endInvoicingRange</var-value>
+                </var>
+            </field>
+            <field property="price1" depends="decimalNumbers">
+                <arg0 key="Product.price" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>price2</var-value>
+                </var>
+            </field>
+            <field property="openAmount1" depends="decimalNumbers">
+                <arg0 key="Contact.Payment.openAmount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>openAmount2</var-value>
+                </var>
+            </field>
+            <field property="discount1" depends="decimalNumbers">
+                <arg0 key="SupplierProduct.discount" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>discount2</var-value>
+                </var>
+            </field>
+            <field property="instalation1" depends="decimalNumbers">
+                <arg0 key="Contact.Payment.installment" resource="true"/>
+                <arg1 key="maxInt=10"/>
+                <arg2 key="maxFloat=2"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>instalation2</var-value>
+                </var>
+            </field>
+        </form>
+    </formset>
+</form-validation>

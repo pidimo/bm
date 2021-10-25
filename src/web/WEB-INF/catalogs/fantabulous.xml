@@ -1,0 +1,3430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<!DOCTYPE  lists PUBLIC "-//Alfacentaurto//DTD AC" "../dtd/DTDConfiguration.dtd">-->
+<lists>
+    <!--Sales module catalogs-->
+    <!--Unselected languages for templateText-->
+    <list listName="unselectedLanguageList" persistence="true">
+        <tables>
+            <table tableName="language" alias="language">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId" key="true" type="integer"/>
+                    <field fieldName="languagename" fieldAlias="languageName"/>
+                    <field fieldName="iso" fieldAlias="languageIso"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="invoicetext" alias="invoiceText">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId_fk" key="true" type="integer"/>
+                    <field fieldName="templateid" fieldAlias="templateId" key="true" type="integer"/>
+                    <field fieldName="freetextid" fieldAlias="freetextId"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>languageId_fk</pK>
+                <fK>languageId</fK>
+                <leftJoin/>
+                <conditions>
+                    <condition fieldReference="templateId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="languageId_fk" operator="IS" type="constant" value="null"/>
+            <conector>And</conector>
+            <condition fieldReference="languageId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Unselected languages for reminderText-->
+    <list listName="unselectedLanguageListInReminderText" persistence="true">
+        <tables>
+            <table tableName="language" alias="language">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId" key="true" type="integer"/>
+                    <field fieldName="languagename" fieldAlias="languageName"/>
+                    <field fieldName="iso" fieldAlias="languageIso"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="remindertext" alias="reminderText">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId_fk" key="true" type="integer"/>
+                    <field fieldName="reminderlevelid" fieldAlias="reminderLevelId" key="true" type="integer"/>
+                    <field fieldName="freetextid" fieldAlias="freetextId"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>languageId_fk</pK>
+                <fK>languageId</fK>
+                <leftJoin/>
+                <conditions>
+                    <condition fieldReference="reminderLevelId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="languageId_fk" operator="IS" type="constant" value="null"/>
+            <conector>And</conector>
+            <condition fieldReference="languageId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--SequenceRule Catalog-->
+    <list listName="sequenceRuleList" persistence="true">
+        <tables>
+            <table tableName="sequencerule" alias="sequenceRule">
+                <fields>
+                    <field fieldName="numberid" fieldAlias="numberId" key="true" type="integer"/>
+                    <field fieldName="label" fieldAlias="label"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="format" fieldAlias="format"/>
+                    <field fieldName="lastnumber" fieldAlias="lastNumber" type="integer"/>
+                    <field fieldName="lastdate" fieldAlias="lastDate" type="integer"/>
+                    <field fieldName="resettype" fieldAlias="resetType" type="integer"/>
+                    <field fieldName="startnumber" fieldAlias="startNumber" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="numberId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="DISTINCT" type="constant" value="6"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="numberId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>numberId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="format">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>format</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>label</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="lastDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>lastDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="lastNumber">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>lastNumber</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="resetType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>resetType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="label"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--ReminderText catalog-->
+    <list listName="reminderTextList" persistence="true">
+        <tables>
+            <table tableName="remindertext" alias="reminderText">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId_fk" key="true" type="integer"/>
+                    <field fieldName="reminderlevelid" fieldAlias="reminderLevelId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="freetextid" fieldAlias="freetextId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="language" alias="language">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId" key="true" type="integer"/>
+                    <field fieldName="languagename" fieldAlias="languageName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>languageId</pK>
+                <fK>languageId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reminderLevelId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="languageId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageId_fk</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="reminderLevelId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reminderLevelId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="languageName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="freetextId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>freetextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isDefault">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="languageName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--ReminderLevel catalog-->
+    <list listName="reminderLevelList" persistence="true">
+        <tables>
+            <table tableName="reminderlevel" alias="reminderLevel">
+                <fields>
+                    <field fieldName="reminderlevelid" fieldAlias="reminderLevelId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="fee" fieldAlias="fee" type="decimal"/>
+                    <field fieldName="level" fieldAlias="level" type="integer"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                    <field fieldName="numberofdays" fieldAlias="numberOfDays" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reminderLevelId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="reminderLevelId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reminderLevelId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="level">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>level</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="numberOfDays">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>numberOfDays</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="fee">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>fee</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="level"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--InvoiceText catalog-->
+    <list listName="invoiceTextList" persistence="true">
+        <tables>
+            <table tableName="invoicetext" alias="invoiceText">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId_fk" key="true" type="integer"/>
+                    <field fieldName="templateid" fieldAlias="templateId" key="true" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault"/>
+                    <field fieldName="freetextid" fieldAlias="freetextId"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="language" alias="language">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId" key="true" type="integer"/>
+                    <field fieldName="languagename" fieldAlias="languageName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>languageId</pK>
+                <fK>languageId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="templateId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="languageId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageId_fk</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="templateId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>templateId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="languageName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="freetextId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>freetextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isDefault">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="languageName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--InvoiceTemplate catalog-->
+    <list listName="invoiceTemplateList" persistence="true">
+        <tables>
+            <table tableName="invoicetemplate" alias="invoiceTemplate">
+                <fields>
+                    <field fieldName="templateid" fieldAlias="templateId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="templateId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="templateId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>templateId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="title"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Account catalog-->
+    <list listName="accountList" persistence="true">
+        <tables>
+            <table tableName="account" alias="account">
+                <fields>
+                    <field fieldName="accountid" fieldAlias="accountId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                    <field fieldName="number" fieldAlias="number"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="accountId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="accountId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>accountId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="number">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>number</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--ContractType Catalog-->
+    <list listName="contractTypeList" persistence="true">
+        <tables>
+            <table tableName="contracttype" alias="contractType">
+                <fields>
+                    <field fieldName="contracttypeid" fieldAlias="contractTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                    <field fieldName="tobeinvoiced" fieldAlias="tobeInvoiced" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contractTypeId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="contractTypeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contractTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="tobeInvoiced">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tobeInvoiced</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Bank base list-->
+    <list listName="bankBaseList" persistence="true">
+        <tables>
+            <table tableName="bank" alias="bank">
+                <fields>
+                    <field fieldName="bankid" fieldAlias="bankId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="bankname" fieldAlias="bankName"/>
+                    <field fieldName="bankcode" fieldAlias="bankCode"/>
+                    <field fieldName="banklabel" fieldAlias="bankLabel"/>
+                    <field fieldName="internationalcode" fieldAlias="internationalCode"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="bankId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>bankId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>bankName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="code">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>bankCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <!--added to show in bankaccounts contact module-->
+                <column columnName="nameCode">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>bankName</referenceField>
+                            <referenceField>bankCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!-- List of Banks -->
+    <list listName="bankList" persistence="true" extends="bankBaseList">
+        <tables/>
+        <conditions>
+            <condition fieldReference="bankName" operator="LIKE2" type="parameter" parameterName="bankNameAlpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="bankName" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="bankCode" operator="LIKE" type="parameter"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>bankLabel</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="internationalCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>internationalCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <!-- List of Cities -->
+    <list listName="cityList" persistence="true">
+        <tables>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true" type="integer"/>
+                    <field fieldName="countryid" fieldAlias="countryNameId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                    <field fieldName="zip" fieldAlias="zip"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="countryname" fieldAlias="countryName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>countryId</pK>
+                <fK>countryNameId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="cityName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="cityName" operator="LIKE2" type="parameter" parameterName="cityNameAlpha"/>
+            <conector>And</conector>
+            <condition fieldReference="zip" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="countryId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="country">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Costcenter base list-->
+    <list listName="costCenterBaseList" persistence="true">
+        <tables>
+            <table tableName="costcenter" alias="CostCenter">
+                <fields>
+                    <field fieldName="costcenterid" fieldAlias="costCenterId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="parentcostcenterid" fieldAlias="parentCostCenterNameId" type="integer"/>
+                    <field fieldName="costcentername" fieldAlias="costCenterName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="costCenterId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>costCenterId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>costCenterName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of base constcenters for select tag in costcenter-->
+    <list listName="costCenterSelectTagList" persistence="true">
+        <tables>
+            <table tableName="costcenter" alias="CostCenter">
+                <fields>
+                    <field fieldName="costcenterid" fieldAlias="costCenterId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="parentcostcenterid" fieldAlias="parentCostCenterNameId" type="integer"/>
+                    <field fieldName="costcentername" fieldAlias="costCenterName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="costCenterId" operator="DISTINCT" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>costCenterId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>costCenterName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!-- List of CostCenters -->
+    <list listName="costCenterList" persistence="true" extends="costCenterBaseList">
+        <tables>
+            <table tableName="costcenter" alias="ParentCostCenter">
+                <fields>
+                    <field fieldName="costcenterid" fieldAlias="parentCostCenterId" key="true" type="integer"/>
+                    <field fieldName="costcentername" fieldAlias="parentCostCenterName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>parentCostCenterId</pK>
+                <fK>parentCostCenterNameId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="itDependantId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>parentCostCenterNameId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="itDependant">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>parentCostCenterName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <!-- Basic Coutry List-->
+    <list listName="countryBasicList" persistence="true">
+        <tables>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="countryname" fieldAlias="countryName"/>
+                    <field fieldName="areacode" fieldAlias="countryAreaCode"/>
+                    <field fieldName="prefix" fieldAlias="countryPrefix"/>
+                    <field fieldName="currencyid" fieldAlias="currencyOfCountry" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="countryId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!-- List of Countries -->
+    <list listName="countryList" extends="countryBasicList" persistence="true">
+        <tables>
+            <table tableName="currency" alias="currency">
+                <fields>
+                    <field fieldName="currencyid" fieldAlias="currencyId" key="true" type="integer"/>
+                    <field fieldName="currencyname" fieldAlias="currencyName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>currencyId</pK>
+                <fK>currencyOfCountry</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="countryName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="countryName" operator="LIKE2" type="parameter" parameterName="countryNameAlpha"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="myCurrencyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyOfCountry</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="areaCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryAreaCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="prefix">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryPrefix</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="currency">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <!--<defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>-->
+        </configuration>
+    </list>
+    <!--list of Basic currency-->
+    <list listName="basicCurrencyList" persistence="true">
+        <tables>
+            <table tableName="currency" alias="currency">
+                <fields>
+                    <field fieldName="currencyid" fieldAlias="currencyId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="currencyname" fieldAlias="currencyName"/>
+                    <field fieldName="label" fieldAlias="currencyLabel"/>
+                    <field fieldName="symbol" fieldAlias="currencySymbol"/>
+                    <field fieldName="unit" fieldAlias="currencyUnit" type="decimal"/>
+                    <field fieldName="isbasiccurrency" fieldAlias="currencyBasic" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="currencyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Currency-->
+    <list listName="currencyList" extends="basicCurrencyList" persistence="true">
+        <tables/>
+        <conditions>
+            <condition fieldReference="currencyName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="currencyName" operator="LIKE2" type="parameter" parameterName="currencyNameAlpha"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyLabel</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="symbol">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencySymbol</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="unit">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyUnit</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="basic">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currencyBasic</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Language base list-->
+    <list listName="languageBaseList" persistence="true">
+        <tables>
+            <table tableName="language" alias="language">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="languagename" fieldAlias="languageName"/>
+                    <field fieldName="iso" fieldAlias="languageIso"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="languageId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isDefault">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Languages-->
+    <list listName="languageList" persistence="true" extends="languageBaseList">
+        <tables/>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="iso">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageIso</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="systemLanguageList" extends="languageBaseList" persistence="true">
+        <tables/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="languageIso" operator="IS" type="constant" value="not null"/>
+            <conector>And</conector>
+            <condition fieldReference="languageId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="iso">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageIso</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <!--List of Person types-->
+    <list listName="personTypeList" persistence="true">
+        <tables>
+            <table tableName="persontype" alias="personType">
+                <fields>
+                    <field fieldName="persontypeid" fieldAlias="personTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="persontypename" fieldAlias="personTypeName"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="personTypeId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>personTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>personTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Salutation base list-->
+    <list listName="salutationBaseList" persistence="true">
+        <tables>
+            <table tableName="salutation" alias="salutation">
+                <fields>
+                    <field fieldName="salutationid" fieldAlias="salutationId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="salutationlabel" fieldAlias="salutationLabel"/>
+                    <field fieldName="addresstextid" fieldAlias="addressTextId" type="integer"/>
+                    <field fieldName="lettertextid" fieldAlias="letterTextId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="salutationId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>salutationId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>salutationLabel</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="label"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Salutations-->
+    <list listName="salutationList" persistence="true" extends="salutationBaseList">
+        <tables/>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="addressPartId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="letterPartId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>letterTextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <!--List of SupplierTypes-->
+    <list listName="supplierTypeList" persistence="true">
+        <tables>
+            <table tableName="suppliertype" alias="supplierType">
+                <fields>
+                    <field fieldName="suppliertypeid" fieldAlias="supplierTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="suppliertypename" fieldAlias="supplierTypeName"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>supplierTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>supplierTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="addressRelationTypeList" persistence="true">
+        <tables>
+            <table tableName="addressreltype" alias="addressRelationType">
+                <fields>
+                    <field fieldName="relationtypeid" fieldAlias="relationTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="relationtype" fieldAlias="relationType" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="relationTypeId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="relationTypeId"/>
+                <column columnName="relationType"/>
+                <column columnName="title"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="title"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--List of Titles-->
+    <list listName="titleList" persistence="true">
+        <tables>
+            <table tableName="title" alias="title">
+                <fields>
+                    <field fieldName="titleid" fieldAlias="titleId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="titletext" fieldAlias="titleText"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="titleId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>titleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>titleText</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Address Sources-->
+    <list listName="addressSourceList" persistence="true">
+        <tables>
+            <table tableName="addresssource" alias="addressSource">
+                <fields>
+                    <field fieldName="sourceid" fieldAlias="addressSourceId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="sourcename" fieldAlias="addressSourceName"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressSourceId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressSourceName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Branch exclues the Id with is selected-->
+    <list listName="BranchSelectTagList" persistence="true">
+        <tables>
+            <table tableName="branch" alias="branch">
+                <fields>
+                    <field fieldName="branchid" fieldAlias="branchId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="branchname" fieldAlias="branchName"/>
+                    <field fieldName="branchgroup" fieldAlias="branchGroupId" type="integer"/>
+                    <field fieldName="branchid" fieldAlias="branchIdAux" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="branchId" operator="DISTINCT" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>branchId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>branchName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Branch-->
+    <list listName="branchList" persistence="true">
+        <tables>
+            <table tableName="branch" alias="branch">
+                <fields>
+                    <field fieldName="branchid" fieldAlias="branchId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="branchname" fieldAlias="branchName"/>
+                    <field fieldName="branchgroup" fieldAlias="groupId"/>
+                </fields>
+            </table>
+            <table tableName="branch" alias="branchGroup">
+                <fields>
+                    <field fieldName="branchid" fieldAlias="branchGroupId" key="true" type="integer"/>
+                    <field fieldName="branchname" fieldAlias="branchGroupName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>branchGroupId</pK>
+                <fK>groupId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="branchName" operator="LIKE" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>branchId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="group">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>branchGroupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>branchName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Categories-->
+    <list listName="childrenCategoryList" persistence="true">
+        <tables>
+            <table tableName="category" alias="category">
+                <fields>
+                    <field fieldName="categoryid" fieldAlias="categoryId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="categoryname" fieldAlias="categoryName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                    <field fieldName="hassubcategories" fieldAlias="hasSubCategories" type="integer"/>
+                    <field fieldName="tableid" fieldAlias="tableId" type="integer"/>
+                    <field fieldName="parentcategory" fieldAlias="parentCategory" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hasSubCategories" operator="EQUAL" type="constant" value="0"/>
+            <conector>And</conector>
+            <condition fieldReference="parentCategory" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="categoryId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="categoryName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="sequence"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="selectCategoryList" persistence="true">
+        <tables>
+            <table tableName="category" alias="category">
+                <fields>
+                    <field fieldName="categoryid" fieldAlias="categoryId" type="integer" key="true"/>
+                    <field fieldName="categoryid" fieldAlias="parentCategory" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="categoryname" fieldAlias="categoryName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                    <field fieldName="hassubcategories" fieldAlias="hasSubCategories" type="integer"/>
+                    <field fieldName="tableid" fieldAlias="tableId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hasSubCategories" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="tableId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="parentCategory" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="categoryId" operator="DISTINCT" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="categoryId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="categoryName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="sequence"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="categoryList" persistence="true">
+        <tables>
+            <table tableName="category" alias="category">
+                <fields>
+                    <field fieldName="categoryid" fieldAlias="categoryId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="categoryname" fieldAlias="categoryName"/>
+                    <field fieldName="tableid" fieldAlias="tableId"/>
+                    <field fieldName="categoryType" fieldAlias="categoryType" type="integer"/>
+                    <field fieldName="parentcategory" fieldAlias="fkCategoryId" type="integer"/>
+                    <field fieldName="categorygroupid" fieldAlias="fkCategoryGroupId" type="integer"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="category" alias="parentCategoryTable">
+                <fields>
+                    <field fieldName="categoryid" fieldAlias="pkCategoryId" key="true" type="integer"/>
+                    <field fieldName="categoryname" fieldAlias="parentCategoryName"/>
+                </fields>
+            </table>
+            <table tableName="categorygroup" alias="categoryGroup">
+                <fields>
+                    <field fieldName="categorygroupid" fieldAlias="pkCategoryGroupId" key="true" type="integer"/>
+                    <field fieldName="label" fieldAlias="groupName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>pkCategoryId</pK>
+                <fK>fkCategoryId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>pkCategoryGroupId</pK>
+                <fK>fkCategoryGroupId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="tableId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="categoryName" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tableId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="categoryType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="parentCategoryName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>parentCategoryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="groupName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Category Values-->
+    <list listName="categoryValuesList" persistence="true">
+        <tables>
+            <table tableName="categoryvalue" alias="categoryValue">
+                <fields>
+                    <field fieldName="categoryvalueid" fieldAlias="categoryValueId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="categoryid" fieldAlias="category" type="integer"/>
+                    <field fieldName="categoryvaluename" fieldAlias="categoryValueName"/>
+                    <field fieldName="tableid" fieldAlias="label"/>
+                </fields>
+            </table>
+            <table tableName="category" alias="category">
+                <fields>
+                    <field fieldName="categoryid" fieldAlias="categoryId" key="true" type="integer"/>
+                    <field fieldName="categoryname" fieldAlias="categoryName"/>
+                    <field fieldName="tableid" fieldAlias="tableId"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>categoryId</pK>
+                <fK>category</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="category" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="categoryValueName" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryValueId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <!--<column columnName="categoryLabel">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tableId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>-->
+                <!--<column columnName="catName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>-->
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryValueName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <!--<column columnName="categoryValueLabel">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>label</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>-->
+                <column columnName="categoryId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>category</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="selectCategoryValuesList" persistence="true" extends="categoryValuesList" executeFirstTime="true">
+        <tables/>
+        <relationShips/>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="catName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Customer Typers-->
+    <list listName="customerTypeList" persistence="true">
+        <tables>
+            <table tableName="customertype" alias="customerType">
+                <fields>
+                    <field fieldName="customertypeid" fieldAlias="customerTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="customertypename" fieldAlias="customerTypeName"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>customerTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>customerTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Payment Conditions-->
+    <list listName="payConditionList" persistence="true">
+        <tables>
+            <table tableName="paycondition" alias="payCondition">
+                <fields>
+                    <field fieldName="payconditionid" fieldAlias="payConditionId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="conditiontextid1" fieldAlias="firstCondition" type="integer"/>
+                    <field fieldName="conditiontextid2" fieldAlias="secondCondition" type="integer"/>
+                    <field fieldName="conditionname" fieldAlias="payconditionName"/>
+                    <field fieldName="discount" fieldAlias="discount" type="decimal"/>
+                    <field fieldName="paydays " fieldAlias="payDays" type="integer"/>
+                    <field fieldName="paydaysdisc" fieldAlias="payDaysDiscount" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="payConditionId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>payConditionId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="firstConditionId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>firstCondition</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="secondConditionId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>secondCondition</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>payconditionName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="payDaysColumn">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>payDays</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="payDaysDiscountColumn">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>payDaysDiscount</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="discountColumn">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>discount</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Pay Moralities-->
+    <list listName="payMoralityList" persistence="true">
+        <tables>
+            <table tableName="paymorality" alias="payMorality">
+                <fields>
+                    <field fieldName="paymoralityid" fieldAlias="payMoralityId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="paymoralityname" fieldAlias="payMoralityName"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>payMoralityId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>payMoralityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Priorities-->
+    <list listName="priorityList" persistence="true">
+        <tables>
+            <table tableName="priority" alias="priority">
+                <fields>
+                    <field fieldName="priorityid" fieldAlias="priorityId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="priorityname" fieldAlias="priorityName"/>
+                    <field fieldName="sequence" fieldAlias="prioritySequence" type="integer"/>
+                    <field fieldName="type" fieldAlias="type"/>
+                    <field fieldName="langtextid" fieldAlias="langTextId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="priorityId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="langTextId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>langTextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>prioritySequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="selectPriorityList" extends="priorityList" persistence="true">
+        <tables/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="priorityId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>prioritySequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="sequence"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--List of Telecom Types-->
+    <list listName="telecomTypeList" persistence="true">
+        <tables>
+            <table tableName="telecomtype" alias="telecomType">
+                <fields>
+                    <field fieldName="telecomtypeid" fieldAlias="telecomTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="telecomtypename" fieldAlias="telecomTypeName"/>
+                    <field fieldName="telecomtypepos" fieldAlias="telecomTypePosition" type="integer"/>
+                    <field fieldName="langtextid" fieldAlias="telecomTypeLangTextId" type="integer"/>
+                    <field fieldName="type" fieldAlias="telecomTypeType"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="position">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomTypePosition</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="translationId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomTypeLangTextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomTypeType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Templates-->
+    <list listName="templateList" persistence="true">
+        <tables>
+            <table tableName="template" alias="template">
+                <fields>
+                    <field fieldName="templateid" fieldAlias="templateId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="description" fieldAlias="templateDescription"/>
+                    <field fieldName="mediatype" fieldAlias="mediaType" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="mediaType" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="templateId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>templateId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="description">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>templateDescription</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="mediaType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mediaType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="description"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Product Types-->
+    <list listName="productTypeList" persistence="true">
+        <tables>
+            <table tableName="producttype" alias="productType">
+                <fields>
+                    <field fieldName="typeid" fieldAlias="typeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="typename" fieldAlias="typeName"/>
+                    <field fieldName="producttypetype" fieldAlias="productTypeType" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="typeId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>typeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>typeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="productTypeType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productTypeType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--group exclues the Id with is selected-->
+    <list listName="productGroupSelectTagList" persistence="true">
+        <tables>
+            <table tableName="productgroup" alias="productGroup">
+                <fields>
+                    <field fieldName="groupid" fieldAlias="productGroupId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="productGroupName"/>
+                    <field fieldName="parentgroupid" fieldAlias="parentGroupId"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productGroupId" operator="DISTINCT" type="parameter" parameterName="groupId"/>
+            <conector>And</conector>
+            <condition fieldReference="productGroupId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productGroupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Product groups-->
+    <list listName="productGroupList" persistence="true">
+        <tables>
+            <table tableName="productgroup" alias="productGroup">
+                <fields>
+                    <field fieldName="groupid" fieldAlias="productGroupId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="productGroupName"/>
+                    <field fieldName="parentgroupid" fieldAlias="parentProductGroupId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="productgroup" alias="parent">
+                <fields>
+                    <field fieldName="groupid" fieldAlias="parentId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="parentName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>parentId</pK>
+                <fK>parentProductGroupId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <!--needed to product group management. Product detail-->
+            <condition fieldReference="parentProductGroupId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productGroupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="parentProductgroupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>parentName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="parentProductGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>parentProductGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="productGroupSimpleList" persistence="true">
+        <tables>
+            <table tableName="productgroup" alias="productGroup">
+                <fields>
+                    <field fieldName="groupid" fieldAlias="productGroupId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="productGroupName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productGroupId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productGroupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Product Units-->
+    <list listName="productUnitList" persistence="true">
+        <tables>
+            <table tableName="productunit" alias="productUnit">
+                <fields>
+                    <field fieldName="unitid" fieldAlias="productUnitId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="unitname" fieldAlias="productUnitName"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productUnitId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productUnitId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productUnitName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Base vat List-->
+    <list listName="baseVatList" persistence="true">
+        <tables>
+            <table tableName="vat" alias="vat">
+                <fields>
+                    <field fieldName="vatid" fieldAlias="vatId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="label" fieldAlias="vatName"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>vatId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>vatName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of vat-->
+    <list listName="vatList" extends="baseVatList" persistence="true">
+        <tables>
+            <table tableName="vat" alias="vat">
+                <fields>
+                    <field fieldName="description" fieldAlias="vatDescription"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="vatId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="description">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>vatDescription</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <!--Lits of Vat Rates-->
+    <list listName="vatRateList" persistence="true">
+        <tables>
+            <table tableName="vatrate" alias="vatRate">
+                <fields>
+                    <field fieldName="vatrateid" fieldAlias="vatRateId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="vatid" fieldAlias="vatRateVatId" type="integer"/>
+                    <field fieldName="validfrom" fieldAlias="validFrom" type="integer"/>
+                    <field fieldName="vatrate" fieldAlias="vatRate" type="decimal"/>
+                </fields>
+            </table>
+            <table tableName="vat" alias="vat">
+                <fields>
+                    <field fieldName="vatid" fieldAlias="vatId" key="true" type="integer"/>
+                    <field fieldName="label" fieldAlias="vatName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>vatId</pK>
+                <fK>vatRateVatId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="vatRateVatId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>vatRateId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="vId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>vatId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="vat">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>vatName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="from">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>validFrom</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="rate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>vatRate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="from"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of template files-->
+    <list listName="templateFreeTextList" persistence="true">
+        <tables>
+            <table tableName="templatetext" alias="templateText">
+                <fields>
+                    <field fieldName="templateid" fieldAlias="templateId" key="true" type="integer"/>
+                    <field fieldName="languageid" fieldAlias="languageId" key="true" type="integer"/>
+                    <field fieldName="freetextid" fieldAlias="freetextId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="bydefault" fieldAlias="byDefault" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="language" alias="language">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="templateLanguageId" key="true" type="integer"/>
+                    <field fieldName="languagename" fieldAlias="languageName"/>
+                </fields>
+            </table>
+            <table tableName="template" alias="template">
+                <fields>
+                    <field fieldName="templateid" fieldAlias="templateId_PK" key="true" type="integer"/>
+                    <field fieldName="mediatype" fieldAlias="mediaType" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>templateLanguageId</pK>
+                <fK>languageId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>templateId_PK</pK>
+                <fK>templateId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="templateId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="languageId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="languageOfTemplate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="templateByDefault">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>byDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="fileOfTemplateId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>freetextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="mediaType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mediaType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="languageOfTemplate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--List of Languages with not exists in the templateTexts by template-->
+    <list listName="templateLanguageTagList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="language" alias="language">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="languagename" fieldAlias="languageName"/>
+                </fields>
+            </table>
+            <table tableName="templatetext" alias="templateText">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="templateTextLanguageId" key="true" type="integer"/>
+                    <field fieldName="templateid" fieldAlias="templateTextTemplateId" key="true" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <outerJoin/>
+                <pK>templateTextLanguageId</pK>
+                <fK>languageId</fK>
+                <conditions>
+                    <condition fieldReference="templateTextTemplateId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="templateTextTemplateId" operator="IS" type="constant" value="null"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--Appointment type List-->
+    <list listName="appointmentTypeList" persistence="true">
+        <tables>
+            <table tableName="appointmenttype" alias="appointmenttype">
+                <fields>
+                    <field fieldName="apptypeid" fieldAlias="appointmentTypeId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="appointmentTypeName"/>
+                    <field fieldName="color" fieldAlias="appointmentTypeColor"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="appointmentTypeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appointmentTypeName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appointmentTypeColor">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentTypeColor</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="appointmentTypeName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--taskType LIST-->
+    <list listName="taskTypeList" persistence="true">
+        <tables>
+            <table tableName="tasktype" alias="tasktype">
+                <fields>
+                    <field fieldName="tasktypeid" fieldAlias="taskTypeId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="taskTypeName"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="taskTypeId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskTypeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="taskTypeName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="taskTypeName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="holidayList" persistence="true">
+        <tables>
+            <table tableName="holiday" alias="holiday">
+                <fields>
+                    <field fieldName="holidayid" fieldAlias="holidayId" key="true" type="integer"/>
+                    <field fieldName="countryid" fieldAlias="countryNameId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="day" fieldAlias="day" type="integer"/>
+                    <field fieldName="month" fieldAlias="month" type="integer"/>
+                    <field fieldName="occurrence" fieldAlias="occurrence" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="movetomonday" fieldAlias="moveToMonday" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="countryname" fieldAlias="countryName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>countryId</pK>
+                <fK>countryNameId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE2" type="parameter" parameterName="titleAlpha"/>
+            <conector>And</conector>
+            <conditions evaluateIf="indepent">
+                <condition fieldReference="countryId" operator="IS" type="constant" value="null"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="normal">
+                <condition fieldReference="countryId" operator="EQUAL" type="parameter"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>holidayId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="moveToMonday">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>moveToMonday</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="day">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>day</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="month">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>month</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="occurrence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>occurrence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="country">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="title"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="caseSeverityList" persistence="true">
+        <tables>
+            <table tableName="caseseverity" alias="caseSeverity">
+                <fields>
+                    <field fieldName="severityid" fieldAlias="severityId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="severityname" fieldAlias="severityName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                    <field fieldName="langtextid" fieldAlias="langTextId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="severityId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>severityId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="langTextId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>langTextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>severityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="workLevelList" persistence="true">
+        <tables>
+            <table tableName="caseworklevel" alias="workLevel">
+                <fields>
+                    <field fieldName="worklevelid" fieldAlias="workLevelId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="worklevelname" fieldAlias="workLevelName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                    <field fieldName="langtextid" fieldAlias="langTextId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="workLevelId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>workLevelId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="langTextId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>langTextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>workLevelName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="caseTypeList" persistence="true">
+        <tables>
+            <table tableName="casetype" alias="caseType">
+                <fields>
+                    <field fieldName="casetypeid" fieldAlias="caseTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="casetypename" fieldAlias="caseTypeName"/>
+                    <field fieldName="langtextid" fieldAlias="langTextId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="caseTypeId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>caseTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="langTextId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>langTextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>caseTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="articleCategoryList" persistence="true">
+        <tables>
+            <table tableName="articlecategory" alias="articleCategory">
+                <fields>
+                    <field fieldName="categoryid" fieldAlias="categoryId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="categoryname" fieldAlias="articleCategoryName"/>
+                    <field fieldName="parentcategoryid" fieldAlias="parentCategoryId" type="integer"/>
+                    <field fieldName="categoryid" fieldAlias="categoryIdAux" key="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="articlecategory" alias="parentName">
+                <fields>
+                    <field fieldName="categoryid" fieldAlias="catId" key="true" type="integer"/>
+                    <field fieldName="categoryname" fieldAlias="parentName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>catId</pK>
+                <fK>parentCategoryId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="categoryIdAux" operator="DISTINCT" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="categoryId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="parentCategoryId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>parentCategoryId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>articleCategoryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="parentName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>parentName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="articleCategorySimpleList" persistence="true">
+        <tables>
+            <table tableName="articlecategory" alias="articleCategory">
+                <fields>
+                    <field fieldName="categoryid" fieldAlias="categoryId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="categoryname" fieldAlias="articleCategoryName"/>
+                    <field fieldName="parentcategoryid" fieldAlias="parentCategoryId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="categoryId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>articleCategoryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="stateBaseList" persistence="true">
+        <tables>
+            <table tableName="state" alias="state">
+                <fields>
+                    <field fieldName="stateid" fieldAlias="stateId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="statename" fieldAlias="name"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                    <field fieldName="stagetype" fieldAlias="stageType" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="stateId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>stateId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="sequence"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="stateList" persistence="true" executeFirstTime="true" extends="stateBaseList">
+        <tables/>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="stageType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>stageType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="supportUserList" persistence="true">
+        <tables>
+            <table tableName="supportuser" alias="supportUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="supportUserId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="productid" fieldAlias="userProductId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="userAddressId" type="integer"/>
+                    <field fieldName="emailsupportcase" fieldAlias="emailSupportCase"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="userName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                </fields>
+            </table>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="productid" fieldAlias="productId" key="true" type="integer"/>
+                    <field fieldName="productname" fieldAlias="productName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>productId</pK>
+                <fK>userProductId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userId</pK>
+                <fK>supportUserId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>userAddressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="productName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="productId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="emailSupportCase">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>emailSupportCase</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="productName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="campaignTypeList" persistence="true">
+        <tables>
+            <table tableName="camptype" alias="campaignType">
+                <fields>
+                    <field fieldName="camptypeid" fieldAlias="id" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="id" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>id</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="title"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="categoryTabList" persistence="true">
+        <tables>
+            <table tableName="categorytab" alias="categoryTab">
+                <fields>
+                    <field fieldName="categorytabid" fieldAlias="categoryTabId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="label" fieldAlias="label"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                    <field fieldName="tableid" fieldAlias="tableId"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="tableId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="label" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="categoryTabId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryTabId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>label</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="tableId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tableId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="label"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="categoryGroupList" persistence="true">
+        <tables>
+            <table tableName="categorygroup" alias="categoryGroup">
+                <fields>
+                    <field fieldName="categorygroupid" fieldAlias="categoryGroupId" type="integer" key="true"/>
+                    <field fieldName="categorytabid" fieldAlias="fk_categoryTabId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="label" fieldAlias="label"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                    <field fieldName="tableid" fieldAlias="tableId"/>
+                </fields>
+            </table>
+            <table tableName="categorytab" alias="categoryTab">
+                <fields>
+                    <field fieldName="categorytabid" fieldAlias="categoryTabId" type="integer" key="true"/>
+                    <field fieldName="label" fieldAlias="tabLabel"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>categoryTabId</pK>
+                <fK>fk_categoryTabId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="tableId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="label" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="categoryGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>categoryGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>label</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="tabLabel">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tabLabel</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="tableId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>tableId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="label"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="webDocumentList" persistence="true">
+        <tables>
+            <table tableName="webdocument" alias="webDocument">
+                <fields>
+                    <field fieldName="webdocumentid" fieldAlias="webDocumentId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                    <field fieldName="url" fieldAlias="url"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="webDocumentId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="webDocumentId"/>
+                <column columnName="companyId"/>
+                <column columnName="name"/>
+                <column columnName="url"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+
+</lists>

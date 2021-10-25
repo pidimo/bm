@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ejb-jar xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd"
+         version="2.1">
+    <enterprise-beans>
+        <entity>
+            <ejb-name>StyleSheet</ejb-name>
+            <local-home>com.piramide.elwis.domain.uimanager.StyleSheetHome</local-home>
+            <local>com.piramide.elwis.domain.uimanager.StyleSheet</local>
+            <ejb-class>com.piramide.elwis.domain.uimanager.StyleSheetBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>StyleSheet</abstract-schema-name>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>styleSheetId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>userId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>version</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>styleSheetType</field-name>
+            </cmp-field>
+            <primkey-field>styleSheetId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByUserIdAndCompanyId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM StyleSheet AS s
+                    WHERE s.userId = ?1 AND s.companyId = ?2 AND s.styleSheetType = ?3
+                    ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllByUserIdAndCompanyId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM StyleSheet AS s
+                    WHERE s.userId = ?1 AND s.companyId = ?2 AND s.styleSheetType = ?3
+                    ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByCompanyId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM StyleSheet AS s
+                    WHERE s.companyId = ?1 AND s.userId IS NULL AND s.styleSheetType = ?2
+                    ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findAllByCompanyId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM StyleSheet AS s
+                    WHERE s.companyId = ?1 AND s.userId IS NULL AND s.styleSheetType = ?2
+                    ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByStyleSheetTypeAllCompanies</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM StyleSheet AS s
+                    WHERE s.userId IS NULL AND s.styleSheetType = ?1
+                    ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByStyleSheetTypeAllUser</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM StyleSheet AS s
+                    WHERE s.userId IS NOT NULL AND s.styleSheetType = ?1
+                    ]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>Style</ejb-name>
+            <local-home>com.piramide.elwis.domain.uimanager.StyleHome</local-home>
+            <local>com.piramide.elwis.domain.uimanager.Style</local>
+            <ejb-class>com.piramide.elwis.domain.uimanager.StyleBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>Style</abstract-schema-name>
+            <cmp-field>
+                <field-name>name</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>styleId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>styleSheetId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>styleId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByStyleSheetIdAndCompanyIdAndName</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.String</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM Style AS s
+                    WHERE s.styleSheetId = ?1 AND s.companyId = ?2 AND s.name = ?3
+                    ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByStyleSheetIdAndName</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.String</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM Style AS s
+                    WHERE s.styleSheetId = ?1 AND s.name = ?2
+                    ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByNameOfCompany</method-name>
+                    <method-params>
+                        <method-param>java.lang.String</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM Style AS s
+                    WHERE s.name = ?1 AND s.styleSheet.userId IS NULL AND s.styleSheet.companyId = ?2  AND s.styleSheet.styleSheetType = ?3
+                    ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByNameOfUser</method-name>
+                    <method-params>
+                        <method-param>java.lang.String</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(s)
+                    FROM Style AS s
+                    WHERE s.name = ?1 AND s.styleSheet.userId =?2 AND s.styleSheet.companyId = ?3  AND s.styleSheet.styleSheetType = ?4
+                    ]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>StyleAttribute</ejb-name>
+            <local-home>com.piramide.elwis.domain.uimanager.StyleAttributeHome</local-home>
+            <local>com.piramide.elwis.domain.uimanager.StyleAttribute</local>
+            <ejb-class>com.piramide.elwis.domain.uimanager.StyleAttributeBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>StyleAttribute</abstract-schema-name>
+            <cmp-field>
+                <field-name>attributeId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>name</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>styleId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>value</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>attributeId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByStyleSheetIdAndClassNameAndAttributeName</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.String</method-param>
+                        <method-param>java.lang.String</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql><![CDATA[
+                    SELECT OBJECT(a)
+                    FROM StyleAttribute AS a
+                    WHERE a.style.styleSheetId = ?1 AND a.style.name = ?2 AND a.name =?3
+                    ]]>
+                </ejb-ql>
+            </query>
+        </entity>
+    </enterprise-beans>
+    <relationships>
+        <ejb-relation>
+            <ejb-relation-name>StyleSheet - Style</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>stylesheet</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>StyleSheet</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>styles</cmr-field-name>
+                    <cmr-field-type>java.util.Collection</cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>style</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>Style</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>styleSheet</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Style - StyleAttribute</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>style</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Style</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>styleAttributes</cmr-field-name>
+                    <cmr-field-type>java.util.Collection</cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>styleattribute</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>StyleAttribute</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>style</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+    </relationships>
+    <assembly-descriptor>
+        <container-transaction>
+            <method>
+                <ejb-name>StyleSheet</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>Style</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>StyleAttribute</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+    </assembly-descriptor>
+</ejb-jar>

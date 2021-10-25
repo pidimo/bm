@@ -1,0 +1,12 @@
+<mbean code="org.jboss.varia.scheduler.Scheduler" name=":service=EmailScheduler">
+    <attribute name="StartAtStartup">true</attribute>
+    <attribute name="SchedulableClass">com.piramide.elwis.plugins.jboss.scheduler.SchedulableEmailSender</attribute>
+    <attribute name="SchedulableArguments">300000</attribute>
+    <attribute name="SchedulableArgumentTypes">long</attribute>
+    <attribute name="InitialStartDate">0</attribute>
+    <!--schedule every 5 minutes-->
+    <attribute name="SchedulePeriod">300000</attribute>
+    <attribute name="InitialRepetitions">-1</attribute>
+    <depends>jboss:service=Naming</depends>
+    <depends>jboss.j2ee:jndiName=Elwis.EmailService,service=EJB</depends>
+</mbean>

@@ -1,0 +1,3692 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<!DOCTYPE  lists PUBLIC "-//Alfacentaurto//DTD AC" "../dtd/DTDConfiguration.dtd">-->
+
+<lists>
+    <list listName="Address-ContactPerson" distinct="true" persistence="true">
+        <tables>
+            <table tableName="contactperson" alias="contactPerson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="personId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="bossId" key="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="personName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="personNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="organization">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="companyid" fieldAlias="company" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>personNameId</pK>
+                <fK>personId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>bossId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="personId" operator="GREATER" type="constant" value="0"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="name1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="name2" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="name3" operator="LIKE" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="company" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="ORGANIZATIONNAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="PERSONNAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="ORGANIZATIONNAME"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--begin ivan-->
+    <list listName="newEmailList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="email">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="newemail" fieldAlias="isNewEmail" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="folderId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="folderId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="isNewEmail" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="emailId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="inboxList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="webMail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="mailFolderId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="state" fieldAlias="stateBK" type="integer"/>
+                    <field fieldName="subject" fieldAlias="subject"/>
+                    <field fieldName="priority" fieldAlias="priority" type="integer"/>
+                    <field fieldName="mailpersonalfrom" fieldAlias="personal"/>
+                    <field fieldName="sentdatetime" fieldAlias="sentDate" type="integer"/>
+                    <field fieldName="size" fieldAlias="size" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="folder" alias="Folder">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folderId" key="true" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>folderId</pK>
+                <fK>mailFolderId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="mailFolderId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="stateBK" operator="EQUAL" type="parameter"/>
+                <conector>Or</conector>
+                <conditions evaluateIf="all">
+                    <condition fieldReference="stateBK" operator="NOTANDBIT" type="constant" value="4"/> <!--all but not send state-->
+                </conditions>
+                <conector>Or</conector>
+                <condition fieldReference="stateBK" operator="EQUAL" type="parameter"/>
+                <conector>Or</conector>
+                <conditions evaluateIf="unreadFilter">
+                    <condition fieldReference="stateBK" operator="NOTANDBIT" type="constant" value="1"/> <!-- all with not read state-->
+                </conditions>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="size">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>size</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="mailSubject">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>subject</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="mailPriority">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priority</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="personalFrom">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>personal</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="folderName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sentDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sentDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="sentDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="attachList" persistence="true">
+        <tables>
+            <table tableName="attach" alias="attach">
+                <fields>
+                    <field fieldName="attachid" fieldAlias="attachId" key="true" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="mailId" type="integer"/>
+                    <field fieldName="visible" fieldAlias="visible" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="number">
+                <param type="field" field="attachId"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="mailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="visible" operator="IS" type="constant" value="null"/>
+                <conector>Or</conector>
+                <condition fieldReference="visible" operator="EQUAL" type="constant" value="0"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="total">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">number</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="mailAccountList" persistence="true">
+        <tables>
+            <table tableName="mailaccount" alias="mailAccount">
+                <fields>
+                    <field fieldName="mailaccountid" fieldAlias="mailAccountId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="email" fieldAlias="email"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="servername" fieldAlias="serverName"/>
+                    <field fieldName="serverport" fieldAlias="serverPort"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="smtpserver" fieldAlias="smtpServer"/>
+                    <field fieldName="defaultaccount" fieldAlias="defaultAccount"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="mailAccountId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailAccountId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="email">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>email</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="serverName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>serverName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="smtpServer">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>smtpServer</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userMailId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userMailId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="defaultAccount">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>defaultAccount</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="login"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="emailRecipientList" persistence="true">
+        <tables>
+            <table tableName="mailrecipient" alias="mailRecipient">
+                <fields>
+                    <field fieldName="recipientid" fieldAlias="recipientId" type="integer" key="true"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="mailId" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="personal" fieldAlias="personal"/>
+                    <field fieldName="email" fieldAlias="email"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="mailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="recipientId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>recipientId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="email">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>email</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="personal">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>personal</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="recipientId"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--end ivan-->
+    <!--Begin Alvaro-->
+    <list listName="signatureList" persistence="true">
+        <tables>
+            <table tableName="signature" alias="signature">
+                <fields>
+                    <field fieldName="signatureid" fieldAlias="signatureId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="signatureName"/>
+                    <field fieldName="message" fieldAlias="signatureMessage"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="mailaccountid" fieldAlias="mailAccountId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="mailaccount" alias="mailAccount">
+                <fields>
+                    <field fieldName="mailaccountid" fieldAlias="fk_mailAccountId" key="true" type="integer"/>
+                    <field fieldName="email" fieldAlias="email"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>fk_mailAccountId</pK>
+                <fK>mailAccountId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="signatureName" operator="LIKE2" type="parameter"/>
+            <conector>Or</conector>
+            <condition fieldReference="mailAccountId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="SIGNATUREID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>signatureId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+
+                <column columnName="SIGNATURENAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>signatureName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ISDEFAULT">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="EMAIL">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>email</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="SIGNATURENAME"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+
+    <list listName="contactGroupList" persistence="true">
+        <tables>
+            <table tableName="mailgroupaddr" alias="contactGroup">
+                <fields>
+                    <field fieldName="groupaddrid" fieldAlias="groupAddrId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="contactGroupName"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="GROUPADDRID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupAddrId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="CONTACTGROUPNAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactGroupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="CONTACTGROUPNAME"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="mailRecipientCountList" persistence="true">
+        <tables>
+            <table tableName="mailrecipient" alias="mailRecipient">
+                <fields>
+                    <field fieldName="recipientid" fieldAlias="recipientId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="recipientMailId_fk" type="integer"/>
+                    <field fieldName="email" fieldAlias="email"/>
+                    <field fieldName="personal" fieldAlias="personal"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="counter">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="countRecipient">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">counter</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="mailContactCountList" persistence="true">
+        <tables>
+            <table tableName="mailcontact" alias="mailContact">
+                <fields>
+                    <field fieldName="mailcontactid" fieldAlias="mailContactId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="mailContactMailId_fk" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="counter">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="countMailContact">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">counter</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="actionMailContactCountList" persistence="true">
+        <tables>
+            <table tableName="mailcontact" alias="mailContact">
+                <fields>
+                    <field fieldName="mailcontactid" fieldAlias="mailContactId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="contactid" fieldAlias="contactId_fk" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="mailContactMailId_fk" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="contact" alias="contact">
+                <fields>
+                    <field fieldName="contactid" fieldAlias="contactId" key="true" type="integer"/>
+                    <field fieldName="isaction" fieldAlias="isAction" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <join/>
+                <pK>contactId</pK>
+                <fK>contactId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function name="count" alias="counter">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="isAction" operator="EQUAL" type="constant" value="1"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="countActionMailContact">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">counter</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="supportActivityMailContactCountList" persistence="true">
+        <tables>
+            <table tableName="mailcontact" alias="mailContact">
+                <fields>
+                    <field fieldName="mailcontactid" fieldAlias="mailContactId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="contactid" fieldAlias="contactId_fk" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="mailContactMailId_fk" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="supportcontact" alias="supportContact">
+                <fields>
+                    <field fieldName="caseid" fieldAlias="caseId" key="true" type="integer"/>
+                    <field fieldName="contactid" fieldAlias="supportContacId" type="integer"/>
+                    <field fieldName="activityid" fieldAlias="activityId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <join/>
+                <pK>supportContacId</pK>
+                <fK>contactId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function name="count" alias="counter">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="activityId" operator="IS" type="constant" value="NOT NULL"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="countSupportMailContact">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">counter</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="mailTrayList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="sentMail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="subject" fieldAlias="mailSubject"/>
+                    <field fieldName="priority" fieldAlias="mailPriority" type="integer"/>
+                    <field fieldName="state" fieldAlias="mailState" type="integer"/>
+                    <field fieldName="state" fieldAlias="mailState2" type="integer"/>
+                    <field fieldName="size" fieldAlias="mailSize" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="mailFolderId" type="integer"/>
+                    <field fieldName="mailfrom" fieldAlias="mailFrom"/>
+                    <field fieldName="mailpersonalfrom" fieldAlias="mailPersonalFrom"/>
+                    <field fieldName="sentdatetime" fieldAlias="sentDateTime" type="integer"/>
+                    <field fieldName="isinout" fieldAlias="inOut" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden" type="integer"/>
+                    <field fieldName="attachment" fieldAlias="haveAttachment" type="integer"/>
+                    <field fieldName="completeemail" fieldAlias="isCompleteEmail" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="folder" alias="folder">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folderId" key="true" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="type" fieldAlias="folderType" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>folderId</pK>
+                <fK>mailFolderId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="mailFolderId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="mailState" operator="ANDBIT" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="mailPriority" operator="EQUAL" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="mailState2" operator="NOTANDBIT" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="mailSubject" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="mailFrom" operator="LIKE" type="parameter"/>
+                    <conector>Or</conector>
+                    <condition fieldReference="mailPersonalFrom" operator="LIKE" type="parameter"/>
+                </conditions>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="MAILID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSUBJECT">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailSubject</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILPRIORITY">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailPriority</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSTATE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailState</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSIZE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailSize</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILFROM">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailFrom</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILPERSONALFROM">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailPersonalFrom</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="SENTDATETIME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sentDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="INOUT">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>inOut</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILHASATTACH">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>haveAttachment</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ISCOMPLETEEMAIL">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isCompleteEmail</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="FOLDERTYPE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="RECIPIENTCOUNT">
+                    <config>
+                        <listField listName="mailRecipientCountList">
+                            <conditions>
+                                <condition fieldReference="recipientMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="MAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="mailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="ACTIONMAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="actionMailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="SUPPORTMAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="supportActivityMailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="SENTDATETIME"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="mailFilterRecipientBaseList" distinct="true">
+        <tables>
+            <table tableName="mailrecipient" alias="mailRecipient">
+                <fields>
+                    <field fieldName="recipientid" fieldAlias="recipientId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="recipientMailId_fk" type="integer"/>
+                    <field fieldName="email" fieldAlias="email"/>
+                    <field fieldName="personal" fieldAlias="personal"/>
+                    <field fieldName="type" fieldAlias="recipientType" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="mailId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>recipientMailId_fk</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="mailFilterRecipientList" extends="mailFilterRecipientBaseList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="email" operator="LIKE" type="parameter"/>
+            <conector>Or</conector>
+            <condition fieldReference="personal" operator="LIKE" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+    <list listName="mailFilterTORecipientList" extends="mailFilterRecipientBaseList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="recipientType" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="email" operator="LIKE" type="parameter" parameterName="mailTo"/>
+                <conector>Or</conector>
+                <condition fieldReference="personal" operator="LIKE" type="parameter" parameterName="mailPersonalTo"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+    <list listName="mailFilterCCRecipientList" extends="mailFilterRecipientBaseList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="recipientType" operator="EQUAL" type="constant" value="2"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="email" operator="LIKE" type="parameter" parameterName="mailToCC"/>
+                <conector>Or</conector>
+                <condition fieldReference="personal" operator="LIKE" type="parameter" parameterName="mailPersonalToCC"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+
+    <list listName="searchMailList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="mailTable">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="subject" fieldAlias="mailSubject"/>
+                    <field fieldName="priority" fieldAlias="mailPriority" type="integer"/>
+                    <field fieldName="state" fieldAlias="mailState" type="integer"/>
+                    <field fieldName="state" fieldAlias="mailState2" type="integer"/>
+                    <field fieldName="size" fieldAlias="mailSize" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="mailFolderId_fk" type="integer"/>
+                    <field fieldName="mailfrom" fieldAlias="mailFrom"/>
+                    <field fieldName="bodyid" fieldAlias="bodyId_fk" type="integer"/>
+                    <field fieldName="mailpersonalfrom" fieldAlias="mailPersonalFrom"/>
+                    <field fieldName="sentdatetime" fieldAlias="sentDateTime" type="integer"/>
+                    <field fieldName="isinout" fieldAlias="inOut" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden" type="integer"/>
+                    <field fieldName="attachment" fieldAlias="haveAttachment" type="integer"/>
+                    <field fieldName="completeemail" fieldAlias="isCompleteEmail" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="folder" alias="folderTable">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folderId" key="true" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="type" fieldAlias="folderType" type="integer"/>
+                    <field fieldName="name" fieldAlias="folderName"/>
+                </fields>
+            </table>
+            <table tableName="body" alias="bodyTable">
+                <fields>
+                    <field fieldName="bodyid" fieldAlias="bodyId" key="true" type="integer"/>
+                    <field fieldName="body" fieldAlias="body"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>folderId</pK>
+                <fK>mailFolderId_fk</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>bodyId</pK>
+                <fK>bodyId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="blobfunction" class="com.piramide.elwis.utils.dbfunction.BlobReadFunction">
+                <param type="field" field="body"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+            <conector>And</conector>
+            <condition fieldReference="mailFolderId_fk" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="mailState" operator="ANDBIT" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="mailPriority" operator="EQUAL" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="mailState2" operator="NOTANDBIT" type="parameter"/>
+                <conector>And</conector>
+                <conditions>
+                    <condition functionReference="blobfunction" operator="LIKE" type="parameter" parameterName="body"/>
+                    <conector>Or</conector>
+                    <conditions>
+                        <condition fieldReference="mailFrom" operator="LIKE" type="parameter"/>
+                        <conector>Or</conector>
+                        <condition fieldReference="mailPersonalFrom" operator="LIKE" type="parameter"/>
+                    </conditions>
+                    <conector>Or</conector>
+                    <condition fieldReference="mailSubject" operator="LIKE" type="parameter"/>
+                    <conector>Or</conector>
+                    <conditions evaluateIf="enableRecipientFilter">
+                        <condition fieldReference="mailId" operator="IN" type="list" value="mailFilterRecipientList">
+                            <conditions>
+                                <condition fieldReference="recipientMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </condition>
+                    </conditions>
+                </conditions>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="MAILID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSUBJECT">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailSubject</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILPRIORITY">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailPriority</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSTATE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailState</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSIZE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailSize</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILFROM">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailFrom</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="FOLDERID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="FOLDERTYPE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="FOLDERNAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILPERSONALFROM">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailPersonalFrom</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="SENTDATETIME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sentDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="INOUT">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>inOut</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILHASATTACH">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>haveAttachment</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ISCOMPLETEEMAIL">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isCompleteEmail</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="RECIPIENTCOUNT">
+                    <config>
+                        <listField listName="mailRecipientCountList">
+                            <conditions>
+                                <condition fieldReference="recipientMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="MAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="mailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="ACTIONMAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="actionMailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="SUPPORTMAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="supportActivityMailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="SENTDATETIME"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="mailContactFilterList" distinct="true">
+        <tables>
+            <table tableName="mailcontact" alias="mailContactTable">
+                <fields>
+                    <field fieldName="mailcontactid" fieldAlias="mailContactId" key="true" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="mailContactMailIdFK" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="mailId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailContactMailIdFK</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="advancedSearchMailList" persistence="true" executeFirstTime="true">
+        <tables>
+            <table tableName="mail" alias="mailTable">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="subject" fieldAlias="mailSubject"/>
+                    <field fieldName="priority" fieldAlias="mailPriority" type="integer"/>
+                    <field fieldName="state" fieldAlias="mailState" type="integer"/>
+                    <field fieldName="state" fieldAlias="mailState2" type="integer"/>
+                    <field fieldName="size" fieldAlias="mailSize" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="mailFolderId_fk" type="integer"/>
+                    <field fieldName="mailfrom" fieldAlias="mailFrom"/>
+                    <field fieldName="bodyid" fieldAlias="bodyId_fk" type="integer"/>
+                    <field fieldName="mailpersonalfrom" fieldAlias="mailPersonalFrom"/>
+                    <field fieldName="sentdatetime" fieldAlias="sentDateTime" type="integer"/>
+                    <field fieldName="isinout" fieldAlias="inOut" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden" type="integer"/>
+                    <field fieldName="attachment" fieldAlias="haveAttachment" type="integer"/>
+                    <field fieldName="completeemail" fieldAlias="isCompleteEmail" type="integer"/>
+                    <field fieldName="createcontact" fieldAlias="haveCommunication" type="integer"/>
+                    <field fieldName="createcontact" fieldAlias="haveCommunication2" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="folder" alias="folderTable">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folderId" key="true" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="type" fieldAlias="folderType" type="integer"/>
+                    <field fieldName="name" fieldAlias="folderName"/>
+                </fields>
+            </table>
+            <table tableName="body" alias="bodyTable">
+                <fields>
+                    <field fieldName="bodyid" fieldAlias="bodyId" key="true" type="integer"/>
+                    <field fieldName="body" fieldAlias="body"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>folderId</pK>
+                <fK>mailFolderId_fk</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>bodyId</pK>
+                <fK>bodyId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="blobfunction" class="com.piramide.elwis.utils.dbfunction.BlobReadFunction">
+                <param type="field" field="body"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+            <conector>And</conector>
+            <condition fieldReference="mailSubject" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="mailFolderId_fk" operator="EQUAL" type="parameter" parameterName="searchMailFolderId"/>
+            <conector>And</conector>
+            <condition fieldReference="mailPriority" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="mailFrom" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="mailPersonalFrom" operator="LIKE" type="parameter" parameterName="mailFrom"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="mailState" operator="ANDBIT" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="mailState2" operator="NOTANDBIT" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="enableToRecipientFilter">
+                <condition fieldReference="mailId" operator="IN" type="list" value="mailFilterTORecipientList">
+                    <conditions>
+                        <condition fieldReference="recipientMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                    </conditions>
+                </condition>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="enableCcRecipientFilter">
+                <condition fieldReference="mailId" operator="IN" type="list" value="mailFilterCCRecipientList">
+                    <conditions>
+                        <condition fieldReference="recipientMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                    </conditions>
+                </condition>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="sentDateTime" operator="GREATER_EQUAL" type="parameter" parameterName="startSendDate"/>
+                <conector>And</conector>
+                <condition fieldReference="sentDateTime" operator="LESS_EQUAL" type="parameter" parameterName="endSendDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="mailSize" operator="GREATER_EQUAL" type="parameter" parameterName="startSizeRangeBytes"/>
+                <conector>And</conector>
+                <condition fieldReference="mailSize" operator="LESS_EQUAL" type="parameter" parameterName="endSizeRangeBytes"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="haveAttachment" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions evaluateIf="haveCommunications">
+                <condition fieldReference="mailId" operator="IN" type="list" value="mailContactFilterList">
+                    <conditions>
+                        <condition fieldReference="mailContactMailIdFK" operator="EQUAL" type="field" value="mailId"/>
+                    </conditions>
+                </condition>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="haveNotCommunications">
+                <condition fieldReference="mailId" operator="NOT_IN" type="list" value="mailContactFilterList">
+                    <conditions>
+                        <condition fieldReference="mailContactMailIdFK" operator="EQUAL" type="field" value="mailId"/>
+                    </conditions>
+                </condition>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="inOut" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition functionReference="blobfunction" operator="LIKE" type="parameter" parameterName="body"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="MAILID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSUBJECT">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailSubject</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILPRIORITY">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailPriority</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSTATE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailState</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILSIZE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailSize</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILFROM">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailFrom</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="FOLDERID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="FOLDERTYPE">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="FOLDERNAME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILPERSONALFROM">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mailPersonalFrom</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="SENTDATETIME">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sentDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="INOUT">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>inOut</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="MAILHASATTACH">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>haveAttachment</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ISCOMPLETEEMAIL">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isCompleteEmail</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="RECIPIENTCOUNT">
+                    <config>
+                        <listField listName="mailRecipientCountList">
+                            <conditions>
+                                <condition fieldReference="recipientMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="MAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="mailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="ACTIONMAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="actionMailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="SUPPORTMAILCONTACTCOUNT">
+                    <config>
+                        <listField listName="supportActivityMailContactCountList">
+                            <conditions>
+                                <condition fieldReference="mailContactMailId_fk" operator="EQUAL" type="field" value="mailId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="SENTDATETIME"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="telecomsForAnAddress" persistence="true">
+        <tables>
+            <table tableName="telecom" alias="telecom">
+                <fields>
+                    <field fieldName="telecomid" fieldAlias="telecomId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="telecomAddressId" type="integer"/>
+                    <field fieldName="contactpersonid" fieldAlias="telecomContactPersonId" type="integer"/>
+                    <field fieldName="telecomtypeid" fieldAlias="telecomTelecomTypeId" type="integer"/>
+                    <field fieldName="telecomnumber" fieldAlias="telecomNumber"/>
+                    <field fieldName="companyid" fieldAlias="telecomCompanyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="telecomtype" alias="telecomtype">
+                <fields>
+                    <field fieldName="telecomtypeid" fieldAlias="telecomTypeId" key="true" type="integer"/>
+                    <field fieldName="type" fieldAlias="type"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="addressCompanyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>telecomAddressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>telecomTypeId</pK>
+                <fK>telecomTelecomTypeId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="addressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="addressCompanyId" operator="EQUAL" type="field" value="telecomCompanyId"/>
+            <conector>And</conector>
+            <condition fieldReference="telecomContactPersonId" operator="IS" type="constant" value="null"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="TELECOMID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="TELECOMNUMBER">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomNumber</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ADDRESSID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomAddressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="CONTACTPERSONID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomContactPersonId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="telecomsForAnContactPerson" persistence="true">
+        <tables>
+            <table tableName="telecom" alias="telecom">
+                <fields>
+                    <field fieldName="telecomid" fieldAlias="telecomId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="telecomAddressId" type="integer"/>
+                    <field fieldName="contactpersonid" fieldAlias="telecomContactPersonId" type="integer"/>
+                    <field fieldName="telecomtypeid" fieldAlias="telecomTelecomTypeId" type="integer"/>
+                    <field fieldName="telecomnumber" fieldAlias="telecomNumber"/>
+                    <field fieldName="companyid" fieldAlias="telecomCompanyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="telecomtype" alias="telecomtype">
+                <fields>
+                    <field fieldName="telecomtypeid" fieldAlias="telecomTypeId" key="true" type="integer"/>
+                    <field fieldName="type" fieldAlias="type"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="addressCompanyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>telecomAddressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>telecomTypeId</pK>
+                <fK>telecomTelecomTypeId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="telecomAddressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="addressCompanyId" operator="EQUAL" type="field" value="telecomCompanyId"/>
+            <conector>And</conector>
+            <condition fieldReference="telecomContactPersonId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="TELECOMID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="TELECOMNUMBER">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomNumber</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ADDRESSID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomAddressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="CONTACTPERSONID">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomContactPersonId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <!--Lists with union-->
+    <list listName="addressGroupList1" specialList="true" persistence="true">
+        <tables>
+            <table tableName="address" alias="A1">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressIdA1" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeA1"/>
+                    <field fieldName="name1" fieldAlias="name1A1"/>
+                    <field fieldName="name2" fieldAlias="name2A1"/>
+                    <field fieldName="name3" fieldAlias="name3A1"/>
+                    <field fieldName="searchname" fieldAlias="searchNameA1"/>
+                    <field fieldName="countryid" fieldAlias="addressCountryIdA1" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="addressCityIdA1" type="integer"/>
+                    <field fieldName="active" fieldAlias="activeA1" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="A2">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressIdA2" key="true" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeA2"/>
+                    <field fieldName="name1" fieldAlias="name1A2"/>
+                    <field fieldName="name2" fieldAlias="name2A2"/>
+                    <field fieldName="name3" fieldAlias="name3A2"/>
+                </fields>
+            </table>
+            <table tableName="addressgroup" alias="AG1">
+                <fields>
+                    <field fieldName="groupaddrid" fieldAlias="groupAddressId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId_fk" key="true" type="integer"/>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonGroupId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="addressgroupid" fieldAlias="addressGroupId" key="true" type="integer"/>
+                    <field fieldName="telecomid" fieldAlias="telecomId_fk" key="true" type="integer"/>
+                    <field fieldName="sendtoall" fieldAlias="sendToAll" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="areacode" fieldAlias="countryCode"/>
+                </fields>
+            </table>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true" type="integer"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                    <field fieldName="zip" fieldAlias="zip"/>
+                </fields>
+            </table>
+            <table tableName="telecom" alias="telecom">
+                <fields>
+                    <field fieldName="telecomid" fieldAlias="telecomId" key="true" type="integer"/>
+                    <field fieldName="telecomnumber" fieldAlias="telecomNumber"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addressId_fk</pK>
+                <fK>addressIdA1</fK>
+            </relationShip>
+            <relationShip>
+                <outerJoin/>
+                <pK>addressIdA2</pK>
+                <fK>contactPersonGroupId</fK>
+            </relationShip>
+            <relationShip>
+                <outerJoin/>
+                <pK>countryId</pK>
+                <fK>addressCountryIdA1</fK>
+            </relationShip>
+            <relationShip>
+                <outerJoin/>
+                <pK>cityId</pK>
+                <fK>addressCityIdA1</fK>
+            </relationShip>
+            <relationShip>
+                <outerJoin/>
+                <pK>telecomId</pK>
+                <fK>telecomId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contactPersonGroupId" operator="IS" type="constant" value="NULL"/>
+            <conector>And</conector>
+            <condition fieldReference="groupAddressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="activeA1" operator="EQUAL" type="constant" value="1"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressIdA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressTypeA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressTypeA2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactPersonGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactPersonGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="countryCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="cityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="telecomNumber">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomNumber</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="searchNameA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>searchNameA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="addressGroupList2" persistence="true" specialList="true">
+        <tables>
+            <table tableName="address" alias="A1">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressIdA1" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeA1"/>
+                    <field fieldName="name1" fieldAlias="name1A1"/>
+                    <field fieldName="name2" fieldAlias="name2A1"/>
+                    <field fieldName="name3" fieldAlias="name3A1"/>
+                    <field fieldName="searchname" fieldAlias="searchNameA1"/>
+                    <field fieldName="countryid" fieldAlias="addressCountryIdA1" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="addressCityIdA1" type="integer"/>
+                    <field fieldName="active" fieldAlias="activeA1" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="A2">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressIdA2" key="true" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeA2"/>
+                    <field fieldName="name1" fieldAlias="name1A2"/>
+                    <field fieldName="name2" fieldAlias="name2A2"/>
+                    <field fieldName="name3" fieldAlias="name3A2"/>
+                </fields>
+            </table>
+            <table tableName="addressgroup" alias="AG1">
+                <fields>
+                    <field fieldName="groupaddrid" fieldAlias="groupAddressId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId_fk" key="true" type="integer"/>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonGroupId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="addressgroupid" fieldAlias="addressGroupId" key="true" type="integer"/>
+                    <field fieldName="telecomid" fieldAlias="telecomId_fk" key="true" type="integer"/>
+                    <field fieldName="sendtoall" fieldAlias="sendToAll" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="areacode" fieldAlias="countryCode"/>
+                </fields>
+            </table>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true" type="integer"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                    <field fieldName="zip" fieldAlias="zip"/>
+                </fields>
+            </table>
+            <table tableName="telecom" alias="telecom">
+                <fields>
+                    <field fieldName="telecomid" fieldAlias="telecomId" key="true" type="integer"/>
+                    <field fieldName="telecomnumber" fieldAlias="telecomNumber"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>contactPersonGroupId</pK>
+                <fK>addressIdA1</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressIdA2</pK>
+                <fK>addressId_fk</fK>
+            </relationShip>
+            <relationShip>
+                <outerJoin/>
+                <pK>countryId</pK>
+                <fK>addressCountryIdA1</fK>
+            </relationShip>
+            <relationShip>
+                <outerJoin/>
+                <pK>cityId</pK>
+                <fK>addressCityIdA1</fK>
+            </relationShip>
+            <relationShip>
+                <outerJoin/>
+                <pK>telecomId</pK>
+                <fK>telecomId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="groupAddressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="activeA1" operator="EQUAL" type="constant" value="1"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressIdA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressTypeA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressTypeA2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactPersonGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactPersonGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="countryCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="cityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="telecomNumber">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomNumber</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="searchNameA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>searchNameA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="groupList" union="true" persistence="true">
+        <union alias="test">
+            <unionList list="addressGroupList1"/>
+            <unionList list="addressGroupList2"/>
+        </union>
+        <conditions>
+            <condition fieldReference="name1A1" operator="LIKE2" type="parameter"/>
+            <conector>Or</conector>
+            <condition fieldReference="name2A1" operator="LIKE2" type="parameter"/>
+            <conector>Or</conector>
+            <condition fieldReference="searchNameA1" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressIdA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName1">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeA1" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1A1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2A1</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeA1" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1A1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2A1</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3A1</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1A1</referenceField>
+                            <referenceField>name2A1</referenceField>
+                            <referenceField>name3A1</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="addressName2">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeA2" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1A2</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2A2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeA2" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1A2</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2A2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3A2</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1A2</referenceField>
+                            <referenceField>name2A2</referenceField>
+                            <referenceField>name3A2</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="addressGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="countryCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="cityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="telecomNumber">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>telecomNumber</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="addressName1"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--List for ALL addresses-->
+    <list listName="addressesAlreadyContactPersonOfList" specialList="true" persistence="true">
+        <tables>
+            <table tableName="address" alias="A1">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressIdA1" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1A1"/>
+                    <field fieldName="name2" fieldAlias="name2A1"/>
+                    <field fieldName="name3" fieldAlias="name3A1"/>
+                    <field fieldName="searchname" fieldAlias="searchNameA1"/>
+                    <field fieldName="countryid" fieldAlias="addressCountryIdA1" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="addressCityIdA1" type="integer"/>
+                    <field fieldName="active" fieldAlias="activeA1" type="integer"/>
+                    <field fieldName="recorduser" fieldAlias="userId" type="integer"/>
+                    <field fieldName="personal" fieldAlias="personalA1" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeA1"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="A2">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressIdA2" key="true" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeA2"/>
+                    <field fieldName="name1" fieldAlias="name1A2"/>
+                    <field fieldName="name2" fieldAlias="name2A2"/>
+                    <field fieldName="name3" fieldAlias="name3A2"/>
+                    <field fieldName="searchname" fieldAlias="searchNameA2"/>
+                    <field fieldName="countryid" fieldAlias="addressCountryIdA2" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="addressCityIdA2" type="integer"/>
+                    <field fieldName="active" fieldAlias="activeA2" type="integer"/>
+                    <field fieldName="recorduser" fieldAlias="userIdA2" type="integer"/>
+                    <field fieldName="personal" fieldAlias="personalA2" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="contactperson" alias="contactperson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="active" fieldAlias="contactPersonActive" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="areacode" fieldAlias="countryCode"/>
+                </fields>
+            </table>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true" type="integer"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                    <field fieldName="zip" fieldAlias="zip"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>contactPersonId</pK>
+                <fK>addressIdA1</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>addressIdA2</pK>
+                <fK>contactPersonAddressId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>countryId</pK>
+                <fK>addressCountryIdA2</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>cityId</pK>
+                <fK>addressCityIdA2</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="contactSearchName" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1A1"/>
+                <param type="field" field="name2A1"/>
+                <param type="field" field="name3A1"/>
+                <param type="field" field="searchNameA1"/>
+            </function>
+            <function alias="contactPersonOfSearchName" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1A2"/>
+                <param type="field" field="name2A2"/>
+                <param type="field" field="name3A2"/>
+                <param type="field" field="searchNameA2"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contactPersonActive" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="activeA1" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="activeA2" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="name1A1" operator="LIKE2" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition functionReference="contactSearchName" operator="LIKE" type="parameter" parameterName="contactSearchNameFixed"/>
+                <conector>Or</conector>
+                <condition functionReference="contactPersonOfSearchName" operator="LIKE" type="parameter" parameterName="contactSearchNameFixed"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressIdA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressTypeA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="searchNameA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>searchNameA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="countryCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="cityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressIdA2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressTypeA2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="addressesNoContactPerson" specialList="true" persistence="true">
+        <tables>
+            <table tableName="address" alias="A1">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressIdA1" key="true" listKey="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1A1"/>
+                    <field fieldName="name2" fieldAlias="name2A1"/>
+                    <field fieldName="name3" fieldAlias="name3A1"/>
+                    <field fieldName="searchname" fieldAlias="searchNameA1"/>
+                    <field fieldName="countryid" fieldAlias="addressCountryIdA1" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="addressCityIdA1" type="integer"/>
+                    <field fieldName="active" fieldAlias="activeA1" type="integer"/>
+                    <field fieldName="recorduser" fieldAlias="userId" type="integer"/>
+                    <field fieldName="personal" fieldAlias="personalA1" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeA1"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="A2">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressIdA2" key="true" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeA2"/>
+                    <field fieldName="name1" fieldAlias="name1A2"/>
+                    <field fieldName="name2" fieldAlias="name2A2"/>
+                    <field fieldName="name3" fieldAlias="name3A2"/>
+                    <field fieldName="countryid" fieldAlias="addressCountryIdA2" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="addressCityIdA2" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="areacode" fieldAlias="countryCode"/>
+                </fields>
+            </table>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true" type="integer"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                    <field fieldName="zip" fieldAlias="zip"/>
+                </fields>
+            </table>
+            <table tableName="contactperson" alias="contactperson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="active" fieldAlias="contactPersonActive" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactPersonAddressId</pK>
+                <fK>addressIdA1</fK>
+                <conditions>
+                    <condition fieldReference="contactPersonId" operator="EQUAL" type="field" value="addressIdA1"/>
+                </conditions>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>addressIdA2</pK>
+                <fK>contactPersonAddressId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>countryId</pK>
+                <fK>addressCountryIdA1</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>cityId</pK>
+                <fK>addressCityIdA1</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="contactSearchName" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1A1"/>
+                <param type="field" field="name2A1"/>
+                <param type="field" field="name3A1"/>
+                <param type="field" field="searchNameA1"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="activeA1" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="name1A1" operator="LIKE2" type="parameter"/>
+            <conector>And</conector>
+            <condition functionReference="contactSearchName" operator="LIKE" type="parameter" parameterName="contactSearchNameFixed"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressIdA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3A1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3A1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressTypeA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="searchNameA1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>searchNameA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="countryCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="cityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <!--boss data-->
+                <column columnName="addressIdA2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3A2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3A2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressTypeA2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="allAddressList" union="true" executeFirstTime="false" persistence="true"> <!--contact and contactPersons-->
+        <union alias="addressUnion">
+            <unionList list="addressesAlreadyContactPersonOfList"/>
+            <unionList list="addressesNoContactPerson"/>
+        </union>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="addressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactPersonAddressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName1">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeA1" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1A1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2A1</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeA1" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1A1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2A1</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3A1</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1A1</referenceField>
+                            <referenceField>name2A1</referenceField>
+                            <referenceField>name3A1</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="addressName2">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeA2" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1A2</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2A2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeA2" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1A2</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2A2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3A2</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1A2</referenceField>
+                            <referenceField>name2A2</referenceField>
+                            <referenceField>name3A2</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="addressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressTypeA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="countryCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="cityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactPersonId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressIdA2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="checkBoxIdentifier">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressIdA1" operator="EQUAL" type="field" value="addressIdA1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>addressIdA1</referenceField>
+                                    <separator value="_"/>
+                                    <fieldFormat>
+                                        <referenceField>addressIdA2</referenceField>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="addressName1"/>
+                <columnOrder columnName="addressName2"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--End Alvaro-->
+
+    <!-- Begin miky -->
+
+    <list listName="filterList" persistence="true">
+        <tables>
+            <table tableName="filter" alias="filte">
+                <fields>
+                    <field fieldName="filterid" fieldAlias="filter_id" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="filter_name"/>
+                    <field fieldName="folderid" fieldAlias="filter_folderid" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="filter_companyid" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="folder" alias="folder">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folder_id" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="folder_name"/>
+                    <field fieldName="date" fieldAlias="folder_date" type="integer"/>
+                    <field fieldName="type" fieldAlias="folder_type" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>folder_id</pK>
+                <fK>filter_folderid</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <!-- the parameters be past from the session  -->
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <!--
+                        <conector>And</conector>
+                        <condition fieldReference="path" operator="LIKE2" type="parameter"/>
+                        <conector>And</conector>
+                        <condition fieldReference="description" operator="LIKE2" type="parameter"/>
+            -->
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id_filter">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_id</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name_filter">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="folderid_filter">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_folderid</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="conpanyid_filter">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_companyid</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name_filter"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!-- list folder   -->
+    <list listName="emailCounterList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="mail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="folderId_fk" type="integer"/>
+                    <field fieldName="state" fieldAlias="state" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="counter">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="folderId_fk" operator="EQUAL" type="parameter" parameterName="folderId"/>
+            <conector>And</conector>
+            <condition fieldReference="state" operator="ANDBIT" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="counter">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">counter</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="unReadEmailCounterList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="mail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="folderId_fk" type="integer"/>
+                    <field fieldName="state" fieldAlias="state" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="counter">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="folderId_fk" operator="EQUAL" type="parameter" parameterName="folderId"/>
+            <conector>And</conector>
+            <condition fieldReference="state" operator="NOTANDBIT" type="constant" value="1"/> <!--only unread-->
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="counter">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">counter</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="allEmailCounterList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="mail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="folderId_fk" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="counter">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="folderId_fk" operator="EQUAL" type="parameter" parameterName="folderId"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="counter">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">counter</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="uiFolderList" persistence="true">
+        <tables>
+            <table tableName="folder" alias="uiFolder">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folderId" key="true" type="integer"/>
+                    <field fieldName="type" fieldAlias="folderType" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="name" fieldAlias="folderName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="folderType" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="folderId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="folderName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="folderType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="folderType"/>
+                <columnOrder columnName="folderName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="folderAndMailsList" persistence="true">
+        <tables>
+            <table tableName="folder" alias="folder">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folderId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="folderName"/>
+                    <field fieldName="date" fieldAlias="folderDate" type="integer"/>
+                    <field fieldName="type" fieldAlias="folderType" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="columntoshow" fieldAlias="columnToShow" type="integer"/>
+                    <field fieldName="parentid" fieldAlias="parentId" type="integer"/>
+                    <field fieldName="isopen" fieldAlias="isOpen" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="folderType" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions evaluateIf="isSystemFolder">
+                <condition fieldReference="folderType" operator="DISTINCT" type="constant" value="0"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="folderId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="folderName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="folderType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userMailId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userMailId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="parentFolderId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>parentId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isOpen">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isOpen</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="unReadMails">
+                    <config>
+                        <listField listName="unReadEmailCounterList">
+                            <conditions>
+                                <condition fieldReference="folderId_fk" operator="EQUAL" type="field" value="folderId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+                <column columnName="countMails">
+                    <config>
+                        <listField listName="allEmailCounterList">
+                            <conditions>
+                                <condition fieldReference="folderId_fk" operator="EQUAL" type="field" value="folderId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="folderType" orderBy="DESC"/>
+                <columnOrder columnName="folderName" orderBy="ASC"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="folderList" persistence="true">
+        <tables>
+            <table tableName="folder" alias="folder">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folder_id" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="folder_name"/>
+                    <field fieldName="date" fieldAlias="folder_date" type="integer"/>
+                    <field fieldName="type" fieldAlias="folder_type" type="integer"/>
+                    <field fieldName="type" fieldAlias="folder_systemType" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="columntoshow" fieldAlias="columnToShow" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <!-- the parameters be past from the session  -->
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="folder_type" operator="EQUAL" type="parameter"/>
+            <!-- to default folder -->
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_id</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="date_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_date</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="usermailid_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userMailId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="conpanyid_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="columnToShow_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>columnToShow</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name_folder"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="systemFoldersGroupedList" persistence="true">
+        <tables>
+            <table tableName="folder" alias="folder">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folderId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="folder_name"/>
+                    <field fieldName="date" fieldAlias="folder_date" type="integer"/>
+                    <field fieldName="type" fieldAlias="folder_type" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="columntoshow" fieldAlias="columnToShow" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="mail" alias="mail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="size" fieldAlias="mailSize" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="mailFolderId_fk" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="folderMailsCount">
+                <param type="field" field="mailSize"/>
+            </function>
+            <function name="sum" alias="folderMailsSize">
+                <param type="field" field="mailSize"/>
+            </function>
+        </functions>
+        <relationShips>
+            <relationShip>
+                <outerJoin/>
+                <pK>mailFolderId_fk</pK>
+                <fK>folderId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="folder_type" operator="DISTINCT" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+                <conector>Or</conector>
+                <condition fieldReference="hidden" operator="IS" type="constant" value="null"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="columnToShow_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>columnToShow</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="folder_type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="totalSize_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">folderMailsSize</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="mailsNumber_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">folderMailsCount</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="folder_type"/>
+            </defaultOrder>
+            <groupBy>
+                <columnGroup columnName="id_folder"/>
+                <columnGroup columnName="name_folder"/>
+                <columnGroup columnName="columnToShow_folder"/>
+                <columnGroup columnName="folder_type"/>
+            </groupBy>
+        </configuration>
+    </list>
+
+    <list listName="userFoldersGroupedList" persistence="true">
+        <tables>
+            <table tableName="folder" alias="folder">
+                <fields>
+                    <field fieldName="folderid" fieldAlias="folderId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="folder_name"/>
+                    <field fieldName="date" fieldAlias="folder_date" type="integer"/>
+                    <field fieldName="type" fieldAlias="folder_type" type="integer"/>
+                    <field fieldName="usermailid" fieldAlias="userMailId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="columntoshow" fieldAlias="columnToShow" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="mail" alias="mail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="size" fieldAlias="mailSize" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="mailFolderId_fk" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="folderMailsCount">
+                <param type="field" field="mailSize"/>
+            </function>
+            <function name="sum" alias="folderMailsSize">
+                <param type="field" field="mailSize"/>
+            </function>
+        </functions>
+        <relationShips>
+            <relationShip>
+                <outerJoin/>
+                <pK>mailFolderId_fk</pK>
+                <fK>folderId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="userMailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="folder_type" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+                <conector>Or</conector>
+                <condition fieldReference="hidden" operator="IS" type="constant" value="null"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folderId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>folder_name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="columnToShow_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>columnToShow</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="totalSize_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">folderMailsSize</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="mailsNumber_folder">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">folderMailsCount</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name_folder"/>
+            </defaultOrder>
+            <groupBy>
+                <columnGroup columnName="id_folder"/>
+                <columnGroup columnName="name_folder"/>
+                <columnGroup columnName="columnToShow_folder"/>
+            </groupBy>
+        </configuration>
+    </list>
+
+    <list listName="systemFolderList" persistence="true" extends="folderList">
+        <tables/>
+        <conditions>
+            <condition fieldReference="folder_systemType" operator="DISTINCT" type="parameter"/>
+            <!-- to system folders -->
+        </conditions>
+        <configuration>
+            <columns/>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="type_folder"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="folderMailsSizeList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="mail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="folderId" type="integer"/>
+                    <field fieldName="size" fieldAlias="size" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="sum" alias="mailsSize">
+                <param type="field" field="size"/>
+            </function>
+        </functions>
+        <conditions>
+            <!-- the parameters be past from the session  -->
+            <condition fieldReference="folderId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="mailsSumSize">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">mailsSize</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <!-- end miky   -->
+    <list listName="mailRecipientList" persistence="true">
+        <tables>
+            <table tableName="mailrecipient" alias="mailrecipient">
+                <fields>
+                    <field fieldName="recipientid" fieldAlias="recipientId" key="true" type="integer"/>
+                    <field fieldName="mailid" fieldAlias="mailId" type="integer"/>
+                    <field fieldName="email" fieldAlias="email"/>
+                    <field fieldName="personal" fieldAlias="personal"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="mailId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="email" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="personal">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>personal</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="findRecipientEmailTelecomList" persistence="true">
+        <tables>
+            <table tableName="telecomtype" alias="telecomType">
+                <fields>
+                    <field fieldName="telecomtypeid" fieldAlias="telecomTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="type" fieldAlias="telecomTypeType"/>
+                </fields>
+            </table>
+            <table tableName="telecom" alias="telecom">
+                <fields>
+                    <field fieldName="telecomid" fieldAlias="telecomId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="telecomAddressId" type="integer"/>
+                    <field fieldName="contactpersonid" fieldAlias="telecomContactPersonId" type="integer"/>
+                    <field fieldName="telecomtypeid" fieldAlias="telecomTelecomTypeId" type="integer"/>
+                    <field fieldName="telecomnumber" fieldAlias="telecomNumber"/>
+                    <field fieldName="predetermined" fieldAlias="telecomPredetermined" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="active" fieldAlias="addressActive" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="contactperson" alias="contactperson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId_PK" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId_FK" key="true" type="integer" listKey="true"/>
+                    <field fieldName="active" fieldAlias="contactPersonActive" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="contactPersonAddress">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="contactPersonName1"/>
+                    <field fieldName="name2" fieldAlias="contactPersonName2"/>
+                    <field fieldName="name3" fieldAlias="contactPersonName3"/>
+                    <field fieldName="searchname" fieldAlias="contactPersonSearchName"/>
+                    <field fieldName="addresstype" fieldAlias="contactPersonAddressType"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>telecomTelecomTypeId</pK>
+                <fK>telecomTypeId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>addressId_PK</pK>
+                <fK>telecomAddressId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactPersonId_PK</pK>
+                <fK>telecomContactPersonId</fK>
+                <conditions>
+                    <condition fieldReference="contactPersonAddressId_FK" operator="EQUAL" type="field" value="telecomAddressId"/>
+                </conditions>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactPersonAddressId_PK</pK>
+                <fK>contactPersonId_PK</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="addressSearchFunc" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1"/>
+                <param type="field" field="name2"/>
+                <param type="field" field="name3"/>
+                <param type="field" field="searchName"/>
+            </function>
+            <function alias="contactPersonSearchFunc" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="contactPersonName1"/>
+                <param type="field" field="contactPersonName2"/>
+                <param type="field" field="contactPersonName3"/>
+                <param type="field" field="contactPersonSearchName"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="telecomTypeType" operator="EQUAL" type="constant" value="EMAIL"/>
+            <conector>And</conector>
+            <condition fieldReference="addressActive" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="contactPersonActive" operator="IS" type="constant" value="NULL"/>
+                <conector>Or</conector>
+                <condition fieldReference="contactPersonActive" operator="EQUAL" type="constant" value="1"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="telecomNumber" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition functionReference="addressSearchFunc" operator="LIKE" type="parameter" parameterName="addressSearchNameFixed"/>
+                <conector>Or</conector>
+                <condition functionReference="contactPersonSearchFunc" operator="LIKE" type="parameter" parameterName="contactPersonSearchNameFixed"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="telecomId"/>
+                <column columnName="telecomNumber"/>
+                <column columnName="telecomAddressId"/>
+                <column columnName="telecomContactPersonId"/>
+                <column columnName="addressName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="contactPersonName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="contactPersonAddressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>contactPersonName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>contactPersonName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="contactPersonAddressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>contactPersonName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>contactPersonName2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>contactPersonName3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>contactPersonName1</referenceField>
+                            <referenceField>contactPersonName2</referenceField>
+                            <referenceField>contactPersonName3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="telecomPredetermined"/>
+                <column columnName="telecomTypeId"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="addressName"/>
+                <columnOrder columnName="contactPersonName"/>
+                <columnOrder columnName="telecomTypeId"/>
+                <columnOrder columnName="telecomPredetermined" orderBy="DESC"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+</lists>

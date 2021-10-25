@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 4.0//EN" "http://www.jboss.org/j2ee/dtd/jboss_4_0.dtd">
+<jboss>
+    <enterprise-beans>
+        <entity>
+            <ejb-name>Product</ejb-name>
+            <local-jndi-name>Elwis.Product</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>ProductFreeText</ejb-name>
+            <local-jndi-name>Elwis.ProductFreeText</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>CompetitorProduct</ejb-name>
+            <local-jndi-name>Elwis.CompetitorProduct</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>ProductPicture</ejb-name>
+            <local-jndi-name>Elwis.ProductPicture</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>Pricing</ejb-name>
+            <local-jndi-name>Elwis.Pricing</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>ProductSupplier</ejb-name>
+            <local-jndi-name>Elwis.ProductSupplier</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>ProductText</ejb-name>
+            <local-jndi-name>Elwis.ProductText</local-jndi-name>
+        </entity>
+    </enterprise-beans>
+</jboss>

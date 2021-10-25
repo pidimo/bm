@@ -1,0 +1,1842 @@
+/** Custom styles for bootstrap components, these should be minor and default for all companies */
+
+/*because is there used navbar as top fixed, define the top padding*/
+body {
+    padding-top: 50px;
+}
+
+/* padding top to modal-popup*/
+.body-popup {
+    padding-top: 0;
+}
+
+/*
+.nav-menu{
+
+}*/
+
+/*Label Bold*/
+.control-label {
+    font-weight: 600;
+}
+
+/*Border to table*/
+.translate .panel > .table-bordered,
+.translate .panel > .table-responsive > .table-bordered {
+    border: 1px solid #dddddd;
+}
+
+/*Margin bottom to table*/
+.translate .panel > .table,
+.translate .panel > .table-responsive > .table,
+.translate .panel > .panel-collapse > .table {
+    margin-bottom: 18px;
+}
+
+/*Label aligned to the left side*/
+.form-horizontal .label-left {
+    text-align: left;
+}
+
+/*styles for inputs*/
+input.numberText {
+    text-align: right;
+}
+
+input.numberTextMedium {
+    text-align: right;
+}
+
+input.numberTextLarge {
+    text-align: right;
+}
+
+input.text {
+    text-align: left;
+}
+
+input.dateText {
+    text-align: left;
+}
+
+input.shortText {
+    text-align: left;
+}
+
+input.zipText {
+    text-align: left;
+}
+
+input.tinyText {
+    text-align: left;
+}
+
+input.yearText {
+    text-align: left;
+}
+
+input.mediumText {
+    text-align: left;
+}
+
+input.middleText {
+    text-align: left;
+}
+
+input.largeText {
+    text-align: left;
+}
+
+input.cityNameText {
+    text-align: left;
+}
+
+select.select {
+    text-align: left;
+}
+
+select.adminSelect {
+    text-align: left;
+}
+
+select.numberSelect {
+    text-align: left;
+}
+
+select.schedulerSelect {
+    text-align: left;
+}
+
+select.largeSelect {
+    text-align: left;
+}
+
+select.middleSelect {
+    text-align: left;
+}
+
+select.mediumSelect {
+    text-align: left;
+}
+
+select.tinySelect {
+    text-align: left;
+}
+
+select.shortSelect {
+    text-align: left;
+}
+
+select.multipleSelect {
+    text-align: left;
+}
+
+select.middleMultipleSelect {
+    text-align: left;
+}
+
+select.multipleColumnSelect {
+    text-align: left;
+}
+
+select.multipleSelectFilter {
+    text-align: left;
+}
+
+select.halfMiddleTextSelect {
+    text-align: left;
+}
+
+select.webmailSelect {
+    text-align: left;
+}
+
+/*styles for upload file*/
+/*if change name btnFile we need change initBootstrapFile name*/
+.btnFile {
+    position: relative;
+    overflow: hidden;
+}
+
+.btnFile input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background: red;
+    cursor: inherit;
+    display: block;
+}
+
+/*wrapper button*/
+.wrapperButton {
+    display: block;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.panel {
+    margin-bottom: 15px;
+}
+
+/*fantabolous alphabet*/
+.alpha table tr td {
+    border: medium none;
+    padding: 0;
+}
+
+.alpha table .btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    color: #777777;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    text-decoration: underline;
+}
+
+.alpha table .btn.active {
+    font-size: 1.4em;
+    font-weight: 700;
+    padding: 4px 12px 5px;
+}
+
+.alpha table tr td:first-child .btn {
+    border-radius: 4px 0 0 4px;
+}
+
+.alpha table tr td:last-child .btn {
+    border-radius: 0 4px 4px 0;
+}
+
+.alphabet-wrapper > .table-responsive {
+    border: 0px solid #dddddd !important;
+}
+
+/* Section list_Elements */
+/*List header*/
+th.listHeader {
+    background: #f9f9f9;
+    color: #444444;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+th.listHeader a {
+    color: #d9230f;
+}
+
+th.listHeaderDashBoard {
+    text-align: center;
+}
+
+tr.HeaderDashBoard {
+}
+
+td.listHeader {
+}
+
+/*List row*/
+.table > tbody > tr.listRow {
+    background-color: transparent;
+    border: 1px solid #dddddd;
+    color: #777777;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+.table > tbody > tr.listRow:nth-of-type(2n+1) {
+    background-color: #f9f9f9;
+}
+
+.table tr.listRow > td {
+    vertical-align: middle;
+}
+
+/*List row hover*/
+tr.listRowOver:hover,
+tr.listRow:hover {
+    background-color: #f5f5f5 !important;
+}
+
+tr.listRowOver:hover td {
+    border: 1px solid #dddddd;
+    color: #777777;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+/*List cell*/
+.table > thead > tr > th.listHeader,
+.table > tbody > tr > th.listHeader,
+.table > tfoot > tr > th.listHeader,
+.table > thead > tr.listRow > td,
+.table > tbody > tr.listRow > td,
+.table > tfoot > tr.listRow > td {
+    border: 1px solid #dddddd;
+}
+
+td.listItem {
+    border: 1px solid #dddddd;
+    color: #777777;
+    font-size: 13px;
+    text-align: left;
+}
+
+td.listItem2Center {
+    border: 1px solid #dddddd;
+    color: #777777;
+    font-size: 13px;
+    text-align: center;
+}
+
+td.listItem2 {
+    text-align: left;
+}
+
+td.listItem2Right {
+    color: #777777;
+    text-align: right;
+}
+
+td.listItemRight {
+    color: #777777;
+    text-align: right;
+}
+
+td.listItemCenter {
+    text-align: center;
+}
+
+/*List pager*/
+.table-striped > tbody > tr.listRowLast {
+    background-color: #f9f9f9;
+}
+
+.table-striped > tbody > tr.listRowLast td {
+    border: 1px solid #dddddd;
+}
+
+table.pagingBar {
+    color: #777777;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+td.pagingBar {
+    border: none !important;
+    color: #777777;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+.pagingBar span.glyphicon {
+    color: #777777;
+    cursor: no-drop;
+}
+
+.pagingBar a span.glyphicon {
+    color: inherit;
+    cursor: default;
+}
+
+input.pagingText {
+}
+
+/*List item highlight */
+td.listItemHighlight {
+    background-color: #ffcc99;
+}
+
+/*List item checkbox */
+div.listItemCheckbox {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+/* List section end */
+
+/*Bottom margin to the formulary multi search*/
+.wrapperSearch {
+    display: inline-block;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+/*delete icon in IE10 for lose focus*/
+.numberText::-ms-clear,
+.numberTextMedium::-ms-clear,
+.numberTextLarge::-ms-clear {
+    display: none;
+}
+
+/*Styles for width of input number*/
+.numberInputWidth {
+    float: right;
+    width: 70%;
+}
+
+/*margin in rows when you add rows dynamically*/
+.addMarginRow {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/*Styles for margin top*/
+.marginTop {
+    display: block;
+    margin-top: 5px;
+}
+
+/*Margin right*/
+.marginRight {
+    margin-right: 0.3em;
+}
+
+/*Margin right*/
+.marginLeft {
+    margin-left: 0.3em;
+}
+
+/*Responsive table for tablet device*/
+.table-responsive {
+    margin-bottom: 13.5px;
+}
+
+.table-responsive > .table {
+    margin-bottom: 0;
+}
+
+/*add padding right in table*/
+.paddingRight {
+    padding-right: 5px;
+}
+
+/*override style iframe into modal window*/
+.modalIframeContent {
+    left: 0px !important;
+    top: 0px !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+input.minusButton {
+    width: 12px;
+    height: 16px;
+    border: 0px;
+    font-weight: lighter;
+    font-size: 11px;
+    text-decoration: none;
+    margin-top: 10%;
+    background: url(../layout/ui/img/trash.png) no-repeat;
+    azimuth: center;
+    word-spacing: 1px;
+    cursor: pointer;
+}
+
+input.minusButton:focus {
+    width: 12px;
+    height: 16px;
+    border: dotted #195f91 0.5px;
+    font-weight: lighter;
+    font-size: 11px;
+    text-decoration: inherit;
+    background: url(../layout/ui/img/trash.png) no-repeat;
+    azimuth: center;
+    word-spacing: 1px;
+    cursor: pointer;
+}
+
+input.plusButton {
+    margin-top: -5%;
+    font-size: 2.5em;
+    font-weight: 700;
+    text-decoration: none !important;
+    padding: 0px;
+}
+
+input.calculatorButton {
+    background: url(../layout/ui/img/calculators.png) no-repeat;
+    border: 0 none;
+    text-decoration: none;
+}
+
+/*Center Icon Validation for label with file*/
+.centerIconValidation {
+    top: 34%;
+}
+
+/*change display block to display table in table responsive*/
+.displayTable {
+    display: table !important;
+}
+
+/*Margin Button*/
+.marginButton {
+    margin-bottom: 5px;
+    padding-bottom: 5px !important;
+}
+
+input.glyphicon-trash,
+input.fa {
+    line-height: 1.2em
+}
+
+/* Section sexyCombo_styles */
+div.combo {
+    position: relative;
+    left: 0px;
+    top: 0px;
+}
+
+.combo input.test {
+    position: absolute;
+}
+
+.combo div.icon {
+    position: absolute;
+}
+
+.combo div.list-wrapper {
+    background: #ffffff;
+    font-family: Verdana, Helvetica;
+    font-weight: normal;
+    vertical-align: middle;
+    height: 200px;
+    position: absolute;
+    overflow: hidden;
+    max-height: 200px;
+    z-index: 99999;
+}
+
+.combo div.list-wrapper-up {
+}
+
+.combo li {
+}
+
+.combo li.active {
+    background: #5099F1;
+    color: #FFFFFF;
+}
+
+.combo .visible {
+    display: block;
+    height: 16px;
+}
+
+.combo .invisible {
+    display: none;
+}
+
+.combo input.empty {
+}
+
+div.sexy {
+    white-space: nowrap;
+    height: 21px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+div.sexy input {
+    background: #ffffff;
+    font-family: Verdana, Helvetica;
+    font-weight: normal;
+    vertical-align: middle;
+    width: 100%;
+}
+
+div.sexy div.list-wrapper {
+    background: #ffffff;
+    font-family: Verdana, Helvetica;
+    font-weight: normal;
+    vertical-align: middle;
+    height: 18px;
+    bottom: auto;
+    left: 0px;
+    top: 21px;
+    padding: 0;
+    margin: 0;
+    margin-top: 15px;
+    width: 100%;
+    border-left: 2px solid #999999;
+    border-top: 1px solid #999999;
+    border-bottom: 1px solid #000000;
+    border-right: 1px solid #000000;
+}
+
+div.sexy div.list-wrapper-up {
+    bottom: 21px;
+    top: auto;
+}
+
+div.sexy ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height: 200px;
+}
+
+div.sexy li {
+    padding: 0;
+    padding-left: 2px;
+    cursor: pointer;
+    margin: 0;
+}
+
+div.sexy li.active {
+    background: #5099F1;
+    font-family: Verdana, Helvetica;
+    color: #FFFFFF;
+}
+
+div.sexy input.empty {
+    background: #ffffff;
+    font-family: Verdana, Helvetica;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+div.sexy div.icon {
+    width: 16px;
+    height: 18px;
+    border: 0;
+    background: transparent url(layout/ui/img/sel.gif) no-repeat 0 0;
+    cursor: pointer;
+    top: 10px;
+    left: 94%;
+}
+
+/* Section end */
+
+/*delete icon in IE10 for sexy combo*/
+.clearCheckInComboSexy::-ms-clear, {
+    display: none;
+}
+
+.paddingRemove {
+    padding: 0;
+}
+
+.paddingLeftRemove {
+    padding-left: 0;
+}
+
+.paddingRightRemove {
+    padding-right: 0;
+}
+
+.form-group {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    height: 30px;
+    padding: 5px 9px;
+}
+
+/*The padding has to be the same as for form-Control*/
+.form-horizontal .control-label {
+    padding-top: 5px;
+}
+
+/*The padding has to be the same as for form-Control*/
+.form-horizontal .radio,
+.form-horizontal .checkbox,
+.form-horizontal .radio-inline,
+.form-horizontal .checkbox-inline {
+    padding-top: 5px;
+}
+
+/*The padding has to be the same as for form-Control*/
+.form-control-static {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.btn, .input-group-addon {
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+.form-control-feedback {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.table tbody tr td {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table_same_row tbody tr td {
+    height: 35px;
+    vertical-align: middle;
+}
+
+/* Section webcalendar old css -lito- */
+table.wc_table {
+    background-color: #BFCFDF;
+}
+
+th.wc_header {
+    font-family: Sans-serif;
+    font-size: 12px;
+    font-weight: bolder;
+    text-align: center;
+    color: #00008B;
+}
+
+td.wc_day_cell {
+    background-color: #F9F9F9;
+    text-align: center;
+}
+
+td.wc_day_cell a {
+    font-family: Verdana;
+    font-size: 11px;
+    font-weight: lighter;
+    color: #00008B;
+}
+
+td.wc_week_cell {
+    background-color: #E6F6EA;
+    font-family: Verdana;
+    font-size: 11px;
+    font-weight: lighter;
+    text-align: center;
+    color: #00008B;
+}
+
+td.wc_outmonth_color {
+    background-color: #b5b5b5;
+}
+
+td.wc_today_color {
+    background-color: #DECACA;
+}
+
+table.calendar_table {
+    background-color: #1B1B87;
+}
+
+tr.calendar_header {
+    background-color: #DDEEFF !important;
+    background-image: linear-gradient(to bottom, #DDEEFF, #DDEEFF);
+    font-family: Verdana;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    height: 20px;
+    color: #333333;
+    padding: 0px 0px 0px 5px;
+    border-width: 1px 1px 1px 1px;
+}
+
+td.calendar_cell {
+    background-color: #F9F9F9;
+}
+
+td.day_cell {
+    padding-left: 10px;
+    font-family: Verdana;
+    font-size: 11px;
+    font-weight: bold;
+    color: #00008B;
+}
+
+td.day_cell a {
+    color: #00008B;
+}
+
+td.year_cell {
+    padding-left: 3px;
+    height: 20px;
+}
+
+td.month_week_cell {
+    padding: 0px 0px 0px 0px;
+    font-size: 14px;
+    text-align: center;
+    height: 70px;;
+    vertical-align: top;
+}
+
+td.week_time_cell {
+    vertical-align: middle !important;
+}
+
+td.year_week_cell {
+    font-size: 9px;
+    text-align: left;
+    padding-left: 3px;
+}
+
+div.month_day_header {
+    padding: 5px 5px 5px 5px;
+    margin: 0px 0px 0px 0px;
+    vertical-align: top;
+    border-style: solid;
+    border-width: 0px;
+    text-align: left;
+}
+
+div.month_day_header a {
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    color: #00008B;
+}
+
+td.year_cell a {
+    font-family: Verdana;
+    color: #00008B;
+    font-size: 11px;
+}
+
+span.month_time {
+    font-family: Verdana;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+span.type_appoiment {
+    font-family: Verdana;
+    font-size: 9px;
+    font-weight: normal;
+}
+
+span.datetime {
+    font-family: Verdana;
+    font-size: 9px;
+    font-weight: normal;
+    color: #000000;
+}
+
+span.scroll_text {
+    font-size: 13px;
+    font-weight: lighter;
+    vertical-align: middle;
+}
+
+input.scroll {
+    text-align: right;
+}
+
+select.scroll {
+    width: 90px;
+}
+
+div.scroll {
+    text-align: left;
+}
+
+div.data {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: black;
+    font-weight: lighter;
+    padding: 3px 3px 3px 3px;
+    margin: 0px 0px 0px 0px;
+}
+
+div.field {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    text-decoration: underline;
+    padding: 0px 0px 0px 3px;
+    margin: 0px 0px 0px 0px;
+}
+
+div.holiday div {
+    font-family: Arial;
+    font-size: 11px;
+    font-weight: lighter;
+    color: #000000;
+    text-align: left;
+    padding: 0px 0px 0px 3px;
+}
+
+.smallcalendar_appointment {
+    color: #ff0000;
+}
+
+div.appointment {
+    margin: 3px 5px 3px 5px;
+    padding: 5px 3px 5px 3px;
+    vertical-align: top;
+    text-align: left;
+    font-weight: lighter;
+    border: 1px solid #898988;
+    border-radius: 7px;
+}
+
+td.appointment_cell {
+    background: #D2DDF2;
+    padding: 5px 5px 5px 5px;
+    vertical-align: top;
+    font-weight: lighter;
+    text-align: left;
+}
+
+.appointment_font a {
+    font-family: Verdana;
+    font-size: 11px;
+    color: #00008B;
+}
+
+.appointment_font {
+    font-family: Verdana;
+    font-size: 11px;
+    color: #00008B;
+}
+
+td.smallcalendar_month_cell {
+    vertical-align: top;
+}
+
+td.nopadding {
+    padding: 0px 0px 0px 0px;
+}
+
+td.calendar_cell#outmonthColor {
+    background-color: #b5b5b5;
+}
+
+td.calendar_cell#todayColor {
+    background-color: #DECACA;
+}
+
+td.calendar_cell#holidayColor {
+    background-color: #ffcc99;
+}
+
+div.appointmentAnonymous {
+    background-color: #F0F0D3;
+}
+
+td.appointmentAnonymous {
+    background-color: #F0F0D3;
+}
+
+td.task_expireColor {
+    background-color: #ffcc99;
+}
+
+td.tdWeekCellHeight {
+    height: 21px;
+    padding: 0px !important;
+}
+
+.divAppContainer {
+    position: relative;
+    width: 100%;
+}
+
+.divAppFloat {
+    position: absolute;
+    top: 0px;
+
+    margin: 0px !important;
+    padding: 2px 3px 1px 3px !important;
+    /*border-radius: 3px !important;*/
+}
+
+.divAppAllDay {
+    margin: 0px !important;
+    padding: 2px 3px 1px 3px !important;
+}
+
+/* Section end */
+
+/*Height for the text editor*/
+form#composeEmailId span#body_field_parent table#body_field_tbl tbody tr td iframe#body_field_ifr {
+    height: 300px !important;
+}
+
+/*Borde to Webmail Html*/
+#webmailHtmlBody {
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    padding: 5px 10px;
+}
+
+#webmailHtmlBody #bodyIFrameId {
+    position: inherit;
+}
+
+/*Styles for message tool tip*/
+.messageToolTip {
+    background: #f0f0ee;
+    padding: 5px;
+    border: 1px solid #ccc;
+    text-align: left;
+    font-weight: 400;
+    z-index: 1;
+}
+
+/*Remove Margin Button*/
+.removeMarginButton {
+    margin-bottom: 0;
+}
+
+/*Remove margin*/
+.removeAllMarginButton {
+    margin: 0 !important;
+    padding-bottom: 0;
+}
+
+/*Title in popup*/
+.titleModalClearfix {
+    white-space: initial;
+}
+
+/*to align buttons in campaign*/
+.alignButtons {
+    margin-left: -4px !important;
+}
+
+/*height select in generate email send*/
+.heightSelect {
+    height: 100px !important;
+}
+
+.form-horizontal .control-label .checkbox {
+    min-height: 20px;
+    padding-top: 0;
+}
+
+/*custom well-sm-cutom used in Container.jsp*/
+.well-sm-custom {
+    margin-bottom: 0px !important;
+}
+
+/*custom checkbox legend right*/
+.checkboxLegend {
+    margin-top: 0px !important;
+}
+
+/*change padding for checkbos in table*/
+.paddingCheckboxInTable {
+    padding-top: 2px !important;
+}
+
+/*add margin input in campaign input alone*/
+.marginTopInput {
+    margin-top: 10px;
+}
+
+/* change the color of the last column of the table for proyectTime */
+td.projectTime_enteredColor {
+    background-color: #BBEEFF;
+}
+
+td.projectTime_releasedColor {
+    background-color: #FFE786;
+}
+
+td.projectTime_confirmedColor {
+    background-color: #B1EC9E;
+}
+
+td.projectTime_notConfirmedColor {
+    background-color: #FFAAAA;
+}
+
+td.projectTime_invoicedColor {
+    background-color: #D8D8FF;
+}
+
+.minicolors-swatch.minicolors-sprite {
+    right: 1px !important;
+    top: 1px !important;
+}
+
+/*Padding top*/
+.paddingTop {
+    padding-top: 9px;
+}
+
+/*Select element or active*/
+#selectedContain {
+    background-color: #dddddd;
+}
+
+/*fix problem in contract it use two type of forms*/
+@media only screen and (min-width: 992px) {
+    .paddingaa {
+        margin-left: 15px !important;
+    }
+}
+
+/*the library sexy combo not add margin between form-group*/
+.combo.sexy {
+    margin-bottom: 15px;
+}
+
+/*Custom styles for SIMPLEX THEME*/
+
+/*Section schedule task*/
+.task_expireColor {
+    background: #ffcc99 !important;
+}
+
+/*Section end*/
+
+/*Section dashboard*/
+.nowDate {
+    background: #ffcc99;
+}
+
+/*Section end*/
+
+/*Section schedule calendar*/
+
+.calendar_table.table-bordered > thead > tr > th, .calendar_table.table-bordered > tbody > tr > th, .calendar_table.table-bordered > tfoot > tr > th, .calendar_table.table-bordered > thead > tr > td, .calendar_table.table-bordered > tbody > tr > td, .calendar_table.table-bordered > tfoot > tr > td {
+    border: 1px solid #dddddd;
+}
+
+tr.calendar_header {
+    background-color: #DDEEFF !important;
+    background-image: linear-gradient(to bottom, #DDEEFF, #DDEEFF);
+    font-family: Verdana;
+    font-size: 11px;
+    height: 20px;
+}
+
+tr.calendar_header th {
+    color: #333333;
+    font-weight: bold;
+}
+
+td.calendar_cell {
+    background-color: #F9F9F9;
+}
+
+td.day_cell {
+    font-family: Verdana;
+    font-size: 11px;
+    font-weight: bold;
+    color: #00008B;
+}
+
+td.day_cell a {
+    color: #00008B;
+}
+
+td.calendar_week_cell {
+    background-color: #E6F6EA;
+    font-family: Verdana;
+    color: #00008B;
+    font-weight: lighter;
+}
+
+td.calendar_week_cell a {
+    color: #00008B;
+}
+
+div.month_day_header a {
+    font-family: Verdana;
+    font-size: 12px;
+    font-weight: bold;
+    color: #00008B;
+}
+
+td.year_cell a {
+    font-family: Verdana;
+    color: #00008B;
+}
+
+div.holiday div {
+    font-family: Arial;
+    font-size: 11px;
+    font-weight: lighter;
+    color: #000000;
+}
+
+.smallcalendar_appointment {
+    color: #ff0000;
+}
+
+.appointment_font a {
+    font-family: Verdana;
+    font-size: 11px;
+    color: #00008B;
+}
+
+.appointment_font a:hover, .appointment_font a:focus {
+    color: #00008B;
+}
+
+td.calendar_cell#outmonthColor {
+    background-color: #b5b5b5;
+}
+
+td.calendar_cell#todayColor {
+    background-color: #DECACA;
+}
+
+td.calendar_cell#holidayColor {
+    background-color: #ffcc99;
+}
+
+/*-----------------Anonymous appointment NOT*/
+/*-----------------DateTime for all day appointments in daily view NOT*/
+/*Section end*/
+
+/* Section general *
+
+/*----------------- Background color and font color is empty mode default -----------------*/
+body {
+
+}
+
+/*------- Page links -------*/
+/*a link mode default the colors:
+Color 1 : #d9230f the color is default view
+Color 2 : #91170a the color is where the mouse hover and focus
+*/
+a {
+    color: #d9230f; /*Color 1*/
+}
+
+a:hover, a:focus {
+    color: #91170a; /*Color 2*/
+}
+
+/*the mode link affect buttons type link*/
+.btn-link {
+    color: #d9230f; /*Color 1*/
+}
+
+.btn-link:hover,
+.btn-link:focus {
+    color: #91170a; /*Color 2*/
+}
+
+/*--------- Text boxes fields input select texarea ------*/
+/*
+COLOR 1 = #777777; text color of the box.
+COLOR 2 = #ffffff; color box.
+COLOR 3 = #dddddd; border color.
+
+COLOR 4 = #66afe9; border color focus.
+COLOR 5 = rgba(102, 175, 233, 0.6) border color box shadow.
+
+FONT    = "Helvetica Neue", "Roboto", sans-serif; field font.
+FONT size= 13px; tamanio de la letra de la caja de texto
+BORDER  = 1px size border
+*/
+.form-control {
+    color: #777777; /*COLOR 1*/
+    background-color: #ffffff; /*COLOR 2*/
+    border: 1px solid #dddddd; /*BORDER and COLOR 3 */
+    font-size: 13px; /*FONT SIZE*/
+}
+
+.form-control:focus {
+    border-color: #66afe9; /*COLOR 4*/
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6); /*COLOR 5*/
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, 0.6); /*COLOR 5*/
+}
+
+/*
+Color buttons default and primary
+*/
+
+.btn {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    height: 30px;
+}
+
+.glyphicon {
+    font-size: 13px !important;
+}
+
+.weeklyIcon {
+    font-size: 9px !important;
+}
+
+.fa {
+    font-size: 15px !important;
+}
+
+/*
+Button mode default
+
+COLOR 1 = #4f5151 gradient 1
+COLOR 2 = #3f4141 gradient 2
+COLOR 3 = #2e2f2f border  gradient
+
+COLOR 4 = #ffffff text color button
+
+*/
+.btn-default,
+.btn-default:hover {
+    background-color: #474949; /*COLOR 1*/
+    background-image: -webkit-linear-gradient(top, #4f5151, #3f4141); /*COLOR 1  COLOR 2*/
+    background-image: linear-gradient(to bottom, #4f5151, #3f4141); /*COLOR 1  COLOR 2*/
+    border: 1px solid #2e2f2f; /*COLOR 3*/
+}
+
+.btn-default {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #3f4141; /*COLOR 2*/
+    border-color: #2e2f2f; /* COLOR 2*/
+}
+
+.btn-default:focus,
+.btn-default.focus {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #3f4141; /*COLOR 2*/
+    border-color: #2e2f2f; /*COLOR 3*/
+}
+
+.btn-default:hover {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #3f4141; /*COLOR 2*/
+    border-color: #2e2f2f; /*COLOR 3*/
+}
+
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #3f4141; /*COLOR 2*/
+    border-color: #2e2f2f; /*COLOR 3*/
+}
+
+.btn-default.disabled,
+.btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled.focus,
+.btn-default[disabled].focus,
+fieldset[disabled] .btn-default.focus,
+.btn-default.disabled:active,
+.btn-default[disabled]:active,
+fieldset[disabled] .btn-default:active,
+.btn-default.disabled.active,
+.btn-default[disabled].active,
+fieldset[disabled] .btn-default.active {
+    background-color: #3f4141; /*COLOR 2*/
+    border-color: #3f4141; /*COLOR 2*/
+}
+
+/*button mode primary*/
+/*
+COLOR 1 = #d9230f gradient 1
+COLOR 2 = #cb210e gradient 2
+COLOR 3 = #a01a0b border  gradient
+
+COLOR 4 = #ffffff text color button
+*/
+.btn-primary,
+.btn-primary:hover {
+
+    background-color: #d9230f; /*COLOR 1*/
+    background-image: -webkit-linear-gradient(top, #d9230f, #cb210e); /*COLOR 1  COLOR 2*/
+    background-image: linear-gradient(to bottom, #d9230f, #cb210e); /*COLOR 1  COLOR 2*/
+    border: 1px solid #a01a0b; /*COLOR 3*/
+}
+
+.btn-primary {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #d9230f; /*COLOR 1*/
+    border-color: #a01a0b; /*COLOR 3*/
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #cb210e; /*COLOR 1*/
+    border-color: #a01a0b; /*COLOR 3*/
+}
+
+.btn-primary:hover {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #cb210e; /*COLOR 1*/
+    border-color: #a01a0b; /*COLOR 3*/
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #cb210e; /*COLOR 1*/
+    border-color: #a01a0b; /*COLOR 3*/
+}
+
+.btn-primary:active:hover,
+.btn-primary.active:hover,
+.open > .dropdown-toggle.btn-primary:hover,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.open > .dropdown-toggle.btn-primary:focus,
+.btn-primary:active.focus,
+.btn-primary.active.focus,
+.open > .dropdown-toggle.btn-primary.focus {
+    color: #ffffff; /*COLOR 4*/
+    background-color: #cb210e; /*COLOR 1*/
+    border-color: #a01a0b; /*COLOR 3*/
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+    background-image: none;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled.focus,
+.btn-primary[disabled].focus,
+fieldset[disabled] .btn-primary.focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+    background-color: #d9230f; /*COLOR 1*/
+    border-color: #d9230f; /*COLOR 1*/
+}
+
+/*End  section general */
+
+/* Section projects *
+/*--------------- change the color of the last column of the table for proyectTime-------------- */
+td.projectTime_enteredColor {
+    background-color: #BBEEFF;
+}
+
+td.projectTime_releasedColor {
+    background-color: #FFE786;
+}
+
+td.projectTime_confirmedColor {
+    background-color: #B1EC9E;
+}
+
+td.projectTime_notConfirmedColor {
+    background-color: #FFAAAA;
+}
+
+td.projectTime_invoicedColor {
+    background-color: #D8D8FF;
+}
+
+/* End  section projects *
+
+
+
+/* --------------------- Custom styles for SIMPLEX THEME  menuBar ----------------------- */
+/*for default top menuBar*/
+.navbar-default {
+    background-color: #ffffff;
+    border-color: #eeeeee;
+}
+
+/*for color top default text menuBar*/
+.navbar-default .navbar-nav > li > a {
+    color: #777777;
+}
+
+/*for text color focus of menuBar default*/
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #d9230f;
+    background-color: transparent;
+}
+
+/* Section general tab attributes*/
+/* to generate the background color and border color of the navbar */
+.navbar-inverse {
+    background-color: #d9230f;
+    border-color: #a91b0c;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+/* to color the dropdown-menu by moving the cursor */
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background-color: #d9230f;
+}
+
+/* Section end */
+
+/* Section inactive tab */
+/* font color for the navBar */
+.navbar-inverse .navbar-nav > li > a {
+    color: #fac0ba;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+    color: #ffffff;
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.navbar-inverse .navbar-nav > .open > a:focus {
+    color: #ffffff;
+    background-color: transparent;
+
+}
+
+/* Section end */
+
+/* Section active tab */
+/* to change the text color of active tab */
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: #ffffff;
+    background-color: #c1220f;
+}
+
+/* Section end */
+
+/* Section changes in mobile home button */
+.navbar-inverse .navbar-toggle {
+    border-color: #a91b0c;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #a91b0c;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #ffffff;
+}
+
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+    border-color: #b81e0d;
+}
+
+/* Section end */
+
+/* Section module shortcuts bar */
+/* changes to the selected dropdown-menu */
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+    /*color: #050505;*/
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu .divider {
+    background-color: #d2d3c8;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ffffff;
+    background-color: #d9230f;
+}
+
+/* changes to the submenu of a dropdown-menu */
+.nav .open > a,
+.nav .open > a:hover,
+.nav .open > a:focus {
+    background-color: #dddddd;
+    border-color: #d9230f;
+}
+
+/* Section end */
+/* ---------------------------- End custom styles for SIMPLEX THEME  menuBar ----------------------- */
+
+/* ----------------------------Custom styles for SIMPLEX THEME  tabs -------------------------*/
+/* Section general tab attributes*/
+/* changes to the active tags */
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    color: #777777;
+    background-color: #fcfcfc;
+    border: 1px solid #dddddd;
+    border-bottom-color: transparent;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #dddddd;
+}
+
+.nav-tabs > li > a:hover {
+    border-color: #dddddd;
+}
+
+/* Section end */
+
+/* Section inactive tab */
+/* changes to the inactive tabs */
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus {
+    background-color: #dddddd;
+}
+
+/* Default changes to the titles of the tabs */
+.navTabsDetail {
+    color: #d9230f;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+.navTabsDetail:hover,
+.navTabsDetail:focus {
+    color: #91170a;
+    text-decoration: underline;
+}
+
+/* changes to the submenu of a dropdown-menu tabs*/
+.dropdownTabsDetail > .active > a,
+.dropdownTabsDetail > .active > a:hover,
+.dropdownTabsDetail > .active > a:focus {
+    color: #ffffff;
+    /*text-decoration: none;*/
+    /*outline: 0;*/
+    background-color: #d9230f;
+}
+
+/* changes to the submenu of a menuBar dropdown tab */
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #d9230f;
+}
+
+/* Section end */
+
+/* --------------------------------- End custom styles for SIMPLEX THEME  tabs ---------------------------*/
+
+/*Section Form*/
+/*Title form*/
+legend.title {
+    background-color: transparent;
+    background-image: -webkit-linear-gradient(top, transparent, transparent);
+    background-image: linear-gradient(to bottom, transparent, transparent);
+    border-bottom: 4px solid #e5e5e5;
+    color: #444444;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 19.5px;
+    padding: 5px;
+}
+
+/*Label form*/
+.control-label {
+    color: #777777;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+/*Panel body*/
+.formPanelBody {
+    background: #ffffff;
+}
+
+/* Section form end */
+
+/*
+*   Glyphicons
+*   some icon need to be custom
+*/
+
+.privatePersonClassColor {
+    color: #ff832e;
+}
+
+.personClassColor {
+    color: #45ba35;
+}
+
+.organizationClassColor {
+    color: #2eabff;
+}
+
+.RemoveSignClassColor {
+    color: red;
+}
+
+.downloadClassColor {
+    color: #ff832e;
+}
+
+.generateClassColor {
+    color: #777777;
+}
+
+.saveClassColor {
+    color: #45ba35;
+}
+
+.openClassColor {
+    color: #ff832e;
+}
+
+.okClassColor {
+    color: #00bf00;
+}
+
+.prioHighClassColor {
+    color: #F61D1D;
+}
+
+/* end Glyphicons */
+
+/*for glyphicons center in table*/
+.centerClass {
+    display: inline !important;
+}
+
+/*text label in German is big*/
+@media only screen and (min-width: 1200px) {
+    .alignInput {
+        float: right;
+    }
+
+    .alignLabel {
+        padding-left: initial;
+    }
+}
+
+/*to improve table into a form*/
+.borderless td, .borderless th {
+    border-top: none !important;
+    padding-top: 8px !important;
+}
+
+/*to improve table into a form*/
+.addBorderBottom th {
+    border-bottom: 2px solid #dddddd;
+}
+
+/*see form like table into a form*/
+.formAddBorderButtom {
+    margin: 0px 0px 10px 0px !important;
+    border-bottom: 2px solid #dddddd;
+    padding-bottom: 5px;
+    color: #444444 !important;
+}
+
+.controlLabelColor{
+    color: #444444 !important;
+}
+
+i.map-icon {
+    display: table-cell;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.quitPaddingFixHeaderInTH {
+    padding: 0 !important;
+}
+
+.addPaddingFixHeaderInTH {
+    padding: 8px !important;
+}
+
+/*media query for enable on mobile phones*/
+@media only screen and (max-width: 767px) {
+
+    /*define table width for mobile phones */
+    TABLE.mobileTableDefault {
+        width: 900px;
+        max-width: 900px;
+    }
+
+    TABLE.mobileTableMedium {
+        width: 750px;
+        max-width: 750px;
+    }
+
+    TABLE.mobileTableMiddle {
+        width: 800px;
+        max-width: 800px;
+    }
+
+    TABLE.mobileTableLarge {
+        width: 1200px;
+        max-width: 1200px;
+    }
+}
+
+/*Bootstrap File Input jquery plugin overwrite class*/
+/*to define the height of drag & drop zone*/
+.file-drop-zone-title {
+    padding: 0px !important;
+}
+
+.file-drop-zone {
+    padding: 10px !important;
+}
+
+/*to define the height of preview*/
+.file-other-icon {
+    font-size: 8px !important;
+}
+
+.file-preview-other {
+    padding: 0px !important;
+}
+
+div.attachContainerUI {
+    display: inline-block;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 0px 5px 10px 0;
+    background-color:#f9f9f9;
+}
+
+
+/*Drag & drop mail to folder css*/
+li.folderDropHover{
+    border: 1px solid red;
+}
+
+.dragMailItem{
+    z-index: 100;
+}

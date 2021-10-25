@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ========== Top Level Elements ======================================== -->
+<!ELEMENT accessrightdatalevel (datalevelconfig)+>
+
+<!ELEMENT datalevelconfig (lists,tables)>
+<!ATTLIST datalevelconfig
+    name CDATA #REQUIRED>
+
+<!ELEMENT lists (list)+>
+<!ELEMENT list EMPTY>
+<!ATTLIST list
+    listName CDATA #REQUIRED
+    aliasfield CDATA #REQUIRED>
+
+<!ELEMENT tables (table)+>
+<!ELEMENT table EMPTY>
+<!ATTLIST table
+    tablename CDATA #REQUIRED
+    relationfield CDATA #REQUIRED>

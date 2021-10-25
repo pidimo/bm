@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN"
+"http://www.jatun.com/titus-config-1.0.dtd">
+
+<databasestructure>
+<database>
+<table tablename="campaign" resource="Report.functionality.campaign">
+    <fields>
+        <field fieldname="addresstype" dbtype="integer" columntype="boolean"  iscolumnview="false"/>
+        <field fieldname="campaignid" dbtype="integer"  iscolumnview="false"/>
+        <field fieldname="campaignname" dbtype="string" resource="Campaign.mailing"/>
+        <field fieldname="companyid" dbtype="integer" iscolumnview="false"  />
+        <field fieldname="contacttype" dbtype="integer" columntype="boolean" iscolumnview="false" />
+        <field fieldname="isdouble" dbtype="integer" columntype="boolean"  iscolumnview="false" />
+        <field fieldname="employeeid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="includepartner" dbtype="integer" columntype="boolean" iscolumnview="false" />
+        <field fieldname="numbercontacts" dbtype="integer" iscolumnview="false"  /> <!--null bd-->
+        <field fieldname="recorddate" dbtype="integer" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="Campaign.dateCreation"/>
+        <field fieldname="remark" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="status" dbtype="short" columntype="string" resource="Campaign.status"  converter="campaignStatusConverter"/>
+        <field fieldname="text" dbtype="integer" iscolumnview="false"/>
+
+        <field fieldname="closedate" dbtype="integer" columntype="date" resource="Campaign.closeDate" converter="integerToDateValue" filterer="dateFilter"/>
+        <field fieldname="typeid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="changedate" dbtype="integer" columntype="date" resource="Campaign.updatedDate" converter="integerToDateValue" filterer="dateFilter"/>
+        <field fieldname="realcost" dbtype="decimal" columntype="decimal" resource="Campaign.realCost" converter="decimalConverter" iscolumnview="true"/>
+        <field fieldname="awaitedutility" dbtype="decimal" columntype="decimal" resource="Campaign.profits" converter="decimalConverter" iscolumnview="true"/>
+        <field fieldname="budgetcost" dbtype="decimal" columntype="decimal" resource="Campaign.budgetedCost" converter="decimalConverter" iscolumnview="true"/>
+    </fields>
+    <primarykey fields="campaignid">
+        <inverserelation relationtype="left-join" tablename="campcriterion" keys="campaignid" resource="Report.inverseRelation.campCriterion"/>
+        <inverserelation relationtype="left-join" tablename="campcontact" keys="campaignid" resource="Report.inverseRelation.campaignContact"/>
+        <inverserelation relationtype="left-join" tablename="campactivity" keys="campaignid" resource="Report.inverseRelation.campaignActivity"/>
+<!--<inverserelation relationtype="left-join" tablename="campaigntext" keys="campaignid" resource="Template.templateText"/> -->
+    </primarykey>
+    <foreignkeys>
+        <foreignkey foreigntableref="freetext" relationtype="left-join" resource="Report.foreignRelation.freetext.campaign.remark" strongrelation="true">
+            <keyref fieldref="remark" foreignfieldref="freetextid"/>
+            <overwriteresources>
+                <overwrite field="freetextvalue" resource="Campaign.remark"/>
+            </overwriteresources>
+        </foreignkey>
+        <foreignkey foreigntableref="employee" relationtype="left-join" resource="Report.foreignRelation.employee.campaignResponsible" >
+            <keyref fieldref="employeeid" foreignfieldref="employeeid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="camptype" relationtype="left-join" resource="Report.foreignRelation.campType">
+            <keyref fieldref="typeid" foreignfieldref="camptypeid"/>
+        </foreignkey>
+    </foreignkeys>
+    <filters>
+        <constantfilter fieldref="status" resource="Campaign.status">
+            <values typevalue="resource">
+                <value key="1" showvalue="Campaign.preparation"/>
+                <value key="2" showvalue="Campaign.sent"/>
+                <value key="3" showvalue="Campaign.cancel"/>
+            </values>
+        </constantfilter>
+        <foreignfilter resource="Campaign.mailing" filterfieldref="campaignname">
+            <columns>
+                <column fieldpath="campaignname" order="asc" />
+                <column fieldpath="campaign>>employee:employeeid->address:employeeid.addressName"  resource="Contact.employee" order="asc"/>
+                <column fieldpath="recorddate" />
+                <column fieldpath="status" />
+            </columns>
+            <conditions>
+                    <condition fieldpath="campaignname" operator="start-with" type="parameter"/>
+            </conditions>
+        </foreignfilter>
+
+    </filters>
+    <modulefunctionality>
+      <functionality module="campaign"/>
+    </modulefunctionality>
+</table>
+
+<table tablename="campcontact" resource="Report.functionality.campContact">
+    <fields>
+        <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="campaignid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="campcontactid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="status" dbtype="integer" iscolumnview="false"/>
+
+        <field fieldname="userid" dbtype="integer" columntype="integer" iscolumnview="false"/>
+        <field fieldname="active" dbtype="integer"  columntype="boolean" converter="activeConverter" resource="Common.active"  />
+        <field fieldname="activityid" dbtype="integer" columntype="integer" iscolumnview="false"/>
+    </fields>
+    <primarykey fields="campaignid, campcontactid"/>
+    <foreignkeys>
+        <foreignkey foreigntableref="contactperson" relationtype="left-join" resource="Report.foreignRelation.contactPerson" >
+            <keyref fieldref="addressid" foreignfieldref="addressid"/>
+            <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="campaign" relationtype="left-join" resource="Report.foreignRelation.campaign">
+            <keyref fieldref="campaignid" foreignfieldref="campaignid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="address" relationtype="left-join" resource="Report.foreignRelation.address.campContact" >
+            <keyref fieldref="addressid" foreignfieldref="addressid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.campContact.responsible">
+            <keyref fieldref="userid" foreignfieldref="userid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="campactivity" relationtype="left-join" resource="Report.foreignRelation.campaignActivity">
+            <keyref fieldref="activityid" foreignfieldref="activityid"/>
+        </foreignkey>
+    </foreignkeys>
+    <filters>
+        <constantfilter fieldref="active" resource="Common.active">
+            <values typevalue="resource">
+                <value key="0" showvalue="Common.inactive"/>
+                <value key="1" showvalue="Common.active"/>
+            </values>
+        </constantfilter>
+    </filters>
+    <modulefunctionality>
+      <functionality module="campaign"/>
+    </modulefunctionality>
+</table>
+<table tablename="campactivity" resource="Report.functionality.campaignActivity">
+    <fields>
+        <field fieldname="activityid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="campaignid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="startdate" dbtype="integer" iscolumnview="true" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="CampaignActivity.startDate"/>
+        <field fieldname="closedate" dbtype="integer" iscolumnview="true" columntype="date" converter="integerToDateValue" filterer="dateFilter" resource="CampaignActivity.closeDate"/>
+        <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="cost" dbtype="decimal" columntype="decimal" resource="CampaignActivity.cost" converter="decimalConverter" iscolumnview="true"/>
+        <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="state" dbtype="short" columntype="string" resource="CampaignActivity.state"  converter="campaignStatusConverter"/>
+        <field fieldname="numbercontact" dbtype="integer" columntype="integer" resource="CampaignActivity.numberContact" istotalize="true"/>
+        <field fieldname="percent" dbtype="integer" columntype="integer" resource="CampaignActivity.percent"/>
+        <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="title" dbtype="string" resource="CampaignActivity.title"/>
+    </fields>
+    <primarykey fields="activityid">
+        <inverserelation relationtype="left-join" tablename="campactivcontact" keys="activityid"  resource="Report.inverseRelation.campActivity.communication"/>
+        <inverserelation relationtype="left-join" tablename="campactivityuser" keys="activityid"  resource="Report.inverseRelation.campActivityUser"/>
+    </primarykey>
+    <foreignkeys>
+        <foreignkey foreigntableref="campaign" relationtype="left-join" resource="Report.foreignRelation.campaign">
+            <keyref fieldref="campaignid" foreignfieldref="campaignid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.campActivity.responsible">
+            <keyref fieldref="userid" foreignfieldref="userid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="freetext" relationtype="left-join" resource="Report.foreignRelation.freetext.campActivity.detail"  strongrelation="true">
+            <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+            <overwriteresources>
+                <overwrite field="freetextvalue" resource="CampaignActivity.detail"/>
+            </overwriteresources>
+        </foreignkey>
+    </foreignkeys>
+    <filters>
+        <constantfilter fieldref="state" resource="Campaign.status">
+            <values typevalue="resource">
+                <value key="1" showvalue="Campaign.preparation"/>
+                <value key="2" showvalue="Campaign.sent"/>
+                <value key="3" showvalue="Campaign.cancel"/>
+            </values>
+        </constantfilter>
+        <foreignfilter resource="Campaign.Tab.Activity" filterfieldref="title">
+            <columns>
+                <column fieldpath="title" order="asc" />
+                <column fieldpath="campactivity>>elwisuser:userid->address:addressid.addressName"  resource="User.userName" order="asc"/>
+                <column fieldpath="startdate" />
+                <column fieldpath="closedate" />
+            </columns>
+            <conditions>
+                    <condition fieldpath="title" operator="start-with" type="parameter"/>
+            </conditions>
+        </foreignfilter>
+    </filters>
+    <modulefunctionality>
+      <functionality module="campaign"/>
+    </modulefunctionality>
+</table>
+    <table tablename="campattach" resource="Report.functionality.campAttach">
+        <fields>
+            <field fieldname="attachid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="campaignid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="comment" dbtype="string" resource="Attach.comment" />
+            <field fieldname="filename" dbtype="string" resource="Attach.fileName" />
+            <field fieldname="size" dbtype="integer"  resource="Attach.fileSize"/>
+        </fields>
+        <primarykey fields="attachid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="campaign" relationtype="left-join" resource="Report.foreignRelation.campaign">
+                <keyref fieldref="campaignid" foreignfieldref="campaignid"/>
+            </foreignkey>
+        </foreignkeys>
+        <filters>
+    </filters>
+        <modulefunctionality>
+          <functionality module="campaign"/>
+        </modulefunctionality>
+    </table>
+
+    <table tablename="campactivityuser" resource="Report.functionality.campActivityUser">
+        <fields>
+            <field fieldname="activityid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="percent" dbtype="integer"  resource="Campaign.activity.user.percent"/>
+        </fields>
+        <primarykey fields="activityid,userid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="campactivity" relationtype="left-join" resource="Report.foreignRelation.campaignActivity">
+                <keyref fieldref="activityid" foreignfieldref="activityid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="elwisuser" relationtype="left-join" resource="Report.foreignRelation.elwisUser.campActivityUser">
+                <keyref fieldref="userid" foreignfieldref="userid"/>
+            </foreignkey>
+        </foreignkeys>
+        <filters>
+    </filters>
+        <modulefunctionality>
+          <functionality module="campaign"/>
+        </modulefunctionality>
+    </table>
+    <table tablename="campactivcontact" resource="Report.functionality.campActivityCommunication">
+        <fields>
+            <field fieldname="activityid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="campaignid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            <field fieldname="contactid" dbtype="integer" iscolumnview="false"/>
+        </fields>
+        <primarykey fields="campaignid,contactid"/>
+        <foreignkeys>
+            <foreignkey foreigntableref="campactivity" relationtype="left-join" resource="Report.foreignRelation.campaignActivity">
+                <keyref fieldref="activityid" foreignfieldref="activityid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="campaign" relationtype="left-join" resource="Report.foreignRelation.campaign">
+                <keyref fieldref="campaignid" foreignfieldref="campaignid"/>
+            </foreignkey>
+            <foreignkey foreigntableref="contact" relationtype="left-join" resource="Report.foreignRelation.communication">
+                <keyref fieldref="contactid" foreignfieldref="contactid"/>
+            </foreignkey>
+        </foreignkeys>
+        <filters>
+    </filters>
+        <modulefunctionality>
+          <functionality module="campaign"/>
+        </modulefunctionality>
+    </table>
+
+    <table tablename="campcriterion" resource="Report.functionality.campCriterion">
+    <fields>
+        <field fieldname="campaignid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="criterionid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="numberhits" dbtype="integer" resource="Campaign.numberHits" istotalize="true"/>
+        <field fieldname="operator" dbtype="string" resource="Campaign.singleOperator" converter="campaignCriteriaOperator" />
+        <field fieldname="valueid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="campcriterionvalueid" dbtype="integer" iscolumnview="false"/>
+    </fields>
+    <primarykey fields="criterionid"/>
+    <foreignkeys>
+        <foreignkey foreigntableref="category" relationtype="left-join" resource="Report.foreignRelation.category">
+            <keyref fieldref="categoryid" foreignfieldref="categoryid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="campcriterionvalue" relationtype="left-join" resource="Report.foreignRelation.campCriterionValue">
+            <keyref fieldref="campcriterionvalueid" foreignfieldref="campcriterionvalueid"/>
+        </foreignkey>
+        <foreignkey foreigntableref="campaign" relationtype="left-join" resource="Report.foreignRelation.campaign" >
+            <keyref fieldref="campaignid" foreignfieldref="campaignid"/>
+        </foreignkey>
+    </foreignkeys>
+    <filters>
+        <constantfilter fieldref="operator" resource="Campaign.singleOperator">
+            <values typevalue="resource">
+                <value key="EQUAL" showvalue="Report.filter.op.equal"/>
+                <value key="LESS" showvalue="Report.filter.op.lessThan"/>
+                <value key="GREATER" showvalue="Report.filter.op.greaterThan"/>
+                <value key="DISTINCT" showvalue="Report.filter.op.notEqual"/>
+                <value key="BETWEEN" showvalue="Report.filter.op.between"/>
+                <value key="IN" showvalue="Report.filter.op.oneOf"/>
+            </values>
+        </constantfilter>
+    </filters>
+    <modulefunctionality>
+      <functionality module="campaign"/>
+    </modulefunctionality>
+</table>
+<table tablename="campcriterionvalue" resource="Report.functionality.campCriterionValue">
+    <fields>
+        <field fieldname="campcriterionvalueid" dbtype="integer" iscolumnview="false"/>
+        <field fieldname="descriptionkey" dbtype="string" resource="CampaignCriterion.type" converter="criterionTypeConverter"/>
+    </fields>
+    <primarykey fields="campcriterionvalueid"/>
+    <foreignkeys/>
+    <filters>
+        <constantfilter fieldref="descriptionkey" resource="Common.type">
+            <values typevalue="resource">
+                <value key="campaign.customerType" showvalue="campaign.customerType"/>
+                <value key="campaign.expectedTurn" showvalue="campaign.expectedTurn"/>
+                <value key="campaign.numberEmployees" showvalue="campaign.numberEmployees"/>
+                <value key="campaign.priority" showvalue="campaign.priority"/>
+                <value key="campaign.addressSource" showvalue="campaign.addressSource"/>
+                <value key="campaign.personType" showvalue="campaign.personType"/>
+                <value key="campaign.city" showvalue="campaign.city"/>
+                <value key="campaign.country" showvalue="campaign.country"/>
+                <value key="campaign.language" showvalue="campaign.language"/>
+                <value key="campaign.recorddate" showvalue="campaign.recorddate"/>
+                <value key="campaign.productVersion" showvalue="campaign.productVersion"/>
+                <value key="campaign.productGroup" showvalue="campaign.productGroup"/>
+                <value key="campaign.productType" showvalue="campaign.productType"/>
+                <value key="campaign.salesPartner" showvalue="campaign.salesPartner"/>
+                <value key="campaign.salesPerson" showvalue="campaign.salesPerson"/>
+                <value key="campaign.contactPersonFunction" showvalue="campaign.contactPersonFunction"/>
+                <value key="campaign.addressKeywords" showvalue="campaign.addressKeywords"/>
+            </values>
+        </constantfilter>
+    </filters>
+    <modulefunctionality>
+      <functionality module="campaign"/>
+    </modulefunctionality>
+</table>
+</database>
+</databasestructure>
+

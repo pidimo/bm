@@ -1,0 +1,20 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Fantabulous TestSuite" verbose="1">
+    <parameter name="configurationFilePath" value="data/fantabulous/fantabulous_test_config.xml"/>
+    <test name="FirstTest">
+        <groups>
+            <run>
+                <include name="list"/>
+                <include name="order"/>
+                <include name="pagination"/>
+                <include name="search"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="org.alfacentauro.fantabulous.testsuite.tests.TestFactory"/>
+        </classes>
+    </test>
+</suite>
+
+         

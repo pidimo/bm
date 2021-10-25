@@ -1,0 +1,165 @@
+#parse("templates/email/includes/header.vm")
+<table cellpadding="0" cellspacing="0" border="0" width="100%" align="left">
+<tr>
+
+<td bgcolor="#ffffff">
+<table width="100%" border="0" cellpadding="10" cellspacing="1">
+<tr>
+<td bgcolor="#ffffff">
+<p>
+    $messages.getMessage("Notification.Company.newAccount")
+</p>
+
+<p>
+    <table width="100%" border="0" cellpadding="3" cellspacing="0">
+        <tr>
+            <td colspan="2">
+                <p style="color:#0066cc;font-weight:bold;">$messages.getMessage("Notification.Company.title")</p>
+            </td>
+        </tr>
+        <tr>
+            <td width="30%">
+                <b>$messages.getMessage("Notification.Company.name")</b>
+            </td>
+            <td width="70%">
+               $company.name
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>$messages.getMessage("Notification.Company.login")</b>
+            </td>
+            <td >
+                $company.login
+            </td>
+        </tr>
+        #if($!company.startLicence)
+        <tr>
+            <td>
+                <b>$messages.getMessage("Notification.Company.startLicence")</b>
+            </td>
+            <td >
+
+				$messages.getDateFormatted($company.startLicence,"datePattern")
+
+            </td>
+        </tr>
+       #end
+		#if($!company.endLicence)
+		<tr>
+            <td>
+                <b>$messages.getMessage("Notification.Company.endLicence")</b>
+            </td>
+            <td >
+
+                $messages.getDateFormatted($company.endLicence,"datePattern")
+
+            </td>
+        </tr>
+		#end
+        <tr>
+            <td>
+                <b>$messages.getMessage("Notification.Company.allowedUsers")</b>
+            </td>
+            <td>
+
+                    #if($showNumberUsers)
+                    $company.users
+                    #else
+                    $messages.getMessage("Notification.Company.unlimited")
+                    #end
+
+            </td>
+        </tr>
+        <tr>
+            <td  colspan="2">
+               <p style="color:#0066cc;font-weight:bold;">$messages.getMessage("Notification.Administrator.title")</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>$messages.getMessage("Notification.Administrator.lastName")</b>
+            </td>
+            <td>
+                $administrator.lastName
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>$messages.getMessage("Notification.Administrator.firsName")</b>
+            </td>
+            <td >
+                $administrator.firstName
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>$messages.getMessage("Notification.Administrator.userName")</b>
+            </td>
+            <td >
+                $administrator.userName
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>$messages.getMessage("Notification.Administrator.password")</b>
+            </td>
+            <td>
+                $administrator.password
+            </td>
+        </tr>
+    </table>
+</p>
+<p>
+<table width="100%" border="0" cellpadding="3" cellspacing="0">
+    <tr>
+        <td  colspan="2">
+           <p style="color:#0066cc;font-weight:bold;">$messages.getMessage("Notification.Company.accountInformation")</p>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p>
+                $messages.getMessage("Notification.Elwis.serverName",$serverName)
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td width="30%">
+            <b>$messages.getMessage("Notification.Administrator.userName")</b>
+        </td>
+        <td  width="70%">
+            $administrator.userName
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>$messages.getMessage("Notification.Administrator.password")</b>
+        </td>
+        <td >
+            $administrator.password
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <b>$messages.getMessage("Notification.Company.login")</b>
+        </td>
+        <td >
+            $company.login
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p>
+                $messages.getMessage("Notification.Company.recomendation")
+            </p>
+        </td>
+    </tr>
+</table>
+</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>

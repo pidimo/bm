@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ejb-jar xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd"
+         version="2.1">
+
+    <enterprise-beans>
+        <session>
+            <ejb-name>DataImportService</ejb-name>
+            <local-home>com.piramide.elwis.service.contact.DataImportServiceHome</local-home>
+            <local>com.piramide.elwis.service.contact.DataImportService</local>
+            <ejb-class>com.piramide.elwis.service.contact.DataImportServiceBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Bean</transaction-type>
+        </session>
+        <session>
+            <ejb-name>DeduplicationAddressService</ejb-name>
+            <local-home>com.piramide.elwis.service.contact.DeduplicationAddressServiceHome</local-home>
+            <local>com.piramide.elwis.service.contact.DeduplicationAddressService</local>
+            <ejb-class>com.piramide.elwis.service.contact.DeduplicationAddressServiceBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Bean</transaction-type>
+        </session>
+        <session>
+            <ejb-name>ContactMergeService</ejb-name>
+            <local-home>com.piramide.elwis.service.contact.ContactMergeServiceHome</local-home>
+            <local>com.piramide.elwis.service.contact.ContactMergeService</local>
+            <ejb-class>com.piramide.elwis.service.contact.ContactMergeServiceBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Bean</transaction-type>
+        </session>
+    </enterprise-beans>
+</ejb-jar>

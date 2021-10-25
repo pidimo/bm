@@ -1,0 +1,970 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="passForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="companyForm" type="com.piramide.elwis.web.admin.form.CompanyForm"/>
+        <form-bean name="companyDeleteForm" type="com.piramide.elwis.web.admin.form.CompanyDeleteForm"/>
+        <form-bean name="userInfoForm" type="com.piramide.elwis.web.admin.form.UserInfoForm"/>
+        <form-bean name="userInfoUpdateForm" type="com.piramide.elwis.web.admin.form.UserInfoForm"/>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="roleForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="accessRightForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="userGroupForm" type="com.piramide.elwis.web.admin.form.UserGroupForm"/>
+        <form-bean name="roleUserForm" type="com.piramide.elwis.web.admin.form.RoleUserForm"/>
+        <form-bean name="userGroupImportForm" type="com.piramide.elwis.web.admin.form.UserGroupImportForm"/>
+        <form-bean name="applicationSignatureForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="passwordChangeForm" type="com.piramide.elwis.web.admin.form.PasswordChangeForm"/>
+        <form-bean name="reportJrxmlForm" type="com.piramide.elwis.web.reports.form.ReportJrxmlForm"/>
+        <form-bean name="reportJrxmlExecuteForm" type="com.piramide.elwis.web.reports.form.ReportJrxmlExecuteForm"/>
+        <form-bean name="queryParamListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="queryParamForm" type="com.piramide.elwis.web.reports.form.QueryParamForm"/>
+        <form-bean name="reportArtifactForm" type="com.piramide.elwis.web.reports.form.ReportArtifactForm"/>
+        <!--begin reports-->
+        <form-bean name="userReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="companyReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="userByGroupReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="userByRoleReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="userSessionReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="roleReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="userGroupReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="reportExecuteForm" type="com.piramide.elwis.web.reports.form.ReportExecuteForm"/>
+        <!--end reports-->
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainSearch" path="/User/List.do"/>
+        <forward name="ReportMainSearch" path="/Report/Jrxml/List.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+        <action path="/Main" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" parameter="/admin/MainPage.jsp"/>
+
+        <!--Company-->
+        <action path="/Company/List" type="com.piramide.elwis.web.common.action.ListAction" name="listForm"
+                scope="request" input="/CompanyList.jsp" validate="false" parameter="companyList" roles="COMPANY.VIEW">
+            <forward name="Success" path="/CompanyList.jsp"/>
+        </action>
+
+        <action path="/Company/Forward/Create"
+                type="com.piramide.elwis.web.admin.action.CompanyAction"
+                name="companyForm"
+                scope="request"
+                validate="false"
+                parameter="/CompanyForCreate.jsp?isCreate=true"
+                roles="COMPANY.CREATE"/>
+
+        <action path="/Company/Create"
+                type="com.piramide.elwis.web.admin.action.CompanyCreateAction"
+                name="companyForm"
+                scope="request"
+                input="/CompanyForCreate.jsp?isCreate=true"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.admin.CompanyCreateCmd"
+                roles="COMPANY.CREATE">
+            <forward name="Success" path="/Company/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Company/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Company/Forward/Update"
+                type="com.piramide.elwis.web.admin.action.CompanyAction"
+                name="companyForm"
+                scope="request"
+                input="/User/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.CompanyReadCmd"
+                roles="COMPANY.VIEW">
+            <forward name="Success" path="/CompanyForUpdate.jsp"/>
+            <forward name="Fail" path="/Company/List.do"/>
+        </action>
+
+        <action path="/Company/LoadModules" type="com.piramide.elwis.web.admin.action.CompanyAction" name="companyForm"
+                scope="request" validate="false" parameter="/CompanyForUpdate.jsp" roles="COMPANY.UPDATE"/>
+
+        <action path="/Company/Update" type="com.piramide.elwis.web.admin.action.CompanyAction" name="companyForm"
+                scope="request" input="/Company/LoadModules.do?op=create" validate="true" roles="COMPANY.UPDATE"
+                parameter="com.piramide.elwis.cmd.admin.CompanyUpdateCmd">
+            <forward name="Success" path="/Company/List.do" redirect="true"/>
+            <forward name="Reload" path="/Company/LoadModules"/>
+            <forward name="Fail" path="/Company/List.do"/>
+            <forward name="Cancel" path="/Company/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Company/Active" type="com.piramide.elwis.web.admin.action.CompanyAction" name="companyForm"
+                scope="request" input="/Company/LoadModules.do?op=create" validate="false" roles="COMPANY.UPDATE"
+                parameter="com.piramide.elwis.cmd.admin.CompanyUpdateCmd">
+            <forward name="Success" path="/Company/List.do" redirect="true"/>
+            <forward name="Reload" path="/Company/LoadModules"/>
+            <forward name="Fail" path="/Company/List.do"/>
+            <forward name="Cancel" path="/Company/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Company/Forward/Delete"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="companyDeleteForm"
+                scope="request"
+                input="/Company/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.CompanyDeleteCmd">
+            <forward name="Success" path="/CompanyDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Company/List.do"/>
+        </action>
+
+        <!--<action path="/Company/Forward/Delete" type="com.piramide.elwis.web.admin.action.CompanyAction" name="companyForm"
+            scope="request" input="/Company/List.do" validate="false"
+            parameter="com.piramide.elwis.cmd.admin.CompanyCmd" roles="ROLE.DELETE">
+            <forward name="Success" path="/CompanyForDelete.jsp"/>
+        </action>-->
+        <action path="/Company/Delete/Confirmation"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="companyDeleteForm"
+                scope="request"
+                input="/Company/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.CompanyDeleteCmd"
+                roles="ROLE.DELETE">
+            <forward name="Success" path="/CompanyDetailForDeleteConfirmation.jsp"/>
+            <forward name="Cancel" path="/Company/List.do" redirect="true"/>
+            <forward name="Fail" path="/Company/List.do"/>
+        </action>
+
+        <action path="/Company/Delete"
+                type="com.piramide.elwis.web.admin.action.CompanyDeleteAction"
+                name="companyDeleteForm"
+                scope="request"
+                input="/CompanyDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.CompanyCmd"
+                roles="ROLE.DELETE">
+            <forward name="Success" path="/Company/List.do"/>
+            <forward name="Cancel" path="/Company/List.do" redirect="true"/>
+            <forward name="Fail" path="/Company/List.do"/>
+        </action>
+
+        <!-- User -->
+        <action path="/PersonSearch" type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm" scope="request" validate="false" parameter="personSearchList">
+            <forward name="Success"
+                     path="/contacts/SearchAddress.jsp?action=/PersonSearch.do&amp;columnName=personName"/>
+        </action>
+
+        <action path="/User/List" type="com.piramide.elwis.web.common.action.ListAction" name="listForm"
+                scope="request" input="/UserList.jsp" validate="false" parameter="userList" roles="USER.VIEW">
+            <forward name="Success" path="/UserList.jsp"/>
+        </action>
+
+        <action path="/User/Forward/Create"
+                type="com.piramide.elwis.web.admin.action.UserCreateAction"
+                name="userInfoForm"
+                scope="request"
+                validate="false"
+                parameter="/admin/UserForCreate.jsp" roles="USER.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="elwisuser"/>
+        </action>
+
+        <action path="/User/Create" type="com.piramide.elwis.web.admin.action.UserAction" name="userInfoForm"
+                scope="request" input="/UserForCreate.jsp" validate="true" roles="USER.CREATE">
+            <forward name="Success" path="/User/List.do" redirect="true"/>
+            <forward name="Cancel" path="/User/List.do" redirect="true"/>
+            <forward name="SearchEmployee" path="/User/Create/ImportEmployee.do"/>
+            <forward name="GoBack" path="/UserForCreate.jsp"/>
+            <forward name="SaveAndNew" path="/User/Forward/Create.do" redirect="true"/>
+            <forward name="Fail" path="/User/Forward/Create.do"/>
+        </action>
+
+        <action path="/User/Create/ImportEmployee" type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm" scope="request" validate="false"
+                parameter="contacts@searchNotUserEmployeeList">
+            <forward name="Success" path="/SearchEmployee.jsp"/>
+        </action>
+
+        <action path="/User/Forward/Update" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userInfoUpdateForm"
+                scope="request" input="/User/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.UserAdminCmd"
+                roles="USER.VIEW">
+            <forward name="Success" path="/UserForUpdate.jsp"/>
+        </action>
+
+        <action path="/User/Update" type="com.piramide.elwis.web.admin.action.UserManagerAction"
+                name="userInfoUpdateForm"
+                scope="request" input="/UserForUpdate.jsp" validate="true" roles="USER.UPDATE"
+                parameter="com.piramide.elwis.cmd.admin.UserAdminCmd">
+            <forward name="Success" path="/User/List.do" redirect="true"/>
+            <forward name="VersionUpdate" path="/User/Forward/AfterChekUpdate.do"/>
+            <forward name="RolesUpdate" path="/User/Forward/RoleChekUpdate.do"/>
+            <forward name="GoBack" path="/UserForUpdate.jsp"/>
+            <forward name="Fail" path="/User/List.do"/>
+            <forward name="Cancel" path="/User/List.do" redirect="true"/>
+        </action>
+
+        <action path="/User/Forward/AfterChekUpdate" type="org.apache.struts.actions.ForwardAction"
+                name="userInfoUpdateForm"
+                scope="request" validate="false" parameter="/admin/UserForUpdate.jsp" roles="USER.UPDATE"/>
+
+        <action path="/User/Forward/RoleChekUpdate" type="org.apache.struts.actions.ForwardAction"
+                name="userInfoUpdateForm"
+                scope="request" validate="false" parameter="/admin/UserForUpdate.jsp" roles="USER.UPDATE"/>
+
+        <action path="/User/Forward/Delete" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userInfoUpdateForm" scope="request" input="/User/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.UserAdminCmd" roles="USER.DELETE">
+            <forward name="Success" path="/UserForDelete.jsp"/>
+            <forward name="fail" path="/User/List.do"/>
+        </action>
+
+        <action path="/User/Delete" type="com.piramide.elwis.web.admin.action.UserManagerAction"
+                name="userInfoUpdateForm"
+                scope="request" input="/User/Forward/Delete.do" validate="false" roles="USER.DELETE"
+                parameter="com.piramide.elwis.cmd.admin.UserAdminCmd">
+            <forward name="Success" path="/User/List.do"/>
+            <forward name="Cancel" path="/User/List.do" redirect="true"/>
+            <forward name="Fail" path="/User/List.do"/>
+        </action>
+
+
+        <action path="/User/ChangePassword/Forward/AfterChekUpdate" type="org.apache.struts.actions.ForwardAction"
+                name="form"
+                scope="request" validate="false" parameter="/admin/UserUpdatePassword.jsp" roles="USER.VIEW"/>
+
+        <action path="/User/Forward/UpdatePassword" type="com.piramide.elwis.web.admin.action.UserManagerAction"
+                name="passForm" roles="USER.UPDATE"
+                scope="request" input="/User/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.UserAdminCmd">
+            <forward name="Success" path="/UserUpdatePassword.jsp"/>
+        </action>
+
+        <action path="/User/UpdatePassword" type="com.piramide.elwis.web.admin.action.UserManagerAction" name="passForm"
+                scope="request" input="/UserUpdatePassword.jsp" validate="true" roles="USER.UPDATE"
+                parameter="com.piramide.elwis.cmd.admin.UserAdminCmd">
+            <forward name="Success" path="/User/Forward/UpdatePassword.do"/>
+            <forward name="VersionUpdate" path="/User/ChangePassword/Forward/AfterChekUpdate.do"/>
+            <forward name="GoBack" path="/UserUpdatePassword.jsp"/>
+            <forward name="Fail" path="/User/List.do"/>
+            <forward name="Cancel" path="/User/List.do" redirect="true"/>
+        </action>
+
+
+        <!--Roles-->
+        <action path="/Role/List" type="com.piramide.elwis.web.common.action.ListAction" name="listForm"
+                scope="request" input="/RoleList.jsp" validate="false" parameter="roleList" roles="ROLE.VIEW">
+            <forward name="Success" path="/RoleList.jsp"/>
+        </action>
+
+        <action path="/Role/Forward/Create" type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction"
+                name="form"
+                scope="request" validate="false" parameter="/admin/RoleForCreate.jsp" roles="ROLE.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="role"/>
+            <set-property property="redirect" value="Search"/>
+            <forward name="Search" path="/Role/List.do"/>
+        </action>
+
+        <action path="/Role/Create" type="com.piramide.elwis.web.admin.action.RoleCreateAction" name="roleForm"
+                scope="request" input="/RoleForCreate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.admin.RoleCmd" roles="ROLE.CREATE">
+            <forward name="ToUpdate" path="/Role/Forward/Update.do"/>
+            <forward name="ToAccessRight" path="/Role/Forward/AccessRight/Read.do"/>
+            <forward name="Cancel" path="/Role/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/Role/Forward/Create.do" redirect="true"/>
+            <forward name="Fail" path="/Role/List.do"/>
+        </action>
+
+        <action path="/Role/Forward/Update" type="com.piramide.elwis.web.common.action.DefaultAction" name="roleForm"
+                scope="request" input="/User/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.RoleCmd" roles="ROLE.VIEW">
+            <forward name="Success" path="/RoleForUpdate.jsp"/>
+        </action>
+
+        <action path="/Role/Update" type="com.piramide.elwis.web.common.action.DefaultAction" name="roleForm"
+                scope="request" input="/RoleForUpdate.jsp" validate="true" roles="USER.UPDATE"
+                parameter="com.piramide.elwis.cmd.admin.RoleCmd">
+            <forward name="Success" path="/Role/List.do" redirect="true"/>
+            <forward name="Fail" path="/Role/List.do"/>
+            <forward name="Cancel" path="/Role/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Role/Forward/Delete" type="com.piramide.elwis.web.common.action.DefaultAction" name="roleForm"
+                scope="request" input="/Role/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.RoleCmd" roles="ROLE.DELETE">
+            <forward name="Success" path="/RoleForDelete.jsp"/>
+        </action>
+
+        <action path="/Role/Delete" type="com.piramide.elwis.web.common.action.DefaultAction" name="roleForm"
+                scope="request" input="/RoleForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.RoleCmd" roles="ROLE.DELETE">
+            <forward name="Success" path="/Role/List.do"/>
+            <forward name="Cancel" path="/Role/List.do" redirect="true"/>
+            <forward name="Fail" path="/Role/List.do"/>
+        </action>
+
+        <!--begin ivan-->
+
+        <action path="/Role/Forward/AccessRight/Read" type="com.piramide.elwis.web.admin.action.AccessRightAction"
+                name="accessRightForm"
+                scope="request" input="/Role/List.do" validate="false" roles="ACCESSRIGHT.UPDATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.admin.SystemFunctionsReadCmd">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/AccessRight.jsp"/>
+            <forward name="Failure" path="/Role/List.do"/>
+        </action>
+        <action path="/Role/AccessRight/Save" type="com.piramide.elwis.web.admin.action.AccessRightAction"
+                name="accessRightForm"
+                scope="request" input="/AccessRight.jsp" validate="false" roles="ACCESSRIGHT.UPDATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.admin.AccessRightSaveCmd">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/Role/Forward/AccessRight/Read.do"/>
+            <forward name="Cancel" path="/Role/List.do" redirect="true"/>
+            <forward name="Failure" path="/Role/List.do"/>
+            <forward name="Retry" path="/Role/Forward/AccessRight/Read.do"/>
+        </action>
+
+
+        <action path="/RoleUser/RoleUserList" type="com.piramide.elwis.web.admin.action.RoleUserDeleteAllAction"
+                name="roleUserForm"
+                scope="request" input="/Role/List.do" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="roleUserList" roles="USER.VIEW">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/RoleUserList.jsp"/>
+            <forward name="Delete" path="/RoleUserDetailForDeleteAll.jsp"/>
+            <forward name="Fail" path="/Role/List.do" redirect="true"/>
+            <forward name="GoBack" path="/RoleUser/RoleUserListBK.do"/>
+        </action>
+        <action path="/RoleUser/RoleUserListBK" type="com.piramide.elwis.web.admin.action.RoleListAction"
+                name="roleUserForm"
+                scope="request" input="/RoleUser/RoleUserList.do" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="roleUserList" roles="USER.VIEW">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/RoleUserList.jsp"/>
+        </action>
+
+
+        <action path="/RoleUser/Forward/Delete" type="com.piramide.elwis.web.common.action.DefaultAction" name="form"
+                scope="request" input="/RoleUser/RoleUserList.do" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.admin.RoleUserCmd" roles="USER.VIEW">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/RoleUserDetailForDelete.jsp"/>
+            <forward name="Fail" path="/RoleUser/RoleUserList.do"/>
+        </action>
+        <action path="/RoleUser/Delete" type="com.piramide.elwis.web.common.action.DefaultAction" name="form"
+                scope="request" input="/RoleUserDetailForDelete.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.admin.RoleUserCmd" roles="USER.UPDATE">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/RoleUser/RoleUserList.do"/>
+            <forward name="Cancel" path="/RoleUser/RoleUserList.do" redirect="true"/>
+            <forward name="Fail" path="/RoleUser/RoleUserList.do"/>
+        </action>
+        <action path="/RoleUser/DeleteAll" type="com.piramide.elwis.web.common.action.DefaultAction" name="form"
+                scope="request" input="" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.admin.RoleUserCmd" roles="USER.UPDATE">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/RoleUser/RoleUserList.do"/>
+            <forward name="Cancel" path="/RoleUser/RoleUserList.do" redirect="true"/>
+        </action>
+
+
+        <action path="/RoleUser/Forward/UserImportList" type="com.piramide.elwis.web.admin.action.UserImportAction"
+                name="roleUserForm"
+                scope="request" input="/RoleUser/RoleUserList.do" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="roleUserSearchList" roles="USER.UPDATE">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/UserImportList.jsp"/>
+            <forward name="Cancel" path="/RoleUser/RoleUserList.do" redirect="true"/>
+            <forward name="Fail" path="/Role/List.do" redirect="true"/>
+            <forward name="GoBack" path="/RoleUser/UserImportListBk.do"/>
+            <forward name="Saved" path="/RoleUser/RoleUserList.do" redirect="true"/>
+        </action>
+
+        <action path="/RoleUser/UserImportListBk" type="com.piramide.elwis.web.admin.action.RoleListAction"
+                name="roleUserForm"
+                scope="request" input="/RoleUser/Forward/UserImportList.do" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="userList" roles="USER.UPDATE">
+            <set-property property="paramReWrite" value="roleName"/>
+            <set-property property="paramReWrite" value="roleId"/>
+            <forward name="Success" path="/UserImportList.jsp"/>
+        </action>
+
+
+        <!--user GROUPS-->
+        <action path="/User/UserGroupList" type="com.piramide.elwis.web.common.action.ListAction" name="listForm"
+                scope="request" input="/Main.do" validate="false"
+                parameter="userGroupList" roles="USERGROUP.VIEW">
+            <forward name="Success" path="/UserGroupList.jsp"/>
+        </action>
+
+        <action path="/User/Forward/CreateUserGroup"
+                type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction" name="userGroupForm"
+                scope="request" validate="false" parameter="/admin/UserGroupDetailForCreate.jsp"
+                roles="USERGROUP.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="usergroup"/>
+            <set-property property="redirect" value="Search"/>
+            <forward name="Success" path="/User/UserGroupList.do"/>
+            <forward name="Search" path="/User/UserGroupList.do"/>
+        </action>
+
+        <action path="/User/CreateUserGroup" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userGroupForm"
+                scope="request" validate="true" input="/UserGroupDetailForCreate.jsp" roles="USERGROUP.CREATE"
+                parameter="com.piramide.elwis.cmd.admin.UserGroupCmd">
+            <forward name="Success" path="/User/UserGroupList.do"/>
+            <forward name="Cancel" path="/User/UserGroupList.do" redirect="true"/>
+            <forward name="Fail" path="/User/UserGroupList.do"/>
+        </action>
+
+        <action path="/User/Forward/UpdateUserGroup" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userGroupForm"
+                scope="request" validate="false" input="/User/UserGroupList.do" roles="USERGROUP.VIEW"
+                parameter="com.piramide.elwis.cmd.admin.UserGroupCmd">
+            <forward name="Success" path="/UserGroupDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/User/UpdateUserGroup" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userGroupForm"
+                scope="request" validate="true" input="/UserGroupDetailForUpdate.jsp" roles="USERGROUP.UPDATE"
+                parameter="com.piramide.elwis.cmd.admin.UserGroupCmd">
+            <forward name="Success" path="/User/UserGroupList.do"/>
+            <forward name="Cancel" path="/User/UserGroupList.do" redirect="true"/>
+            <forward name="Fail" path="/User/UserGroupList.do"/>
+        </action>
+
+        <action path="/User/Forward/DeleteUserGroup" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userGroupForm"
+                scope="request" validate="false" input="/User/UserGroupList.do"
+                parameter="com.piramide.elwis.cmd.admin.UserGroupCmd" roles="USERGROUP.DELETE">
+            <forward name="Success" path="/UserGroupDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/User/DeleteUserGroup" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userGroupForm"
+                scope="request" validate="false" input="/UserGroupList.jsp" roles="USERGROUP.DELETE"
+                parameter="com.piramide.elwis.cmd.admin.UserGroupCmd">
+            <forward name="Success" path="/User/UserGroupList.do"/>
+            <forward name="Cancel" path="/User/UserGroupList.do" redirect="true"/>
+            <forward name="Fail" path="/User/UserGroupList.do"/>
+        </action>
+        <!--      list      -->
+        <action path="/User/Forward/UserGroupImportList"
+                type="com.piramide.elwis.web.admin.action.UserOfGroupListAction" name="listForm"
+                scope="request" input="/UserUserGroupList.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="userByGroupList" roles="USERGROUP.VIEW">
+            <set-property property="paramReWrite" value="userGroupId"/>
+            <forward name="Success" path="/UserUserGroupList.jsp"/>
+            <forward name="Cancel" path="/UserUserGroupList.jsp"/>
+            <forward name="Fail" path="/User/UserGroupList.do"/>
+        </action>
+
+        <!-- for import -->
+
+        <action path="/User/UserGroupImportList/SearchUser"
+                type="com.piramide.elwis.web.admin.action.UserOfGroupListAction"
+                name="userGroupImportForm" scope="request" input="/UserGroupList.jsp" validate="false"
+                roles="USERGROUP.UPDATE"
+                parameter="scheduler@userList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="userGroupId"/>
+            <forward name="Success" path="/UserGroupImportList.jsp"/>
+            <forward name="Cancel" path="/User/Forward/UserGroupImportList.do" redirect="true"/>
+            <forward name="Fail" path="/User/UserGroupList.do" redirect="true"/>
+        </action>
+
+        <!--for create user of group-->
+        <action path="/User/UserGroupImportList" type="com.piramide.elwis.web.admin.action.UserGroupImportAction"
+                name="userGroupImportForm" scope="request" validate="false" input="/UserGroupImportList.jsp"
+                parameter="userList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="userGroupId"/>
+            <forward name="Success" path="/User/Forward/UserGroupImportList.do"/>
+            <forward name="Fail" path="/User/UserGroupImportList/SearchUser.do"/>
+            <forward name="Cancel" path="/User/Forward/UserGroupImportList.do" redirect="true"/>
+        </action>
+
+        <action path="/UserOfGroup/Forward/Delete" type="com.piramide.elwis.web.common.action.DefaultAction" name="form"
+                scope="request" input="/User/UserGroupImportList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.UserOfGroupDeleteCmd" roles="USERGROUP.UPDATE">
+            <forward name="Success" path="/UserOfGroupDetailForDelete.jsp"/>
+            <forward name="Fail" path="/User/Forward/UserGroupImportList.do"/>
+        </action>
+
+        <action path="/User/UserOfGroup/Delete" type="com.piramide.elwis.web.common.action.DefaultAction" name="form"
+                scope="request" validate="false" input="/User/Forward/UserGroupImportList.do" roles="USERGROUP.UPDATE"
+                parameter="com.piramide.elwis.cmd.admin.UserOfGroupDeleteCmd">
+            <forward name="Success" path="/User/Forward/UserGroupImportList.do"/>
+            <forward name="Cancel" path="/User/Forward/UserGroupImportList.do" redirect="true"/>
+            <forward name="Fail" path="/User/Forward/UserGroupImportList.do"/>
+        </action>
+
+        <!--user Session-->
+        <action path="/User/UserSessionList" type="com.piramide.elwis.web.admin.action.UserSessionActionList"
+                name="listForm"
+                scope="request" input="/UserSessionList.jsp" validate="false" parameter="userSessionList"
+                roles="USERSESSION.VIEW">
+            <forward name="Success" path="/UserSessionList.jsp"/>
+        </action>
+
+        <!--Application signature-->
+        <action path="/ApplicationSignature/Forward/Update"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="applicationSignatureForm"
+                scope="request"
+                input="/ApplicationSignatureDetailForUpdate.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.ApplicationSignatureCmd"
+                roles="APPLICATIONSIGNATURE.VIEW">
+            <forward name="Success" path="/ApplicationSignatureDetailForUpdate.jsp"/>
+        </action>
+        <action path="/ApplicationSignature/Update"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="applicationSignatureForm"
+                scope="request"
+                input="/ApplicationSignatureDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.admin.ApplicationSignatureCmd"
+                roles="APPLICATIONSIGNATURE.UPDATE">
+            <forward name="Success" path="/ApplicationSignature/Forward/Update.do" redirect="true"/>
+        </action>
+
+        <!--Password change-->
+        <action path="/PasswordChange/List"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request" input="/PasswordChangeList.jsp"
+                validate="false"
+                parameter="passwordChangeList"
+                roles="PASSWORDCHANGE.VIEW">
+            <forward name="Success" path="/PasswordChangeList.jsp"/>
+        </action>
+        <action path="/PasswordChange/Forward/Create"
+                type="org.apache.struts.actions.ForwardAction"
+                name="passwordChangeForm"
+                validate="false"
+                parameter="/admin/PasswordChangeDetailForCreate.jsp"
+                roles="PASSWORDCHANGE.CREATE"/>
+        <action path="/PasswordChange/Create"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="passwordChangeForm"
+                input="/PasswordChangeDetailForCreate.jsp"
+                validate="true"
+                scope="request"
+                parameter="com.piramide.elwis.cmd.admin.PasswordChangeCmd"
+                roles="PASSWORDCHANGE.CREATE">
+            <forward name="Success" path="/PasswordChange/List.do" redirect="true"/>
+            <forward name="Cancel" path="/PasswordChange/List.do" redirect="true"/>
+        </action>
+        <action path="/PasswordChange/Forward/Update"
+                type="com.piramide.elwis.web.admin.action.PasswordChangeAction"
+                name="passwordChangeForm"
+                input="/PasswordChange/List.do"
+                validate="false"
+                scope="request"
+                parameter="com.piramide.elwis.cmd.admin.PasswordChangeCmd"
+                roles="PASSWORDCHANGE.VIEW">
+            <forward name="Success" path="/PasswordChangeDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/PasswordChange/List.do"/>
+        </action>
+        <action path="/PasswordChange/Update"
+                type="com.piramide.elwis.web.admin.action.PasswordChangeAction"
+                name="passwordChangeForm"
+                input="/PasswordChangeDetailForUpdate.jsp"
+                validate="true"
+                scope="request"
+                parameter="com.piramide.elwis.cmd.admin.PasswordChangeCmd"
+                roles="PASSWORDCHANGE.UPDATE">
+            <forward name="Success" path="/PasswordChange/List.do"/>
+            <forward name="Cancel" path="/PasswordChange/List.do" redirect="true"/>
+            <forward name="Fail" path="/PasswordChange/List.do"/>
+        </action>
+        <action path="/PasswordChange/Forward/Delete"
+                type="com.piramide.elwis.web.admin.action.PasswordChangeAction"
+                name="passwordChangeForm"
+                input="/PasswordChange/List.do"
+                validate="false"
+                scope="request"
+                parameter="com.piramide.elwis.cmd.admin.PasswordChangeCmd"
+                roles="PASSWORDCHANGE.DELETE">
+            <forward name="Success" path="/PasswordChangeDetailForDelete.jsp"/>
+            <forward name="Fail" path="/PasswordChange/List.do"/>
+        </action>
+        <action path="/PasswordChange/Delete"
+                type="com.piramide.elwis.web.admin.action.PasswordChangeAction"
+                name="passwordChangeForm"
+                input="/PasswordChangeDetailForDelete.jsp"
+                validate="false"
+                scope="request"
+                parameter="com.piramide.elwis.cmd.admin.PasswordChangeCmd"
+                roles="PASSWORDCHANGE.DELETE">
+            <forward name="Success" path="/PasswordChange/List.do"/>
+            <forward name="Cancel" path="/PasswordChange/List.do" redirect="true"/>
+            <forward name="Fail" path="/PasswordChange/List.do"/>
+        </action>
+
+        <!--jrxml report-->
+        <action path="/Report/Jrxml/List"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request" validate="false" input="/ReportJrxmlList.jsp"
+                parameter="reports@reportJrxmlList"
+                roles="JRXMLREPORT.VIEW">
+            <forward name="Success" path="/ReportJrxmlList.jsp"/>
+        </action>
+
+        <action path="/Report/Jrxml/Forward/Create" type="org.apache.struts.actions.ForwardAction"
+                name="reportJrxmlForm"
+                scope="request" validate="false"
+                parameter="/admin/ReportJrxmlDetailForCreate.jsp"
+                roles="JRXMLREPORT.CREATE"/>
+
+        <action path="/Report/Jrxml/Create" type="com.piramide.elwis.web.reports.action.ReportJrxmlAction" name="reportJrxmlForm"
+                scope="request" validate="false" input="/ReportJrxmlDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportCreateCmd"
+                roles="JRXMLREPORT.CREATE">
+            <forward name="Success" path="/Report/Jrxml/Forward/Update.do"/>
+            <forward name="Cancel" path="/Report/Jrxml/List.do" redirect="true"/>
+            <forward name="Fail" path="/ReportJrxmlDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/Report/Jrxml/Forward/Update" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="reportJrxmlForm"
+                scope="request" validate="false" input="/Report/Jrxml/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportReadCmd"
+                roles="JRXMLREPORT.VIEW">
+            <forward name="Success" path="/ReportJrxmlDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Report/Jrxml/Update" type="com.piramide.elwis.web.reports.action.ReportJrxmlUpdateAction" name="reportJrxmlForm"
+                scope="request" validate="false" input="/ReportJrxmlDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportUpdateCmd"
+                roles="JRXMLREPORT.UPDATE">
+            <forward name="Success" path="/Report/Jrxml/Forward/Update.do"/>
+            <forward name="Cancel" path="/Report/Jrxml/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Jrxml/List.do"/>
+        </action>
+
+        <action path="/Report/Jrxml/Forward/Delete"
+                type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="reportJrxmlForm"
+                scope="request" validate="false" input="/Report/Jrxml/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportReadCmd"
+                roles="JRXMLREPORT.DELETE">
+            <forward name="Success" path="/ReportJrxmlDetailForDelete.jsp"/>
+        </action>
+        <action path="/Report/Jrxml/Delete"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="reportJrxmlForm"
+                scope="request" validate="false" input="/ReportJrxmlDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportDeleteCmd"
+                roles="JRXMLREPORT.DELETE">
+            <forward name="Success" path="/Report/Jrxml/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Report/Jrxml/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Jrxml/List.do"/>
+        </action>
+
+        <!--execute-->
+        <action path="/Report/Jrxml/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExecuteForwardAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="false" input="/Report/Jrxml/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd"
+                roles="JRXMLREPORT.EXECUTE">
+            <forward name="Success" path="/ReportJrxmlExecute.jsp"/>
+            <forward name="Fail" path="/Report/Jrxml/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Jrxml/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExecuteAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="true" input="/ReportJrxmlExecute.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd"
+                roles="JRXMLREPORT.EXECUTE">
+            <forward name="Success" path="/ReportJrxmlExecute.jsp"/>
+            <forward name="Cancel" path="/Report/Jrxml/List.do" redirect="true"/>
+            <forward name="FailButStay" path="/ReportJrxmlExecute.jsp"/>
+        </action>
+
+        <!--query param filters-->
+        <action path="/Report/QueryParam/List" type="com.piramide.elwis.web.reports.action.ReportJrxmlListAction"
+                name="queryParamListForm"
+                scope="request" input="/ReportQueryParamList.jsp" validate="false"
+                parameter="reports@reportQueryParamList"
+                roles="JRXMLREPORT.VIEW">
+            <forward name="Success" path="/ReportQueryParamList.jsp"/>
+        </action>
+
+        <action path="/Report/QueryParam/Forward/Update" type="com.piramide.elwis.web.reports.action.ReportQueryParamUpdateForwardAction"
+                name="queryParamForm"
+                scope="request" validate="false" input="/Report/QueryParam/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportQueryParamCmd"
+                roles="JRXMLREPORT.VIEW">
+            <forward name="Success" path="/ReportQueryParamDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Report/QueryParam/List.do"/>
+        </action>
+
+        <action path="/Report/QueryParam/Update" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="queryParamForm"
+                scope="request" validate="true" input="/ReportQueryParamDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportQueryParamUpdateCmd"
+                roles="JRXMLREPORT.UPDATE">
+            <forward name="Success" path="/Report/QueryParam/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Report/QueryParam/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/QueryParam/List.do"/>
+        </action>
+
+        <!--report artifact-->
+        <action path="/Report/Artifact/List" type="com.piramide.elwis.web.reports.action.ReportJrxmlListAction"
+                name="listForm"
+                scope="request" input="/ReportArtifactList.jsp" validate="false"
+                parameter="reports@reportArtifactList"
+                roles="JRXMLREPORT.VIEW">
+            <forward name="Success" path="/ReportArtifactList.jsp"/>
+        </action>
+
+        <action path="/Report/Artifact/Forward/Create" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerForwardAction"
+                name="reportArtifactForm"
+                scope="request" validate="false"
+                parameter="/admin/ReportArtifactDetailForCreate.jsp"
+                roles="JRXMLREPORT.CREATE"/>
+
+        <action path="/Report/Artifact/Create" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="reportArtifactForm"
+                scope="request" validate="true"
+                input="/ReportArtifactDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportArtifactCmd"
+                roles="JRXMLREPORT.CREATE">
+            <forward name="Success" path="/Report/Artifact/List.do"/>
+            <forward name="Cancel" path="/Report/Artifact/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Artifact/List.do"/>
+        </action>
+
+        <action path="/Report/Artifact/Forward/Update" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="reportArtifactForm"
+                scope="request" validate="false" input="/Report/Artifact/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportArtifactCmd"
+                roles="JRXMLREPORT.VIEW">
+            <forward name="Success" path="/ReportArtifactDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Report/Artifact/Update" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="reportArtifactForm"
+                scope="request" validate="true" input="/ReportArtifactDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportArtifactCmd"
+                roles="JRXMLREPORT.UPDATE">
+            <forward name="Success" path="/Report/Artifact/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Report/Artifact/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Artifact/List.do"/>
+        </action>
+
+        <action path="/Report/Artifact/Forward/Delete" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="reportArtifactForm"
+                scope="request" validate="false" input="/Report/Artifact/List.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportArtifactCmd"
+                roles="JRXMLREPORT.DELETE">
+            <forward name="Success" path="/ReportArtifactDetailForDelete.jsp"/>
+        </action>
+        <action path="/Report/Artifact/Delete" type="com.piramide.elwis.web.reports.action.ReportJrxmlManagerAction"
+                name="reportArtifactForm"
+                scope="request" validate="false" input="/ReportArtifactDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.reports.ReportArtifactCmd"
+                roles="JRXMLREPORT.DELETE">
+            <forward name="Success" path="/Report/Artifact/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Report/Artifact/List.do" redirect="true"/>
+            <forward name="Fail" path="/Report/Artifact/List.do"/>
+        </action>
+
+        <!--begin reports-->
+
+        <action path="/Report/UserList" type="org.apache.struts.actions.ForwardAction" name="userReportListForm"
+                scope="request" parameter="/admin/report/UserReportList.jsp" validate="false" roles="USER.VIEW"/>
+
+        <action path="/Report/UserList/Execute"
+                type="com.piramide.elwis.web.admin.action.report.AdminReportAction"
+                name="userReportListForm"
+                validate="false"
+                scope="request"
+                input="/report/UserReportList.jsp"
+                parameter="userReportList"
+                roles="USER.VIEW">
+            <forward name="Success" path="/report/UserReportList.jsp"/>
+        </action>
+
+        <action path="/Report/CompanyList" type="org.apache.struts.actions.ForwardAction" name="companyReportForm"
+                scope="request" parameter="/admin/report/CompanyReportList.jsp" validate="false" roles="COMPANY.VIEW"/>
+
+        <action path="/Report/CompanyList/Execute"
+                type="com.piramide.elwis.web.admin.action.report.AdminExetendedReportAction"
+                name="companyReportForm"
+                validate="true"
+                scope="request"
+                input="/report/CompanyReportList.jsp"
+                parameter="companyReportList"
+                roles="COMPANY.VIEW">
+            <forward name="Success" path="/report/CompanyReportList.jsp"/>
+        </action>
+
+
+        <action path="/Report/UserSessionList" type="org.apache.struts.actions.ForwardAction"
+                name="userSessionReportForm"
+                scope="request" parameter="/admin/report/UserSessionReportList.jsp" validate="false"
+                roles="USERSESSION.VIEW"/>
+        <action path="/Report/UserSessionList/Execute"
+                type="com.piramide.elwis.web.admin.action.report.AdminExetendedReportAction"
+                name="userSessionReportForm"
+                validate="true"
+                scope="request"
+                input="/report/UserSessionReportList.jsp"
+                parameter="userSessionReportList"
+                roles="USERSESSION.VIEW">
+            <forward name="Success" path="/report/UserSessionReportList.jsp"/>
+        </action>
+        <action path="/Report/SearchCompany" type="com.piramide.elwis.web.common.action.ListAction" name="listForm"
+                scope="request" input="/SearchCompany.jsp" parameter="lightCompanyList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="contactSearchName"/>
+            <forward name="Success" path="/SearchCompany.jsp"/>
+        </action>
+
+
+        <action path="/Report/UserByGroupList" type="org.apache.struts.actions.ForwardAction"
+                name="userByGroupReportForm"
+                scope="request" parameter="/admin/report/UserByGroupReportList.jsp" validate="false" roles="USER.VIEW"/>
+        <action path="/Report/UserByGroupList/Execute"
+                type="com.piramide.elwis.web.admin.action.report.AdminReportAction"
+                name="userByGroupReportForm"
+                validate="false"
+                scope="request"
+                input="/report/UserByGroupReportList.jsp"
+                parameter="userByGroupList"
+                roles="USER.VIEW">
+            <forward name="Success" path="/report/UserByGroupReportList.jsp"/>
+        </action>
+
+        <action path="/Report/UserByRoleList" type="org.apache.struts.actions.ForwardAction" name="userByRoleReportForm"
+                scope="request" parameter="/admin/report/UserByRoleReportList.jsp" validate="false" roles="USER.VIEW"/>
+        <action path="/Report/UserByRoleList/Execute"
+                type="com.piramide.elwis.web.admin.action.report.AdminReportAction"
+                name="userByRoleReportForm"
+                validate="false"
+                scope="request"
+                input="/report/RoleReportList.jsp"
+                parameter="roleUserReportList"
+                roles="USER.VIEW">
+            <forward name="Success" path="/report/UserByRoleReportList.jsp"/>
+        </action>
+
+
+        <action path="/Report/RoleReportList" type="org.apache.struts.actions.ForwardAction" name="roleReportForm"
+                scope="request" parameter="/admin/report/RoleReportList.jsp" validate="false" roles="ROLE.VIEW"/>
+        <action path="/Report/RoleReportList/Execute"
+                type="com.piramide.elwis.web.admin.action.report.AdminReportAction"
+                name="roleReportForm"
+                validate="false"
+                scope="request"
+                input="/report/RoleReportList.jsp"
+                parameter="roleReportList"
+                roles="ROLE.VIEW">
+            <forward name="Success" path="/report/RoleReportList.jsp"/>
+        </action>
+
+        <action path="/Report/UserGroupReportList" type="org.apache.struts.actions.ForwardAction"
+                name="userGroupReportForm"
+                scope="request" parameter="/admin/report/UserGroupReportList.jsp" validate="false"
+                roles="USERGROUP.VIEW"/>
+        <action path="/Report/UserGroupReportList/Execute"
+                type="com.piramide.elwis.web.admin.action.report.AdminReportAction"
+                name="userGroupReportForm"
+                validate="false"
+                scope="request"
+                input="/report/UserGroupReportList.jsp"
+                parameter="userGroupList"
+                roles="USERGROUP.VIEW">
+            <forward name="Sucess" path="/report/UserGroupReportList.jsp"/>
+        </action>
+
+        <action path="/Report/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportExternalExecute.jsp"/>
+
+        <action path="/Report/Blank" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/common/Blank.jsp"/>
+
+        <action path="/Report/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportExecuteForm" scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteAction"
+                name="reportExecuteForm" scope="request" validate="true" input="/Report/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailColumn" path="/Report/ExecutePage.do"/>
+            <forward name="FailButStay" path="/Report/ExecutePage.do"/>
+        </action>
+
+        <!--jrxml external report-->
+        <action path="/Report/Jrxml/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportJrxmlExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportJrxmlExternalExecute.jsp"/>
+
+        <action path="/Report/Jrxml/External/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+        <action path="/Report/Jrxml/External/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExternalExecuteAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="true" input="/Report/Jrxml/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailButStay" path="/Report/Jrxml/ExecutePage.do"/>
+        </action>
+
+        <!--end reports-->
+    </action-mappings>
+
+    <controller maxFileSize="2M" locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+                /WEB-INF/admin/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/admin/fantabulous.xml"/>
+        <set-property property="moduleParams" value="index, reportId, reportType"/>
+    </plug-in>
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="userId, index, userGroupId,roleId, isDefault,groupName, reportId, reportType"/>
+    </plug-in>
+
+
+</struts-config>

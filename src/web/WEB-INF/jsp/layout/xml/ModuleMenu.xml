@@ -1,0 +1,114 @@
+<!--
+Author: Fer�
+Date: 2005-07-21
+Version: 1.0
+
+MODULE MENU STRUCTURE DOCUMENTATION:
+
+<module> module tag allows following attributes:
+    name: the name of the module (struts module name). It's required.
+    titleKey: the resource key for module name
+
+<forward> the forward tag (always into module tag) allows to configure
+where you want action forward depending if it has the access right to do it.
+You can define several forward tags inside the module tag, you only take care
+in one thing "Order" the order is important, because depending if the access right
+is given, the forward will be the first which has the access right. In the other hand
+if there is no any access right the whole module is hidden.
+    action: the action to forward. It's required.
+    functionality: the security funcionality. It's only required if you want to configure the security.
+    permission: the security funcionality permission (always both functionality and permission must be together.
+    It's only required if you want to configure the security.
+
+<shortCuts>  the shortcut tag (always into module tag) define the URL of module shorcuts.
+this tag is always required.
+    url: the url of the tile containing the templates.
+
+
+<catalogMenu> this tag is an special tag, which can be used only in the configuration module, because
+such module have categories and an special way to validate the security.
+So, all module tag wich has the catalogMenu has an special behavior. (Consult
+the owner to ask about details)
+
+ -->
+
+<modules>
+    <module name="" titleKey="Common.home" default="true">
+        <forward action="/Dashboard/Container/DrawContainer.do"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/DashboardShortCuts.jsp</shortCuts>
+    </module>
+    <module name="contacts" titleKey="subModule.contacts">
+        <forward action="/contacts/Search.do" functionality="CONTACT" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/ContactShortCuts.jsp</shortCuts>
+    </module>
+    <module name="campaign" titleKey="module.campaign">
+        <forward action="/campaign/List.do" functionality="CAMPAIGN" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/CampaignShortCuts.jsp</shortCuts>
+    </module>
+
+    <module name="products" titleKey="module.products">
+        <forward action="/products/SimpleSearch.do" functionality="PRODUCT" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/ProductsShortCuts.jsp</shortCuts>
+    </module>
+    <module name="sales" titleKey="module.sales">
+        <forward action="/sales/SalesProcess/List.do" functionality="SALESPROCESS" permission="VIEW"/>
+        <forward action="/sales/Sale/SingleList.do" functionality="SALE" permission="VIEW"/>
+        <forward action="/sales/ProductContract/List.do" functionality="PRODUCTCONTRACT" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/SalesShortCuts.jsp</shortCuts>
+    </module>
+    <module name="finance" titleKey="module.finance">
+        <forward action="/finance/Contract/ToInvoice/List.do" functionality="PRODUCTCONTRACT" permission="VIEW"/>
+        <forward action="/finance/Invoice/SingleList.do" functionality="INVOICE" permission="VIEW"/>
+        <forward action="/finance/Invoice/ToRemind/List.do" functionality="INVOICE" permission="VIEW"/>
+        <forward action="/finance/Invoice/RemindersList.do" functionality="INVOICEREMINDER" permission="VIEW"/>
+        <forward action="/finance/Invoice/RangePrintList.do" functionality="INVOICE" permission="VIEW"/>
+        <forward action="/finance/InvoicePayment/Forward/CreateInOneStep.do" functionality="INVOICEPAYMENT"
+                 permission="CREATE"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/FinanceShortCuts.jsp</shortCuts>
+    </module>
+    <module name="webmail" titleKey="module.webmail">
+        <forward action="/webmail/Messages.do" functionality="MAIL" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/WebmailShortCuts.jsp</shortCuts>
+    </module>
+    <module name="scheduler" titleKey="Common.scheduler">
+        <forward action="/scheduler/AppointmentView.do" functionality="APPOINTMENT" permission="VIEW"/>
+        <forward action="/scheduler/TaskList.do" functionality="TASK" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/SchedulerShortCuts.jsp</shortCuts>
+    </module>
+    <module name="support" titleKey="module.support">
+        <forward action="/support/ArticleList.do" functionality="ARTICLE" permission="VIEW"/>
+        <forward action="/support/QuestionList.do" functionality="QUESTION" permission="VIEW"/>
+        <forward action="/support/CaseList.do" functionality="CASE" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/SupportShortCuts.jsp</shortCuts>
+    </module>
+
+    <module name="projects" titleKey="module.projects">
+        <forward action="/projects/Project/List.do" functionality="PROJECT" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/ProjectShortCuts.jsp</shortCuts>
+    </module>
+
+
+    <module name="reports" titleKey="module.reports">
+        <forward action="/reports/Report/List.do" functionality="REPORT" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/ReportShortCuts.jsp</shortCuts>
+    </module>
+
+    <!--below is the only one special module.-->
+    <module name="catalogs" titleKey="package.configuration">
+        <catalogModule structure="/layout/tiles/CatalogMenuStructure.jsp"/>
+        <forward action="/catalogs/Main.do"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/CatalogShortCuts.jsp</shortCuts>
+    </module>
+
+    <module name="admin" titleKey="package.Administration">
+        <forward action="/admin/User/List.do" functionality="USER" permission="VIEW"/>
+        <forward action="/admin/Role/List.do" functionality="ROLE" permission="VIEW"/>
+        <forward action="/admin/User/UserGroupList.do" functionality="USERGROUP" permission="VIEW"/>
+        <forward action="/admin/Company/List.do" functionality="COMPANY" permission="VIEW"/>
+        <forward action="/admin/User/UserSessionList.do" functionality="USERSESSION" permission="VIEW"/>
+        <forward action="/admin/PasswordChange/List.do" functionality="PASSWORDCHANGE" permission="VIEW"/>
+        <shortCuts>/WEB-INF/jsp/layout/tiles/AdminShortCuts.jsp</shortCuts>
+    </module>
+</modules>
+
+

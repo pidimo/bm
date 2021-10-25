@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN"
+        "http://www.jatun.com/titus-config-1.0.dtd">
+
+<databasestructure>
+    <modules>
+        <module name="contacts" resource="subModule.contacts"/>
+        <module name="sales" resource="module.sales"/>
+        <module name="campaign" resource="module.campaign"/>
+        <module name="catalogs" resource="package.configuration"/>
+        <module name="products" resource="module.products"/>
+        <module name="support" resource="module.support"/>
+        <module name="admin" resource="module.admin"/>
+        <module name="finances" resource="module.finance"/>
+    </modules>
+    <converters>
+        <converter name="longToDateValue" class="com.piramide.elwis.web.reports.converters.LongToDateConverter"/>
+        <converter name="integerToDateValue" class="com.piramide.elwis.web.reports.converters.IntegerToDateConverter"/>
+        <converter name="integerToBoolean" class="com.piramide.elwis.web.reports.converters.IntegerToBooleanConverter"/>
+        <converter name="addressCompleteName"
+                   class="com.piramide.elwis.web.reports.converters.AddressCompleteNameConverter"/>
+        <converter name="activeConverter" class="com.piramide.elwis.web.reports.converters.ActiveConverter"/>
+        <converter name="addressTypeConverter" class="com.piramide.elwis.web.reports.converters.AddressTypeConverter"/>
+        <converter name="inOutConverter" class="com.piramide.elwis.web.reports.converters.InOutConverter"/>
+        <converter name="personalConverter" class="com.piramide.elwis.web.reports.converters.PersonalConverter"/>
+        <converter name="predeterminedConverter"
+                   class="com.piramide.elwis.web.reports.converters.PredeterminedConverter"/>
+        <converter name="defaultConverter" class="com.piramide.elwis.web.reports.converters.DefaultConverter"/>
+        <converter name="connectedConverter" class="com.piramide.elwis.web.reports.converters.ConnectedConverter"/>
+        <converter name="finalConverter" class="com.piramide.elwis.web.reports.converters.FinalConverter"/>
+        <converter name="inUserConverter" class="com.piramide.elwis.web.reports.converters.InUseConverter"/>
+        <converter name="isStandardConverter" class="com.piramide.elwis.web.reports.converters.StandardConverter"/>
+        <converter name="actionHistoryConverter"
+                   class="com.piramide.elwis.web.reports.converters.ActionHistoryConverter"/>
+        <converter name="sizeConverter" class="com.piramide.elwis.web.reports.converters.SizeConverter"/>
+        <converter name="birthdayConverter" class="com.piramide.elwis.web.reports.converters.BirthdayConverter"/>
+        <converter name="communicationTypeConverter"
+                   class="com.piramide.elwis.web.reports.converters.CommunicationTypeConverter"/>
+        <converter name="communicationStatusConverter"
+                   class="com.piramide.elwis.web.reports.converters.CommunicationStatusConverter"/>
+        <converter name="categoryLabelConverter"
+                   class="com.piramide.elwis.web.reports.converters.CategoryLabelConverter"/>
+        <converter name="basicCurrencyConverter" class="com.piramide.elwis.web.reports.converters.BasicConverter"/>
+        <converter name="systemLanguageConverter"
+                   class="com.piramide.elwis.web.reports.converters.SystemLanguageConverter"/>
+        <converter name="telecomTypeConverter" class="com.piramide.elwis.web.reports.converters.TelecomtypeConverter"/>
+        <converter name="priorityConverter" class="com.piramide.elwis.web.reports.converters.PriorityConverter"/>
+        <converter name="freeTextConverter" class="com.piramide.elwis.web.reports.converters.FreeTextConverter"/>
+
+        <!--campaign-->
+        <converter name="campaignCriteriaOperator" class="com.piramide.elwis.web.reports.converters.OperatorConverter"/>
+        <converter name="campaignStatusConverter"
+                   class="com.piramide.elwis.web.reports.converters.CampaignStatusConverter"/>
+        <converter name="criterionTypeConverter"
+                   class="com.piramide.elwis.web.reports.converters.CriterionTypeConverter"/>
+
+        <!--support-->
+        <converter name="publishedValue" class="com.piramide.elwis.web.reports.converters.PublishedValueConverter"/>
+        <converter name="questionPublishedConverter"
+                   class="com.piramide.elwis.web.reports.converters.QuestionPublishedConverter"/>
+        <converter name="stageTypeConverter" class="com.piramide.elwis.web.reports.converters.StateStageTypeConverter"/>
+        <!--admin-->
+        <converter name="userTypeConverter" class="com.piramide.elwis.web.reports.converters.UserTypeConverter"/>
+        <!--product-->
+        <converter name="productPictureConverter"
+                   class="com.piramide.elwis.web.reports.converters.ProductPictureConverter"/>
+        <!--salesProcess-->
+        <converter name="probabilityConverter" class="com.piramide.elwis.web.reports.converters.ProbabilityConverter"/>
+        <converter name="decimalConverter" class="com.piramide.elwis.web.reports.converters.DecimalConverter"/>
+        <converter name="decimalFourDigitsConverter"
+                   class="com.piramide.elwis.web.reports.converters.DecimalFourDigitsConverter"/>
+        <converter name="isActionConverter" class="com.piramide.elwis.web.reports.converters.IsActionConverter"/>
+        <converter name="discountType" class="com.piramide.elwis.web.reports.converters.DiscountTypeConverter"/>
+        <converter name="contractAmountTypeConverter"
+                   class="com.piramide.elwis.web.reports.converters.ContractAmountTypeConverter"/>
+        <converter name="contractMatchCalPeriodConverter"
+                   class="com.piramide.elwis.web.reports.converters.ContractMatchCalPeriodConverter"/>
+        <converter name="contractPayMethodConverter"
+                   class="com.piramide.elwis.web.reports.converters.ContractPayMethodConverter"/>
+        <converter name="contractPayPeriodConverter"
+                   class="com.piramide.elwis.web.reports.converters.ContractPayPeriodConverter"/>
+        <!--finance-->
+        <converter name="invoiceTypeConverter" class="com.piramide.elwis.web.reports.converters.InvoiceTypeConverter"/>
+        <!--catalogs-->
+        <converter name="booleanConverter" class="com.piramide.elwis.web.reports.converters.BooleanConverter"/>
+        <converter name="productTypeTypeConverter" class="com.piramide.elwis.web.reports.converters.ProductTypeTypeConverter"/>
+
+    </converters>
+
+    <!--cambiar el nombre de la clase DateTimeFilterer  un nombre mas intuitivo-->
+    <filterers>
+        <filterer name="dateTimeFilter" class="com.piramide.elwis.web.reports.filterers.DateTimeFilterer"/>
+        <filterer name="dateFilter" class="com.piramide.elwis.web.reports.filterers.DateFilterer"/>
+        <filterer name="blobReadFilter" class="com.piramide.elwis.web.reports.filterers.BlobReadFilterer"/>
+    </filterers>
+
+    <globalforeignconditions>
+        <tableforeignref name="company" fieldname="companyid" parametername="companyId" operator="equal"/>
+    </globalforeignconditions>
+    <database>
+        <table tablename="address" resource="Report.functionality.contact">
+            <fields>
+                <field fieldname="active" dbtype="integer" columntype="boolean" converter="activeConverter"
+                       resource="Contact.active" merge="false"/>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="addresstype" dbtype="string" columntype="string" converter="addressTypeConverter"
+                       resource="Address.addressType"/>
+                <field fieldname="bankaccountid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="birthday" dbtype="integer" columntype="date" converter="birthdayConverter"
+                       filterer="dateFilter" resource="Contact.Person.birthday"/>
+                <field fieldname="cityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="code" dbtype="boolean" iscolumnview="false"/>
+                <field fieldname="street" dbtype="string" resource="Contact.street"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="countryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="education" dbtype="string" resource="Contact.Person.education"/>
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="housenumber" dbtype="string" resource="Contact.houseNumber"/>
+                <field fieldname="imageid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="keywords" dbtype="string" resource="Contact.keywords"/>
+                <field fieldname="languageid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="lastmoddate" dbtype="integer" columntype="date" resource="address.lastModDate"
+                       converter="integerToDateValue" filterer="dateFilter"/>
+                <field fieldname="lastmoduser" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="name1" dbtype="string" iscolumnview="false"/>
+                <field fieldname="name2" dbtype="string" iscolumnview="false"/>
+                <field fieldname="name3" dbtype="string" iscolumnview="false"/>
+                <!--<field fieldname="personal" dbtype="integer" columntype="boolean" converter="personalConverter"
+                       resource="Contact.private"/>-->
+                <field fieldname="recorddate" dbtype="integer" columntype="date" resource="address.recordDate"
+                       converter="integerToDateValue" filterer="dateFilter"/>
+                <field fieldname="recorduser" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="salutationid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="searchname" dbtype="string" resource="Contact.Person.searchName"/>
+                <field fieldname="taxnumber" dbtype="string" iscolumnview="false"/>
+                <!--OJO NULL-->
+                <field fieldname="titleid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="waydescriptionid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <compoundfields>
+                <compoundfield name="addressName" columntype="string"
+                               resource="Contact.name"
+                               converter="addressCompleteName">
+                    <fieldref fieldname="addresstype" filterable="false"/>
+                    <fieldref fieldname="name1" alphabetfilter="true"/>
+                    <fieldref fieldname="name2"/>
+                    <fieldref fieldname="name3"/>
+                </compoundfield>
+            </compoundfields>
+            <primarykey fields="addressid">
+                <inverserelation relationtype="left-join" tablename="department" keys="addressid"
+                                 resource="Report.inverseRelation.department"/>
+                <inverserelation relationtype="left-join" tablename="telecom" keys="addressid"
+                                 resource="Report.inverseRelation.telecom">
+                    <relationcondition>
+                        <conditions>
+                            <condition fieldpath="telecom.contactpersonid" operator="is" type="constant" value="NULL"/>
+                        </conditions>
+                    </relationcondition>
+                </inverserelation>
+                <inverserelation relationtype="left-join" tablename="employee" keys="healthfund"
+                                 resource="Report.inverseRelation.employee.helthfund"/>
+                <inverserelation relationtype="left-join" tablename="employee" keys="employeeid"
+                                 resource="Report.inverseRelation.employee.detail"/>
+                <inverserelation relationtype="left-join" tablename="supplier" keys="supplierid"
+                                 resource="Report.inverseRelation.supplier"/>
+                <inverserelation relationtype="left-join" tablename="contact" keys="addressid"
+                                 resource="Report.inverseRelation.communication"/>
+                <inverserelation relationtype="left-join" tablename="bankaccount" keys="addressid"
+                                 resource="Report.inverseRelation.bankAccount"/>
+                <inverserelation relationtype="left-join" tablename="customer" keys="customerid"
+                                 resource="Report.inverseRelation.customer.detail"/>
+                <inverserelation relationtype="left-join" tablename="customer" keys="partnerid"
+                                 resource="Report.inverseRelation.customer.partner"/>
+                <inverserelation relationtype="left-join" tablename="contactperson" keys="addressid"
+                                 resource="Report.inverseRelation.contactPerson.onAddress"/>
+                <inverserelation relationtype="left-join" tablename="contactperson" keys="contactpersonid"
+                                 resource="Report.inverseRelation.contactPerson.detail"/>
+                <inverserelation relationtype="left-join" tablename="office" keys="addressid"
+                                 resource="Report.inverseRelation.office"/>
+                <!--ADD-->
+                <inverserelation relationtype="left-join" tablename="supportcase" keys="addressid"
+                                 resource="Report.inverseRelation.supportCase"/>
+                <inverserelation relationtype="left-join" tablename="salesprocess" keys="addressid"
+                                 resource="Report.inverseRelation.salesProcess"/>
+                <!--<inverserelation relationtype="left-join" tablename="bank" keys="addressid" resource="Bank"/>      No se usa-->
+                <inverserelation relationtype="left-join" tablename="elwisuser" keys="addressid"
+                                 resource="Report.inverseRelation.User"/>
+                <!--<inverserelation relationtype="left-join" tablename="company" keys="companyid" resource="Company"/>-->
+                <inverserelation relationtype="left-join" tablename="competitorproduct" keys="competitorid"
+                                 resource="Report.inverseRelation.competitor"/>
+                <inverserelation relationtype="left-join" tablename="campcontact" keys="addressid"
+                                 resource="Report.inverseRelation.campaignContact"/>
+                <inverserelation relationtype="left-join" tablename="productcontract" keys="addressid"
+                                 resource="Report.inverseRelation.productContract"/>
+                <inverserelation relationtype="left-join" tablename="invoice" keys="addressid"
+                                 resource="Report.inverseRelation.invoice"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="elwisuser" relationtype="left-join"
+                            resource="Report.foreignRelation.elwisUser.lastModifiedby">
+                    <keyref fieldref="lastmoduser" foreignfieldref="userid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="country" relationtype="left-join"
+                            resource="Report.foreignRelation.country">
+                    <keyref fieldref="countryid" foreignfieldref="countryid"/>
+                    <overwriteresources>
+                        <overwrite field="countryname" resource="City.country"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="bankaccount" relationtype="left-join"
+                            resource="Report.foreignRelation.bankAccount">
+                    <keyref fieldref="bankaccountid" foreignfieldref="bankaccountid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="title" relationtype="left-join" resource="Report.foreignRelation.title">
+                    <keyref fieldref="titleid" foreignfieldref="titleid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="elwisuser" relationtype="left-join"
+                            resource="Report.foreignRelation.elwisUser.createdBy">
+                    <keyref fieldref="recorduser" foreignfieldref="userid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="language" relationtype="left-join"
+                            resource="Report.foreignRelation.language">
+                    <keyref fieldref="languageid" foreignfieldref="languageid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.wayDescription"
+                            strongrelation="true">
+                    <keyref fieldref="waydescriptionid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="Contact.wayDescription"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="city" relationtype="left-join" resource="Report.foreignRelation.city">
+                    <keyref fieldref="cityid" foreignfieldref="cityid"/>
+                    <overwriteresources>
+                        <overwrite field="cityname" resource="Contact.city"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="salutation" relationtype="left-join"
+                            resource="Report.foreignRelation.salutation">
+                    <keyref fieldref="salutationid" foreignfieldref="salutationid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.notes"
+                            strongrelation="true">
+                    <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="Contact.notes"/>
+                    </overwriteresources>
+                </foreignkey>
+            </foreignkeys>
+            <dynamiccolumns>
+                <dynamiccolumn
+                        loadcolumnclass="com.piramide.elwis.web.reports.dynamiccolumns.AddressCategoryColumnLoader">
+                    <dynamicforeignkey foreigntableref="categfieldvalue" relationtype="left-join"
+                                       columnkeyfield="categoryid" columnkeyparam="CATEGORY_ID">
+                        <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                        <relationcondition>
+                            <conditions>
+                                <condition fieldpath="categfieldvalue.contactpersonid" operator="is" type="constant"
+                                           value="NULL"/>
+                            </conditions>
+                        </relationcondition>
+                    </dynamicforeignkey>
+                </dynamiccolumn>
+            </dynamiccolumns>
+            <filters>
+                <constantfilter fieldref="addresstype" resource="Address.addressType">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Contact.organization"/>
+                        <value key="1" showvalue="Contact.person"/>
+                    </values>
+                </constantfilter>
+                <!--<constantfilter fieldref="personal" resource="Customer.personalInformation">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Article.public"/>
+                        <value key="1" showvalue="Contact.private"/>
+                    </values>
+                </constantfilter>-->
+                <constantfilter fieldref="active" resource="Common.active">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Common.inactive"/>
+                        <value key="1" showvalue="Common.active"/>
+                    </values>
+                </constantfilter>
+                <foreignfilter resource="Contact.name" filterfieldref="addressName">
+                    <columns>
+                        <column fieldpath="addressName" order="asc"/>
+                        <column fieldpath="address>>country:countryid.countryname" resource="City.country"/>
+                        <column fieldpath="address>>city:cityid.zip"/>
+                        <column fieldpath="address>>city:cityid.cityname" resource="Contact.city"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="addressName" operator="start-with" type="parameter"/>
+                    </conditions>
+                    <filtersanothertable>
+                        <filterinanothertable tablename="employee"/>
+                        <filterinanothertable tablename="contactperson"/>
+                        <filterinanothertable tablename="customer"/>
+                        <filterinanothertable tablename="supplier"/>
+                        <filterinanothertable tablename="elwisuser"/>
+                        <filterinanothertable tablename="competitorproduct"/>
+                        <filterinanothertable tablename="usersessionlog"/>
+                    </filtersanothertable>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="bankaccount" resource="Report.functionality.bankAccount">
+            <fields>
+                <field fieldname="accountnumber" dbtype="string" resource="Contact.BankAccount.number"/>
+                <field fieldname="accountowner" dbtype="string" resource="Contact.BankAccount.owner"/>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="bankaccountid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="bankid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="iban" dbtype="string" resource="Contact.BankAccount.iban"/>
+            </fields>
+            <primarykey fields="bankaccountid">
+                <inverserelation relationtype="left-join" tablename="address" keys="bankaccountid"
+                                 resource="Report.inverseRelation.contact"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="bank" relationtype="left-join" resource="Report.foreignRelation.bank">
+                    <keyref fieldref="bankid" foreignfieldref="bankid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="contact" resource="Report.functionality.communication">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="datefinished" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="datestart" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter"
+                       resource="Document.date"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactid" dbtype="integer" iscolumnview="false"/>
+                <!--<field fieldname="contactnumber" dbtype="string" resource="Document.contactNumber"/>-->
+                <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="employeeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="isinout" dbtype="integer" columntype="string" converter="inOutConverter"
+                       resource="Document.inout"/>
+                <field fieldname="isaction" dbtype="integer" columntype="boolean" converter="isActionConverter"
+                       resource="Common.action"/>
+                <field fieldname="note" dbtype="string" resource="Document.subject"/>
+                <field fieldname="probability" dbtype="integer" columntype="integer" converter="probabilityConverter"
+                       resource="SalesProcess.probability" istotalize="true"/>
+                <field fieldname="processid" dbtype="integer" iscolumnview="false"/>
+                <!--<field fieldname="status" dbtype="integer" columntype="string" resource="Document.status"
+                       converter="communicationStatusConverter"/>-->
+                <field fieldname="templateid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="type" dbtype="integer" columntype="string" resource="Communication.type"
+                       converter="communicationTypeConverter"/>
+            </fields>
+            <!--ADD-->
+            <primarykey fields="contactid">
+                <inverserelation relationtype="left-join" tablename="action" keys="contactid"
+                                 resource="Report.inverseRelation.action"/>
+                <inverserelation relationtype="left-join" tablename="supportcontact" keys="contactid"
+                                 resource="Report.inverseRelation.supportContact.communication"/>
+                <inverserelation relationtype="left-join" tablename="campactivcontact" keys="contactid"
+                                 resource="Report.inverseRelation.campActivity.communication"/>
+            </primarykey>
+            <foreignkeys>
+                <!--<foreignkey foreigntableref="freetext" relationtype="left-join" resource="Document.content"
+                            strongrelation="true">
+                    <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="Document.content"/>
+                    </overwriteresources>
+                </foreignkey>-->
+                <foreignkey foreigntableref="contactperson" relationtype="left-join"
+                            resource="Report.foreignRelation.contactPerson">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                    <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+                    <overwriteresources>
+                        <overwrite field="addressName" resource="ContactPerson"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                    <overwriteresources>
+                        <overwrite field="addressName" resource="Contact"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="salesprocess" relationtype="left-join"
+                            resource="Report.foreignRelation.salesProcess">
+                    <keyref fieldref="processid" foreignfieldref="processid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="template" relationtype="left-join"
+                            resource="Report.foreignRelation.template">
+                    <keyref fieldref="templateid" foreignfieldref="templateid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="employee" relationtype="left-join"
+                            resource="Report.foreignRelation.employee">
+                    <keyref fieldref="employeeid" foreignfieldref="employeeid"/>
+                    <overwriteresources>
+                        <overwrite field="addressName" resource="Document.employee"/>
+                    </overwriteresources>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <constantfilter fieldref="isinout" resource="Document.inout">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Document.out"/>
+                        <value key="1" showvalue="Document.in"/>
+                    </values>
+                </constantfilter>
+                <!--<constantfilter fieldref="status" resource="Document.status">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Common.open"/>
+                        <value key="1" showvalue="Common.close"/>
+                    </values>
+                </constantfilter>-->
+                <constantfilter fieldref="isaction" resource="Common.action">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Webmail.tray.noIsAction"/>
+                        <value key="1" showvalue="Webmail.tray.isAction"/>
+                    </values>
+                </constantfilter>
+                <constantfilter fieldref="type" resource="Communication.type">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Communication.type.phone"/>
+                        <value key="1" showvalue="Communication.type.meeting"/>
+                        <value key="2" showvalue="Communication.type.fax"/>
+                        <value key="3" showvalue="Communication.type.letter"/>
+                        <value key="4" showvalue="Communication.type.other"/>
+                        <value key="5" showvalue="Communication.type.email"/>
+                        <value key="6" showvalue="Communication.type.document"/>
+                        <value key="7" showvalue="Communication.type.webDocument"/>
+                    </values>
+                </constantfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="contactperson" resource="Report.functionality.contactPerson">
+            <fields>
+                <field fieldname="active" dbtype="integer" columntype="boolean" resource="Contact.active"
+                       converter="activeConverter"/>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="departmentid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="function" dbtype="string" resource="ContactPerson.function"/>
+                <field fieldname="persontypeid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="addressid, contactpersonid">
+                <inverserelation relationtype="left-join" tablename="department" keys="addressid, managerid"
+                                 resource="Report.inverseRelation.department"/>
+                <inverserelation relationtype="left-join" tablename="contact" keys="addressid, contactpersonid"
+                                 resource="Report.inverseRelation.communication"/>
+                <inverserelation relationtype="left-join" tablename="telecom" keys="addressid, contactpersonid"
+                                 resource="Report.inverseRelation.telecom"/>
+                <!--ADD-->
+                <inverserelation relationtype="left-join" tablename="campcontact" keys="addressid, contactpersonid"
+                                 resource="Report.inverseRelation.campaignContact"/>
+                <inverserelation relationtype="left-join" tablename="supportcase" keys="addressid, contactpersonid"
+                                 resource="Report.inverseRelation.supportCase"/>
+                <inverserelation relationtype="left-join" tablename="prodsupplier" keys="supplierid, contactpersonid"
+                                 resource="Report.inverseRelation.productSupplier"/>
+                <inverserelation relationtype="left-join" tablename="sale" keys="customerid, contactpersonid"
+                                 resource="Report.inverseRelation.sale"/>
+                <inverserelation relationtype="left-join" tablename="saleposition" keys="customerid, contactpersonid"
+                                 resource="Report.inverseRelation.salePosition"/>
+                <inverserelation relationtype="left-join" tablename="productcontract" keys="addressid, contactpersonid"
+                                 resource="Report.inverseRelation.productContract"/>
+                <inverserelation relationtype="left-join" tablename="invoice" keys="addressid, contactpersonid"
+                                 resource="Report.inverseRelation.invoice"/>
+            </primarykey>
+
+            <foreignkeys>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                    <overwritemerges>
+                        <overwritemerge field="addresstype" merge="false"/>
+                    </overwritemerges>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.contactPerson"
+                            strongrelation="true">
+                    <keyref fieldref="contactpersonid" foreignfieldref="addressid"/>
+                    <overwriteresources>
+                        <overwrite field="addressName" resource="ContactPerson.contactPersonName"/>
+                    </overwriteresources>
+                    <overwritemerges>
+                        <overwritemerge field="addresstype" merge="false"/>
+                        <overwritemerge field="lastmoddate" merge="false"/>
+                        <overwritemerge field="recorddate" merge="false"/>
+                    </overwritemerges>
+                </foreignkey>
+                <foreignkey foreigntableref="persontype" relationtype="left-join"
+                            resource="Report.foreignRelation.personType">
+                    <keyref fieldref="persontypeid" foreignfieldref="persontypeid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="department" relationtype="left-join"
+                            resource="Report.foreignRelation.department">
+                    <keyref fieldref="departmentid" foreignfieldref="departmentid"/>
+                </foreignkey>
+            </foreignkeys>
+            <dynamiccolumns>
+                <dynamiccolumn
+                        loadcolumnclass="com.piramide.elwis.web.reports.dynamiccolumns.ContactPersonCategoryColumnLoader">
+                    <dynamicforeignkey foreigntableref="categfieldvalue" relationtype="left-join"
+                                       columnkeyfield="categoryid" columnkeyparam="CATEGORY_ID">
+                        <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                        <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+                    </dynamicforeignkey>
+                </dynamiccolumn>
+            </dynamiccolumns>
+            <relationfilter>
+                <columns>
+                    <column fieldpath="contactperson->address:contactpersonid.addressName" order="asc"
+                            resource="ContactPerson"/>
+                    <column fieldpath="contactperson>>address:addressid.addressName" order="asc" resource="Contact"/>
+                    <column fieldpath="contactperson>>department:departmentid.departmentname"/>
+                </columns>
+                <conditions>
+                    <condition fieldpath="contactperson->address:contactpersonid.addressName" operator="start-with"
+                               type="parameter"/>
+                </conditions>
+            </relationfilter>
+            <filters>
+                <constantfilter fieldref="active" resource="Common.active">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Common.inactive"/>
+                        <value key="1" showvalue="Common.active"/>
+                    </values>
+                </constantfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+
+        <table tablename="customer" resource="Report.functionality.customer">
+            <fields>
+                <field fieldname="branchid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="customerid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="customernumber" dbtype="string" columntype="integer" resource="Customer.number"/>
+                <field fieldname="customertypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="employeeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="expectedturnover" dbtype="decimal" resource="Customer.expectedTurnOver"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="numberofemployees" dbtype="integer" resource="Customer.numberOfEmpoyees"
+                       iscolumnview="true"/>
+                <field fieldname="partnerid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="payconditionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="paymoralityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="priorityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="sourceid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="customerid">
+                <inverserelation relationtype="left-join" tablename="sale" keys="customerid"
+                                 resource="Report.inverseRelation.sale"/>
+                <inverserelation relationtype="left-join" tablename="saleposition" keys="customerid"
+                                 resource="Report.inverseRelation.salePosition"/>
+                <inverserelation relationtype="left-join" tablename="salesprocess" keys="addressid"
+                                 resource="Report.inverseRelation.salesProcess"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="priority" relationtype="left-join"
+                            resource="Report.foreignRelation.priority">
+                    <keyref fieldref="priorityid" foreignfieldref="priorityid"/>
+                    <addforeingfiltercondition>
+                        <conditions>
+                            <condition fieldpath="priority.type" operator="equal" type="constant" value="CUSTOMER"/>
+                        </conditions>
+                    </addforeingfiltercondition>
+                </foreignkey>
+                <foreignkey foreigntableref="paycondition" relationtype="left-join"
+                            resource="Report.foreignRelation.payCondition">
+                    <keyref fieldref="payconditionid" foreignfieldref="payconditionid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="addresssource" relationtype="left-join"
+                            resource="Report.foreignRelation.addressSource">
+                    <keyref fieldref="sourceid" foreignfieldref="sourceid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="employee" relationtype="left-join"
+                            resource="Report.foreignRelation.employee.responsibleEmployee">
+                    <keyref fieldref="employeeid" foreignfieldref="employeeid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="branch" relationtype="left-join" resource="Report.foreignRelation.branch">
+                    <keyref fieldref="branchid" foreignfieldref="branchid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="paymorality" relationtype="left-join"
+                            resource="Report.foreignRelation.payMorality">
+                    <keyref fieldref="paymoralityid" foreignfieldref="paymoralityid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.customer" strongrelation="true">
+                    <keyref fieldref="customerid" foreignfieldref="addressid"/>
+                    <overwriteresources>
+                        <overwrite field="addressName" resource="Customer.name"/>
+                    </overwriteresources>
+                    <overwritemerges>
+                        <overwritemerge field="active" merge="true"/>
+                    </overwritemerges>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.customer.partner">
+                    <keyref fieldref="partnerid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="customertype" relationtype="left-join"
+                            resource="Report.foreignRelation.customerType">
+                    <keyref fieldref="customertypeid" foreignfieldref="customertypeid"/>
+                </foreignkey>
+            </foreignkeys>
+            <dynamiccolumns>
+                <dynamiccolumn
+                        loadcolumnclass="com.piramide.elwis.web.reports.dynamiccolumns.CustomerCategoryColumnLoader">
+                    <dynamicforeignkey foreigntableref="categfieldvalue" relationtype="left-join"
+                                       columnkeyfield="categoryid" columnkeyparam="CATEGORY_ID">
+                        <keyref fieldref="customerid" foreignfieldref="customerid"/>
+                    </dynamicforeignkey>
+                </dynamiccolumn>
+            </dynamiccolumns>
+            <relationfilter>
+                <columns>
+                    <column fieldpath="customer->address:customerid.addressName" order="asc" resource="Customer.name"/>
+                    <column fieldpath="customer>>customertype:customertypeid.customertypename"
+                            resource="Customer.type"/>
+                    <column fieldpath="customernumber"/>
+                </columns>
+                <conditions>
+                    <condition fieldpath="customer->address:customerid.addressName" operator="start-with"
+                               type="parameter"/>
+                </conditions>
+            </relationfilter>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <!--<table tablename="customercategory" resource="Customer.CustomerCategory">
+            <fields>
+                <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="categoryvalueid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" resource="Company" iscolumnview="false"/>
+                <field fieldname="customerid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="categoryid, categoryvalueid, customerid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="customer" relationtype="left-join" resource="Customer">
+                    <keyref fieldref="customerid" foreignfieldref="customerid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="categoryvalue" relationtype="left-join"
+                            resource="ReferencedBy.table.categoryvalue">
+                    <keyref fieldref="categoryvalueid" foreignfieldref="categoryvalueid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="category" relationtype="left-join" resource="CategoryValue.category">
+                    <keyref fieldref="categoryid" foreignfieldref="categoryid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>-->
+        <table tablename="department" resource="Report.functionality.department">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="departmentid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="departmentname" dbtype="string" resource="Contact.Organization.Department.name"/>
+                <field fieldname="parentdepartmentid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="managerid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="departmentid">
+                <inverserelation relationtype="left-join" tablename="department" keys="parentdepartmentid"
+                                 resource="Report.inverseRelation.department.dependentOf"/>
+                <inverserelation relationtype="left-join" tablename="employee" keys="departmentid"
+                                 resource="Report.inverseRelation.employee"/>
+                <inverserelation relationtype="left-join" tablename="contactperson" keys="departmentid"
+                                 resource="Report.inverseRelation.contactPerson"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="contactperson" relationtype="left-join"
+                            resource="Report.foreignRelation.contactPerson.depManager">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                    <keyref fieldref="managerid" foreignfieldref="contactpersonid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="department" relationtype="left-join"
+                            resource="Report.foreignRelation.department.dependentOf">
+                    <keyref fieldref="parentdepartmentid" foreignfieldref="departmentid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="Employee.DepartmentName" filterfieldref="departmentname">
+                    <columns>
+                        <column fieldpath="departmentname" order="asc"/>
+                        <column fieldpath="department>>department:parentdepartmentid.departmentname"
+                                resource="Department.parentName"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="departmentname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="employee" resource="Report.functionality.employee">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="costcenterid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="costhour" dbtype="decimal" resource="Contact.Organization.Employee.costHour"
+                       converter="decimalConverter" istotalize="true"/>
+                <field fieldname="costposition" dbtype="decimal" resource="Contact.Organization.Employee.costPosition"
+                       converter="decimalConverter" iscolumnview="true" istotalize="true"/>
+                <field fieldname="dateend" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter"
+                       resource="Contact.Organization.Employee.endDate"/>
+                <field fieldname="departmentid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="employeeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="function" dbtype="string" resource="Contact.Organization.Employee.function"/>
+                <field fieldname="healthfund" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="hiredate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter"
+                       resource="Contact.Organization.Employee.hireDate"/>
+                <field fieldname="hourlyrate" dbtype="decimal" resource="Contact.Organization.Employee.hourlyRate"
+                       converter="decimalConverter" istotalize="true"/>
+                <field fieldname="initials" dbtype="string" resource="Contact.Organization.Employee.initials"/>
+                <field fieldname="officeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="socialsecnumber" dbtype="string"
+                       resource="Contact.Organization.Employee.socialSecure"/>
+            </fields>
+            <primarykey fields="employeeid">
+                <inverserelation relationtype="left-join" tablename="office" keys="employeeid"
+                                 resource="Report.inverseRelation.office"/>
+                <inverserelation relationtype="left-join" tablename="customer" keys="employeeid"
+                                 resource="Report.inverseRelation.customer"/>
+                <inverserelation relationtype="left-join" tablename="contact" keys="employeeid"
+                                 resource="Report.inverseRelation.communication"/>
+                <!--ADD-->
+                <inverserelation relationtype="left-join" tablename="salesprocess" keys="employeeid"
+                                 resource="Report.inverseRelation.salesProcess"/>
+                <inverserelation relationtype="left-join" tablename="campaign" keys="employeeid"
+                                 resource="Report.inverseRelation.campaign"/>
+                <inverserelation relationtype="left-join" tablename="sale" keys="sellerid"
+                                 resource="Report.inverseRelation.sale"/>
+                <inverserelation relationtype="left-join" tablename="productcontract" keys="sellerid"
+                                 resource="Report.inverseRelation.productContract"/>
+
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="costcenter" relationtype="left-join"
+                            resource="Report.foreignRelation.costCenter">
+                    <keyref fieldref="costcenterid" foreignfieldref="costcenterid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.address.asHealthFund">
+                    <keyref fieldref="healthfund" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.employee"
+                            strongrelation="true">
+                    <keyref fieldref="employeeid" foreignfieldref="addressid"/>
+                    <overwriteresources>
+                        <overwrite field="addressName" resource="Employee.employeeName"/>
+                    </overwriteresources>
+                    <overwritemerges>
+                        <overwritemerge field="addresstype" merge="false"/>
+                        <overwritemerge field="lastmoddate" merge="false"/>
+                        <overwritemerge field="recorddate" merge="false"/>
+                    </overwritemerges>
+                </foreignkey>
+                <foreignkey foreigntableref="office" relationtype="left-join"
+                            resource="Report.foreignRelation.office">
+                    <keyref fieldref="officeid" foreignfieldref="officeid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="department" relationtype="left-join"
+                            resource="Report.foreignRelation.department">
+                    <keyref fieldref="departmentid" foreignfieldref="departmentid"/>
+                </foreignkey>
+            </foreignkeys>
+            <relationfilter>
+                <columns>
+                    <column fieldpath="employee->address:employeeid.addressName" order="asc"
+                            resource="Contact.employee"/>
+                    <column fieldpath="function"/>
+                </columns>
+                <conditions>
+                    <condition fieldpath="employee->address:employeeid.addressName" operator="start-with"
+                               type="parameter"/>
+                </conditions>
+            </relationfilter>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="office" resource="Report.functionality.office">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="employeeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="officeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="officename" dbtype="string" columntype="string"
+                       resource="Contact.Organization.Office.name"/>
+            </fields>
+            <primarykey fields="officeid">
+                <inverserelation relationtype="left-join" tablename="employee" keys="officeid"
+                                 resource="Report.inverseRelation.employee"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="employee" relationtype="left-join"
+                            resource="Report.foreignRelation.employee.asSupervisor">
+                    <keyref fieldref="employeeid" foreignfieldref="employeeid"/>
+                </foreignkey>
+                <!--<foreignkey foreigntableref="address" relationtype="left-join" resource="Contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>-->
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="Contact.Organization.Employee.office" filterfieldref="officename">
+                    <columns>
+                        <column fieldpath="officename" order="asc" resource="Contact.Organization.Employee.office"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="officename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="supplier" resource="Report.functionality.supplier">
+            <fields>
+                <field fieldname="branchid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="priorityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="supplierid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="suppliertypeid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <!--ADD-->
+            <primarykey fields="supplierid">
+                <inverserelation relationtype="left-join" tablename="prodsupplier" keys="supplierid"
+                                 resource="Report.inverseRelation.productSupplier"/>
+            </primarykey>
+            <foreignkeys>
+                <!--<foreignkey foreigntableref="category" relationtype="left-join" resource="CategoryValue.category">
+                    <keyref fieldref="categoryid" foreignfieldref="categoryid"/>
+                </foreignkey>-->
+                <foreignkey foreigntableref="branch" relationtype="left-join" resource="Report.foreignRelation.branch">
+                    <keyref fieldref="branchid" foreignfieldref="branchid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join" resource="Report.foreignRelation.contact"
+                            strongrelation="true">
+                    <keyref fieldref="supplierid" foreignfieldref="addressid"/>
+                    <overwriteresources>
+                        <overwrite field="addressName" resource="Supplier.name"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="suppliertype" relationtype="left-join"
+                            resource="Report.foreignRelation.supplierType">
+                    <keyref fieldref="suppliertypeid" foreignfieldref="suppliertypeid"/>
+                </foreignkey>
+            </foreignkeys>
+            <relationfilter>
+                <columns>
+                    <column fieldpath="supplier->address:supplierid.addressName" order="asc"
+                            resource="Contact.supplier"/>
+                    <column fieldpath="supplier>>suppliertype:suppliertypeid.suppliertypename"
+                            resource="Supplier.type"/>
+                    <column fieldpath="supplier>>branch:branchid.branchname" resource="Supplier.branch"/>
+                </columns>
+                <conditions>
+                    <condition fieldpath="supplier->address:supplierid.addressName" operator="start-with"
+                               type="parameter"/>
+                </conditions>
+            </relationfilter>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="telecom" resource="Report.functionality.telecom">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="description" dbtype="string" resource="Telecom.description"/>
+                <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="predetermined" dbtype="integer" columntype="boolean"
+                       converter="predeterminedConverter" resource="Common.predetermined"/>
+                <field fieldname="telecomid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="telecomnumber" dbtype="string" resource="Common.telecomNumber"/>
+                <field fieldname="telecomtype" dbtype="string" resource="Telecom.telecomType" iscolumnview="false"/>
+                <field fieldname="telecomtypeid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="telecomid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="telecomtype" relationtype="left-join"
+                            resource="Report.foreignRelation.telecomType">
+                    <keyref fieldref="telecomtypeid" foreignfieldref="telecomtypeid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="contactperson" relationtype="left-join"
+                            resource="Report.foreignRelation.contactPerson">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                    <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <constantfilter fieldref="predetermined" resource="Common.predetermined">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Common.alternative"/>
+                        <value key="1" showvalue="Common.predetermined"/>
+                    </values>
+                </constantfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="contacts"/>
+            </modulefunctionality>
+        </table>
+    </database>
+</databasestructure>

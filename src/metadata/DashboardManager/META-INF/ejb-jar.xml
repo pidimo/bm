@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ejb-jar xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd"
+         version="2.1">
+
+    <enterprise-beans>
+        <entity>
+            <ejb-name>AdminComponent</ejb-name>
+            <local-home>com.piramide.elwis.domain.dashboard.AdminComponentHome</local-home>
+            <local>com.piramide.elwis.domain.dashboard.AdminComponent</local>
+            <ejb-class>com.piramide.elwis.domain.dashboard.AdminComponentBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>com.piramide.elwis.domain.dashboard.AdminComponentPK</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>AdminComponent</abstract-schema-name>
+            <cmp-field>
+                <field-name>containerId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>componentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>rowX</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>columnY</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>xmlComponentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyid</field-name>
+            </cmp-field>
+            <query>
+                <query-method>
+                    <method-name>findByContainerId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[
+                  SELECT OBJECT(adminComp)
+                  FROM AdminComponent as adminComp
+                  WHERE adminComp.containerId =?1
+                  ORDER BY adminComp.rowX ASC, adminComp.columnY ASC
+                  ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByColumnY</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[
+                  SELECT OBJECT(adminComp)
+                  FROM AdminComponent as adminComp
+                  WHERE adminComp.containerId =?1 AND adminComp.columnY = ?2
+                  ORDER BY adminComp.rowX ASC
+                  ]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>DashboardContainer</ejb-name>
+            <local-home>com.piramide.elwis.domain.dashboard.DashboardContainerHome</local-home>
+            <local>com.piramide.elwis.domain.dashboard.DashboardContainer</local>
+            <ejb-class>com.piramide.elwis.domain.dashboard.DashboardContainerBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>DashboardContainer</abstract-schema-name>
+            <cmp-field>
+                <field-name>dashboardContainerId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>userId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>dashboardContainerId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByUserIdCompanyId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[
+                      SELECT OBJECT(cont)
+                      FROM DashboardContainer as cont
+                      WHERE cont.userId =?1 AND cont.companyId = ?2
+                    ]]>
+                </ejb-ql>
+            </query>
+        </entity>
+        <entity>
+            <ejb-name>Component</ejb-name>
+            <local-home>com.piramide.elwis.domain.dashboard.ComponentHome</local-home>
+            <local>com.piramide.elwis.domain.dashboard.Component</local>
+            <ejb-class>com.piramide.elwis.domain.dashboard.ComponentBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>Component</abstract-schema-name>
+            <cmp-field>
+                <field-name>componentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>xmlComponentId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>componentId</primkey-field>
+        </entity>
+        <entity>
+            <ejb-name>Filter</ejb-name>
+            <local-home>com.piramide.elwis.domain.dashboard.FilterHome</local-home>
+            <local>com.piramide.elwis.domain.dashboard.Filter</local>
+            <ejb-class>com.piramide.elwis.domain.dashboard.FilterBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>Filter</abstract-schema-name>
+            <cmp-field>
+                <field-name>filterId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>val</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>isRange</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>name</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>filterId</primkey-field>
+        </entity>
+        <entity>
+            <ejb-name>ComponentColumn</ejb-name>
+            <local-home>com.piramide.elwis.domain.dashboard.ComponentColumnHome</local-home>
+            <local>com.piramide.elwis.domain.dashboard.ComponentColumn</local>
+            <ejb-class>com.piramide.elwis.domain.dashboard.ComponentColumnBean</ejb-class>
+            <persistence-type>Container</persistence-type>
+            <prim-key-class>java.lang.Integer</prim-key-class>
+            <reentrant>false</reentrant>
+
+            <cmp-version>2.x</cmp-version>
+            <abstract-schema-name>ComponentColumn</abstract-schema-name>
+            <cmp-field>
+                <field-name>componentColumnId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>xmlColumnId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>ord</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>position</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>companyId</field-name>
+            </cmp-field>
+            <primkey-field>componentColumnId</primkey-field>
+            <query>
+                <query-method>
+                    <method-name>findByComponentIdAndXMLColumnId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[
+                  SELECT OBJECT(col)
+                  FROM ComponentColumn as col
+                  WHERE col.component.componentId=?1 AND col.xmlColumnId=?2
+                  ]]>
+                </ejb-ql>
+            </query>
+            <query>
+                <query-method>
+                    <method-name>findByComponentId</method-name>
+                    <method-params>
+                        <method-param>java.lang.Integer</method-param>
+                    </method-params>
+                </query-method>
+                <ejb-ql>
+                    <![CDATA[
+                  SELECT OBJECT(col)
+                  FROM ComponentColumn as col
+                  WHERE col.component.componentId=?1
+                  ORDER BY col.position
+                  ]]>
+                </ejb-ql>
+            </query>
+        </entity>
+    </enterprise-beans>
+    <relationships>
+        <ejb-relation>
+            <ejb-relation-name>Component - Column</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>componentRole</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Component</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>columns</cmr-field-name>
+                    <cmr-field-type>java.util.Collection</cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>columnRole</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>ComponentColumn</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>component</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>Component - Filter</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>componentRole</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Component</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>filters</cmr-field-name>
+                    <cmr-field-type>java.util.Collection</cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>filterRole</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>Filter</ejb-name>
+                </relationship-role-source>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>DashboardContainer - AdminComponent</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>dashboardContainerRole</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>DashboardContainer</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>adminComponents</cmr-field-name>
+                    <cmr-field-type>java.util.Collection</cmr-field-type>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>adminComponentRole</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>AdminComponent</ejb-name>
+                </relationship-role-source>
+            </ejb-relationship-role>
+        </ejb-relation>
+        <ejb-relation>
+            <ejb-relation-name>AdminComponent - Component</ejb-relation-name>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>AdminComponentRole</ejb-relationship-role-name>
+                <multiplicity>Many</multiplicity>
+                <cascade-delete/>
+                <relationship-role-source>
+                    <ejb-name>AdminComponent</ejb-name>
+                </relationship-role-source>
+                <cmr-field>
+                    <cmr-field-name>component</cmr-field-name>
+                </cmr-field>
+            </ejb-relationship-role>
+            <ejb-relationship-role>
+                <ejb-relationship-role-name>componentRole</ejb-relationship-role-name>
+                <multiplicity>One</multiplicity>
+                <relationship-role-source>
+                    <ejb-name>Component</ejb-name>
+                </relationship-role-source>
+            </ejb-relationship-role>
+        </ejb-relation>
+    </relationships>
+    <assembly-descriptor>
+    </assembly-descriptor>
+</ejb-jar>

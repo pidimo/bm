@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ========== Defined Types ============================================= -->
+<!-- A "Boolean" is the string representation of a boolean (true or false)
+     variable.
+-->
+<!ENTITY % Boolean "(true|false)">
+
+<!-- A "FieldType" is the string representation of the field types.
+-->
+<!ENTITY % FieldType "(string|integer|decimal|date|bitwise|database|constant|unknown)">
+
+<!-- ========== Top Level Elements ======================================== -->
+<!ELEMENT dynamicsearchs (dynamicsearch)*>
+<!ELEMENT dynamicsearch (fields,dynamicfields?)>
+<!ATTLIST dynamicsearch
+    name CDATA #REQUIRED>
+
+<!ELEMENT fields (field)+>
+<!ELEMENT field (innerfield?,operators?)>
+<!ATTLIST field
+    alias CDATA #REQUIRED
+    type %FieldType; #IMPLIED
+    resource CDATA #IMPLIED>
+
+<!ELEMENT operators (operator)*>
+<!ELEMENT operator (#PCDATA)>
+<!ATTLIST operator
+    name CDATA #REQUIRED
+    parametername CDATA #IMPLIED
+    isparameter %Boolean; #IMPLIED
+    isdefault %Boolean; #IMPLIED>
+
+<!ELEMENT innerfield (operators?)>
+<!ATTLIST innerfield
+    alias CDATA #REQUIRED
+    type %FieldType; #IMPLIED
+    resource CDATA #IMPLIED>
+
+<!ELEMENT dynamicfields (dynamicfield)+>
+<!ELEMENT dynamicfield EMPTY>
+<!ATTLIST dynamicfield
+    loadfieldclass CDATA #REQUIRED
+    joinfieldalias CDATA #REQUIRED
+    joinfieldalias2 CDATA #IMPLIED>

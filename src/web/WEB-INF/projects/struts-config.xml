@@ -1,0 +1,705 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="projectForm" type="com.piramide.elwis.web.projects.form.ProjectForm"/>
+        <form-bean name="reportExecuteForm" type="com.piramide.elwis.web.reports.form.ReportExecuteForm"/>
+        <form-bean name="projectReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+
+        <form-bean name="projectTimeForm" type="com.piramide.elwis.web.projects.form.ProjectTimeForm"/>
+        <form-bean name="projectTimeRegistrationForm" type="com.piramide.elwis.web.projects.form.ProjectTimeRegistrationForm"/>
+        <form-bean name="projectUserForm" type="com.piramide.elwis.web.projects.form.ProjectUserForm"/>
+        <form-bean name="projectActivityForm" type="com.piramide.elwis.web.projects.form.ProjectActivityForm"/>
+        <form-bean name="subProjectForm" type="com.piramide.elwis.web.projects.form.SubProjectForm"/>
+        <form-bean name="projectTimeLimitForm" type="com.piramide.elwis.web.projects.form.ProjectTimeLimitForm"/>
+        <!--Begin Alvaro-->
+        <form-bean name="projectTimesReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="projectTimesAdvancedSearchForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <!--End Alvaro-->
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainSearch" path="/Project/List.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+
+        <action path="/Project/List" type="com.piramide.elwis.web.projects.action.ProjectListAction" name="listForm"
+                scope="request" input="/ProjectList.jsp" validate="false" parameter="projectList" roles="PROJECT.VIEW">
+            <forward name="Success" path="/ProjectList.jsp"/>
+        </action>
+
+        <action path="/Project/Forward/Create"
+                type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction"
+                name="projectForm"
+                scope="request"
+                validate="false"
+                parameter="/projects/ProjectDetailForCreate.jsp"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping"
+                roles="PROJECT.CREATE">
+            <set-property property="mainTable" value="project"/>
+        </action>
+
+        <action path="/Project/Create"
+                type="com.piramide.elwis.web.projects.action.ProjectAction"
+                name="projectForm"
+                scope="request"
+                input="/ProjectDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectCmd"
+                roles="PROJECT.CREATE">
+            <forward name="Success" path="/Project/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/Project/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Project/Forward/Update" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="projectForm" scope="request" input="/Project/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectCmd" roles="PROJECT.UPDATE">
+            <forward name="Success" path="/ProjectDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Project/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectUpdateAction"
+                name="projectForm"
+                scope="request"
+                input="/ProjectDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectCmd"
+                roles="PROJECT.UPDATE">
+            <forward name="Success" path="/Project/Forward/Update.do?dto(op)="/>
+            <forward name="Cancel" path="/Project/List.do" redirect="true"/>
+            <forward name="Fail" path="/Project/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+
+        <action path="/Project/Forward/Delete" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="projectForm" scope="request" input="/Project/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectCmd" roles="PROJECT.DELETE">
+            <forward name="Success" path="/ProjectDetailForDelete.jsp"/>
+        </action>
+
+        <action path="/Project/Delete" type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectForm" scope="request" input="/ProjectDetailForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectCmd" roles="PROJECT.DELETE">
+            <forward name="Success" path="/Project/List.do" redirect="true"/>
+            <forward name="Fail" path="/Project/List.do"/>
+            <forward name="Cancel" path="/Project/List.do" redirect="true"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+
+        <!--ProjectTime ActionMappings-->
+        <action path="/ProjectTime/List"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeListAction"
+                name="listForm"
+                scope="request"
+                input="/ProjectTimeList.jsp"
+                validate="false"
+                parameter="projectTimeList"
+                roles="PROJECTTIME.VIEW">
+            <forward name="Success" path="/ProjectTimeList.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTimeRegistration/List"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeRegistrationListAction"
+                name="listForm"
+                scope="request"
+                input="/ProjectTimeRegistrationList.jsp"
+                validate="false"
+                parameter="projectTimeRegistrationList"
+                roles="PROJECTTIME.VIEW">
+            <forward name="Success" path="/ProjectTimeRegistrationList.jsp"/>
+        </action>
+        <action path="/ProjectTimeRegistration/Forward/Create"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeRegistrationForwardAction"
+                name="projectTimeRegistrationForm"
+                scope="request"
+                validate="false"
+                parameter="/projects/ProjectTimeRegistrationDetailForCreate.jsp"
+                roles="PROJECTTIME.CREATE">
+            <forward name="Fail" path="/ProjectTimeRegistration/List.do"/>
+            <forward name="Detail" path="/ProjectTimeRegistration/List.do"/>
+        </action>
+        <action path="/ProjectTimeRegistration/Create"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeRegistrationAction"
+                name="projectTimeRegistrationForm"
+                scope="request"
+                input="/ProjectTimeRegistrationDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.CREATE">
+            <forward name="Success" path="/ProjectTimeRegistration/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTimeRegistration/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/ProjectTimeRegistration/Forward/Create.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectTimeRegistration/List.do"/>
+            <forward name="Detail" path="/ProjectTimeRegistration/List.do"/>
+        </action>
+        <action path="/ProjectTimeRegistration/Forward/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeRegistrationAction"
+                name="projectTimeRegistrationForm"
+                scope="request"
+                input="/ProjectTimeRegistration/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.VIEW">
+            <forward name="Success" path="/ProjectTimeRegistrationDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/ProjectTimeRegistration/List.do"/>
+            <forward name="Detail" path="/ProjectTimeRegistration/List.do"/>
+        </action>
+        <action path="/ProjectTimeRegistration/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeRegistrationAction"
+                name="projectTimeRegistrationForm"
+                scope="request"
+                input="/ProjectTimeRegistrationDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.UPDATE">
+            <forward name="Success" path="/ProjectTimeRegistration/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTimeRegistration/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectTimeRegistration/List.do"/>
+            <forward name="Detail" path="/ProjectTimeRegistration/List.do"/>
+        </action>
+        <action path="/ProjectTimeRegistration/Forward/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeRegistrationAction"
+                name="projectTimeRegistrationForm"
+                scope="request"
+                input="/ProjectTimeRegistration/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.DELETE">
+            <forward name="Success" path="/ProjectTimeRegistrationDetailForDelete.jsp"/>
+            <forward name="Fail" path="/ProjectTimeRegistration/List.do"/>
+            <forward name="Detail" path="/ProjectTimeRegistration/List.do"/>
+        </action>
+        <action path="/ProjectTimeRegistration/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeRegistrationAction"
+                name="projectTimeRegistrationForm"
+                scope="request"
+                input="/ProjectTimeRegistrationDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.DELETE">
+            <forward name="Success" path="/ProjectTimeRegistration/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTimeRegistration/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectTimeRegistration/List.do"/>
+            <forward name="Detail" path="/ProjectTimeRegistration/List.do"/>
+        </action>
+        <action path="/ProjectTime/Forward/Create"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeCreateForwardAction"
+                name="projectTimeForm"
+                scope="request"
+                validate="false"
+                parameter="/projects/ProjectTimeDetailForCreate.jsp"
+                roles="PROJECTTIME.CREATE">
+            <forward name="Fail" path="/ProjectTime/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTime/Create"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeAction"
+                name="projectTimeForm"
+                scope="request"
+                input="/ProjectTimeDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.CREATE">
+            <forward name="Success" path="/ProjectTime/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTime/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/ProjectTime/Forward/Create.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectTime/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTime/Forward/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeAction"
+                name="projectTimeForm"
+                scope="request"
+                input="/ProjectTime/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.VIEW">
+            <forward name="Success" path="/ProjectTimeDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/ProjectTime/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTime/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeAction"
+                name="projectTimeForm"
+                scope="request"
+                input="/ProjectTimeDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.UPDATE">
+            <forward name="Success" path="/ProjectTime/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTime/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectTime/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTime/Forward/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeAction"
+                name="projectTimeForm"
+                scope="request"
+                input="/ProjectTime/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.DELETE">
+            <forward name="Success" path="/ProjectTimeDetailForDelete.jsp"/>
+            <forward name="Fail" path="/ProjectTime/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTime/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeAction"
+                name="projectTimeForm"
+                scope="request"
+                input="/ProjectTimeDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeCmd"
+                roles="PROJECTTIME.DELETE">
+            <forward name="Success" path="/ProjectTime/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTime/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectTime/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTime/CheckLimit/Ajax"
+                type="com.piramide.elwis.web.projects.action.ProjectTimeCheckLimitExceededAjaxAction"
+                name="form"
+                scope="request"
+                validate="false"/>
+
+        <!--ProjectUser ActionMappings-->
+        <action path="/ProjectUser/List"
+                type="com.piramide.elwis.web.projects.action.AdminUserProjectListAction"
+                name="listForm"
+                scope="request"
+                input="/ProjectUserList.jsp"
+                validate="false"
+                parameter="projectUserList"
+                roles="PROJECTUSER.VIEW">
+            <forward name="Success" path="/ProjectUserList.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectUser/Forward/CreateUser"
+                type="com.piramide.elwis.web.projects.action.ProjectUserCreateForwardAction"
+                name="projectUserForm"
+                scope="request"
+                validate="false"
+                parameter="/projects/ProjectUserDetailForCreate.jsp"
+                roles="PROJECTUSER.CREATE">
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectUser/CreateUser"
+                type="com.piramide.elwis.web.projects.action.ProjectUserCreateAction"
+                name="projectUserForm"
+                scope="request"
+                input="/ProjectUserDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectAssigneeCmd"
+                roles="PROJECTUSER.CREATE">
+            <forward name="Success" path="/ProjectUser/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectUser/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/ProjectUser/Forward/CreateUser.do" redirect="true"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectUser/Forward/CreatePerson"
+                type="com.piramide.elwis.web.projects.action.ProjectUserCreateForwardAction"
+                name="projectUserForm"
+                scope="request"
+                validate="false"
+                parameter="/projects/ProjectUserDetailForCreatePerson.jsp"
+                roles="PROJECTUSER.CREATE">
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectUser/CreatePerson"
+                type="com.piramide.elwis.web.projects.action.ProjectUserCreateAction"
+                name="projectUserForm"
+                scope="request"
+                input="/ProjectUserDetailForCreatePerson.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectAssigneeCmd"
+                roles="PROJECTUSER.CREATE">
+            <forward name="Success" path="/ProjectUser/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectUser/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/ProjectUser/Forward/CreatePerson.do?createPerson=true" redirect="true"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectUser/Forward/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectUserForm"
+                scope="request"
+                input="/ProjectUser/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectAssigneeCmd"
+                roles="PROJECTUSER.VIEW">
+            <forward name="Success" path="/ProjectUserDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Project/Forward/Update.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectUser/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectUserForm"
+                scope="request"
+                input="/ProjectUserDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectAssigneeCmd"
+                roles="PROJECTUSER.UPDATE">
+            <forward name="Success" path="/ProjectUser/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectUser/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectUser/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectUser/Forward/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectUserForm"
+                scope="request"
+                input="/ProjectUser/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectAssigneeCmd"
+                roles="PROJECTUSER.DELETE">
+            <forward name="Success" path="/ProjectUserDetailForDelete.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectUser/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectUserForm"
+                scope="request"
+                input="/ProjectUserDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectAssigneeCmd"
+                roles="PROJECTUSER.DELETE">
+            <forward name="Success" path="/ProjectUser/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectUser/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectUser/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <!--search elwis user pop up list-->
+        <action path="/ProjectUser/SearchElwisUser"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request"
+                validate="false"
+                input="/SearchElwisUser.jsp"
+                parameter="elwisUserList">
+            <forward name="Success" path="/SearchElwisUser.jsp"/>
+        </action>
+
+        <!--ProjectActivity ActionMappings-->
+        <action path="/ProjectActivity/List"
+                type="com.piramide.elwis.web.projects.action.AdminUserProjectListAction"
+                name="listForm"
+                scope="request"
+                input="/ProjectActivityList.jsp"
+                validate="false"
+                parameter="projectActivityList"
+                roles="PROJECTACTIVITY.VIEW">
+            <forward name="Success" path="/ProjectActivityList.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectActivity/Forward/Create"
+                type="com.piramide.elwis.web.projects.action.AdminUserProjectForwardAction"
+                name="projectActivityForm"
+                scope="request"
+                validate="false"
+                parameter="/projects/ProjectActivityDetailForCreate.jsp"
+                roles="PROJECTACTIVITY.CREATE">
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectActivity/Create"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectActivityForm"
+                scope="request"
+                input="/ProjectActivityDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectActivityCmd"
+                roles="PROJECTACTIVITY.CREATE">
+            <forward name="Success" path="/ProjectActivity/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectActivity/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/ProjectActivity/Forward/Create.do" redirect="true"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectActivity/Forward/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectActivityForm"
+                scope="request"
+                input="/ProjectActivity/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectActivityCmd"
+                roles="PROJECTACTIVITY.VIEW">
+            <forward name="Success" path="/ProjectActivityDetailForUpdate.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectActivity/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectActivityForm"
+                scope="request"
+                input="/ProjectActivityDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectActivityCmd"
+                roles="PROJECTACTIVITY.UPDATE">
+            <forward name="Success" path="/ProjectActivity/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectActivity/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectActivity/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectActivity/Forward/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectActivityForm"
+                scope="request"
+                input="/ProjectActivity/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectActivityCmd"
+                roles="PROJECTACTIVITY.DELETE">
+            <forward name="Success" path="/ProjectActivityDetailForDelete.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectActivity/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectActivityForm"
+                scope="request"
+                input="/ProjectActivityDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectActivityCmd"
+                roles="PROJECTACTIVITY.DELETE">
+            <forward name="Success" path="/ProjectActivity/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectActivity/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectActivity/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+
+        <!--SubProject ActionMappings-->
+        <action path="/SubProject/List"
+                type="com.piramide.elwis.web.projects.action.AdminUserProjectListAction"
+                name="listForm"
+                scope="request"
+                input="/SubProjectList.jsp"
+                validate="false"
+                parameter="subProjectList"
+                roles="PROJECTSUBPROJECT.VIEW">
+            <forward name="Success" path="/SubProjectList.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/SubProject/Forward/Create"
+                type="com.piramide.elwis.web.projects.action.AdminUserProjectForwardAction"
+                name="subProjectForm"
+                scope="request"
+                validate="false"
+                parameter="/projects/SubProjectDetailForCreate.jsp"
+                roles="PROJECTSUBPROJECT.CREATE">
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/SubProject/Create"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="subProjectForm"
+                scope="request"
+                input="/SubProjectDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.SubProjectCmd"
+                roles="PROJECTSUBPROJECT.CREATE">
+            <forward name="Success" path="/SubProject/List.do" redirect="true"/>
+            <forward name="Cancel" path="/SubProject/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/SubProject/Forward/Create.do" redirect="true"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/SubProject/Forward/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="subProjectForm"
+                scope="request"
+                input="/SubProject/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.SubProjectCmd"
+                roles="PROJECTSUBPROJECT.VIEW">
+            <forward name="Success" path="/SubProjectDetailForUpdate.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/SubProject/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="subProjectForm"
+                scope="request"
+                input="/SubProjectDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.SubProjectCmd"
+                roles="PROJECTSUBPROJECT.UPDATE">
+            <forward name="Success" path="/SubProject/List.do" redirect="true"/>
+            <forward name="Cancel" path="/SubProject/List.do" redirect="true"/>
+            <forward name="Fail" path="/SubProject/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/SubProject/Forward/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="subProjectForm"
+                scope="request"
+                input="/SubProject/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.SubProjectCmd"
+                roles="PROJECTSUBPROJECT.DELETE">
+            <forward name="Success" path="/SubProjectDetailForDelete.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/SubProject/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="subProjectForm"
+                scope="request"
+                input="/SubProjectDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.SubProjectCmd"
+                roles="PROJECTSUBPROJECT.DELETE">
+            <forward name="Success" path="/SubProject/List.do" redirect="true"/>
+            <forward name="Cancel" path="/SubProject/List.do" redirect="true"/>
+            <forward name="Fail" path="/SubProject/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/SubProject/ProjectTime/List"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerListAction"
+                name="listForm" scope="request" input="/SubProject/List.do" validate="false"
+                parameter="subProjectTimeList" roles="PROJECTTIME.VIEW">
+            <forward name="Success" path="/SubProjectTimeList.jsp"/>
+        </action>
+
+        <!--ProjectTimeLimit ActionMappings-->
+        <action path="/ProjectTimeLimit/List"
+                type="com.piramide.elwis.web.projects.action.AdminUserProjectListAction"
+                name="listForm"
+                scope="request"
+                input="/ProjectTimeLimitList.jsp"
+                validate="false"
+                parameter="projectTimeLimitList"
+                roles="PROJECTTIMELIMIT.VIEW">
+            <forward name="Success" path="/ProjectTimeLimitList.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTimeLimit/Forward/Create"
+                type="com.piramide.elwis.web.projects.action.AdminUserProjectForwardAction"
+                name="projectTimeLimitForm"
+                scope="request"
+                validate="false"
+                parameter="/projects/ProjectTimeLimitDetailForCreate.jsp"
+                roles="PROJECTTIMELIMIT.CREATE">
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTimeLimit/Create"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectTimeLimitForm"
+                scope="request"
+                input="/ProjectTimeLimitDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeLimitCmd"
+                roles="PROJECTTIMELIMIT.CREATE">
+            <forward name="Success" path="/ProjectTimeLimit/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTimeLimit/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/ProjectTimeLimit/Forward/Create.do" redirect="true"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTimeLimit/Forward/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectTimeLimitForm"
+                scope="request"
+                input="/ProjectTimeLimit/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeLimitCmd"
+                roles="PROJECTTIMELIMIT.VIEW">
+            <forward name="Success" path="/ProjectTimeLimitDetailForUpdate.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTimeLimit/Update"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectTimeLimitForm"
+                scope="request"
+                input="/ProjectTimeLimitDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeLimitCmd"
+                roles="PROJECTTIMELIMIT.UPDATE">
+            <forward name="Success" path="/ProjectTimeLimit/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTimeLimit/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectTimeLimit/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTimeLimit/Forward/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectTimeLimitForm"
+                scope="request"
+                input="/ProjectTimeLimit/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeLimitCmd"
+                roles="PROJECTTIMELIMIT.DELETE">
+            <forward name="Success" path="/ProjectTimeLimitDetailForDelete.jsp"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+        <action path="/ProjectTimeLimit/Delete"
+                type="com.piramide.elwis.web.projects.action.ProjectManagerAction"
+                name="projectTimeLimitForm"
+                scope="request"
+                input="/ProjectTimeLimitDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.projects.ProjectTimeLimitCmd"
+                roles="PROJECTTIMELIMIT.DELETE">
+            <forward name="Success" path="/ProjectTimeLimit/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProjectTimeLimit/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProjectTimeLimit/List.do"/>
+            <forward name="Detail" path="/Project/Forward/Update.do"/>
+        </action>
+
+        <!--Begin Alvaro-->
+        <action path="/Project/Forward/ProjectReportList" type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction"
+                name="projectReportForm" scope="request" input="/Project/List.do" validate="false"
+                parameter="/projects/ProjectReportList.jsp" roles="PROJECT.VIEW"/>
+
+        <action path="/Project/ProjectReportList/Execute" input="/ProjectReportList.jsp" roles="PROJECT.VIEW"
+                type="com.piramide.elwis.web.common.action.report.ReportAction" name="projectReportForm"
+                scope="request" parameter="projectReportList" validate="true">
+            <forward name="Success" path="/report/ProjectReportList.jsp"/>
+        </action>
+
+        <action path="/Project/Forward/ProjectTimesReportList" type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction"
+                name="projectTimesReportForm" scope="request" input="/Project/List.do" validate="false"
+                parameter="/projects/ProjectTimesReportList.jsp" roles="PROJECTTIME.VIEW"/>
+
+        <action path="/Project/ProjectTimesReportList/Execute" input="/ProjectTimesReportList.jsp" roles="PROJECTTIME.VIEW"
+                type="com.piramide.elwis.web.projects.action.report.TimeRegistrationsReportAction" name="projectTimesReportForm"
+                scope="request" parameter="projectTimeReportList" validate="true">
+            <forward name="Success" path="/ProjectTimesReportList.jsp"/>
+            <forward name="Fail" path="/ProjectTimesReportList.jsp"/>
+        </action>
+
+        <action path="/Project/ProjectListPopUp" type="com.piramide.elwis.web.projects.action.ProjectListAction" name="listForm"
+                scope="request" input="/ProjectListForPopUp.jsp" validate="false" parameter="projectListForPopUp" roles="PROJECT.VIEW">
+            <forward name="Success" path="/ProjectListForPopUp.jsp"/>
+        </action>
+
+        <action path="/Project/ProjectTimesAdvancedSearch"
+                input="/ProjectTimesAdvancedSearch.jsp"
+                roles="PROJECTTIME.VIEW"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="projectTimesAdvancedSearchForm"
+                scope="request"
+                parameter="projectTimeAdvancedSearchList"
+                validate="true">
+            <forward name="Success" path="/ProjectTimesAdvancedSearch.jsp"/>
+            <forward name="Fail" path="/Project/List.do"/>
+        </action>
+        <!--End Alvaro-->
+    </action-mappings>
+
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames" value="/WEB-INF/common/validator-rules.xml,
+                /WEB-INF/projects/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/projects/fantabulous.xml"/>
+        <set-property property="moduleParams" value="projectId, index"/>
+    </plug-in>
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="projectId, index"/>
+    </plug-in>
+
+</struts-config>

@@ -1,0 +1,101 @@
+[Root]
+Most Recent Package=Standard Setup Package 1
+
+
+[Package|Standard Setup Package 1|Root]
+SubWizProgID=PDWizard.SetupPkgSubWiz
+BuildFolder=D:\programing\vbins
+
+[Package|Standard Setup Package 1|Configure DAO ISAMs]
+Applicable=No
+
+[Package|Standard Setup Package 1|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|Standard Setup Package 1|Files Found]
+
+[Package|Standard Setup Package 1|Files Released]
+VB6ES.dll=
+
+[Package|Standard Setup Package 1|Missing Dependency Information]
+C:\Archivos de programa\IPWorks V6\ActiveX Edition\lib\webupl60.ocx=
+C:\WINDOWS\SYSTEM\msxml3.dll=
+C:\Archivos de programa\Microsoft Office\Office\MSO9.DLL=
+C:\Archivos de programa\Microsoft Office\Office\MSWORD9.OLB=
+C:\Archivos de programa\Elwis2 - Upload Documents Plugin\webupl60.ocx=
+
+[Package|Standard Setup Package 1|Out-of-Date Dependency Information]
+C:\WINDOWS\SYSTEM\SCRRUN.DLL=
+
+[Package|Standard Setup Package 1|Files Added]
+
+[Package|Standard Setup Package 1|Files Removed]
+c:\archivos de programa\microsoft office\office\mso9.dll=
+c:\archivos de programa\microsoft office\office\msword9.olb=
+c:\windows\system\scrrnes.dll=
+c:\windows\system\scrrun.dll=
+
+[Package|Standard Setup Package 1|Files In Project]
+C:\WINDOWS\SYSTEM\MSVBVM60.DLL=Yes
+C:\WINDOWS\SYSTEM\OLEAUT32.DLL=Yes
+C:\WINDOWS\SYSTEM\OLEPRO32.DLL=Yes
+C:\WINDOWS\SYSTEM\ASYCFILT.DLL=Yes
+C:\WINDOWS\SYSTEM\STDOLE2.TLB=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+C:\Archivos de programa\Microsoft Office\Office\MSWORD9.OLB=No
+C:\Archivos de programa\Microsoft Office\Office\MSO9.DLL=No
+C:\WINDOWS\SYSTEM\msxml3.dll=Yes
+C:\WINDOWS\SYSTEM\SCRRUN.DLL=No
+C:\WINDOWS\SYSTEM\MSVCRT.DLL=Yes
+C:\WINDOWS\SYSTEM\SCRRNES.DLL=No
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=Yes
+C:\WINDOWS\SYSTEM\VB6STKIT.DLL=Yes
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=Yes
+D:\programing\word-plugin\core\ElwisCore.dll=Yes
+C:\Archivos de programa\Elwis2 - Upload Documents Plugin\webupl60.ocx=Yes
+
+[Package|Standard Setup Package 1|Configure Registry Files]
+Applicable=No
+
+[Package|Standard Setup Package 1|Configure Remote Servers]
+Applicable=No
+
+[Package|Standard Setup Package 1|Install Locations]
+D:\programing\elwis\core\ElwisCore.dll=$(AppPath)
+C:\WINDOWS\SYSTEM\MSVBVM60.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\OLEAUT32.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\OLEPRO32.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\ASYCFILT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\STDOLE2.TLB=$(WinSysPathSysFile)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+C:\WINDOWS\SYSTEM\MSVCRT.DLL=$(WinSysPathSysFile)
+C:\Archivos de programa\IPWorks V6\ActiveX Edition\lib\webupl60.ocx=$(WinSysPath)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP.EXE=$(AppPath)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\SETUP1.EXE=$(WinPath)
+C:\WINDOWS\SYSTEM\VB6STKIT.DLL=$(WinSysPathSysFile)
+C:\Archivos de programa\Microsoft Visual Studio\VB98\Wizards\PDWizard\ST6UNST.EXE=$(WinPath)
+D:\programing\word-plugin\core\ElwisCore.dll=$(AppPath)
+C:\WINDOWS\SYSTEM\msxml3.dll=$(WinSysPath)
+C:\Archivos de programa\Elwis2 - Upload Documents Plugin\webupl60.ocx=$(WinSysPath)
+
+[Package|Standard Setup Package 1|Configure Shared Files]
+Applicable=Yes
+D:\programing\elwis\core\ElwisCore.dll=No
+D:\programing\word-plugin\core\ElwisCore.dll=No
+
+[Package|Standard Setup Package 1|Distribution]
+Type=single
+Size=
+Title=Elwis Plugin
+
+[Package|Standard Setup Package 1|Package]
+PackageFolder=D:\programing\vbins
+ProjectFolder=D:\programing\word-plugin\core
+ServerSideCab=
+File1=D:\programing\vbins\setup.exe
+File2=D:\programing\vbins\Setup.Lst
+File3=D:\programing\vbins\ElwisCore.CAB
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz

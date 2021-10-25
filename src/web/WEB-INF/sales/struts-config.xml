@@ -1,0 +1,1714 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="advancedListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="salesProcessForm" type="com.piramide.elwis.web.salesmanager.form.SalesProcessForm"/>
+        <form-bean name="actionPositionForm" type="com.piramide.elwis.web.salesmanager.form.ActionPositionForm"/>
+        <form-bean name="actionForm" type="com.piramide.elwis.web.salesmanager.form.ActionForm"/>
+        <form-bean name="mainCommunicationForm"
+                   type="com.piramide.elwis.web.contactmanager.form.MainCommunicationForm"/>
+        <form-bean name="taskForm" type="com.piramide.elwis.web.schedulermanager.form.TaskForm"/>
+        <form-bean name="contractInvoiceCreateForm"
+                   type="com.piramide.elwis.web.financemanager.form.ContractInvoiceCreateForm"/>
+        <form-bean name="saleAdvancedListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="saleForm" type="com.piramide.elwis.web.salesmanager.form.SaleForm"/>
+        <form-bean name="saleBySalesProcessForm"
+                   type="com.piramide.elwis.web.salesmanager.form.SaleBySalesProcessForm"/>
+        <form-bean name="salePositionForm" type="com.piramide.elwis.web.salesmanager.form.SalePositionForm"/>
+        <form-bean name="productContractForm" type="com.piramide.elwis.web.salesmanager.form.ProductContractForm"/>
+        <form-bean name="productContractAdvancedListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="taskListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="invoiceForm" type="com.piramide.elwis.web.financemanager.form.InvoiceForm"/>
+        <!--    forms for statics  reports-->
+        <form-bean name="salesProcessReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="processActionReportForm"
+                   type="com.piramide.elwis.web.salesmanager.form.report.ProcessActionForm"/>
+        <form-bean name="actionPositionReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="contractsOverviewReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="reportExecuteForm" type="com.piramide.elwis.web.reports.form.ReportExecuteForm"/>
+        <form-bean name="reportJrxmlExecuteForm" type="com.piramide.elwis.web.reports.form.ReportJrxmlExecuteForm"/>
+        <form-bean name="categoryFieldValueForm"
+                   type="com.piramide.elwis.web.catalogmanager.form.CategoryFieldValueForm"/>
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainSearch" path="/SalesProcess/List.do"/>
+        <forward name="MainSaleList" path="/Sale/SingleList.do" redirect="true"/>
+        <forward name="MainSaleBySalesProcessList" path="/SalesProcess/Sale/List.do" redirect="true"/>
+        <forward name="MainProductContractList" path="/ProductContract/List.do" redirect="true"/>
+        <forward name="ContractAdvancedSearch" path="/ProductContract/AdvancedList.do"/>
+        <forward name="SaleAdvancedSearch" path="/Sale/AdvancedList.do"/>
+        <forward name="SalesProcessAdvancedSearch" path="/AdvancedSearch.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+        <!--ProductContract action mappings-->
+        <action path="/ProductContract/List"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractMainListAction"
+                name="listForm"
+                scope="request"
+                input="/ProductContractList.jsp"
+                validate="false"
+                parameter="productContractMainSingleList"
+                roles="PRODUCTCONTRACT.VIEW">
+            <forward name="Success" path="/ProductContractList.jsp"/>
+        </action>
+        <action path="/ProductContract/AdvancedList"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="productContractAdvancedListForm"
+                scope="request"
+                input="/ProductContractAdvancedList.jsp"
+                validate="true"
+                parameter="productContractAdvancedList"
+                roles="PRODUCTCONTRACT.VIEW">
+            <forward name="Success" path="/ProductContractAdvancedList.jsp"/>
+        </action>
+        <action path="/ProductContract/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractCreateForwardAction"
+                name="productContractForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/ProductContractDetailForCreate.jsp"
+                roles="PRODUCTCONTRACT.CREATE"/>
+        <action path="/ProductContract/Create"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractCreateCmd"
+                roles="PRODUCTCONTRACT.CREATE">
+            <forward name="Success" path="/ProductContract/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProductContract/List.do" redirect="true"/>
+        </action>
+        <action path="/ProductContract/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContract/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractReadCmd"
+                roles="PRODUCTCONTRACT.VIEW">
+            <forward name="Success" path="/ProductContractDetailForUpdate.jsp"/>
+        </action>
+        <action path="/ProductContract/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractUpdateCmd"
+                roles="PRODUCTCONTRACT.UPDATE">
+            <forward name="Success" path="/ProductContract/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProductContract/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProductContract/List.do"/>
+        </action>
+        <action path="/ProductContract/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContract/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractReadCmd"
+                roles="PRODUCTCONTRACT.DELETE">
+            <forward name="Success" path="/ProductContractDetailForDelete.jsp"/>
+        </action>
+        <action path="/ProductContract/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractDeleteCmd"
+                roles="PRODUCTCONTRACT.DELETE">
+            <forward name="Success" path="/ProductContract/List.do" redirect="true"/>
+            <forward name="Cancel" path="/ProductContract/List.do" redirect="true"/>
+            <forward name="Fail" path="/ProductContract/List.do"/>
+        </action>
+        <!--Invoices by Contract action mapping-->
+        <action path="/InvoiceByContract/List"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerListAction"
+                name="listForm"
+                scope="request"
+                input="/InvoiceByContractList.jsp"
+                validate="false"
+                parameter="finance@invoiceByContractList"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/InvoiceByContractList.jsp"/>
+        </action>
+        <action path="/InvoiceByContract/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/InvoiceByContract/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReadCmd"
+                roles="INVOICE.DELETE">
+            <forward name="Success" path="/InvoiceByContractDetailForDelete.jsp"/>
+        </action>
+        <action path="/InvoiceByContract/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/InvoiceByContractDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceDeleteCmd"
+                roles="INVOICE.DELETE">
+            <forward name="Success" path="/InvoiceByContract/List.do"/>
+            <forward name="Cancel" path="/InvoiceByContract/List.do" redirect="true"/>
+            <forward name="Fail" path="/InvoiceByContract/List.do"/>
+        </action>
+
+        <!--ProductContract by salePosition action mappings-->
+        <action path="/ProductContract/PaymentOptions"
+                type="com.piramide.elwis.web.common.action.DefaultForwardAction"
+                name="productContractForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/PaymentOptions.jsp"/>
+        <action path="/ProductContractBySalePosition/List"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalePositionListAction"
+                name="listForm"
+                scope="request"
+                input="/ProductContractBySalePositionList.jsp"
+                validate="false"
+                parameter="productContractSingleList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.VIEW">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <forward name="Success" path="/ProductContractBySalePositionList.jsp"/>
+        </action>
+        <action path="/ProductContractBySalePosition/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalePositionCreateForwardAction"
+                name="productContractForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/ProductContractBySalePositionDetailForCreate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.CREATE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <forward name="SalePositionList" path="/SalePosition/List.do"/>
+        </action>
+        <action path="/ProductContractBySalePosition/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalePositionAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractBySalePositionDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractCreateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.CREATE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <forward name="Success" path="/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="SalePositionList" path="/SalePosition/List.do"/>
+        </action>
+        <action path="/ProductContractBySalePosition/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalePositionAction"
+                name="productContractForm"
+                scope="request"
+                input="/SalePosition/Forward/Update.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.VIEW">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <forward name="Success" path="/ProductContractBySalePositionDetailForUpdate.jsp"/>
+            <forward name="SalePositionList" path="/SalePosition/List.do"/>
+        </action>
+        <action path="/ProductContractBySalePosition/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalePositionAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractBySalePositionDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.UPDATE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <forward name="Success" path="/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalePosition/Forward/Update.do"/>
+            <forward name="SalePositionList" path="/SalePosition/List.do"/>
+        </action>
+        <action path="/ProductContractBySalePosition/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalePositionAction"
+                name="productContractForm"
+                scope="request"
+                input="/SalePosition/Forward/Update.do?dto(withReferences)=false"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.DELETE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <forward name="Success" path="/ProductContractBySalePositionDetailForDelete.jsp"/>
+            <forward name="SalePositionList" path="/SalePosition/List.do"/>
+        </action>
+        <action path="/ProductContractBySalePosition/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalePositionAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractBySalePositionDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractDeleteCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.DELETE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <forward name="Success" path="/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalePosition/Forward/Update.do"/>
+            <forward name="SalePositionList" path="/SalePosition/List.do"/>
+        </action>
+        <action path="/SearchProductContract"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request"
+                input="/SearchProductContract.jsp"
+                validate="false"
+                parameter="productContractSearchList">
+            <forward name="Success" path="/SearchProductContract.jsp"/>
+        </action>
+        <!--Address related to ProductContract pop-up list-->
+        <action path="/ProductContractAddress/List"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request"
+                input="/SearchProductContractAddress.jsp"
+                validate="false"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping"
+                parameter="contacts@productContractAddressList">
+            <set-property property="parameterName" value="contactSearchName"/>
+            <forward name="Success" path="/SearchProductContractAddress.jsp"/>
+        </action>
+        <!--SalePosition action mapping-->
+        <action path="/SalePosition/List"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerListAction"
+                name="listForm"
+                scope="request"
+                input="/SalePositionList.jsp"
+                validate="false"
+                parameter="salePositionList"
+                roles="SALEPOSITION.VIEW">
+            <forward name="Success" path="/SalePositionList.jsp"/>
+        </action>
+        <action path="/SalePosition/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.SalePositionCreateForwardAction"
+                name="salePositionForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/SalePositionDetailForCreate.jsp"
+                roles="SALEPOSITION.CREATE"/>
+        <action path="/SalePosition/Create"
+                type="com.piramide.elwis.web.salesmanager.action.SalePositionCreateAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalePositionDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionCreateCmd"
+                roles="SALEPOSITION.CREATE">
+            <forward name="Success" path="/ProductContractBySalePosition/Forward/Create.do" redirect="true"/>
+            <forward name="ToList" path="/SalePosition/List.do" redirect="true"/>
+            <forward name="Cancel" path="/SalePosition/List.do" redirect="true"/>
+        </action>
+        <action path="/SalePosition/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalePosition/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALEPOSITION.VIEW">
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWriteText" value="dto(productName)"/>
+
+            <forward name="Success" path="/SalePositionDetailForUpdate.jsp"/>
+        </action>
+        <action path="/SalePosition/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SalePositionUpdateAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalePositionDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALEPOSITION.UPDATE">
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWrite" value="salePositionId"/>
+
+            <forward name="Success" path="/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="ToList" path="/SalePosition/List.do" redirect="true"/>
+            <forward name="Cancel" path="/SalePosition/List.do" redirect="true"/>
+            <forward name="Fail" path="/SalePosition/List.do"/>
+        </action>
+        <action path="/SalePosition/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalePosition/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionReadCmd"
+                roles="SALEPOSITION.DELETE">
+            <forward name="Success" path="/SalePositionDetailForDelete.jsp"/>
+            <forward name="Fail" path="/SalePosition/List.do"/>
+        </action>
+        <action path="/SalePosition/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalePositionDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionDeleteCmd"
+                roles="SALEPOSITION.DELETE">
+            <forward name="Success" path="/SalePosition/List.do" redirect="true"/>
+            <forward name="Cancel" path="/SalePosition/List.do" redirect="true"/>
+            <forward name="Fail" path="/SalePosition/List.do"/>
+        </action>
+        <!--Sale action mapping-->
+        <action path="/Sale/SingleList"
+                type="com.piramide.elwis.web.common.action.SimpleAdvancedListAction"
+                name="listForm"
+                scope="request"
+                input="/SaleList.jsp"
+                validate="false"
+                parameter="saleSingleList"
+                roles="SALE.VIEW">
+            <forward name="Success" path="/SaleList.jsp"/>
+        </action>
+        <action path="/Sale/AdvancedList"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="saleAdvancedListForm"
+                scope="request"
+                input="/SaleAdvancedList.jsp"
+                validate="true"
+                parameter="saleAdvancedList"
+                roles="SALE.VIEW">
+            <forward name="Success" path="/SaleAdvancedList.jsp"/>
+        </action>
+        <action path="/Sale/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.SaleCreateForwardAction"
+                name="saleForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/SaleDetailForCreate.jsp"
+                roles="SALE.CREATE"/>
+        <action path="/Sale/Create"
+                type="com.piramide.elwis.web.salesmanager.action.SaleCreateAction"
+                name="saleForm"
+                scope="request"
+                input="/SaleDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleCreateCmd"
+                roles="SALE.CREATE">
+            <forward name="Success" path="/SalePosition/List.do?tabKey=Sale.Tab.SalePosition"/>
+            <forward name="Cancel" path="/Sale/SingleList.do" redirect="true"/>
+        </action>
+        <action path="/Sale/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="saleForm"
+                scope="request"
+                input="/Sale/SingleList.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALE.VIEW">
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <forward name="Success" path="/SaleDetailForUpdate.jsp"/>
+        </action>
+        <action path="/Sale/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleUpdateAction"
+                name="saleForm"
+                scope="request"
+                input="/SaleDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALE.UPDATE">
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <forward name="Success" path="/Sale/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/Sale/SingleList.do" redirect="true"/>
+            <forward name="Fail" path="/Sale/SingleList.do"/>
+            <forward name="SaleInvoice" path="/Sale/Contract/ToInvoice.do"/>
+        </action>
+        <action path="/Sale/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="saleForm"
+                scope="request"
+                input="/Sale/SingleList.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleReadCmd"
+                roles="SALE.DELETE">
+            <forward name="Success" path="/SaleDetailForDelete.jsp"/>
+        </action>
+        <action path="/Sale/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="saleForm"
+                scope="request"
+                input="/SaleDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleDeleteCmd"
+                roles="SALE.DELETE">
+            <forward name="Success" path="/Sale/SingleList.do"/>
+            <forward name="Cancel" path="/Sale/SingleList.do" redirect="true"/>
+            <forward name="Fail" path="/Sale/SingleList.do"/>
+        </action>
+
+        <!--contracts to invoice from sale-->
+        <action path="/Sale/Contract/ToInvoice"
+                type="com.piramide.elwis.web.salesmanager.action.ContractInvoiceFromSaleAction"
+                name="form"
+                scope="request"
+                validate="false"
+                roles="INVOICE.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <forward name="Success" path="/ContractToInvoiceFromSale.jsp"/>
+            <forward name="Fail" path="/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/Sale/Contract/Invoice/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ContractInvoiceCreateAction"
+                name="contractInvoiceCreateForm"
+                scope="request"
+                input="/ContractToInvoiceFromSale.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ContractInvoiceCreateCmd"
+                roles="INVOICE.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <forward name="Success" path="/ContractToInvoiceFromSaleSummary.jsp"/>
+            <forward name="Fail" path="/ContractToInvoiceFromSale.jsp"/>
+            <forward name="Invalid" path="/ContractToInvoiceFromSale.jsp"/>
+            <forward name="Cancel" path="/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/Sale/Contract/Invoice/SendViaEmail"
+                type="com.piramide.elwis.web.financemanager.action.ContractInvoicedSendViaEmailAction"
+                name="form"
+                input="/ContractToInvoiceFromSaleSummary.jsp"
+                scope="request"
+                validate="false">
+            <forward name="Success" contextRelative="true" path="/webmail/Mail/Forward/EditDraftEmail.do?index=0" redirect="true"/>
+            <forward name="Fail" path="/Sale/SingleList.do" redirect="true"/>
+        </action>
+        <action path="/Sale/Contract/Invoice/MergeDocument"
+                type="com.piramide.elwis.web.financemanager.action.ContractInvoicedMergeDocumentsAction"
+                name="form"
+                input="/ContractToInvoiceFromSaleSummary.jsp"
+                scope="request"
+                validate="false">
+            <forward name="Fail" path="/Sale/Forward/Update.do"/>
+        </action>
+
+        <!--sale invoiced documents-->
+        <action path="/Sale/Invoiced/List"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerListAction"
+                name="listForm"
+                scope="request"
+                input="/SaleInvoicedList.jsp"
+                validate="false"
+                parameter="finance@saleInvoicedDocumentList"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/SaleInvoicedList.jsp"/>
+        </action>
+
+        <action path="/Sale/Invoice/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/Sale/Invoiced/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReadCmd"
+                roles="INVOICE.DELETE">
+            <forward name="Success" path="/InvoiceDetailForDelete.jsp"/>
+        </action>
+        <action path="/Sale/Invoice/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/InvoiceDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceDeleteCmd"
+                roles="INVOICE.DELETE">
+            <forward name="Success" path="/Sale/Invoiced/List.do"/>
+            <forward name="Cancel" path="/Sale/Invoiced/List.do" redirect="true"/>
+            <forward name="Fail" path="/Sale/Invoiced/List.do"/>
+        </action>
+
+        <!-- invoice from salesprocess-sale -->
+        <action path="/SalesProcess/Sale/Contract/ToInvoice"
+                type="com.piramide.elwis.web.salesmanager.action.ContractInvoiceFromSaleBySalesProcessAction"
+                name="form"
+                scope="request"
+                validate="false"
+                roles="INVOICE.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <forward name="Success" path="/ContractToInvoiceFromSaleBySalesProcess.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/Sale/Contract/Invoice/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ContractInvoiceCreateAction"
+                name="contractInvoiceCreateForm"
+                scope="request"
+                input="/ContractToInvoiceFromSaleBySalesProcess.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ContractInvoiceCreateCmd"
+                roles="INVOICE.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <forward name="Success" path="/ContractToInvoiceFromSaleBySalesProcessSummary.jsp"/>
+            <forward name="Fail" path="/ContractToInvoiceFromSaleBySalesProcess.jsp"/>
+            <forward name="Invalid" path="/ContractToInvoiceFromSaleBySalesProcess.jsp"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+        </action>
+        <action path="/SalesProcess/Sale/Contract/Invoice/SendViaEmail"
+                type="com.piramide.elwis.web.financemanager.action.ContractInvoicedSendViaEmailAction"
+                name="form"
+                input="/ContractToInvoiceFromSaleBySalesProcessSummary.jsp"
+                scope="request"
+                validate="false">
+            <forward name="Success" contextRelative="true" path="/webmail/Mail/Forward/EditDraftEmail.do?index=0" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/List.do" redirect="true"/>
+        </action>
+        <action path="/SalesProcess/Sale/Contract/Invoice/MergeDocument"
+                type="com.piramide.elwis.web.financemanager.action.ContractInvoicedMergeDocumentsAction"
+                name="form"
+                input="/ContractToInvoiceFromSaleBySalesProcessSummary.jsp"
+                scope="request"
+                validate="false">
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+        </action>
+
+        <!--SalesProcess action mappings-->
+        <action path="/SalesProcess/SearchSalesProcess" type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request" input="/SearchSalesProcess.jsp" validate="false"
+                parameter="salesProcessSearchList">
+            <forward name="Success" path="/SearchSalesProcess.jsp"/>
+        </action>
+        <action path="/SalesProcess/SimpleSearchProcess" type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request" input="/SimpleSearchProcess.jsp" validate="false"
+                parameter="salesProcessSearchList">
+            <forward name="Success" path="/SimpleSearchProcess.jsp"/>
+        </action>
+        <action path="/SalesProcess/List" type="com.piramide.elwis.web.common.action.SimpleAdvancedListAction"
+                name="listForm"
+                scope="request" input="/SalesProcessList.jsp" validate="false" parameter="salesProcessList"
+                roles="SALESPROCESS.VIEW">
+            <forward name="Success" path="/SalesProcessList.jsp"/>
+        </action>
+        <action path="/AdvancedSearch" type="com.piramide.elwis.web.common.action.ListAction" name="advancedListForm"
+                scope="request" input="/SalesProcessAdvancedList.jsp" validate="true"
+                parameter="salesProcessAdvancedList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping"
+                roles="SALESPROCESS.VIEW">
+            <set-property property="parameterName" value="contactSearchName"/>
+            <forward name="Success" path="/SalesProcessAdvancedList.jsp"/>
+        </action>
+        <action path="/SalesProcess/Forward/Create"
+                type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction" name="form"
+                scope="request" validate="false" parameter="/sales/SalesProcessDetailForCreate.jsp"
+                roles="SALESPROCESS.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="salesprocess"/>
+        </action>
+        <action path="/SalesProcess/Create" type="com.piramide.elwis.web.salesmanager.action.SalesProcessAction"
+                name="salesProcessForm"
+                scope="request" input="/SalesProcessDetailForCreate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessCmd" roles="SALESPROCESS.CREATE">
+            <forward name="Success" path="/SalesProcess/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/SalesProcess/List.do" redirect="true"/>
+        </action>
+        <action path="/SalesProcess/Forward/Update" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="salesProcessForm" scope="request" input="/SalesProcess/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessCmd" roles="SALESPROCESS.VIEW">
+            <forward name="Success" path="/SalesProcessDetailForUpdate.jsp"/>
+        </action>
+        <action path="/SalesProcess/Update" type="com.piramide.elwis.web.salesmanager.action.SalesProcessUpdateAction"
+                name="salesProcessForm" scope="request" input="/SalesProcessDetailForUpdate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessCmd" roles="SALESPROCESS.UPDATE">
+            <forward name="Success" path="/SalesProcess/Forward/Update.do?dto(op)="/>
+            <forward name="Cancel" path="/SalesProcess/List.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/List.do"/>
+        </action>
+        <action path="/SalesProcess/Forward/Delete" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="salesProcessForm" scope="request" input="/SalesProcess/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessCmd" roles="SALESPROCESS.DELETE">
+            <forward name="Success" path="/SalesProcessDetailForDelete.jsp"/>
+        </action>
+        <action path="/SalesProcess/Delete" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="salesProcessForm" scope="request" input="/SalesProcessDetailForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessDeleteCmd" roles="SALESPROCESS.DELETE">
+            <forward name="Success" path="/SalesProcess/List.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/List.do"/>
+            <forward name="Cancel" path="/SalesProcess/List.do" redirect="true"/>
+        </action>
+        <action path="/SalesProcess/Action/List"
+                type="com.piramide.elwis.web.salesmanager.action.SalesProcessListAction" name="listForm"
+                scope="request" input="/ActionList.jsp" validate="false"
+                parameter="actionList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALESPROCESSACTION.VIEW">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <forward name="Success" path="/ActionList.jsp"/>
+            <forward name="Fail" path="/SalesProcess/List.do"/>
+        </action>
+        <action path="/SalesProcess/ActionPosition/List"
+                type="com.piramide.elwis.web.salesmanager.action.ActionPositionUpdateAction"
+                name="listForm" scope="request" input="/SalesProcess/Action/Forward/Update.do?dto(op)=read"
+                validate="false"
+                parameter="actionPositionList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALESPROCESSPOSITION.VIEW">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <set-property property="paramReWrite" value="dto(contactId)"/>
+            <set-property property="paramReWriteText" value="dto(note)"/>
+            <forward name="Success" path="/ActionPositionList.jsp"/>
+        </action>
+
+        <action path="/SalesProcess/ActionPosition/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ActionPositionManagerAction"
+                name="actionPositionForm"
+                scope="request"
+                validate="false"
+                input="/SalesProcess/Action/Forward/Update.do?dto(op)=read"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALESPROCESSPOSITION.CREATE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <set-property property="paramReWrite" value="dto(contactId)"/>
+            <set-property property="paramReWriteText" value="dto(note)"/>
+            <forward name="Success" path="/ActionPositionDetailForCreate.jsp"/>
+            <forward name="create" path="/ActionPositionDetailForCreate.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do?dto(op)=read"/>
+        </action>
+
+        <action path="/SalesProcess/ActionPosition/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ActionPositionAction"
+                name="actionPositionForm"
+                scope="request"
+                input="/ActionPositionDetailForCreate.jsp"
+                validate="true"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionPositionCreateCmd"
+                roles="SALESPROCESSPOSITION.CREATE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <set-property property="paramReWrite" value="dto(contactId)"/>
+            <set-property property="paramReWriteText" value="dto(note)"/>
+
+            <forward name="Success" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/SalesProcess/Action/Forward/Update.do?cmd=true" redirect="true"/>
+            <forward name="create" path="/SalesProcess/ActionPosition/Forward/Create.do?create=true"/>
+            <forward name="SaveAndNew" path="/SalesProcess/ActionPosition/Forward/Create.do?new=New" redirect="true"/>
+        </action>
+
+        <action path="/SalesProcess/ActionPosition/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ActionPositionManagerAction"
+                name="actionPositionForm" scope="request" input="/SalesProcess/Action/Forward/Update.do?dto(op)=read"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionPositionReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALESPROCESSPOSITION.VIEW">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <set-property property="paramReWrite" value="dto(contactId)"/>
+            <set-property property="paramReWriteText" value="dto(note)"/>
+
+            <forward name="Success" path="/ActionPositionDetailForUpdate.jsp?dto(op)=read"/>
+            <forward name="Fail" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read"/>
+            <forward name="create" path="/ActionPositionDetailForUpdate.jsp?dto(op)=read"/>
+        </action>
+
+        <action path="/SalesProcess/ActionPosition/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ActionPositionAction"
+                name="actionPositionForm" scope="request" input="/ActionPositionDetailForUpdate.jsp" validate="true"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionPositionUpdateCmd"
+                roles="SALESPROCESSPOSITION.UPDATE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWrite" value="dto(contactId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <set-property property="paramReWriteText" value="dto(note)"/>
+
+            <forward name="Success" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/SalesProcess/Action/Forward/Update.do?cmd=true" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read"/>
+            <forward name="create" path="/ActionPositionDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/SalesProcess/ActionPosition/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ActionPositionManagerAction"
+                name="actionPositionForm" scope="request" input="/SalesProcess/Action/Forward/Update.do?dto(op)=read"
+                validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionPositionReadCmd"
+                roles="SALESPROCESSPOSITION.DELETE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWrite" value="dto(contactId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <set-property property="paramReWriteText" value="dto(note)"/>
+            <forward name="Success" path="/ActionPositionDetailForDelete.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read"/>
+        </action>
+
+        <action path="/SalesProcess/ActionPosition/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ActionPositionManagerAction"
+                name="actionPositionForm" scope="request" input="/ActionPositionDetailForDelete.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionPositionDeleteCmd"
+                roles="SALESPROCESSPOSITION.DELETE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <set-property property="paramReWrite" value="dto(contactId)"/>
+            <set-property property="paramReWriteText" value="dto(note)"/>
+            <forward name="Success" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/SalesProcess/Action/Forward/Update.do?cmd=true" redirect="true"/>
+        </action>
+
+        <action path="/SalesProcess/Action/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ActionManagerAction"
+                name="actionForm"
+                scope="request"
+                validate="false"
+                input="/SalesProcess/Forward/Update.do?dto(op)=read"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALESPROCESSACTION.CREATE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <forward name="Success" path="/ActionDetailForCreate.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/Action/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ActionManagerCreateAction"
+                name="actionForm"
+                scope="request"
+                validate="true"
+                input="/ActionDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionCreateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALESPROCESSACTION.CREATE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <forward name="Success" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do?dto(op)=read"/>
+            <forward name="NoUserMail" path="/webmail/Messages.do?index=0" contextRelative="true"/>
+            <forward name="FailSendMail" path="/ActionDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/SalesProcess/Action/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ActionManagerAction"
+                name="actionForm"
+                scope="request"
+                validate="false"
+                input="/SalesProcess/Forward/Update.do?dto(op)=read"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionReadCmd"
+                roles="SALESPROCESSACTION.VIEW">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <forward name="Success" path="/ActionDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do?dto(op)=read"/>
+        </action>
+        <action path="/SalesProcess/Action/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ActionManagerUpdateAction"
+                name="actionForm"
+                scope="request"
+                validate="true"
+                input="/ActionDetailForUpdate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionUpdateCmd"
+                roles="SALESPROCESSACTION.UPDATE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <forward name="Success" path="/SalesProcess/Action/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do?dto(op)=read"/>
+        </action>
+
+        <action path="/SalesProcess/Action/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ActionManagerAction" name="actionForm"
+                scope="request" validate="false" input="/SalesProcess/Forward/Update.do?dto(op)=read"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionReadCmd" roles="SALESPROCESSACTION.DELETE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <forward name="Success" path="/ActionDetailForDelete.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do?dto(op)=read&amp;dto(withReferences)="/>
+        </action>
+
+        <action path="/SalesProcess/Action/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ActionManagerAction"
+                name="actionForm"
+                scope="request"
+                validate="false"
+                input="/ActionDetailForDelete.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.ActionDeleteCmd" roles="SALESPROCESSACTION.DELETE">
+            <set-property property="paramReWrite" value="dto(processId)"/>
+            <set-property property="paramReWriteText" value="dto(processName)"/>
+            <forward name="Success" path="/SalesProcess/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do?dto(op)=read&amp;dto(withReferences)="/>
+        </action>
+
+        <action path="/SalesProcess/Action/Document/Download"
+                type="com.piramide.elwis.web.contactmanager.action.CommunicationDocumentDownloadAction"
+                name="actionForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.CommunicationDocumentDownloadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALESPROCESSACTION.VIEW">
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do?dto(op)=read"/>
+        </action>
+
+        <!-- send action document via email-->
+        <action path="/SalesProcess/Action/SendViaEmail"
+                type="com.piramide.elwis.web.salesmanager.action.ActionDocumentSendViaEmailAction"
+                name="form"
+                scope="request"
+                validate="false">
+            <forward name="Success" contextRelative="true" path="/webmail/Mail/Forward/EditDraftEmail.do?index=0" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/List.do"/>
+        </action>
+
+        <action path="/Communication/List" type="com.piramide.elwis.web.salesmanager.action.SalesProcessListAction"
+                name="listForm"
+                scope="request" input="/CommunicationList.jsp" validate="false" parameter="contacts@communicationList"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationList.jsp"/>
+        </action>
+
+        <action path="/Communication/Task/Forward/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskManagerAction"
+                name="mainCommunicationForm" scope="request" validate="false" input="/TaskDetailForUpdate.jsp"
+                roles="COMMUNICATION.CREATE"
+                parameter="com.piramide.elwis.cmd.schedulermanager.TaskCommunicationReadCmd">
+            <forward name="Success" path="/CommunicationSalesProcessCreate.jsp"/>
+            <forward name="Fail" path="/TaskList.do"/>
+        </action>
+
+
+        <action path="/MainCommunication/Forward/Create"
+                type="org.apache.struts.actions.ForwardAction"
+                name="mainCommunicationForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/CommunicationSalesProcessCreate.jsp"
+                roles="COMMUNICATION.CREATE"/>
+        <action path="/MainCommunication/Create"
+                type="com.piramide.elwis.web.salesmanager.action.CommunicationSalesProcessAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationSalesProcessCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactCreateCmd"
+                roles="COMMUNICATION.CREATE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+            <forward name="FailSendMail" path="/CommunicationSalesProcessCreate.jsp"/>
+            <forward name="NoUserMail" path="/webmail/Messages.do?index=0" contextRelative="true"/>
+        </action>
+
+        <action path="/MainCommunication/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.CommunicationSalesProcessAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/Communication/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactReadCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationSalesProcessUpdate.jsp"/>
+        </action>
+        <action path="/MainCommunication/Update"
+                type="com.piramide.elwis.web.salesmanager.action.CommunicationSalesProcessAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationSalesProcessUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactUpdateCmd"
+                roles="COMMUNICATION.UPDATE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+        <action path="/MainCommunication/Reply"
+                type="com.piramide.elwis.web.salesmanager.action.CommunicationSalesProcessAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationSalesProcessUpdate.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactReadCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationSalesProcessCreate.jsp"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+        <action path="/MainCommunication/Forward/Delete"
+                type="net.java.dev.strutsejb.web.DefaultAction"
+                name="mainCommunicationForm"
+                scope="request" input="/Communication/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactReadCmd"
+                roles="COMMUNICATION.DELETE">
+            <forward name="Success" path="/CommunicationSalesProcessDelete.jsp"/>
+        </action>
+        <action path="/MainCommunication/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.CommunicationSalesProcessAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationSalesProcessDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactDeleteCmd"
+                roles="COMMUNICATION.DELETE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+
+
+        <action path="/MainCommunication/Download"
+                type="com.piramide.elwis.web.salesmanager.action.CommunicationSalesProcessAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/Communication/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactUpdateCmd"
+                roles="COMMUNICATION.EXECUTE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/MainCommunication/Forward/Update.do"/>
+        </action>
+
+        <action path="/MainCommunication/Document/Download"
+                type="com.piramide.elwis.web.contactmanager.action.CommunicationDocumentDownloadAction"
+                name="mainCommunicationForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.CommunicationDocumentDownloadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="COMMUNICATION.VIEW">
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+
+        <action path="/MainCommunication/ReadToCompose"
+                type="com.piramide.elwis.web.salesmanager.action.CommunicationSalesProcessAction"
+                name="mainCommunicationForm"
+                scope="request" input="/Communication/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactReadCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationSalesProcessCreate.jsp"/>
+        </action>
+
+        <action path="/Download" type="com.piramide.elwis.web.common.action.DownloadFreeTextAction" name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.common.DownloadFreeTextCmd">
+            <forward name="fail" path="/Communication/List.do"/>
+        </action>
+
+        <action path="/SalesProcess/Evaluation"
+                type="com.piramide.elwis.web.salesmanager.action.SalesProcessManagerAction" name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessEvaluationCmd"
+                roles="SALESPROCESSEVALUATION.EXECUTE">
+            <forward name="Success" path="/SalesProcessEvaluation.jsp"/>
+        </action>
+
+        <!--Module Scheduler - Task-->
+        <action path="/TaskList" type="com.piramide.elwis.web.salesmanager.action.SalesProcessTaskListAction"
+                name="taskListForm"
+                scope="request" input="/TaskList.jsp" validate="false" roles="TASK.VIEW"
+                parameter="scheduler@taskSchedulerList">
+            <forward name="Success" path="/TaskList.jsp"/>
+            <forward name="Fail" path="/TaskList.jsp"/>
+        </action>
+
+        <action path="/Task/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.TaskCreateAction"
+                name="taskForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/TaskDetailForCreate.jsp"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping"
+                roles="TASK.CREATE">
+            <set-property property="mainTable" value="task"/>
+            <set-property property="redirect" value="Search"/>
+            <forward name="Search" path="/TaskList.do"/>
+        </action>
+
+        <action path="/Task/Create" roles="TASK.CREATE"
+                type="com.piramide.elwis.web.salesmanager.action.TaskAction" name="taskForm"
+                scope="request" input="/TaskDetailForCreate.jsp" validate="true">
+            <forward name="Success" path="/TaskList.do"/>
+            <forward name="Cancel" path="/TaskList.do" redirect="true"/>
+            <forward name="Fail" path="/Task/Forward/Create.do"/>
+        </action>
+
+        <action path="/Task/Forward/Update" type="com.piramide.elwis.web.salesmanager.action.TaskForwardAction"
+                name="taskForm"
+                scope="request" input="TaskList.do" validate="false" roles="TASK.VIEW">
+            <forward name="Success" path="/TaskDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/TaskList.do"/>
+        </action>
+
+        <action path="/Task/Update" roles="TASK.UPDATE"
+                type="com.piramide.elwis.web.salesmanager.action.TaskAction" name="taskForm"
+                scope="request" input="/TaskDetailForUpdate.jsp" validate="true">
+            <forward name="Success" path="/TaskList.do"/>
+            <forward name="Cancel" path="/TaskList.do" redirect="true"/>
+            <forward name="Fail" path="/Task/Forward/Update.do"/>
+            <forward name="Redirect" path="/TaskDetailForUpdate.jsp"/>
+            <forward name="TaskList" path="/TaskList.do"/>
+        </action>
+
+        <action path="/Task/Forward/Delete" type="com.piramide.elwis.web.salesmanager.action.TaskForwardAction"
+                name="taskForm"
+                scope="request" input="/TaskList.do" validate="false" roles="TASK.VIEW"
+                parameter="com.piramide.elwis.cmd.schedulermanager.TaskReadCmd">
+            <forward name="Success" path="/TaskDetailForDelete.jsp"/>
+            <forward name="Fail" path="/TaskList.do"/>
+            <forward name="Cancel" path="/TaskList.do"/>
+        </action>
+
+        <action path="/Task/Delete" roles="TASK.DELETE"
+                type="com.piramide.elwis.web.salesmanager.action.SalesProcessManagerAction" name="taskForm"
+                scope="request" input="/TaskDetailForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.schedulermanager.TaskDeleteCmd">
+            <forward name="Success" path="/TaskList.do" redirect="true"/>
+            <forward name="Fail" path="/TaskList.do"/>
+            <forward name="Cancel" path="/TaskList.do" redirect="true"/>
+        </action>
+
+
+        <!--Sale by Salesprocess Action mappings-->
+        <action path="/SalesProcess/Sale/List"
+                type="com.piramide.elwis.web.salesmanager.action.SalesProcessListAction"
+                name="listForm"
+                scope="request"
+                input="/SaleBySalesProcessList.jsp"
+                validate="false"
+                roles="SALE.VIEW"
+                parameter="saleBySaleProcessList">
+            <forward name="Success" path="/SaleBySalesProcessList.jsp"/>
+        </action>
+        <action path="/SalesProcess/Sale/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.SaleBySalesProcessForwardCreateAction"
+                name="saleBySalesProcessForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/SaleBySalesProcessDetailForCreate.jsp"
+                roles="SALE.CREATE"/>
+        <action path="/SalesProcess/Sale/Create"
+                type="com.piramide.elwis.web.salesmanager.action.SaleBySalesProcessCreateAction"
+                name="saleBySalesProcessForm"
+                scope="request"
+                input="/SaleBySalesProcessDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleCreateCmd"
+                roles="SALE.CREATE">
+            <forward name="Success" path="/SalesProcess/Sale/Forward/Update.do"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/List.do" redirect="true"/>
+        </action>
+        <action path="/SalesProcess/Sale/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SalesProcessManagerAction"
+                name="saleBySalesProcessForm"
+                scope="request"
+                input="/SalesProcess/Sale/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALE.VIEW">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <forward name="Success" path="/SaleBySalesProcessDetailForUpdate.jsp"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/List.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/List.do"/>
+        </action>
+        <action path="/SalesProcess/Sale/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleUpdateBySalesProcessAction"
+                name="saleBySalesProcessForm"
+                scope="request"
+                input="/SaleBySalesProcessDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALE.UPDATE">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <forward name="Success" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/List.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/List.do"/>
+            <forward name="SaleInvoice" path="/SalesProcess/Sale/Contract/ToInvoice.do"/>
+        </action>
+        <action path="/SalesProcess/Sale/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SalesProcessManagerAction"
+                name="saleBySalesProcessForm"
+                scope="request"
+                input="/SalesProcess/Sale/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleReadCmd"
+                roles="SALE.DELETE">
+            <forward name="Success" path="/SaleBySalesProcessDetailForDelete.jsp"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/List.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/List.do"/>
+        </action>
+        <action path="/SalesProcess/Sale/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SalesProcessManagerAction"
+                name="saleBySalesProcessForm"
+                scope="request"
+                input="/SaleBySalesProcessDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SaleDeleteCmd"
+                roles="SALE.DELETE">
+            <forward name="Success" path="/SalesProcess/Sale/List.do" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/List.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/List.do"/>
+        </action>
+
+        <action path="/SalesProcess/SalePosition/List"
+                type="com.piramide.elwis.web.salesmanager.action.SalePositionBySalesProcessListAction"
+                name="listForm"
+                scope="request"
+                input="/SalePositionBySalesProcessList.jsp"
+                validate="false"
+                roles="SALEPOSITION.VIEW"
+                parameter="salePositionList">
+            <forward name="Success" path="/SalePositionBySalesProcessList.jsp"/>
+        </action>
+        <action path="/SalesProcess/SalePosition/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.SalePositionBySalesProcessForwardCreateAction"
+                name="salePositionForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/SalePositionBySalesProcessDetailForCreate.jsp"
+                roles="SALEPOSITION.CREATE">
+            <forward name="Fail" path="/SalesProcess/Sale/List.do"/>
+        </action>
+        <action path="/SalesProcess/SalePosition/Create"
+                type="com.piramide.elwis.web.salesmanager.action.SalePositionBySalesProcessCreateAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalePositionBySalesProcessDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionBySaleCreateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALE.CREATE">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/SalesProcess/ProductContractBySalePosition/Forward/Create.do"
+                     redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+            <forward name="ToList" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/SalePosition/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleBySalesProcessAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalesProcess/Sale/Forward/Update.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALEPOSITION.VIEW">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/SalePositionBySalesProcessDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/SalePosition/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SalePositionBySalesProcessUpdateAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalePositionBySalesProcessDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionBySaleUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALEPOSITION.UPDATE">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/SalesProcess/SalePosition/Forward/Update.do"/>
+            <forward name="ToList" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/SalePosition/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SaleBySalesProcessAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalesProcess/Sale/Forward/Update.do?dto(withReferences)="
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALEPOSITION.DELETE">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/SalePositionBySalesProcessDetailForDelete.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/SalePosition/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.SaleBySalesProcessAction"
+                name="salePositionForm"
+                scope="request"
+                input="/SalePositionBySalesProcessDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionDeleteCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="SALEPOSITION.DELETE">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/Sale/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/ProductContractBySalePosition/List"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalePositionListAction"
+                name="listForm"
+                scope="request"
+                input="/ProductContractBySalesProcessList.jsp"
+                validate="false"
+                parameter="productContractSingleList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.VIEW">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/ProductContractBySalesProcessList.jsp"/>
+        </action>
+        <action path="/SalesProcess/ProductContractBySalePosition/Forward/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalesProcessForwardCreateAction"
+                name="productContractForm"
+                scope="request"
+                validate="false"
+                parameter="/sales/ProductContractBySalesProcessDetailForCreate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.CREATE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/ProductContractBySalePosition/Create"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalesProcessAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractBySalesProcessDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractCreateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.CREATE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/SalesProcess/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/ProductContractBySalePosition/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalesProcessAction"
+                name="productContractForm"
+                scope="request"
+                input="/SalesProcess/SalePosition/Forward/Update.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.VIEW">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/ProductContractBySalesProcessDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/ProductContractBySalePosition/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalesProcessAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractBySalesProcessDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.UPDATE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/SalesProcess/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/ProductContractBySalePosition/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalesProcessAction"
+                name="productContractForm"
+                scope="request"
+                input="/SalePosition/Forward/Update.do?dto(withReferences)=false"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.DELETE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/ProductContractBySalesProcessDetailForDelete.jsp"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/ProductContractBySalePosition/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractBySalesProcessAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractBySalesProcessDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractDeleteCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.DELETE">
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="dto(salePositionId)"/>
+            <set-property property="paramReWriteText" value="productName"/>
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="dto(saleId)"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Success" path="/SalesProcess/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Cancel" path="/SalesProcess/SalePosition/Forward/Update.do" redirect="true"/>
+            <forward name="Fail" path="/SalesProcess/Sale/Forward/Update.do"/>
+        </action>
+
+
+        <!--    Actions for statics REPORTS-->
+        <action path="/Report/SalesProcessList" type="org.apache.struts.actions.ForwardAction"
+                name="salesProcessReportForm"
+                scope="request" parameter="/sales/report/SalesProcessReportList.jsp" validate="false"
+                roles="SALESPROCESS.VIEW"/>
+
+        <action path="/Report/SalesProcessList/Execute" input="/report/SalesProcessReportList.jsp"
+                roles="SALESPROCESS.VIEW"
+                type="com.piramide.elwis.web.salesmanager.action.report.SalesProcessReportAction"
+                name="salesProcessReportForm"
+                scope="request" parameter="salesProcessReportList" validate="false">
+            <forward name="Success" path="/report/SalesProcessReportList.jsp"/>
+        </action>
+
+        <action path="/Report/ProcessActionList" type="org.apache.struts.actions.ForwardAction"
+                name="processActionReportForm"
+                scope="request" parameter="/sales/report/ProcessActionReportList.jsp" validate="false"
+                roles="SALESPROCESSACTION.VIEW"/>
+
+        <action path="/Report/ProcessActionList/Execute" input="/report/SalesProcessReportList.jsp"
+                type="com.piramide.elwis.web.salesmanager.action.report.ProcessActionReportAction"
+                name="processActionReportForm"
+                scope="request" parameter="actionReportList" validate="false" roles="SALESPROCESSACTION.VIEW">
+            <forward name="Success" path="/report/ProcessActionReportList.jsp"/>
+        </action>
+
+        <action path="/Report/ActionPositionList" type="org.apache.struts.actions.ForwardAction"
+                name="actionPositionReportForm"
+                scope="request" parameter="/sales/report/ActionPositionReportList.jsp" validate="false"
+                roles="SALESPROCESSPOSITION.VIEW"/>
+
+        <action path="/Report/ActionPositionList/Execute" input="/report/ActionPositionReportList.jsp"
+                type="com.piramide.elwis.web.salesmanager.action.report.ActionPositionReportAction"
+                roles="SALESPROCESSPOSITION.VIEW"
+                name="actionPositionReportForm" scope="request" parameter="actionPositionReportList" validate="false">
+            <forward name="Success" path="/report/ActionPositionReportList.jsp"/>
+        </action>
+
+        <action path="/Report/ContractsOverviewList"
+                type="com.piramide.elwis.web.salesmanager.action.report.ContractsOverviewReportForwardAction"
+                name="contractsOverviewReportForm"
+                scope="request" parameter="/sales/report/ContractsOverviewReportList.jsp" validate="false"
+                roles="PRODUCTCONTRACT.VIEW"/>
+
+        <action path="/Report/ContractsOverviewList/Execute" input="/report/ContractsOverviewReportList.jsp"
+                type="com.piramide.elwis.web.salesmanager.action.report.ContractsOverviewPredefinedReportAction"
+                roles="PRODUCTCONTRACT.VIEW"
+                name="contractsOverviewReportForm" scope="request" parameter="contractOverviewReportList"
+                validate="false">
+            <forward name="Success" path="/report/ContractsOverviewReportList.jsp"/>
+        </action>
+        <!--end miky report-->
+
+        <action path="/Report/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportExternalExecute.jsp"/>
+
+        <action path="/Report/Blank" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/common/Blank.jsp"/>
+
+        <action path="/Report/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportExecuteForm" scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteAction"
+                name="reportExecuteForm" scope="request" validate="true" input="/Report/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailColumn" path="/Report/ExecutePage.do"/>
+            <forward name="FailButStay" path="/Report/ExecutePage.do"/>
+        </action>
+
+        <!--jrxml external report-->
+        <action path="/Report/Jrxml/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportJrxmlExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportJrxmlExternalExecute.jsp"/>
+
+        <action path="/Report/Jrxml/External/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+        <action path="/Report/Jrxml/External/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExternalExecuteAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="true" input="/Report/Jrxml/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailButStay" path="/Report/Jrxml/ExecutePage.do"/>
+        </action>
+
+        <action path="/CategoryTab/Forward/Update"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="categoryFieldValueForm"
+                scope="request"
+                validate="false"
+                input="/SalesProcess/List.do"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessCategoryTabCmd">
+            <forward name="Success" path="/SalesProcessCategoryTabDetailForUpdate.jsp"/>
+            <forward name="Detail" path="/SalesProcess/Forward/Update.do?index=0"/>
+        </action>
+        <action path="/CategoryTab/Update"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="categoryFieldValueForm"
+                scope="request"
+                validate="true"
+                input="/SalesProcessCategoryTabDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessCategoryTabCmd">
+            <forward name="Success" path="/CategoryTab/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail" path="/CategoryTab/Forward/Update.do?dto(op)=read"/>
+            <forward name="Detail" path="/SalesProcess/Forward/Update.do?index=0"/>
+        </action>
+        <action path="/ReadSubCategories"
+                type="com.piramide.elwis.web.catalogmanager.action.ReadSubCategoriesAction"
+                name="categoryFieldValueForm"
+                scope="request"
+                validate="false"
+                input="/SalesProcessCategoryTabDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd">
+            <forward name="Success" path="/RenderSubCategory.jsp"/>
+        </action>
+        <action path="/DownloadCategoryFieldValue"
+                type="com.piramide.elwis.web.catalogmanager.action.DownloadCategoryFieldValueAction"
+                name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd">
+            <forward name="Fail" path="/CategoryTab/Forward/Update.do?dto(op)=read"/>
+        </action>
+        <action path="/MainPage/DownloadCategoryFieldValue"
+                type="com.piramide.elwis.web.catalogmanager.action.DownloadCategoryFieldValueAction"
+                name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd">
+            <forward name="Fail" path="/SalesProcess/Forward/Update.do?index=0"/>
+        </action>
+        <action path="/MainPageReadSubCategories"
+                type="com.piramide.elwis.web.catalogmanager.action.ReadSubCategoriesAction"
+                name="salesProcessForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd">
+            <forward name="Success" path="/RenderSubCategory.jsp"/>
+        </action>
+
+        <!--sale position categories-->
+        <action path="/SalePosition/MainPageReadSubCategories"
+                type="com.piramide.elwis.web.catalogmanager.action.ReadSubCategoriesAction"
+                name="salePositionForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd">
+            <forward name="Success" path="/RenderSubCategory.jsp"/>
+        </action>
+
+        <action path="/SalePosition/MainPage/DownloadCategoryFieldValue"
+                type="com.piramide.elwis.web.catalogmanager.action.DownloadCategoryFieldValueAction"
+                name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="saleId"/>
+            <forward name="Fail" path="/SalePosition/Forward/Update.do"/>
+        </action>
+
+        <!--sale position category tab Links-->
+        <action path="/SalePosition/CategoryTab/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="categoryFieldValueForm"
+                scope="request"
+                validate="false"
+                input="/SalePosition/List.do"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionCategoryTabCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="salePositionId"/>
+
+            <forward name="Success" path="/SalePositionCategoryTabDetailForUpdate.jsp"/>
+            <forward name="Detail" path="/SalePosition/Forward/Update.do"/>
+        </action>
+        <action path="/SalePosition/CategoryTab/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleManagerAction"
+                name="categoryFieldValueForm"
+                scope="request"
+                validate="true"
+                input="/SalePositionCategoryTabDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionCategoryTabCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="salePositionId"/>
+
+            <forward name="Success" path="/SalePosition/CategoryTab/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail" path="/SalePosition/CategoryTab/Forward/Update.do?dto(op)=read"/>
+            <forward name="Detail" path="/SalePosition/Forward/Update.do"/>
+            <forward name="Cancel" path="/SalePosition/Forward/Update.do?dto(op)="/>
+        </action>
+        <action path="/SalePosition/ReadSubCategories"
+                type="com.piramide.elwis.web.catalogmanager.action.ReadSubCategoriesAction"
+                name="categoryFieldValueForm"
+                scope="request"
+                validate="false"
+                input="/SalePositionCategoryTabDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd">
+            <forward name="Success" path="/RenderSubCategory.jsp"/>
+        </action>
+        <action path="/SalePosition/DownloadCategoryFieldValue"
+                type="com.piramide.elwis.web.catalogmanager.action.DownloadCategoryFieldValueAction"
+                name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <forward name="Fail" path="/SalePosition/CategoryTab/Forward/Update.do?dto(op)=read"/>
+        </action>
+
+        <!--sale position category tab Links by sales process-->
+        <action path="/SalesProcess/SalePosition/CategoryTab/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleBySalesProcessAction"
+                name="categoryFieldValueForm"
+                scope="request"
+                validate="false"
+                input="/SalesProcess/Sale/Forward/Update.do"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionCategoryTabCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="processId"/>
+
+            <forward name="Success" path="/SalePositionCategoryTabBySalesProcessDetailForUpdate.jsp"/>
+            <forward name="Detail" path="/SalesProcess/SalePosition/Forward/Update.do"/>
+        </action>
+        <action path="/SalesProcess/SalePosition/CategoryTab/Update"
+                type="com.piramide.elwis.web.salesmanager.action.SaleBySalesProcessAction"
+                name="categoryFieldValueForm"
+                scope="request"
+                validate="true"
+                input="/SalePositionCategoryTabBySalesProcessDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalePositionCategoryTabCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="processId"/>
+
+            <forward name="Success" path="/SalesProcess/SalePosition/CategoryTab/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail" path="/SalesProcess/SalePosition/CategoryTab/Forward/Update.do?dto(op)=read"/>
+            <forward name="Detail" path="/SalesProcess/SalePosition/Forward/Update.do"/>
+            <forward name="Cancel" path="/SalesProcess/SalePosition/Forward/Update.do?dto(op)="/>
+        </action>
+        <action path="/SalesProcess/SalePosition/DownloadCategoryFieldValue"
+                type="com.piramide.elwis.web.catalogmanager.action.DownloadCategoryFieldValueAction"
+                name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="saleId"/>
+            <set-property property="paramReWrite" value="salePositionId"/>
+            <set-property property="paramReWrite" value="processId"/>
+            <forward name="Fail" path="/SalesProcess/SalePosition/CategoryTab/Forward/Update.do?dto(op)=read"/>
+        </action>
+
+
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+                /WEB-INF/sales/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/sales/fantabulous.xml"/>
+        <set-property property="moduleParams"
+                      value="processId, addressId, invoiceId, saleId, contractId, index, advancedListForward"/>
+    </plug-in>
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams"
+                      value="processId, addressId, invoiceId, saleId, contractId, index, advancedListForward"/>
+    </plug-in>
+
+</struts-config>

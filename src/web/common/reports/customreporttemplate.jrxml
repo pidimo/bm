@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by Alvaro, the template for the customreports -->
+<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD Report Design//EN"
+        "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+
+<jasperReport name="template" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="30" rightMargin="30"
+              topMargin="30" bottomMargin="30" whenNoDataType="AllSectionsNoDetail">
+    <style name="title_style" isDefault="false" fontName="Verdana" fontSize="20" isBold="true" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana-Bold" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#FFFFFF"/>
+
+    <style name="column_style" isDefault="false" fontName="Verdana" fontSize="9" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#FFFFFF">
+        <box>
+            <pen lineColor="#969696"/>
+        </box>
+    </style>
+
+
+    <style name="columnheader_style" isDefault="false" fontName="Verdana" fontSize="9" isBold="true" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana-Bold" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#C0C0C0">
+        <box>
+            <pen lineColor="#969696"/>
+        </box>
+    </style>
+
+    <style name="pagefooter_style" isDefault="false" fontName="Verdana" fontSize="9" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#FFFFFF">
+        <box>
+            <pen lineColor="#969696"/>
+        </box>
+    </style>
+
+    <style name="groupheader_style" isDefault="false" fontName="Verdana" fontSize="9" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#FFFFFF">
+        <box>
+            <pen lineColor="#000000"/>
+        </box>
+    </style>
+    <!--group header-->
+
+    <style name="groupfooter_style" isDefault="false" fontName="Verdana" fontSize="9" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#FFFFFF">
+        <box>
+            <pen lineColor="#000000"/>
+        </box>
+    </style>
+    <!--group totalizator title-->
+
+
+    <style name="summaryfinalvalue_style" isDefault="false" fontName="Verdana" fontSize="9" isBold="true"
+           isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana-Bold" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#F7F7F7">
+        <box>
+            <pen lineColor="#000000"/>
+        </box>
+    </style>
+
+    <style name="summaryfinallabel_style" isDefault="false" fontName="Verdana" fontSize="9" isBold="true"
+           isItalic="true" isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana-Bold" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#FFFFFF">
+        <box>
+            <pen lineColor="#000000"/>
+        </box>
+    </style>
+
+
+    <style name="chart_style" isDefault="false" fontName="Verdana" fontSize="30" isBold="false" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#FFFFFF">
+        <box>
+            <pen lineColor="#000000"/>
+        </box>
+    </style>
+
+    <style name="groupfootervalue_style" isDefault="false" fontName="Verdana" fontSize="9" isBold="true" isItalic="false"
+           isUnderline="false" isStrikeThrough="false" pdfFontName="Verdana-Bold" pdfEncoding="Identity-H"
+           isPdfEmbedded="true"
+           forecolor="#000000" backcolor="#FFFFFF">
+        <box>
+            <pen lineColor="#000000"/>
+        </box>
+    </style>
+
+</jasperReport>

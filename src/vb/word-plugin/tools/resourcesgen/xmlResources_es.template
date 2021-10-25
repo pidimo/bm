@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elwis-resources>
+<%FIELDS_XML.each(' ') {|s| p 
+print "\n"
+ mkey=s.strip
+ _mapFields = listFields[spanish]
+ _fields = _mapFields[mkey] 
+ _fields.each_pair do |fkey, _field| %>
+   <resource key="<%= _field.idKey.downcase %>"><%= _field.resource %></resource><% end }%>
+</elwis-resources>

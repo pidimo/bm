@@ -1,0 +1,693 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="appointmentListForm" type="com.piramide.elwis.web.schedulermanager.form.AppointmentListForm"/>
+        <form-bean name="taskListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="taskForm" type="com.piramide.elwis.web.schedulermanager.form.TaskForm"/>
+        <form-bean name="appointmentForm" type="com.piramide.elwis.web.schedulermanager.form.AppointmentForm"/>
+        <form-bean name="appEmployeeForm" type="com.piramide.elwis.web.schedulermanager.form.AppEmployeeForm"/>
+        <form-bean name="recurrenceForm" type="com.piramide.elwis.web.schedulermanager.form.RecurrenceForm"/>
+        <form-bean name="configurationForm" type="com.piramide.elwis.web.schedulermanager.form.ConfigurationForm"/>
+        <form-bean name="grantAccessForm" type="com.piramide.elwis.web.schedulermanager.form.GrantAccessForm"/>
+        <form-bean name="appointmentGroupForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="participantForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="participantImportForm" type="com.piramide.elwis.web.schedulermanager.form.ParticipantForm"/>
+        <form-bean name="overviewCalendarForm"
+                   type="com.piramide.elwis.web.schedulermanager.form.OverviewCalendarForm"/>
+        <!--for reports-->
+        <form-bean name="appointmentReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="taskReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="participantReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="userAssignedReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="taskSingleReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainSearch" path="/AppointmentList.do"/>
+        <forward name="TaskList" path="/TaskList.do"/>
+        <forward name="AppointmentAdvancedSearch" path="/AppointmentAdvancedList.do"/>
+        <forward name="TaskAdvancedSearch" path="/TaskAdvancedList.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+        <action path="/Ajax" type="com.piramide.elwis.web.schedulermanager.action.AjaxAction" name="form"
+                scope="request" validate="false" roles="APPOINTMENT.VIEW"/>
+
+        <action path="/AppointmentView"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentUIAction"
+                name="form"
+                scope="request"
+                validate="false"
+                roles="APPOINTMENT.VIEW">
+            <forward name="daily" path="/DailyView.jsp"/>
+            <forward name="weekly" path="/WeeklyView.jsp"/>
+            <forward name="monthly" path="/MonthlyView.jsp"/>
+            <forward name="yearly" path="/YearlyView.jsp"/>
+            <forward name="ajax" path="/DailyAJAXResponse.jsp"/>
+            <forward name="fail" path="/AppointmentView.do"/>
+        </action>
+
+        <!--begin miky-->
+        <action path="/Calendar/Forward/Overview"
+                type="com.piramide.elwis.web.schedulermanager.action.OverviewCalendarForwardAction"
+                name="overviewCalendarForm"
+                scope="request" validate="false" parameter="/scheduler/OverviewOtherCalendar.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="sharedCalendar"/>
+        </action>
+
+        <action path="/Calendar/Overview" type="com.piramide.elwis.web.schedulermanager.action.OverviewCalendarAction"
+                name="overviewCalendarForm"
+                scope="request" validate="true" input="/OverviewOtherCalendar.jsp" roles="APPOINTMENT.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="sharedCalendar"/>
+            <forward name="Success" path="/Appointment/Overview.do"/>
+        </action>
+
+        <action path="/Appointment/Overview"
+                type="com.piramide.elwis.web.schedulermanager.action.OverviewAppointmentUIAction" name="form"
+                scope="request" validate="false" roles="APPOINTMENT.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="sharedCalendar"/>
+            <forward name="daily" path="/DailyOverview.jsp"/>
+            <forward name="weekly" path="/WeeklyOverview.jsp"/>
+            <forward name="monthly" path="/MonthlyOverview.jsp"/>
+            <forward name="yearly" path="/YearlyOverview.jsp"/>
+            <forward name="ajax" path="/DailyOverviewAJAXResponse.jsp"/>
+            <forward name="fail" path="/AppointmentView.do"/>
+        </action>
+        <!--end miky-->
+
+        <!--begin ivan-->
+        <action path="/DashboardAppointmentView"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentUIAction"
+                name="form"
+                scope="request" validate="false" roles="APPOINTMENT.VIEW">
+            <forward name="daily" path="/AppointmentComponent.jsp"/>
+            <forward name="fail" redirect="true" path="/DashboardAppointmentView.do?invalid=true;type=1"/>
+        </action>
+
+        <action path="/AppointmentViewComponent" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/AppointmentComponent.jsp"/>
+        <!--end ivan-->
+
+        <action path="/AppointmentList"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentSimpleAdvancedListAction"
+                name="listForm" scope="request" input="/scheduler/AppointmentList.jsp" validate="false"
+                parameter="appointmentList" roles="APPOINTMENT.VIEW">
+            <forward name="Success" path="/AppointmentList.jsp"/>
+            <forward name="fail" redirect="true" path="/AppointmentView.do"/>
+        </action>
+
+        <action path="/AppointmentAdvancedList"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentAdvancedListAction"
+                name="appointmentListForm"
+                scope="request" input="/AppointmentAdvancedList.jsp" validate="true"
+                parameter="appointmentAdvancedList" roles="APPOINTMENT.VIEW">
+            <forward name="Success" path="/AppointmentAdvancedList.jsp"/>
+            <forward name="fail" redirect="true" path="/AppointmentView.do"/>
+        </action>
+
+        <action path="/Appointment/Forward/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentAction"
+                name="appointmentForm"
+                scope="request"
+                validate="false"
+                input="/AppointmentList.do"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="/scheduler/AppointmentDetailForCreate.jsp"
+                roles="APPOINTMENT.CREATE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/AppointmentDetailForCreate.jsp"/>
+            <forward name="redirect" path="/AppointmentList.do?error=true"/>
+            <forward name="fail" path="/AppointmentView.do"/>
+        </action>
+
+        <action path="/Appointment/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentReminderAction"
+                name="appointmentForm"
+                scope="request"
+                input="/Appointment/Forward/Create.do"
+                validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="APPOINTMENT.CREATE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="ReturnDay" path="/AppointmentView.do?type=1" redirect="true"/>
+            <forward name="ReturnWeek" path="/AppointmentView.do?type=2" redirect="true"/>
+            <forward name="ReturnMonth" path="/AppointmentView.do?type=3" redirect="true"/>
+            <forward name="ReturnYear" path="/AppointmentView.do?type=4" redirect="true"/>
+            <forward name="ReturnSearchList" path="/AppointmentList.do?simple=true&amp;forceSimple=true"/>
+            <forward name="ReturnAdvancedSearchList" path="/AppointmentAdvancedList.do"/>
+            <forward name="ReturnTabParticipants" path="/Appointment/ParticipantList.do?index=1"/>
+            <forward name="Reload" path="/AppointmentDetailForCreate.jsp"/>
+            <forward name="Success" path="/Appointment/Forward/Update.do"/>
+            <forward name="Cancel" path="/AppointmentList.do?simple=true" redirect="true"/>
+            <forward name="fail" path="/Appointment/Forward/Create.do?fail=true"/>
+            <forward name="Fail" path="/AppointmentList.do?simple=true"/>
+            <forward name="Search" path="/AppointmentList.do"/>
+        </action>
+
+        <action path="/Appointment/Forward/Update"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentReadAction"
+                name="appointmentForm" scope="request" input="AppointmentList.do" validate="false"
+                roles="APPOINTMENT.VIEW"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/AppointmentDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/AppointmentList.do?simple=true"/>
+        </action>
+
+        <action path="/Appointment/Update"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentReminderAction" name="appointmentForm"
+                scope="request" input="/Appointment/Forward/Update.do" validate="false" roles="APPOINTMENT.UPDATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="ReturnDay" path="/AppointmentView.do?type=1"/>
+            <forward name="ReturnWeek" path="/AppointmentView.do?type=2"/>
+            <forward name="ReturnMonth" path="/AppointmentView.do?type=3"/>
+            <forward name="ReturnYear" path="/AppointmentView.do?type=4"/>
+            <forward name="ReturnSearchList" path="/AppointmentList.do?simple=true&amp;forceSimple=true"/>
+            <forward name="ReturnAdvancedSearchList" path="/AppointmentAdvancedList.do"/>
+            <forward name="ReturnTabParticipants" path="/Appointment/ParticipantList.do?index=1"/>
+            <forward name="Success" path="/Appointment/Forward/Update.do"/>
+            <forward name="ConcurrencyFail" path="/Appointment/Forward/Update.do"/>
+            <forward name="Reload" path="/AppointmentDetailForUpdate.jsp"/>
+            <forward name="Cancel" path="/AppointmentList.do?simple=true" redirect="true"/>
+            <forward name="fail" path="/Appointment/Forward/Update.do?fail=true"/>
+            <forward name="Fail" path="/AppointmentList.do?simple=true"/>
+        </action>
+
+        <action path="/Appointment/Forward/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentReadAction"
+                name="appointmentForm"
+                scope="request"
+                input="/AppoinmentList.do"
+                validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="APPOINTMENT.DELETE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/AppointmentDetailForDelete.jsp"/>
+            <forward name="Fail" path="/AppointmentList.do?simple=true"/>
+            <forward name="Cancel" path="/AppointmentList.do?simple=true"/>
+        </action>
+
+        <action path="/Appointment/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentDeleteAction" name="appointmentForm"
+                scope="request" input="/AppointmentDetailForDelete.jsp" validate="false" roles="APPOINTMENT.DELETE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="ReturnDay" path="/AppointmentView.do?type=1"/>
+            <forward name="ReturnWeek" path="/AppointmentView.do?type=2"/>
+            <forward name="ReturnMonth" path="/AppointmentView.do?type=3"/>
+            <forward name="ReturnYear" path="/AppointmentView.do?type=4"/>
+            <forward name="ReturnSearchList" path="/AppointmentList.do?simple=true&amp;forceSimple=true"/>
+            <forward name="ReturnAdvancedSearchList" path="/AppointmentAdvancedList.do"/>
+            <forward name="ReturnTabParticipants" path="/Appointment/ParticipantList.do?index=1"/>
+            <forward name="Success" path="/AppointmentList.do?simple=true" redirect="true"/>
+            <forward name="Fail" path="/AppointmentList.do?simple=true"/>
+            <forward name="Cancel" path="/AppointmentList.do?simple=true" redirect="true"/>
+        </action>
+
+        <action path="/Appointment/Forward/View/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentForwardDeleteAction"
+                name="appointmentForm"
+                scope="request" input="/AppoinmentList.do" validate="false" roles="APPOINTMENT.DELETE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Recurrence" path="/AppointmentRecurrenceDelete.jsp"/>
+            <forward name="noRecurrence" path="/Appointment/Forward/Delete.do"/>
+            <forward name="Fail" path="/AppointmentList.do?simple=true"/>
+            <forward name="Cancel" path="/Appointment/Forward/View/Delete.do?redirect=true"/>
+            <forward name="ReturnDay" path="/AppointmentView.do?type=1"/>
+            <forward name="ReturnWeek" path="/AppointmentView.do?type=2"/>
+            <forward name="ReturnMonth" path="/AppointmentView.do?type=3"/>
+            <forward name="ReturnYear" path="/AppointmentView.do?type=4"/>
+        </action>
+
+        <action path="/Appointment/View/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentRecurrenceDeleteAction"
+                name="appointmentForm"
+                scope="request" input="/AppoinmentList.do" validate="false" roles="APPOINTMENT.DELETE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/AppointmentView.do?type=1"/>
+            <forward name="ReturnDay" path="/AppointmentView.do?type=1"/>
+            <forward name="ReturnWeek" path="/AppointmentView.do?type=2"/>
+            <forward name="ReturnMonth" path="/AppointmentView.do?type=3"/>
+            <forward name="ReturnYear" path="/AppointmentView.do?type=4"/>
+            <forward name="Cancel" path="/Appointment/Forward/View/Delete.do?redirect=true" redirect="true"/>
+            <forward name="Fail" path="/AppointmentList.do?simple=true"/>
+        </action>
+
+        <action path="/Appointment/ParticipantList"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentListAction"
+                name="participantImportForm"
+                scope="request" input="/scheduler/ParticipantList.jsp" validate="false"
+                roles="APPOINTMENTPARTICIPANT.VIEW"
+                parameter="participantList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/ParticipantList.jsp"/>
+            <forward name="Cancel" path="/ParticipantList.jsp"/>
+            <forward name="fail" path="/AppointmentView.do"/>
+        </action>
+
+        <action path="/AppointmentParticipant/Forward/Group/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentListAction"
+                name="participantImportForm"
+                scope="request" input="/Appointment/Forward/Update.do" validate="false"
+                roles="APPOINTMENTPARTICIPANT.CREATE"
+                parameter="admin@userGroupSchedulerList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/UserGroupImportList.jsp"/>
+            <forward name="fail" path="/AppointmentView.do"/>
+        </action>
+
+        <action path="/AppointmentParticipant/Forward/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentListAction"
+                name="participantImportForm"
+                scope="request" input="/Appointment/Forward/Update.do" validate="false"
+                roles="APPOINTMENTPARTICIPANT.CREATE"
+                parameter="userAppointmentImportList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/UserImportList.jsp"/>
+            <forward name="fail" path="/AppointmentView.do"/>
+        </action>
+
+        <action path="/AppointmentParticipant/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentParticipantImportAction"
+                name="participantImportForm" scope="request" input="/ParticipantList.jsp" validate="true"
+                roles="APPOINTMENTPARTICIPANT.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/Appointment/ParticipantList.do"/>
+            <forward name="Cancel" path="/Appointment/ParticipantList.do" redirect="true"/>
+            <forward name="Fail" path="/Appointment/ParticipantList.do"/>
+            <forward name="importFail" path="/AppointmentParticipant/Forward/Create.do"/>
+            <forward name="error" path="/Appointment/employeeList.do"/>
+        </action>
+
+        <!--Begin Alvaro-->
+        <action path="/AppointmentParticipant/Group/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentManagerAction"
+                name="appointmentGroupForm" scope="request" input="/Appointment/ParticipantList.do" validate="true"
+                parameter="com.piramide.elwis.cmd.schedulermanager.ParticipantDeleteCmd"
+                roles="APPOINTMENTPARTICIPANT.DELETE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/Appointment/ParticipantList.do"/>
+            <forward name="Cancel" path="/Appointment/ParticipantList.do" redirect="true"/>
+        </action>
+
+        <action path="/AppointmentParticipant/Forward/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.ParticipantForwardAction" name="form"
+                scope="request" validate="false" parameter="/scheduler/AppointmentParticipantDetailForDelete.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="APPOINTMENTPARTICIPANT.DELETE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="DeleteGroup" path="/AppointmentParticipant/Group.do?flag=group"/>
+        </action>
+
+        <action path="/AppointmentParticipant/Group"
+                type="com.piramide.elwis.web.schedulermanager.action.ParticipantForwardAction" name="form"
+                scope="request" validate="false" parameter="/scheduler/UserGroupDetail.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="APPOINTMENTPARTICIPANT.DELETE">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/UserGroupDetail.jsp"/>
+        </action>
+
+        <action path="/AppointmentParticipant/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentManagerAction"
+                name="form" scope="request" validate="false" input="/AppointmentParticipantDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.schedulermanager.ParticipantDeleteCmd"
+                roles="APPOINTMENTPARTICIPANT.DELETE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWriteText" value="calendar"/>
+            <set-property property="paramReWriteText" value="type"/>
+            <forward name="Success" path="/Appointment/ParticipantList.do?index=1"/>
+            <forward name="Cancel" path="/Appointment/ParticipantList.do" redirect="true"/>
+            <forward name="Fail" path="/Appointment/ParticipantList.do"/>
+        </action>
+
+        <action path="/GrantAccess/List" type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm" scope="request" validate="false" input="/DayList.do"
+                parameter="grantAccessList" roles="GRANTACCESS.VIEW">
+            <forward name="Success" path="/GrantAccessList.jsp"/>
+        </action>
+
+        <action path="/GrantAccess/ImportUserList" type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm" scope="request" validate="false" input="/DayList.do"
+                parameter="elwisUserList">
+            <forward name="Success" path="/ImportUserList.jsp"/>
+        </action>
+
+
+        <action path="/GrantAccess/Forward/Create" type="org.apache.struts.actions.ForwardAction" name="grantAccessForm"
+                roles="GRANTACCESS.CREATE" scope="request" validate="false"
+                parameter="/scheduler/GrantAccessDetailForCreate.jsp"/>
+
+        <action path="/GrantAccess/Create" type="com.piramide.elwis.web.schedulermanager.action.SchedulerDefaultAction"
+                name="grantAccessForm"
+                roles="GRANTACCESS.CREATE" scope="request" input="/GrantAccessDetailForCreate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.schedulermanager.GrantAccessCmd">
+            <forward name="Success" path="/GrantAccess/List.do" redirect="true"/>
+            <forward name="Cancel" path="/GrantAccess/List.do" redirect="true"/>
+            <forward name="Exists" path="/GrantAccess/Forward/Create.do"/>
+        </action>
+
+        <action path="/GrantAccess/Forward/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.SchedulerDefaultAction"
+                name="grantAccessForm" scope="request" validate="false" input="/GrantAccess/List.do"
+                roles="GRANTACCESS.DELETE" parameter="com.piramide.elwis.cmd.schedulermanager.GrantAccessCmd">
+            <forward name="Success" path="/GrantAccessDetailForDelete.jsp"/>
+            <forward name="Failure" path="/GrantAccess/List.do"/>
+        </action>
+
+        <action path="/GrantAccess/Delete" type="com.piramide.elwis.web.schedulermanager.action.SchedulerDefaultAction"
+                name="grantAccessForm" scope="request" validate="false" input="/GrantAccessDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.schedulermanager.GrantAccessCmd" roles="GRANTACCESS.DELETE">
+            <forward name="Success" path="/GrantAccess/List.do" redirect="true"/>
+            <forward name="Cancel" path="/GrantAccess/List.do" redirect="true"/>
+        </action>
+
+        <action path="/GrantAccess/Forward/Update"
+                type="com.piramide.elwis.web.schedulermanager.action.SchedulerDefaultAction"
+                name="grantAccessForm" scope="request" validate="false" input="/GrantAccess/List.do"
+                parameter="com.piramide.elwis.cmd.schedulermanager.GrantAccessCmd" roles="GRANTACCESS.VIEW">
+            <forward name="Success" path="/GrantAccessDetailForUpdate.jsp"/>
+            <forward name="Failure" path="/GrantAccess/List.do"/>
+        </action>
+
+        <action path="/GrantAccess/Update" type="com.piramide.elwis.web.schedulermanager.action.SchedulerDefaultAction"
+                name="grantAccessForm" scope="request" validate="true" input="/GrantAccessDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.schedulermanager.GrantAccessCmd" roles="GRANTACCESS.UPDATE">
+            <forward name="Success" path="/GrantAccess/List.do" redirect="true"/>
+            <forward name="Cancel" path="/GrantAccess/List.do" redirect="true"/>
+        </action>
+
+        <!--Task-->
+        <action path="/ImportUserList" type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm" scope="request" validate="false" input="/Report/Task.do"
+                parameter="userList">
+            <forward name="Success" path="/ImportAllUserList.jsp"/>
+        </action>
+
+        <action path="/TaskList" type="com.piramide.elwis.web.schedulermanager.action.TaskSimpleAdvancedListAction"
+                scope="request" input="/TaskList.jsp" validate="false" roles="TASK.VIEW" name="taskListForm"
+                parameter="taskSingleList">
+            <forward name="Success" path="/TaskList.jsp"/>
+        </action>
+
+        <action path="/TaskAdvancedList" type="com.piramide.elwis.web.schedulermanager.action.TaskAdvancedListAction"
+                name="taskListForm"
+                scope="request" input="/TaskAdvancedList.jsp" validate="true" roles="TASK.VIEW"
+                parameter="allTaskAdvancedSearchList">
+            <forward name="Success" path="/TaskAdvancedList.jsp"/>
+        </action>
+
+        <action path="/Task/Forward/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskCreateAction"
+                name="taskForm"
+                roles="TASK.CREATE"
+                scope="request"
+                validate="false"
+                parameter="/scheduler/TaskDetailForCreate.jsp"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="task"/>
+            <set-property property="redirect" value="Search"/>
+            <forward name="Search" path="/TaskList.do"/>
+        </action>
+
+        <action path="/Task/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskAction"
+                name="taskForm"
+                scope="request"
+                input="/TaskDetailForCreate.jsp"
+                validate="true"
+                roles="TASK.CREATE">
+            <forward name="Success" path="/Task/Forward/Update.do"/>
+            <forward name="Cancel" path="/TaskList.do" redirect="true"/>
+            <forward name="Fail" path="/Task/Forward/Create.do"/>
+            <forward name="Redirect" path="/TaskDetailForCreate.jsp"/>
+            <forward name="Search" path="/TaskList.do"/>
+        </action>
+
+        <action path="/Task/Forward/Update"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskForwardAction"
+                name="taskForm"
+                scope="request"
+                input="/TaskList.do"
+                validate="false"
+                roles="TASK.VIEW">
+            <forward name="Success" path="/TaskDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/TaskList.do"/>
+        </action>
+
+        <action path="/Task/Update"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskAction" name="taskForm"
+                scope="request" input="/TaskDetailForUpdate.jsp" validate="true" roles="TASK.UPDATE"
+                parameter="com.piramide.elwis.cmd.schedulermanager.TaskUpdateCmd">
+            <forward name="Success" path="/Task/Forward/Update.do"/>
+            <forward name="Cancel" path="/TaskList.do" redirect="true"/>
+            <forward name="Fail" path="/Task/Forward/Update.do"/>
+            <forward name="Redirect" path="/TaskDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Task/Forward/Delete" type="com.piramide.elwis.web.schedulermanager.action.TaskManagerAction"
+                name="taskForm"
+                scope="request" input="/TaskList.do" validate="false" roles="TASK.DELETE"
+                parameter="com.piramide.elwis.cmd.schedulermanager.TaskReadCmd">
+            <forward name="Success" path="/TaskDetailForDelete.jsp"/>
+            <forward name="Fail" path="/TaskList.do"/>
+            <forward name="Cancel" path="/TaskList.do"/>
+        </action>
+
+        <action path="/Task/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskManagerAction" name="taskForm"
+                scope="request" input="/TaskDetailForDelete.jsp" validate="false" roles="TASK.DELETE"
+                parameter="com.piramide.elwis.cmd.schedulermanager.TaskDeleteCmd">
+            <forward name="Success" path="/TaskList.do" redirect="true"/>
+            <forward name="Fail" path="/TaskList.do"/>
+            <forward name="Cancel" path="/TaskList.do" redirect="true"/>
+        </action>
+
+        <action path="/Task/ParticipantTaskList" type="com.piramide.elwis.web.schedulermanager.action.TaskListAction"
+                name="listForm" parameter="participantTaskList" roles="TASKUSER.VIEW"
+                scope="request" input="/scheduler/ParticipantTaskList.jsp" validate="false">
+            <forward name="Success" path="/ParticipantTaskList.jsp"/>
+            <forward name="Cancel" path="/ParticipantTaskList.jsp" redirect="true"/>
+        </action>
+
+        <action path="/TaskParticipant/Forward/Group/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskListAction" name="listForm"
+                scope="request" input="/Task/Forward/Update.do" validate="false"
+                parameter="admin@userGroupSchedulerList" roles="TASKUSER.CREATE">
+            <forward name="Success" path="/UserGroupTaskImportList.jsp"/>
+        </action>
+        <!--import user participant-->
+
+        <action path="/TaskParticipant/List/Create" type="com.piramide.elwis.web.common.action.ListAction"
+                name="participantImportForm" scope="request" input="/Task/Forward/Update.do" validate="false"
+                parameter="userTaskImportList" roles="TASKUSER.CREATE">
+            <forward name="Success" path="/UserTaskImportList.jsp"/>
+        </action>
+
+        <action path="/TaskParticipant/Forward/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskAdvancedListAction"
+                name="participantImportForm" scope="request" input="/Task/Forward/Update.do" validate="false"
+                parameter="userTaskImportList" roles="TASKUSER.CREATE">
+            <forward name="Success" path="/UserTaskImportList.jsp"/>
+        </action>
+
+        <action path="/TaskParticipant/Create"
+                type="com.piramide.elwis.web.schedulermanager.action.ParticipantImportAction"
+                name="participantImportForm" scope="request" input="/ParticipantTaskList.jsp" validate="true"
+                roles="TASKUSER.CREATE">
+            <forward name="Success" path="/Task/ParticipantTaskList.do" redirect="true"/>
+            <forward name="Cancel" path="/Task/ParticipantTaskList.do" redirect="true"/>
+            <forward name="Fail" path="/Task/ParticipantTaskList.do" redirect="true"/>
+            <forward name="importFail" path="/TaskParticipant/Forward/Create.do"/>
+            <forward name="error" path="/Appointment/employeeList.do"/>
+        </action>
+
+        <action path="/TaskParticipant/Forward/Update"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskManagerAction" name="participantForm"
+                scope="request" input="/Task/ParticipantTaskList.do" validate="false" roles="TASKUSER.VIEW"
+                parameter="com.piramide.elwis.cmd.schedulermanager.ParticipantTaskCmd">
+            <forward name="Success" path="/TaskParticipantDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Task/ParticipantTaskList.do"/>
+        </action>
+
+        <action path="/TaskParticipant/Update" type="com.piramide.elwis.web.schedulermanager.action.TaskManagerAction"
+                name="participantForm"
+                scope="request" validate="true" input="/TaskParticipantDetailForUpdate.jsp" roles="TASKUSER.UPDATE"
+                parameter="com.piramide.elwis.cmd.schedulermanager.ParticipantTaskCmd">
+            <forward name="Success" path="/Task/ParticipantTaskList.do"/>
+            <forward name="Cancel" path="/Task/ParticipantTaskList.do" redirect="true"/>
+            <forward name="Fail" path="/Task/ParticipantTaskList.do"/>
+        </action>
+
+        <action path="/TaskParticipant/Group/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.TaskManagerAction"
+                name="participantForm" scope="request" input="/Task/ParticipantTaskList.do" validate="false"
+                parameter="com.piramide.elwis.cmd.schedulermanager.ParticipantTaskCmd" roles="TASKUSER.DELETE">
+            <forward name="Success" path="/Task/ParticipantTaskList.do"/>
+            <forward name="Cancel" path="/Task/ParticipantTaskList.do" redirect="true"/>
+        </action>
+
+        <action path="/TaskParticipant/Group" type="org.apache.struts.actions.ForwardAction" name="participantForm"
+                scope="request" validate="false" parameter="/scheduler/UserTaskGroupDetail.jsp"
+                roles="TASKUSER.DELETE">
+            <forward name="Success" path="/UserTaskGroupDetail.jsp"/>
+            <forward name="Fail" path="/Task/ParticipantTaskList.do"/>
+        </action>
+
+        <action path="/TaskParticipant/Forward/Delete"
+                type="com.piramide.elwis.web.schedulermanager.action.ParticipantDeleteAction"
+                name="participantForm" scope="request" input="/Task/ParticipantTaskList.do" validate="false"
+                roles="TASKUSER.DELETE" parameter="com.piramide.elwis.cmd.schedulermanager.ParticipantTaskCmd">
+            <forward name="Success" path="/TaskParticipantDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Task/ParticipantTaskList.do"/>
+            <forward name="DeleteGroup" path="/TaskParticipant/Group.do"/>
+        </action>
+
+        <action path="/TaskParticipant/Delete" type="com.piramide.elwis.web.schedulermanager.action.TaskManagerAction"
+                name="participantForm"
+                scope="request" validate="false" input="/TaskParticipantDetailForDelete.jsp" roles="TASKUSER.DELETE"
+                parameter="com.piramide.elwis.cmd.schedulermanager.ParticipantTaskCmd">
+            <forward name="Success" path="/Task/ParticipantTaskList.do"/>
+            <forward name="Cancel" path="/Task/ParticipantTaskList.do" redirect="true"/>
+            <forward name="Fail" path="/Task/ParticipantTaskList.do"/>
+        </action>
+        <!--/Task-->
+
+        <!--    for Reports-->
+        <action path="/Report/AppointmentList" type="org.apache.struts.actions.ForwardAction"
+                name="appointmentReportListForm"
+                scope="request" parameter="/scheduler/report/AppointmentReportList.jsp" validate="false"
+                roles="APPOINTMENT.VIEW"/>
+
+        <action path="/Report/AppointmentList/Execute" input="/report/AppointmentReportList.jsp"
+                type="com.piramide.elwis.web.schedulermanager.action.report.AppointmentReportListAction"
+                name="appointmentReportListForm"
+                scope="request" parameter="appointmentReportList" validate="false" roles="APPOINTMENT.VIEW">
+            <forward name="Success" path="/report/AppointmentReportList.jsp"/>
+        </action>
+
+        <action path="/Report/ParticipantList" type="org.apache.struts.actions.ForwardAction"
+                name="participantReportListForm"
+                scope="request" parameter="/scheduler/report/ParticipantReportList.jsp" validate="false"
+                roles="APPOINTMENTPARTICIPANT.VIEW"/>
+
+        <action path="/Report/ParticipantList/Execute" input="/report/ParticipantReportList.jsp"
+                type="com.piramide.elwis.web.common.action.report.ReportAction" name="participantReportListForm"
+                scope="request" parameter="participantReportList" validate="true" roles="APPOINTMENTPARTICIPANT.VIEW">
+            <forward name="Success" path="/report/ParticipantReportList.jsp"/>
+        </action>
+
+        <action path="/Report/TaskList" type="org.apache.struts.actions.ForwardAction" name="taskReportListForm"
+                scope="request" parameter="/scheduler/report/TaskReportList.jsp" validate="false" roles="TASK.VIEW"/>
+
+        <action path="/Report/TaskList/Execute" input="/report/TaskReportList.jsp" roles="TASK.VIEW"
+                type="com.piramide.elwis.web.schedulermanager.action.report.TaskReportListAction"
+                name="taskReportListForm"
+                scope="request" parameter="taskReportList" validate="false">
+            <forward name="Success" path="/report/TaskReportList.jsp"/>
+        </action>
+
+        <action path="/Report/UserAssignedList" type="org.apache.struts.actions.ForwardAction"
+                name="userAssignedReportListForm"
+                scope="request" parameter="/scheduler/report/UserAssignedReportList.jsp" validate="false"
+                roles="TASKUSER.VIEW"/>
+
+
+        <action path="/Report/UserAssignedList/Execute" input="/report/UserAssignedReportList.jsp"
+                type="com.piramide.elwis.web.common.action.report.ReportAction" name="userAssignedReportListForm"
+                scope="request" parameter="userAssignedTaskReportList" validate="true" roles="TASKUSER.VIEW">
+            <forward name="Success" path="/report/UserAssignedReportList.jsp"/>
+        </action>
+        <action path="/GrantAccess/ImportUserList" type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm" scope="request" validate="false" input="/DayList.do"
+                parameter="elwisUserList">
+            <forward name="Success" path="/ImportUserList.jsp"/>
+        </action>
+        <!--for imports-->
+        <action path="/SearchAppointment"
+                type="com.piramide.elwis.web.schedulermanager.action.AppointmentCreateListAction"
+                name="listForm" scope="request" validate="false" parameter="appointmentSimpleList"
+                input="/scheduler/SearchAppointment.jsp">
+            <forward name="Success" path="/SearchAppointment.jsp"/>
+        </action>
+
+        <action path="/SearchTask" type="com.piramide.elwis.web.common.action.ListAction" name="listForm"
+                scope="request" parameter="taskSimpleList" validate="false" input="/scheduler/SearchTask.jsp">
+            <forward name="Success" path="/SearchTask.jsp"/>
+        </action>
+
+        <action path="/TaskListPopUp" type="com.piramide.elwis.web.schedulermanager.action.TaskAdvancedListAction"
+                scope="request" input="/TaskListForPopUp.jsp" validate="false" roles="TASK.VIEW" name="taskListForm"
+                parameter="taskSinglePopUpList">
+            <forward name="Success" path="/TaskListForPopUp.jsp"/>
+        </action>
+        <!--for reports (alvaro)-->
+        <action path="/Report/TaskSingleList" type="org.apache.struts.actions.ForwardAction"
+                name="taskSingleReportListForm"
+                scope="request" parameter="/scheduler/report/TaskSingleReportList.jsp" validate="false"
+                roles="TASK.VIEW"/>
+
+        <action path="/Report/TaskSingleList/Execute" input="/report/TaskSingleReportList.jsp" roles="TASK.VIEW"
+                type="com.piramide.elwis.web.schedulermanager.action.report.TaskSingleReportAction"
+                name="taskSingleReportListForm"
+                scope="request" parameter="taskSinglePopUpList" validate="true">
+            <forward name="Success" path="/report/TaskSingleReportList.jsp"/>
+        </action>
+
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+            /WEB-INF/common/validation.xml,
+            /WEB-INF/scheduler/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="appointmentId, index, taskId, viewerUserId, advancedListForward"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/scheduler/fantabulous.xml"/>
+        <set-property property="moduleParams" value="appointmentId, index, taskId, advancedListForward"/>
+    </plug-in>
+
+</struts-config>

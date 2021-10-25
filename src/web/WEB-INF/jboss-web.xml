@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE jboss-web PUBLIC
+        "-//JBoss//DTD Web Application 2.4//EN"
+        "http://www.jboss.org/j2ee/dtd/jboss-web_4_0.dtd">
+
+<jboss-web>
+    <context-root>bm</context-root>
+    <use-session-cookies>true</use-session-cookies>
+    <ejb-local-ref>
+        <ejb-ref-name>ejb/StatelessFacadeHome</ejb-ref-name>
+        <local-jndi-name>struts_ejb/StatelessFacadeHome</local-jndi-name>
+    </ejb-local-ref>
+</jboss-web>

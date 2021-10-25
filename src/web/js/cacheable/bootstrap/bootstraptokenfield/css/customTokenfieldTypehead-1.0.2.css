@@ -1,0 +1,109 @@
+/*token field custom class to personalise typeahead menu*/
+.tokenfield .tokenInvalid {
+    background-color: #f2dede;
+    border-color: #eed3d7;
+    color: #b94a48;
+}
+
+/*typehead custom class*/
+.tt-menu {
+    text-align: left;
+}
+
+.typeahead,
+.tt-query,
+.tt-hint {
+    width: 396px;
+    height: 30px;
+    padding: 8px 12px;
+    font-size: 13px;
+    line-height: 30px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    outline: none;
+}
+
+.typeahead {
+    background-color: #fff;
+}
+
+.typeahead:focus {
+    border: 2px solid #0097cf;
+}
+
+.tt-query {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+    color: #999;
+    /*this width to avoid disable popup search links*/
+    min-width: 20px !important;
+    width: 20px !important;
+}
+
+.tt-menu {
+    width: 300px;
+    margin: 12px 0;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    padding: 3px 20px;
+    font-size: 13px;
+    line-height: 24px;
+
+    box-sizing: border-box;
+}
+
+.tt-suggestion:hover {
+    cursor: pointer;
+    color: #000000;
+    background-color: #ededed;
+}
+
+.tt-suggestion.tt-cursor {
+    color: #000000;
+    background-color: #ededed;
+}
+
+.tt-suggestion p {
+    margin: 0;
+}
+
+.tt-suggestion + .tt-suggestion {
+    border-top: 1px solid #ccd6dd;
+}
+
+/************* typehead template ****************/
+.suggestionEmail {
+    font-style: oblique;
+}
+
+.suggestionDefaultEmail {
+    background-color: #E3E5E8;
+}
+
+/*enable typehead autocomplete scroll*/
+.tt-menu {
+    max-height: 575px;
+    overflow: hidden;
+}
+
+.tt-dataset {
+    max-height: 550px;
+    overflow: auto;
+}

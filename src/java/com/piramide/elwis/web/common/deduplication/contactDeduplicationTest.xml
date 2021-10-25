@@ -1,0 +1,60 @@
+
+<duke>
+  <param name="database-implementation" value="in-memory"/>
+
+  <object class="no.priv.garshol.duke.comparators.NumericComparator"
+          name="AreaComparator">
+    <param name="min-ratio" value="0.7"/>
+  </object>
+
+  <schema>
+    <threshold>0.89</threshold>
+
+<!--
+    <property type="id">
+      <name>ID</name>
+    </property>
+-->
+
+    <property>
+      <name>NAME</name>
+      <comparator>no.priv.garshol.duke.comparators.JaroWinkler</comparator>
+      <low>0.09</low>
+      <high>0.88</high>
+    </property>
+    <property>
+      <name>COUNTRY</name>
+      <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
+      <low>0.48</low>
+      <high>0.6</high>
+    </property>
+    <property>
+      <name>CITYZIP</name>
+      <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
+      <low>0.48</low>
+      <high>0.6</high>
+    </property>
+    <property>
+      <name>STREETHOUSENUMBER</name>
+      <comparator>no.priv.garshol.duke.comparators.Levenshtein</comparator>
+      <low>0.48</low>
+      <high>0.6</high>
+    </property>
+  </schema>
+
+    <jndi>
+        <param name="jndi-path" value="java:/elwisDS"/>
+        <param name="query" value="
+        select a.name1 as name, co.countryname as country, ci.cityname as city, a.street as street
+        from address a
+        left join country co on a.countryid=co.countryid
+        left join city ci on a.cityid=ci.cityid
+        where a.companyid=1 and a.addressid > 8000"/>
+
+        <column name="name" property="NAME"/>
+        <column name="country" property="COUNTRY"
+                cleaner="no.priv.garshol.duke.cleaners.LowerCaseNormalizeCleaner"/>
+        <column name="city" property="CITYZIP"/>
+        <column name="street" property="STREETHOUSENUMBER"/>
+    </jndi>
+</duke>

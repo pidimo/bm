@@ -1,0 +1,220 @@
+ELWIS Word plugin development notes
+===================================
+This document aims to give you a bunch of steps to have the MS Word plugin environment defined and
+to proceed with some of the most tipical modifications or maintance tasks over the plugin project.
+
+Considerations
+==============
+1.- The plugin is developed using Visual Basic 6.
+2.- The plugin must support Windows 2000, XP and 2003 OS.
+3.- The plugin must support Office 2000, Office XP and Office 2003.
+4.- The plugin must support four languages, which are: English (default), German, Spanish and French.
+
+
+Preparing the environment
+=========================
+1.- In your Operating System (in this case Windows XP) install MS Word 2000. This is in order to use the 2000
+binary libraries which then will allow to install the plugin in any greater Word version.
+2.- Install Visual Basic 6. This is commonly part of Visual Studio 6, you only need to install Visual Basic (personalize the installation).
+3.- Install Ruby programming language.
+The plugin has some tools to generate helper files based on .properties files which are written in ruby programming language. So, you need to have ruby installed. Now you can install ruby186-26.exe windows distribution.
+
+
+Working with the project
+========================
+1.- Download from the ELWIS SVN repository the project fragment corresponding to the root:
+elwis\src\vb\word-plugin\
+If you don't want to make some other configurations in the installer project I suggest to use C:\word-plugin as base directory.
+
+2.- The content of the word-plugin is described as following:
+/installer
+/src
+/tools
+
+2.1.- installer
+The installer directory contains the installer project which is based on Setup Factory 8.
+
+2.2.- src
+The src directoy contains the three VB projects, which are:
+a) addin: This project is responsible to generate the word add-in.
+b) core: This contains the main functionalities of the plugin, the configuration forms, and so on.
+c) util: This project creates an executable which is used in the installation process.
+
+2.3.- tools
+This directory contains the following tools for the projects:
+a) ipworks : This is the installer of a library required by the core VB project.
+b) resourcesgen: This is the utility written in ruby which is responsible to generate the VB project resources based on the *.properties files used in ELWIS* projects.
+
+
+Installing IP Works SSL! library
+============================
+Now you have the project source tree in your disk, you need to install the Ip works library.
+1.- Install the tools\ipworks\ipWorksSSL.exe
+* Use the serial provided for the keygen.
+
+
+
+
+Core Project
+============
+- From Visual Basic you can open the ElwisCore project from src/core directory.
+
+- You must check that the project have the following references (Project/References menu) (fix them if required):
+* Visual Basic for Applications
+* Visual Basic runtimes objects and procedures
+* Visual Basic objects and procedures
+* OLE Automation
+* Microsoft Word 9.0 Object Library 
+* Microsoft Office 9.0 Object LIbrary
+* Microsoft XML, v3.0
+* Microsoft scripting runtime
+* /n software IPWorks! SSL V6 WebUploadS Control
+
+
+- You must check if the following components are checked (Project/Components menu) (fix them if required):
+* /n software IPWorks! SSL V6 WebUploadS Control (load the webupls62.ocx from the core project)
+* Microsoft Tabbed Dialog Control (Update the selection to the file TABCTL32.OCX located in the core project)
+* Microsft Windows Commons Controls 6
+
+- In order to generate the project dll, go to File->Generate ElwisCore.dll menu option. You must choose as place of generation the directory /installer/resources. This is because is from this place where the installer project will take this dll.
+
+Addin Project
+=============
+- From Visual Basic you can open the WordAddin project from src/addin directory.
+
+- The references of the project must point to (Project/References menu):
+* Visual Basic for Applications
+* Visual Basic runtimes objects and procedures
+* Visual Basic objects and procedures
+* OLE Automation
+* Microsoft Word 9.0 Object Library 
+* Microsoft Office 9.0 Object LIbrary 
+* Microsoft XML, v3.0.
+* Microsoft scripting runtime
+* /n software IPWorks! SSL V6 WebUploadS Control
+* Microsoft Add-In designer
+* Microsoft Visual Basic 6 Extensibility
+
+- In order to generate the project dll, go to File->Generate WordAddin.dll menu option. You must choose as place of generation the directory /installer/resources. This is because is from this place where the installer project will take this dll.
+
+
+Util Project
+============
+- From Visual Basic you can open the util project from src/util directory.
+
+- The references of the project must point to (Project/References menu):
+* Visual Basic for Applications
+* Visual Basic runtimes objects and procedures
+* Visual Basic objects and procedures
+* OLE Automation
+* Microsoft Word 9.0 Object Library 
+* Microsoft Office 9.0 Object LIbrary 
+
+- In order to generate the project exe, go to File->Generate util.exe menu option. You must choose as place of generation the directory /installer/resources. This is because is from this place where the installer project will take this dll.
+
+
+
+Working with the installer project
+=================================
+- Install Setup Factory 8 (use the default c:\Archivos de programa\Setup Factory 8.0\)
+
+-Once you have the dll's and exe's files in the installer/resources directory, you can open the setup factory project from the installer\pluginInstaller.sf8.
+
+-Once you clicked pluginInstaller.sf8 the installer project must be opened.
+
+-You can perform any modification in the project. Please, in order to not re-configure the installer project paths use c:\word-plugin as base directory for the project.
+
+- Then you can build  .exe package using the option Project->Build. The .exe will be created in the C:\Output directory (by default).
+
+
+
+
+VB projects development notes
+=============================
+
+ 
+Working with the resources
+=========================
+If you wanna change some resource text in the plugin (UI or Variable), you must use the resources ruby tool in conjunction with the ElwisCore project. Here the main steps to change a label in the UI after modifying the resource in the application resources (.properties of the application).
+
+- Get the files ApplicationResources.properties, ApplicationResources_es.properties and ApplicationResources_fr.properties from the Local Application Resources Web Application and the ApplicationResources_de.properties from the german application resources manager.
+
+- If you have added a new language in the frmConfig form, you have to add the plugin.formConfig.optLang<Locale> into the resources. e.g.: plugin.formConfig.optLangFr
+
+- Modify the installer to update the new language (if you are adding a new language support)
+
+- Copy the ApplicationResources*.properties of the above point to the <rootplugin>/tools/resourcesgen directory (overriding the existing ones).
+
+- In the resourcesgen directory execute the following command from a console:
+> ruby plugin.rb .
+
+- The above program will generate the following files in the same folder (resourcesgen):
+
+* ConstantModule.bas
+This file is generated to store the enumerations corresponding to the resources. If you have added a new variable to the plugin of word (and previously you added a resource for it) you must copy the content of this file to the Enumerations.bas module in the ElwisCore project. From this Enum: Enum LANGUAGE up to this one: Enum RESOURCE_ASSISTENT.
+
+* resources.rs
+If you have changed any existing resource label to another one you must use this file to reflect such changes into the plugin.
+** Copy the resources.rs file to the <rootplugin>/src/core/resources directory (override the existing one).
+** Once you copied the file execute the following command from the console:
+> rc resources.rs
+** The above command execution will create (override) the file resources.RES (in the same directory) which is the main resource file the ElwisCore project needs. With this you have updated one of the main resources files needed by the VB interfaces.
+
+* XMLResources_en.xml
+This file is also generated to store the respective translation for the variables in english language.
+** Copy the english file to the dir <rootplugin>/src/core/xml/
+** In order to update the installer resources files, you must always copy the content of the <rootplugin>/src/core/xml/ directory to the directory <rootplugin>/installer/xml
+
+* XMLResources_es.xml
+This file is also generated to store the respective translation for the variables in spanish language.
+** Copy the spanish fileto the dir <rootplugin>/src/core/xml/
+** In order to update the installer resources files, you must always copy the content of the <rootplugin>/src/core/xml/ directory to the directory <rootplugin>/installer/xml
+
+* XMLResources_de.xml
+This file is also generated to store the respective translation for the variables in german language.
+** Copy the german file to the dir <rootplugin>/src/core/xml/
+** In order to update the installer resources files, you must always copy the content of the <rootplugin>/src/core/xml/ directory to the directory <rootplugin>/installer/xml
+
+* XMLResources_fr.xml
+This file is also generated to store the respective translation for the variables in french language.
+** Copy the frenchfile to the dir <rootplugin>/src/core/xml/
+** In order to update the installer resources files, you must always copy the content of the <rootplugin>/src/core/xml/ directory to the directory <rootplugin>/installer/xml
+
+Resources are grouped by plugin. and template. and for that elements are created the respective enums. See plugin.rb for more details about groups.
+
+Working with the template fields in the toolbars
+================================================
+In the <rootplugin>/src/core/xml you will find two files: TableFields.xml and TemplateFields.xml
+* TemplateFields.xml
+This document allows to configure the toolbars and buttons in the plugin. If you wanna change some position or you wanna do any other change, you must update this file. 
+
+*TableFields.xml
+This xml is used to insert the table for sales process, which is under the sales process option in the toolbar. If you wanna change the order or something like that you must update this file. If you add anything else you must update the source code also.
+
+
+If you change either TemplateFields.xml or TableFields.xml don't forget to copy the changed files to <rootplugin>/installer/xml directory in order to enable the installer to pick up the new changes.
+
+
+
+
+
+Debuging Plugin
+===============
+Of course is not nicest to test every change in the plugin making an installer of the application.
+So, you can debug your application doing the following steps:
+
+1.- Copy all XMLs of <rootplugin>/src/core/xml to c:\Documents and Settings\<CURRENTUSER>\Datos de programa\Elwis-Plugin\
+If necessary create the folder.
+
+2.- Copy the <rootplugin>\installer\resources\Elwis.dot to c:\Documents and Settings\<CURRENTUSER>\Datos de programa\Microsoft\Word\INICIO\
+
+3.- Open the project WordAdding (src/addin). Run it (F5).
+
+4.- Open the project ElwisCore (src/core). Run it (F5).
+
+5.- Open Word.
+
+Now you can test your changes without preparing an installer.
+If you change some files mentioned in 1, and 2 you must copy them to the specified place.
+
+

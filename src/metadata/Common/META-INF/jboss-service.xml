@@ -1,0 +1,90 @@
+<!-- Descriptor for Mbeans services -->
+<server>
+
+    <mbean code="org.jboss.mq.server.jmx.Queue"
+           name="jboss.mq.destination:service=Queue,name=Elwis.SendSimpleMail">
+        <depends optional-attribute-name="DestinationManager">
+            jboss.mq:service=DestinationManager
+        </depends>
+    </mbean>
+
+    <mbean code="org.jboss.mq.server.jmx.Queue"
+           name="jboss.mq.destination:service=Queue,name=Elwis.BatchRestoreRecurrenceReminder">
+        <depends optional-attribute-name="DestinationManager">
+            jboss.mq:service=DestinationManager
+        </depends>
+    </mbean>
+
+    <mbean code="org.jboss.mq.server.jmx.Queue"
+           name="jboss.mq.destination:service=Queue,name=Elwis.SentEmailsInBackground">
+        <depends optional-attribute-name="DestinationManager">
+            jboss.mq:service=DestinationManager
+        </depends>
+    </mbean>
+
+    <mbean code="org.jboss.mq.server.jmx.Queue"
+           name="jboss.mq.destination:service=Queue,name=Elwis.DownloadEmailsInBackground">
+        <depends optional-attribute-name="DestinationManager">
+            jboss.mq:service=DestinationManager
+        </depends>
+    </mbean>
+
+    <mbean code="org.jboss.mq.server.jmx.Queue"
+           name="jboss.mq.destination:service=Queue,name=Elwis.SentEmail">
+        <depends optional-attribute-name="DestinationManager">
+            jboss.mq:service=DestinationManager
+        </depends>
+    </mbean>
+
+    <mbean code="org.jboss.mq.server.jmx.Queue"
+           name="jboss.mq.destination:service=Queue,name=Elwis.DownloadEmail">
+        <depends optional-attribute-name="DestinationManager">
+            jboss.mq:service=DestinationManager
+        </depends>
+    </mbean>
+
+    <mbean code="org.jboss.mq.server.jmx.Queue"
+           name="jboss.mq.destination:service=Queue,name=Elwis.DeleteEmail">
+        <depends optional-attribute-name="DestinationManager">
+            jboss.mq:service=DestinationManager
+        </depends>
+    </mbean>
+
+    <!--batch process schedule timer to rebuild email and delete old attach with blob data-->
+    <mbean code="org.jboss.varia.scheduler.Scheduler" name=":service=AttachDeleteScheduler">
+        <attribute name="StartAtStartup">true</attribute>
+        <attribute name="SchedulableClass">com.piramide.elwis.plugins.jboss.scheduler.SchedulableAttachDeleteBatchProcess</attribute>
+        <attribute name="InitialStartDate">0</attribute>
+        <!--schedule every 7 minutes-->
+        <attribute name="SchedulePeriod">420000</attribute>
+        <attribute name="InitialRepetitions">-1</attribute>
+        <depends>jboss:service=Naming</depends>
+        <depends>jboss.j2ee:jndiName=Elwis.EmailSourceService,service=EJB</depends>
+        <attribute name="FixedRate">true</attribute>
+        <attribute name="TimerName">jboss:service=TimerNew</attribute>
+    </mbean>
+
+    <!--batch process schedule to send campaign in background-->
+    <mbean code="org.jboss.varia.scheduler.Scheduler" name=":service=CampaignBackgroundScheduler">
+        <attribute name="StartAtStartup">true</attribute>
+        <attribute name="SchedulableClass">com.piramide.elwis.plugins.jboss.scheduler.SchedulableCampaignGenerationSend</attribute>
+        <attribute name="InitialStartDate">0</attribute>
+        <!--schedule every 4 second -->
+        <attribute name="SchedulePeriod">4000</attribute>
+        <attribute name="InitialRepetitions">-1</attribute>
+        <depends>jboss:service=Naming</depends>
+        <depends>jboss.j2ee:jndiName=Elwis.EmailSourceService,service=EJB</depends>
+        <attribute name="FixedRate">true</attribute>
+        <attribute name="TimerName">jboss:service=TimerNew</attribute>
+    </mbean>
+
+    <!--do not remove below text it is used to insert automatically the mbean of emailSender service.-->
+    <!--@@emailSenderMBeanXmlFragment@@-->
+
+    <!--do not remove below text it is used to insert automatically the mbean of reminder service.-->
+    <!--@@reminderMBeanXmlFragment@@-->
+
+    <!--do not remove below text it is used to insert automatically the mbean of contract end reminder service.-->
+    <!--@@contractEndReminderMBeanXmlFragment@@-->
+
+</server>

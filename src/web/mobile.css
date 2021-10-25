@@ -1,0 +1,89 @@
+.label {
+    text-align: left;
+    font-weight: bold;
+    margin-top: 2px;
+}
+
+.content {
+    text-align: left;
+    margin-top: 2px;
+    display: block;
+}
+
+.buttons {
+    text-align: left;
+    margin-top: 2px;
+}
+
+.row {
+    text-align: left;
+    padding: 2px;
+}
+
+.page {
+    margin: 3px;
+}
+
+.body {
+    padding: 3px;
+}
+
+.tabBody {
+    background-color: #f5f5f5;
+    border: 1px solid gray;
+}
+
+.footer {
+
+}
+
+.modules {
+
+}
+
+.tabLabel {
+    border-bottom: 1px solid gray;
+}
+
+.tabMenu {
+    border-top: 1px solid gray;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+
+.shortcuts {
+
+}
+
+.error {
+    color: red;
+    text-align: left;
+}
+
+.listHeader {
+    color: #000000;
+    background-color: #ede8db;
+    font-weight: bold;
+}
+
+.listItem {
+    text-align: left;
+    padding: 3px;
+}
+
+.list {
+    border: 1px solid #ede8db;
+}
+
+.rowOdd {
+    background-color: #fff;
+}
+
+.rowEven {
+    background-color: #f5f5f5;
+}
+
+.pagingBar {
+    background-color: #ede8db;
+}

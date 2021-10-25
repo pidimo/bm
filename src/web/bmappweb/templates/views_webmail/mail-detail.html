@@ -1,0 +1,166 @@
+<ion-view view-title='{{ "ReadMail" | translate}}'>
+  <ion-content >
+
+    <!-- <ion-slide-box active-slide="myActiveSlide"> -->
+      <!-- <ion-slide> -->
+        <div class="list card">
+            
+          <div ng:bind="customHtml">{{item.body}}  </div>  
+
+            
+            <!--  -->
+            <div class="item item-divider">
+              <ion-item class="button button-small button-clear button-assertive"
+                      ng-click="toggleGroup(group)"
+                      ng-class="{active: isGroupShown(group)}">
+
+                <i class="icon" ng-class="isGroupShown(group) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>&nbsp;&nbsp;{{ "From" | translate}}: {{item.mailFrom}}
+
+              </ion-item>
+
+              <ion-item class="item-accordion"
+                        ng-show="isGroupShown(group)">
+                <h4>
+                  <div class="item-body-auto">
+                    {{ "From" | translate}}: {{item.mailFrom}}             
+                  </div>
+                </h4> 
+              </ion-item>
+            </div>  
+            <!--  -->
+            
+            
+            <!--  -->
+            <div class="item item-divider">
+              <ion-item class="button button-small button-clear button-assertive"
+                      ng-click="toggleGroup(group2)"
+                      ng-class="{active: isGroupShown(group2)}">
+
+                <i class="icon" ng-class="isGroupShown(group2) ? 'ion-chevron-up' : 'ion-chevron-down'"></i>&nbsp;&nbsp;{{ "To" | translate}}: {{item.to}}
+              </ion-item>
+
+              <ion-item class="item-accordion"
+                        ng-show="isGroupShown(group2)">
+                <h4>
+                  <div class="item-body-auto">
+                    {{ "To" | translate}}: {{item.to}}
+                    <!-- show CC -->
+                    <div ng-if="arrayCC[0] != '' " ng-repeat="ite in arrayCC">
+                      CC: {{ite}}
+                    </div><br>
+                    <!-- show BCC -->
+                    <div ng-if="arrayBCC[0] != '' " ng-repeat="ite in arrayBCC">
+                      BCC: {{ite}}
+                    </div>
+
+                  </div>
+                  
+                </h4> 
+              </ion-item>
+            </div>  
+            <!--  -->
+
+            <div class="item item-text-wrap">
+              <h4>
+              <strong>{{ "Subject" | translate}}: {{item.mailSubject}}<br>  </strong>
+                
+              </h4>
+              <h5>
+                {{ "DateMail" | translate}}: {{item.sentDate}}  
+              </h5>
+              
+            </div>
+            
+          
+          
+          
+          <ion-item ng-if="item.attachmentArray.length > 0" class="button button-clear button-positive"
+                    ng-click="toggleGroup(group3)"
+                    ng-class="{active: isGroupShown(group3)}">
+              <i class="icon" ng-class="isGroupShown(group3) ? 'ion-chevron-up' : 'icon ion-paperclip'"></i>
+            &nbsp;
+          </ion-item>
+
+          <ion-item class="item-accordion"
+                    ng-show="isGroupShown(group3)">
+            <!-- show adjuntos -->
+            <div ng-repeat="attach in item.attachmentArray">
+              <i class="icon ion-paperclip"></i>
+              <!-- download(attach) -->
+              <button ng-click="download(attach)" class="button button-clear button-small button-stable">
+                <h4>{{attach.fileName}}</h4>
+              </button>
+            </div>
+            
+          </ion-item>
+
+          
+        </div>
+
+        <div class="card" ng-if="item.bodyType != '1'">
+          <textarea id="page_content" ng-init="updateEditor()" class="item-large-text" disabled="true">{{item.body}}</textarea>            
+        </div>
+
+        <!-- <div ng-if="item.bodyType != '2' " class="card">
+          <ion-scroll zooming="true" direction="xy">
+            <div ng-bind-html="thisCanBeusedInsideNgBindHtml" style="width: 100%; height: {{iframeHeight*0.55}}px">
+            </div>
+          </ion-scroll>
+        </div> -->
+        <!-- 00000000000000000000000 -->
+
+        <div ng-if="item.bodyType != '2' "  ng-bind-html="thisCanBeusedInsideNgBindHtml" style="overflow: auto;">
+          <!-- <ion-scroll zooming="true" direction="xy"> -->
+            <!-- <div ng-bind-html="thisCanBeusedInsideNgBindHtml" style="overflow-x:scroll">
+            </div> -->
+          <!-- </ion-scroll> -->
+        </div>
+
+        <!-- 00000000000000000000000 -->
+
+        <!-- <div ng-if="item.bodyType != '2' " class="card">
+          <ion-scroll zooming="true" direction="xy">
+            <div ng-bind-html="thisCanBeusedInsideNgBindHtml" style="width: 100%; height: 100%">
+            </div>
+            
+          </ion-scroll>
+        </div> -->
+
+        <!-- width="{{iframeWidth * 0.90}}" height="{{iframeWidth * 0.50}}" -->
+
+        <!-- <div ng-if="item.bodyType != '2' " class="card"> -->
+        <!-- <div ng-if="item.bodyType != '2' " class="card">
+          <ion-scroll direction="xy" locking="false" scrollbar-y="true" scrollbar-x="true" class="img-class">
+            <div ng-if="item.bodyType != '2' " ng-bind-html="thisCanBeusedInsideNgBindHtml" class="img-class"></div>          
+          </ion-scroll>
+        </div> -->
+
+      <!-- </ion-slide> -->
+    <!-- </ion-slide-box> -->
+
+    </ion-content>
+</ion-view>
+
+<!-- <div class="tabs tabs-icon-top">
+
+  <a class="tab-item">
+  	<i class="icon ion-arrow-up-b"></i>
+    Next
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-arrow-down-b"></i>
+    Previous
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-reply"></i>
+    Reply
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-reply-all"></i>
+    Reply All
+  </a>
+  <a class="tab-item">
+    <i class="icon ion-archive"></i>
+    Move
+  </a>
+</div> -->

@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+
+<jasperReport
+        xmlns="http://jasperreports.sourceforge.net/jasperreports"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+
+        name="contractInvoiceReportTemplate"
+        columnCount="1"
+        printOrder="Vertical"
+        orientation="Landscape"
+        pageWidth="792"
+        pageHeight="612"
+        columnWidth="722"
+        columnSpacing="0"
+        leftMargin="42"
+        rightMargin="28"
+        topMargin="42"
+        bottomMargin="42"
+        whenNoDataType="AllSectionsNoDetail"
+        scriptletClass="com.piramide.elwis.web.financemanager.action.report.scriptlet.ContractInvoiceAmountsScriplet"
+        isTitleNewPage="false"
+        isSummaryNewPage="false"
+        resourceBundle="com.piramide.elwis.web.resources.ApplicationResources">
+    <property name="ireport.scriptlethandling" value="2"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+
+    <style
+            name="Title_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="20"
+            isBold="true"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            >
+    </style>
+    <style
+            name="Row_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            >
+    </style>
+    <style
+            name="ColumnHeader_Style"
+            isDefault="true"
+            backcolor="#CCCCCC"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="true"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            >
+    </style>
+    <style
+            name="PageNumber_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="10"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            >
+    </style>
+    <style
+            name="GroupHeader_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="12"
+            isBold="true"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            >
+    </style>
+    <style
+            name="GroupFooter_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="10"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            >
+    </style>
+    <style
+            name="Summary_Style"
+            isDefault="true"
+            backcolor="#F8F8F8"
+            fontName="Verdana"
+            fontSize="10"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"
+            >
+    </style>
+
+    <parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+        <defaultValueExpression><![CDATA[".\\"]]></defaultValueExpression>
+    </parameter>
+
+    <variable name="contractTotalVar" class="java.util.Map" resetType="Report" incrementType="Report"
+              calculation="System">
+        <initialValueExpression><![CDATA[(new java.util.LinkedHashMap())]]></initialValueExpression>
+    </variable>
+    <variable name="contractIncomeVar" class="java.math.BigDecimal" resetType="Report" calculation="System">
+        <initialValueExpression><![CDATA[null]]></initialValueExpression>
+    </variable>
+    <background>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </background>
+    <title>
+        <band height="95" isSplitAllowed="true">
+            <image scaleImage="RetainShape" onErrorType="Icon" evaluationTime="Now" hyperlinkType="None"
+                   hyperlinkTarget="Self">
+                <reportElement
+                        x="0"
+                        y="0"
+                        width="150"
+                        height="50"
+                        key="COMPANY_LOGO_ELEMENT"
+                        isRemoveLineWhenBlank="true">
+                    <printWhenExpression>
+                        <![CDATA[$P{IS_TITLE_IMAGE_STREAM}.booleanValue()?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+                </reportElement>
+                <box></box>
+                <graphicElement stretchType="NoStretch"/>
+                <imageExpression class="java.io.InputStream"><![CDATA[$P{TITLE_IMAGE_STREAM}]]></imageExpression>
+            </image>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Title_Style"
+                        mode="Opaque"
+                        x="0"
+                        y="51"
+                        width="720"
+                        height="28"
+                        forecolor="#000000"
+                        backcolor="#FFFFFF"
+                        key="TITLE_REPORT_ELEMENT"/>
+                <box></box>
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_TITLE}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="0"
+                        y="79"
+                        width="720"
+                        height="13"
+                        key="rangeDate_text"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="0.0" lineColor="#000000"/>
+                    <topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="0.0" lineColor="#000000"/>
+                    <bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$P{RANGEDATE_PARAM} + (!"".equals($P{CONTRACTTYPENAME_PARAM})?", " + $P{CONTRACTTYPENAME_PARAM}:"")]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </pageHeader>
+    <columnHeader>
+        <band height="13" isSplitAllowed="true">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        mode="Opaque"
+                        x="0"
+                        y="0"
+                        width="140"
+                        height="13"
+                        key="contact_column"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineStyle="Solid"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Contract.contact}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        mode="Opaque"
+                        x="140"
+                        y="0"
+                        width="140"
+                        height="13"
+                        key="customer_column"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineStyle="Solid"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Sale.customer}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        mode="Opaque"
+                        x="280"
+                        y="0"
+                        width="130"
+                        height="13"
+                        key="product_column"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineStyle="Solid"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Contract.product}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        mode="Opaque"
+                        x="410"
+                        y="0"
+                        width="70"
+                        height="13"
+                        key="startDate_column"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineStyle="Solid"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{ProductContract.payStartDate}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        mode="Opaque"
+                        x="480"
+                        y="0"
+                        width="70"
+                        height="13"
+                        key="endDate_column"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineStyle="Solid"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{ContractToInvoice.report.contractEndDate}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        mode="Opaque"
+                        x="550"
+                        y="0"
+                        width="110"
+                        height="13"
+                        key="income_column"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineStyle="Solid"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{ContractToInvoice.report.incomeCost}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        mode="Opaque"
+                        x="660"
+                        y="0"
+                        width="60"
+                        height="13"
+                        key="currency_column"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineStyle="Solid"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineStyle="Solid"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$R{ProductContract.currency}]]></textFieldExpression>
+            </textField>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="13" isSplitAllowed="true">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="0"
+                        y="0"
+                        width="140"
+                        height="13"
+                        key="contact_field"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement>
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                                $P{COLUMN_FORMAT_addressName},
+                                (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                    new com.jatun.titus.reportgenerator.util.Pair("contractAddressName1",$F{contractAddressName1}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("contractAddressName2",$F{contractAddressName2}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("contractAddressName3",$F{contractAddressName3}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("contractAddressType",$F{contractAddressType})
+                                }),
+                                $P{FANTABULOUS_PARAMETERS})]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="140"
+                        y="0"
+                        width="140"
+                        height="13"
+                        key="customer_field"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement>
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[($F{addressId_FK}.equals($F{customerId_FK})) ? ""
+:
+com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                                $P{COLUMN_FORMAT_customerName},
+                                (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                    new com.jatun.titus.reportgenerator.util.Pair("customerAddressName1",$F{customerAddressName1}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("customerAddressName2",$F{customerAddressName2}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("customerAddressName3",$F{customerAddressName3}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("customerAddressType",$F{customerAddressType})
+                                }),
+                                $P{FANTABULOUS_PARAMETERS})]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="280"
+                        y="0"
+                        width="130"
+                        height="13"
+                        key="product_field"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement>
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{productName}]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="410"
+                        y="0"
+                        width="70"
+                        height="13"
+                        key="startDate_field"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement>
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatDate(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_DATEINT,
+                                ($F{payStartDate}),
+                                $R{datePattern},
+                                $P{REPORT_LOCALE}.toString(),
+                                $P{REPORT_TIMEZONE}.toString())]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="480"
+                        y="0"
+                        width="70"
+                        height="13"
+                        key="endDate_field"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement>
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatDate(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_DATEINT,
+                                ($F{contractEndDate}),
+                                $R{datePattern},
+                                $P{REPORT_LOCALE}.toString(),
+                                $P{REPORT_TIMEZONE}.toString())]]></textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true"
+                       evaluationTime="Now" hyperlinkType="None" hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="550"
+                        y="0"
+                        width="110"
+                        height="13"
+                        key="income_field"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Right">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.math.BigDecimal">
+                    <![CDATA[$V{contractIncomeVar}]]></textFieldExpression>
+                <patternExpression>$R{numberFormat.2DecimalPlaces}</patternExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="660"
+                        y="0"
+                        width="60"
+                        height="13"
+                        key="currency_field"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                    <topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <leftPen lineWidth="1.0" lineColor="#000000"/>
+                    <bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                    <rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+                </box>
+                <textElement>
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$F{currencyLabel}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="0" isSplitAllowed="true">
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="40" isSplitAllowed="true">
+            <line direction="TopDown">
+                <reportElement
+                        x="0"
+                        y="10"
+                        width="720"
+                        height="1"
+                        key="PAGE_FOOTER_LINE"/>
+                <graphicElement stretchType="NoStretch"/>
+            </line>
+            <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="PageNumber_Style"
+                        mode="Transparent"
+                        x="700"
+                        y="18"
+                        width="20"
+                        height="15"
+                        forecolor="#000000"
+                        backcolor="#FFFFFF"
+                        key="PAGE_FOOTER_NUMBER"/>
+                <box></box>
+                <textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[String.valueOf($V{PAGE_NUMBER})]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="40" isSplitAllowed="true">
+            <subreport isUsingCache="true">
+                <reportElement
+                        mode="Transparent"
+                        x="0"
+                        y="8"
+                        width="500"
+                        height="10"
+                        key="sumarySubreport">
+                    <printWhenExpression>
+                        <![CDATA[$V{contractTotalVar}.isEmpty() ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <subreportParameter name="SUMMARYTOTAL_PARAM">
+                    <subreportParameterExpression><![CDATA[$V{contractTotalVar}]]></subreportParameterExpression>
+                </subreportParameter>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CONTRACTINVOICESUMMARY}]]></subreportExpression>
+            </subreport>
+        </band>
+    </summary>
+</jasperReport>

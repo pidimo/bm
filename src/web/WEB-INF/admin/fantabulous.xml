@@ -1,0 +1,2636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE  lists PUBLIC "-//Alfacentaurto//DTD AC" "fantabulous-config.dtd">-->
+<lists>
+    <list listName="userBaseList" persistence="true">
+        <tables>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="constant" value="1"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="type"/>
+                <columnOrder columnName="name" orderBy="ASC"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="internalUserList" extends="userBaseList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="constant" value="1"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="type"/>
+                <columnOrder columnName="name" orderBy="ASC"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userList" persistence="true">
+        <tables>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="lastName" operator="LIKE2" type="parameter" parameterName="lastNameAlpha"/>
+            <conector>And</conector>
+            <!--<condition fieldReference="active" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>-->
+            <conditions>
+                <condition fieldReference="lastName" operator="LIKE" type="parameter" parameterName="lastName"/>
+                <conector>Or</conector>
+                <condition fieldReference="firstName" operator="LIKE" type="parameter" parameterName="firstName"/>
+                <conector>Or</conector>
+                <condition fieldReference="login" operator="LIKE" type="parameter" parameterName="login"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="default">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="lightUserList" extends="userList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="roleList" persistence="true">
+        <tables>
+            <table tableName="role" alias="role">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                    <field fieldName="rolename" fieldAlias="roleName"/>
+                    <field fieldName="descriptionid" fieldAlias="descriptionId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="roleName" operator="LIKE2" type="parameter" parameterName="roleNameAlpha"/>
+            <conector>And</conector>
+            <condition fieldReference="roleName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isDefault">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="roleName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="lightRoleList" persistence="true" extends="roleList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="roleId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="roleName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="availableRolePassChangeList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="role" alias="role">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                    <field fieldName="rolename" fieldAlias="roleName"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="rolepasschange" alias="rolePassChange">
+                <fields>
+                    <field fieldName="passwordchangeid" fieldAlias="passwordChangeId" key="true" type="integer"/>
+                    <field fieldName="roleid" fieldAlias="roleId_FK" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>roleId_FK</pK>
+                <fK>roleId</fK>
+                <conditions>
+                    <condition fieldReference="passwordChangeId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="passwordChangeId" operator="IS" type="constant" value="NULL"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="roleName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="assignedRolePassChangeList" persistence="true">
+        <tables>
+            <table tableName="role" alias="role">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                    <field fieldName="rolename" fieldAlias="roleName"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="rolepasschange" alias="rolePassChange">
+                <fields>
+                    <field fieldName="passwordchangeid" fieldAlias="passwordChangeId" key="true" type="integer"/>
+                    <field fieldName="roleid" fieldAlias="roleId_FK" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <join/>
+                <pK>roleId_FK</pK>
+                <fK>roleId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="passwordChangeId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="roleName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="companyList" persistence="true">
+        <tables>
+            <table tableName="company" alias="company">
+                <fields>
+                    <field fieldName="companyid" fieldAlias="companyId" key="true" type="integer"/>
+                    <field fieldName="trial" fieldAlias="companyType" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="usersallowed" fieldAlias="usersAllowed" type="integer"/>
+                    <field fieldName="startlicense" fieldAlias="startLicense" type="integer"/>
+                    <field fieldName="finishlicense" fieldAlias="finishLicense" type="integer"/>
+                    <field fieldName="copytemplate" fieldAlias="copyTemplate" type="integer"/>
+                    <field fieldName="language" fieldAlias="language"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="recorddate" fieldAlias="recordDate" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>companyId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="contactSearchName" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1"/>
+                <param type="field" field="name2"/>
+                <param type="field" field="name3"/>
+                <param type="field" field="searchName"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyType" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="name1" operator="LIKE2" type="parameter" parameterName="name1Alpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="name1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="login" operator="LIKE" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition functionReference="contactSearchName" operator="LIKE" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="companyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="usersAllowed">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>usersAllowed</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startLicense">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startLicense</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="finishLicense">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>finishLicense</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="copyTemplateCompany">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>copyTemplate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="templateLanguage">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>language</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="recordDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>recordDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isDefault">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="companyName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="lightCompanyList" extends="companyList" executeFirstTime="true" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="addressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="companyName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="companyName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="templateCompanyList" extends="companyList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="copyTemplate" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="language" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="companyName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="templateCompanyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="companyName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userGroupList" persistence="true">
+        <tables>
+            <table tableName="usergroup" alias="userGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="userGroupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="grouptype" fieldAlias="groupType" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="groupName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="groupName" operator="LIKE2" type="parameter" parameterName="groupNameAlpha"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="userGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupType"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="groupName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userGroupSchedulerList" extends="userGroupList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="groupType" operator="EQUAL" type="constant" value="1"/>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+
+
+    <!--userList-->
+    <list listName="userUserGroupList" persistence="true" extends="userBaseList" specialList="true">
+        <tables>
+            <table tableName="usergroup" alias="userGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="userGroupId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+            <table tableName="userofgroup" alias="userOfGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="usergroupid" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId_FK" key="true" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userId_FK</pK>
+                <fK>userId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userGroupId</pK>
+                <fK>usergroupid</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="userGroupId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId_FK</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="ligthGroupList" persistence="true">
+        <tables>
+            <table tableName="usergroup" alias="groups">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="groupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="groupId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="groupName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userByGroupList" persistence="true">
+        <tables>
+            <table tableName="userofgroup" alias="userOfGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="userGroupId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userOfGroupId" key="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usergroup" alias="userGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="userGroup_Id" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="userAddressId" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                    <field fieldName="searchname" fieldAlias="searchAddressName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userId</pK>
+                <fK>userOfGroupId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>userAddressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userGroup_Id</pK>
+                <fK>userGroupId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userGroupId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="addressName1" operator="LIKE2" type="parameter" parameterName="lastNameAlpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressName1" operator="LIKE" type="parameter" parameterName="lastName"/>
+                <conector>Or</conector>
+                <condition fieldReference="addressName2" operator="LIKE" type="parameter" parameterName="firstName"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchAddressName" operator="LIKE" type="parameter" parameterName="searchName"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userGroupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="groupName"/>
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="userSessionList" persistence="true" executeFirstTime="true">
+        <tables>
+            <table tableName="usersessionlog" alias="userSessionLog">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userSessionLogId" key="true" type="integer"/>
+                    <field fieldName="startconnection" fieldAlias="startConection" type="integer"/>
+                    <field fieldName="lastaction" fieldAlias="lastConection" type="integer"/>
+                    <field fieldName="endconnection" fieldAlias="endConection" type="integer"/>
+                    <field fieldName="ip" fieldAlias="ip"/>
+                    <field fieldName="isconnected" fieldAlias="statusId" type="integer"/>
+                    <field fieldName="sessionid" fieldAlias="sessionId"/>
+                    <field fieldName="lastactionapp" fieldAlias="lastActionApp" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="company" alias="company">
+                <fields>
+                    <field fieldName="companyid" fieldAlias="companyIdCia" key="true" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefaultCia" type="integer"/>
+                    <field fieldName="active" fieldAlias="activeCia" type="integer"/>
+                    <field fieldName="login" fieldAlias="loginCia"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="companyName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="ciaNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastNameCia"/>
+                    <field fieldName="name2" fieldAlias="firstNameCia"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userId</pK>
+                <fK>userSessionLogId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>companyIdCia</pK>
+                <fK>companyId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>ciaNameId</pK>
+                <fK>companyIdCia</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="active" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="lastName" operator="LIKE2" type="parameter" parameterName="lastNameAlpha"/>
+            <conector>And</conector>
+            <conditions evaluateIf="noDefault">
+                <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="loginCia" operator="LIKE" type="parameter" parameterName="loginCia"/>
+                <conector>Or</conector>
+                <condition fieldReference="lastNameCia" operator="LIKE" type="parameter" parameterName="lastNameCia"/>
+                <conector>Or</conector>
+                <condition fieldReference="firstNameCia" operator="LIKE" type="parameter" parameterName="firstNameCia"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="lastName" operator="LIKE" type="parameter" parameterName="lastName"/>
+                <conector>Or</conector>
+                <condition fieldReference="firstName" operator="LIKE" type="parameter" parameterName="firstName"/>
+                <conector>Or</conector>
+                <condition fieldReference="login" operator="LIKE" type="parameter" parameterName="login"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyName">
+                    <config>
+                        <fieldsConfig separator=" ">
+                            <referenceField>lastNameCia</referenceField>
+                            <referenceField>firstNameCia</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startConection">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startConection</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="lastConection">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>lastConection</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="endConection">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>endConection</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="statusId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>statusId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sessionId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sessionId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isDefaultCia">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefaultCia</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="lastActionApp">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>lastActionApp</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="startConection"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--begin ivan-->
+    <list listName="roleUserList" specialList="true" persistence="true">
+        <tables>
+            <table tableName="userrole" alias="userRole">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userRoleUserId" key="true" type="integer"/>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="myUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="userAddressId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userId</pK>
+                <fK>userRoleUserId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>userAddressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="roleId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="name1" operator="LIKE2" type="parameter" parameterName="name1Alpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="name1" operator="LIKE" type="parameter" parameterName="name1"/>
+                <conector>Or</conector>
+                <condition fieldReference="name2" operator="LIKE" type="parameter" parameterName="name2"/>
+                <conector>Or</conector>
+                <condition fieldReference="name3" operator="LIKE" type="parameter" parameterName="name3"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="roleUserSearchList" extends="userList" persistence="true">
+        <tables>
+            <table tableName="userrole" alias="userRole">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userRoleUserId" key="true" type="integer"/>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userRoleUserId</pK>
+                <fK>userId</fK>
+                <outerJoin/>
+                <conditions>
+                    <condition fieldReference="roleId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="active" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="userRoleUserId" operator="IS" type="constant" value="null"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="default">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--end ivan-->
+
+    <list listName="userPassChangeCountList" persistence="true">
+        <tables>
+            <table tableName="userpasschange" alias="userPassChange">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="passwordchangeid" fieldAlias="passwordChangeId_FK" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="userChangeCount">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userChangeCount">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">userChangeCount</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="passwordChangeList" persistence="true">
+        <tables>
+            <table tableName="passwordchange" alias="passwordChange">
+                <fields>
+                    <field fieldName="passwordchangeid" fieldAlias="passwordChangeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="description" fieldAlias="description"/>
+                    <field fieldName="changetime" fieldAlias="changeTime" type="integer"/>
+                    <field fieldName="totaluser" fieldAlias="totalUser" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="description" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="description" operator="LIKE2" type="parameter" parameterName="descriptionAlpha"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="passwordChangeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>passwordChangeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="description">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>description</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="totalUser">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>totalUser</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="changeTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>changeTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userPassChangeCount">
+                    <config>
+                        <listField listName="userPassChangeCountList">
+                            <conditions>
+                                <condition fieldReference="passwordChangeId_FK" operator="EQUAL" type="field" value="passwordChangeId"/>
+                            </conditions>
+                        </listField>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="description"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="plannedUserPasswordChangeList" persistence="true">
+        <tables>
+            <table tableName="userpasschange" alias="userPassChange">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="passwordchangeid" fieldAlias="passwordChangeId_FK" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="passwordchange" alias="passwordChange">
+                <fields>
+                    <field fieldName="passwordchangeid" fieldAlias="passwordChangeId" key="true" type="integer"/>
+                    <field fieldName="description" fieldAlias="description"/>
+                    <field fieldName="changetime" fieldAlias="changeTime" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>passwordChangeId</pK>
+                <fK>passwordChangeId_FK</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="changeTime" operator="LESS_EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="passwordChangeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>passwordChangeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="description">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>description</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="changeTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>changeTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="changeTime"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userMemberList" persistence="true">
+        <tables>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="moborganizationid" fieldAlias="mobileOrganizationId" type="integer"/>
+                    <field fieldName="mobileactive" fieldAlias="mobileActive" type="integer"/>
+                    <field fieldName="visiblemobileapp" fieldAlias="visibleMobileApp" type="integer"/>
+                    <field fieldName="isfavoritewvapp" fieldAlias="isFavoriteWVApp" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="contactperson" alias="contactperson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId_PK" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId" key="true" type="integer" listKey="true"/>
+                    <field fieldName="active" fieldAlias="contactPersonActive" type="integer"/>
+                    <field fieldName="function" fieldAlias="function"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="contactPersonAddress">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="contactPersonName1"/>
+                    <field fieldName="name2" fieldAlias="contactPersonName2"/>
+                    <field fieldName="name3" fieldAlias="contactPersonName3"/>
+                    <field fieldName="searchname" fieldAlias="contactPersonSearchName"/>
+                    <field fieldName="addresstype" fieldAlias="contactPersonAddressType"/>
+                    <field fieldName="imageid" fieldAlias="imageId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>contactPersonId_PK</pK>
+                <fK>addressId</fK>
+                <leftJoin/>
+                <conditions>
+                    <condition fieldReference="contactPersonAddressId" operator="EQUAL" type="field" value="mobileOrganizationId"/>
+                </conditions>
+            </relationShip>
+            <relationShip>
+                <pK>contactPersonAddressId_PK</pK>
+                <fK>contactPersonId_PK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>addressId_PK</pK>
+                <fK>mobileOrganizationId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="addressSearchFunc" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1"/>
+                <param type="field" field="name2"/>
+                <param type="field" field="name3"/>
+                <param type="field" field="searchName"/>
+            </function>
+            <function alias="contactPersonSearchFunc" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="contactPersonName1"/>
+                <param type="field" field="contactPersonName2"/>
+                <param type="field" field="contactPersonName3"/>
+                <param type="field" field="contactPersonSearchName"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="visibleMobileApp" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="mobileOrganizationId" operator="IS" type="constant" value="NOT NULL"/>
+            <conector>And</conector>
+            <conditions>
+                <condition functionReference="addressSearchFunc" operator="LIKE" type="parameter" parameterName="memberSearch"/>
+                <conector>Or</conector>
+                <condition functionReference="contactPersonSearchFunc" operator="LIKE" type="parameter" parameterName="memberSearch"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="isFavoriteWVApp" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId"/>
+                <column columnName="active"/>
+                <column columnName="companyId"/>
+                <column columnName="addressType"/>
+                <column columnName="memberAddressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>mobileOrganizationId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="memberContactPersonId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="organizationName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="contactPersonName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>contactPersonName1</referenceField>
+                            <referenceField>contactPersonName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="imageId"/>
+                <column columnName="function"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="organizationName"/>
+                <columnOrder columnName="contactPersonName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="branchMemberList" persistence="true">
+        <tables>
+            <table tableName="branch" alias="branch">
+                <fields>
+                    <field fieldName="branchid" fieldAlias="branchId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="branchname" fieldAlias="branchName"/>
+                    <field fieldName="branchgroup" fieldAlias="groupId"/>
+                </fields>
+            </table>
+            <table tableName="customer" alias="customer">
+                <fields>
+                    <field fieldName="customerid" fieldAlias="customerId" key="true" type="integer"/>
+                    <field fieldName="branchid" fieldAlias="branchId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="contactperson" alias="contactperson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId_PK" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId" key="true" type="integer" listKey="true"/>
+                    <field fieldName="active" fieldAlias="contactPersonActive" type="integer"/>
+                    <field fieldName="function" fieldAlias="function"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="contactPersonAddress">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="contactPersonName1"/>
+                    <field fieldName="name2" fieldAlias="contactPersonName2"/>
+                    <field fieldName="name3" fieldAlias="contactPersonName3"/>
+                    <field fieldName="searchname" fieldAlias="contactPersonSearchName"/>
+                    <field fieldName="addresstype" fieldAlias="contactPersonAddressType"/>
+                    <field fieldName="imageid" fieldAlias="imageId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="userAddressId" type="integer"/>
+                    <field fieldName="active" fieldAlias="userActive" type="integer"/>
+                    <field fieldName="moborganizationid" fieldAlias="mobileOrganizationId" type="integer"/>
+                    <field fieldName="visiblemobileapp" fieldAlias="visibleMobileApp" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>branchId_FK</pK>
+                <fK>branchId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactPersonAddressId</pK>
+                <fK>customerId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>contactPersonAddressId_PK</pK>
+                <fK>contactPersonId_PK</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>addressId_PK</pK>
+                <fK>contactPersonAddressId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>userAddressId</pK>
+                <fK>contactPersonId_PK</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="addressSearchFunc" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1"/>
+                <param type="field" field="name2"/>
+                <param type="field" field="name3"/>
+                <param type="field" field="searchName"/>
+            </function>
+            <function alias="contactPersonSearchFunc" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="contactPersonName1"/>
+                <param type="field" field="contactPersonName2"/>
+                <param type="field" field="contactPersonName3"/>
+                <param type="field" field="contactPersonSearchName"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="branchId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contactPersonActive" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="visibleMobileApp" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <conditions>
+                <condition functionReference="addressSearchFunc" operator="LIKE" type="parameter" parameterName="memberSearch"/>
+                <conector>Or</conector>
+                <condition functionReference="contactPersonSearchFunc" operator="LIKE" type="parameter" parameterName="memberSearch"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="branchId"/>
+                <column columnName="companyId"/>
+                <column columnName="addressType"/>
+                <column columnName="memberAddressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactPersonAddressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="memberContactPersonId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactPersonId_PK</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="organizationName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="contactPersonName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>contactPersonName1</referenceField>
+                            <referenceField>contactPersonName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="imageId"/>
+                <column columnName="function"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="organizationName"/>
+                <columnOrder columnName="contactPersonName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="branchMemberOrganizationList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="branch" alias="branch">
+                <fields>
+                    <field fieldName="branchid" fieldAlias="branchId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="branchname" fieldAlias="branchName"/>
+                    <field fieldName="branchgroup" fieldAlias="groupId"/>
+                </fields>
+            </table>
+            <table tableName="customer" alias="customer">
+                <fields>
+                    <field fieldName="customerid" fieldAlias="customerId" key="true" type="integer"/>
+                    <field fieldName="branchid" fieldAlias="branchId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="contactperson" alias="contactperson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId_PK" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId" key="true" type="integer" listKey="true"/>
+                    <field fieldName="active" fieldAlias="contactPersonActive" type="integer"/>
+                    <field fieldName="function" fieldAlias="function"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId_PK" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="imageid" fieldAlias="imageId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="userAddressId" type="integer"/>
+                    <field fieldName="active" fieldAlias="userActive" type="integer"/>
+                    <field fieldName="moborganizationid" fieldAlias="mobileOrganizationId" type="integer"/>
+                    <field fieldName="visiblemobileapp" fieldAlias="visibleMobileApp" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>branchId_FK</pK>
+                <fK>branchId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactPersonAddressId</pK>
+                <fK>customerId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressId_PK</pK>
+                <fK>contactPersonAddressId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>userAddressId</pK>
+                <fK>contactPersonId_PK</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="addressSearchFunc" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1"/>
+                <param type="field" field="name2"/>
+                <param type="field" field="name3"/>
+                <param type="field" field="searchName"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="branchId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="visibleMobileApp" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition functionReference="addressSearchFunc" operator="LIKE" type="parameter" parameterName="memberSearch"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="branchId"/>
+                <column columnName="companyId"/>
+                <column columnName="addressType"/>
+                <column columnName="addressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactPersonAddressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="organizationName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="imageId"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="organizationName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--begin reports-->
+    <list listName="companyReportList" persistence="true">
+        <tables>
+            <table tableName="company" alias="company">
+                <fields>
+                    <field fieldName="companyid" fieldAlias="companyId" key="true" type="integer"/>
+                    <field fieldName="trial" fieldAlias="companyType" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="usersallowed" fieldAlias="usersAllowed" type="integer"/>
+                    <field fieldName="startlicense" fieldAlias="startLicense" type="integer"/>
+                    <field fieldName="finishlicense" fieldAlias="finishLicense" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="recorddate" fieldAlias="creationDate" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>companyId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="active" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyType" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="creationDate" operator="GREATER_EQUAL" type="parameter" parameterName="startCreationDate"/>
+                <conector>And</conector>
+                <condition fieldReference="creationDate" operator="LESS_EQUAL" type="parameter" parameterName="endCreationDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_StartLicenseDateRange">
+                <condition fieldReference="startLicense" operator="GREATER_EQUAL" type="parameter" parameterName="initStartLicenseDate"/>
+                <conector>And</conector>
+                <condition fieldReference="startLicense" operator="LESS_EQUAL" type="parameter" parameterName="endStartLicenseDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_StartLicenseDateSingle">
+                <condition fieldReference="startLicense" operator="EQUAL" type="parameter" parameterName="initStartLicenseDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_FinishLicenseDateRange">
+                <condition fieldReference="finishLicense" operator="GREATER_EQUAL" type="parameter" parameterName="initFinishLicenseDate"/>
+                <conector>And</conector>
+                <condition fieldReference="finishLicense" operator="LESS_EQUAL" type="parameter" parameterName="endFinishLicenseDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_FinishLicenseDateSingle">
+                <condition fieldReference="finishLicense" operator="EQUAL" type="parameter" parameterName="initFinishLicenseDate"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="usersAllowed" operator="GREATER_EQUAL" type="parameter" parameterName="initNumberOfUsers_3"/>
+            <conector>And</conector>
+            <condition fieldReference="usersAllowed" operator="LESS_EQUAL" type="parameter" parameterName="endNumberOfUsers_3"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="usersAllowed">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>usersAllowed</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startLicense">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startLicense</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="finishLicense">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>finishLicense</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="companyName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="userReportList" persistence="true">
+        <tables>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="favoritelanguage" fieldAlias="favoriteLanguage"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="favoriteLanguage" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="default">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="roleUserReportList" specialList="true" persistence="true">
+        <tables>
+            <table tableName="userrole" alias="userRole">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userRoleUserId" key="true" type="integer"/>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="myUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="userAddressId" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                </fields>
+            </table>
+            <table tableName="role" alias="role">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="myRoleId" key="true" type="integer"/>
+                    <field fieldName="rolename" fieldAlias="roleName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userId</pK>
+                <fK>userRoleUserId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressId</pK>
+                <fK>userAddressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>myRoleId</pK>
+                <fK>roleId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="roleId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="roleName"/>
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="userSessionReportList" persistence="true">
+        <tables>
+            <table tableName="usersessionlog" alias="userSessionLog">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userSessionLogId" key="true" type="integer"/>
+                    <field fieldName="startconnection" fieldAlias="startConection" type="integer"/>
+                    <field fieldName="lastaction" fieldAlias="lastConection" type="integer"/>
+                    <field fieldName="endconnection" fieldAlias="endConection" type="integer"/>
+                    <field fieldName="ip" fieldAlias="ip"/>
+                    <field fieldName="isconnected" fieldAlias="statusId" type="integer"/>
+                    <field fieldName="sessionid" fieldAlias="sessionId"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="reportCompanyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="company" alias="company">
+                <fields>
+                    <field fieldName="companyid" fieldAlias="companyIdCia" key="true" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefaultCia" type="integer"/>
+                    <field fieldName="active" fieldAlias="activeCia" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="companyName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="ciaNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastNameCia"/>
+                    <field fieldName="name2" fieldAlias="firstNameCia"/>
+                </fields>
+            </table>
+        </tables>
+
+        <relationShips>
+            <relationShip>
+                <pK>userId</pK>
+                <fK>userSessionLogId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>companyIdCia</pK>
+                <fK>companyId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>ciaNameId</pK>
+                <fK>companyIdCia</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="statusId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reportCompanyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions evaluateIf="_LastLoginDateRange">
+                <condition fieldReference="startConection" operator="GREATER_EQUAL" type="parameter" parameterName="initLastLoginDate"/>
+                <conector>And</conector>
+                <condition fieldReference="startConection" operator="LESS_EQUAL" type="parameter" parameterName="endLastLoginDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_LastLoginDateSingle">
+                <condition fieldReference="startConection" operator="EQUAL" type="parameter" parameterName="initLastLoginDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_LastActionDateRange">
+                <condition fieldReference="lastConection" operator="GREATER_EQUAL" type="parameter" parameterName="initLastActionDate"/>
+                <conector>And</conector>
+                <condition fieldReference="lastConection" operator="LESS_EQUAL" type="parameter" parameterName="endLastActionDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_LastActionDateSingle">
+                <condition fieldReference="lastConection" operator="EQUAL" type="parameter" parameterName="initLastActionDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_LogOffDateRange">
+                <condition fieldReference="endConection" operator="GREATER_EQUAL" type="parameter" parameterName="initLogOffDate"/>
+                <conector>And</conector>
+                <condition fieldReference="endConection" operator="LESS_EQUAL" type="parameter" parameterName="endLogOffDate"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="_LogOffDateSingle">
+                <condition fieldReference="endConection" operator="EQUAL" type="parameter" parameterName="initLogOffDate"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="companyName">
+                    <config>
+                        <fieldsConfig separator=" ">
+                            <referenceField>lastNameCia</referenceField>
+                            <referenceField>firstNameCia</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startConection">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startConection</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="lastConection">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>lastConection</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="endConection">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>endConection</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="statusId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>statusId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sessionId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sessionId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isDefaultCia">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefaultCia</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="companyName"/>
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="roleReportList" persistence="true">
+        <tables>
+            <table tableName="role" alias="role">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                    <field fieldName="rolename" fieldAlias="roleName"/>
+                    <field fieldName="descriptionid" fieldAlias="descriptionId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="freetext" alias="freetext">
+                <fields>
+                    <field fieldName="freetextid" fieldAlias="freeTextId" key="true" type="integer"/>
+                    <field fieldName="freetextvalue" fieldAlias="roleDescription" type="binary"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>freeTextId</pK>
+                <fK>descriptionId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="roleName" operator="LIKE2" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleDescription">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleDescription</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isDefault">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="roleName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--end reports-->
+</lists>

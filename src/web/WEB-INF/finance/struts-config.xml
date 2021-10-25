@@ -1,0 +1,1149 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="invoiceAdvancedListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="invoiceForm" type="com.piramide.elwis.web.financemanager.form.InvoiceForm"/>
+        <form-bean name="invoicePositionForm" type="com.piramide.elwis.web.financemanager.form.InvoicePositionForm"/>
+        <form-bean name="creditNoteInvoicePositionForm"
+                   type="com.piramide.elwis.web.financemanager.form.CreditNoteInvoicePositionForm"/>
+        <form-bean name="invoicePaymentForm" type="com.piramide.elwis.web.financemanager.form.InvoicePaymentForm"/>
+        <form-bean name="invoicePaymentInOneStepForm"
+                   type="com.piramide.elwis.web.financemanager.form.InvoicePaymentInOneStepForm"/>
+        <form-bean name="invoiceReminderForm" type="com.piramide.elwis.web.financemanager.form.InvoiceReminderForm"/>
+        <form-bean name="invoicePrintListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="invoicePrintForm" type="com.piramide.elwis.web.financemanager.form.InvoicePrintForm"/>
+        <form-bean name="invoiceToRemindForm" type="com.piramide.elwis.web.financemanager.form.InvoiceToRemindForm"/>
+
+        <form-bean name="invoiceSendViaEmailListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="invoiceSendViaEmailForwardForm" type="com.piramide.elwis.web.financemanager.form.InvoiceSendViaEmailForwardForm"/>
+        <form-bean name="invoiceSendViaEmailForm" type="com.piramide.elwis.web.financemanager.form.InvoiceSendViaEmailForm"/>
+
+        <form-bean name="reminderBulkCreationForm"
+                   type="com.piramide.elwis.web.financemanager.form.ReminderBulkCreationForm"/>
+        <form-bean name="remindersListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="contractToInvoiceForm"
+                   type="com.piramide.elwis.web.financemanager.form.ContractToInvoiceForm"/>
+        <form-bean name="contractToInvoiceListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="contractInvoiceCreateForm"
+                   type="com.piramide.elwis.web.financemanager.form.ContractInvoiceCreateForm"/>
+        <form-bean name="invoiceReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="contractToInvoiceReportForm"
+                   type="com.piramide.elwis.web.financemanager.form.report.ContractInvoiceReportForm"/>
+        <form-bean name="reportExecuteForm" type="com.piramide.elwis.web.reports.form.ReportExecuteForm"/>
+        <form-bean name="reportJrxmlExecuteForm" type="com.piramide.elwis.web.reports.form.ReportJrxmlExecuteForm"/>
+        <form-bean name="productContractForm" type="com.piramide.elwis.web.salesmanager.form.ProductContractForm"/>
+        <form-bean name="incomingInvoiceForm" type="com.piramide.elwis.web.financemanager.form.IncomingInvoiceForm"/>
+        <form-bean name="incomingPaymentForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="incomingInvoiceAdvancedListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="incomingInvoicePrintListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="incomingInvoicePrintForm" type="com.piramide.elwis.web.financemanager.form.IncomingInvoicePrintForm"/>
+
+        <form-bean name="incomingInvoiceReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="invoiceCsvExportReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainInvoiceList" path="/Invoice/SingleList.do" redirect="true"/>
+        <forward name="InvoiceAdvancedSearch" path="/Invoice/AdvancedList.do"/>
+        <forward name="IncomingInvoiceAdvancedSearch" path="/IncomingInvoice/AdvancedSearch.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+        <!--Contract to invoice action mapping-->
+        <action path="/Contract/ToInvoice/List"
+                type="com.piramide.elwis.web.financemanager.action.ContractToInvoiceListAction"
+                name="contractToInvoiceListForm"
+                scope="request"
+                input="/ContractToInvoiceList.jsp"
+                validate="true"
+                parameter="sales@contractToInvoiceList"
+                roles="PRODUCTCONTRACT.VIEW">
+            <forward name="Success" path="/ContractToInvoiceList.jsp"/>
+        </action>
+        <action path="/Contract/ToInvoice"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceCreateForwardAction"
+                name="contractToInvoiceForm"
+                scope="request"
+                input="/Contract/ToInvoice/List.do"
+                validate="true"
+                parameter="/finance/ContractToInvoice.jsp"
+                roles="INVOICE.CREATE"/>
+        <action path="/Contract/Invoice/Create"
+                type="com.piramide.elwis.web.financemanager.action.ContractInvoiceCreateAction"
+                name="contractInvoiceCreateForm"
+                scope="request"
+                input="/ContractToInvoice.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ContractInvoiceCreateCmd"
+                roles="INVOICE.CREATE">
+            <forward name="Success" path="/ContractToInvoiceSummary.jsp"/>
+            <forward name="Fail" path="/ContractToInvoice.jsp"/>
+            <forward name="Invalid" path="/ContractToInvoice.jsp"/>
+            <forward name="Cancel" path="/Contract/ToInvoice/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Contract/Invoice/SendViaEmail"
+                type="com.piramide.elwis.web.financemanager.action.ContractInvoicedSendViaEmailAction"
+                name="form"
+                input="/ContractToInvoiceSummary.jsp"
+                scope="request"
+                validate="false">
+            <forward name="Success" contextRelative="true" path="/webmail/Mail/Forward/EditDraftEmail.do?index=0" redirect="true"/>
+            <forward name="Fail" path="/Contract/ToInvoice/List.do" redirect="true"/>
+        </action>
+        <action path="/Invoice/SendViaEmail"
+                type="com.piramide.elwis.web.financemanager.action.ContractInvoicedSendViaEmailAction"
+                name="form"
+                scope="request"
+                validate="false">
+            <forward name="Success" contextRelative="true" path="/webmail/Mail/Forward/EditDraftEmail.do?index=0" redirect="true"/>
+            <forward name="Fail" path="/Invoice/SingleList.do" redirect="true"/>
+        </action>
+
+        <!--Invoices by Contract action mapping-->
+        <action path="/InvoiceByContract/List"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerListAction"
+                name="listForm"
+                scope="request"
+                input="/InvoiceByContractList.jsp"
+                validate="false"
+                parameter="invoiceByContractList"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/InvoiceByContractList.jsp"/>
+        </action>
+        <action path="/InvoiceByContract/Forward/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/InvoiceByContract/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReadCmd"
+                roles="INVOICE.DELETE">
+            <forward name="Success" path="/InvoiceByContractDetailForDelete.jsp"/>
+        </action>
+        <action path="/InvoiceByContract/Delete"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/InvoiceByContractDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceDeleteCmd"
+                roles="INVOICE.DELETE">
+            <forward name="Success" path="/InvoiceByContract/List.do"/>
+            <forward name="Cancel" path="/InvoiceByContract/List.do" redirect="true"/>
+            <forward name="Fail" path="/InvoiceByContract/List.do"/>
+        </action>
+
+        <action path="/Contract/Invoice/MergeDocument"
+                type="com.piramide.elwis.web.financemanager.action.ContractInvoicedMergeDocumentsAction"
+                name="form"
+                input="/ContractToInvoiceSummary.jsp"
+                scope="request"
+                validate="false">
+            <forward name="Fail" path="/Contract/ToInvoice/List.do" redirect="true"/>
+        </action>
+        <action path="/ProductContractByContractToInvoice/Forward/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractByContractToInvoiceAction"
+                name="productContractForm"
+                scope="request"
+                input="/Contract/ToInvoice/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.VIEW">
+            <set-property property="paramReWrite" value="contractId"/>
+            <set-property property="paramReWriteText" value="dto(addressName)"/>
+            <set-property property="paramReWrite" value="dto(contractId)"/>
+            <set-property property="paramReWriteText" value="dto(productName)"/>
+            <forward name="Success" path="/ProductContractByContractToInvoiceDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Contract/ToInvoice/List.do"/>
+        </action>
+        <action path="/ProductContractByContractToInvoice/Update"
+                type="com.piramide.elwis.web.salesmanager.action.ProductContractByContractToInvoiceAction"
+                name="productContractForm"
+                scope="request"
+                input="/ProductContractByContractToInvoiceDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.salesmanager.ProductContractUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="PRODUCTCONTRACT.UPDATE">
+            <set-property property="paramReWrite" value="contractId"/>
+            <set-property property="paramReWriteText" value="dto(addressName)"/>
+            <set-property property="paramReWrite" value="dto(contractId)"/>
+            <set-property property="paramReWriteText" value="dto(productName)"/>
+            <forward name="Success" path="/Contract/ToInvoice/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Contract/ToInvoice/List.do" redirect="true"/>
+            <forward name="Fail" path="/Contract/ToInvoice/List.do"/>
+        </action>
+
+        <!--Invoice action mappings-->
+        <action path="/Invoice/AdvancedList"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="invoiceAdvancedListForm"
+                scope="request"
+                input="/InvoiceAdvancedList.jsp"
+                validate="true"
+                parameter="invoiceAdvancedList"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/InvoiceAdvancedList.jsp"/>
+        </action>
+        <action path="/Invoice/SingleList"
+                type="com.piramide.elwis.web.common.action.SimpleAdvancedListAction"
+                name="listForm"
+                scope="request"
+                input="/InvoiceList.jsp"
+                validate="false"
+                parameter="invoiceSingleList"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/InvoiceList.jsp"/>
+        </action>
+        <action path="/Invoice/Search"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request"
+                input="/SearchInvoice.jsp"
+                validate="false"
+                parameter="invoiceSearchList">
+            <forward name="Success" path="/SearchInvoice.jsp"/>
+        </action>
+        <action path="/Invoice/Forward/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceCreateForwardAction"
+                name="invoiceForm"
+                scope="request"
+                validate="false"
+                parameter="/finance/InvoiceDetailForCreate.jsp"
+                roles="INVOICE.CREATE"/>
+        <action path="/Invoice/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceCreateAction"
+                name="invoiceForm"
+                scope="request"
+                input="/InvoiceDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceCreateCmd"
+                roles="INVOICE.CREATE">
+            <forward name="Success" path="/InvoicePosition/List.do?tabKey=Invoice.Tab.Position"/>
+            <forward name="CreateCreditNotePosition"
+                     path="/CreditNoteInvoicePosition/Forward/Create.do?tabKey=Invoice.Tab.Position"/>
+            <forward name="Cancel" path="/Invoice/SingleList.do" redirect="true"/>
+        </action>
+
+        <action path="/Invoice/Forward/Update"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/Invoice/SingleList.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReadCmd"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/InvoiceDetailForUpdate.jsp"/>
+        </action>
+        <action path="/Invoice/Update"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceSalesUpdateAction"
+                name="invoiceForm"
+                scope="request"
+                input="/InvoiceDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceUpdateCmd"
+                roles="INVOICE.UPDATE">
+            <forward name="Success" path="/Invoice/Forward/Update.do"/>
+            <forward name="Cancel" path="/Invoice/SingleList.do" redirect="true"/>
+            <forward name="Fail" path="/Invoice/SingleList.do"/>
+            <forward name="FailGeneration" path="/Invoice/Forward/Update.do"/>
+        </action>
+        <action path="/Invoice/Forward/Delete"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/Invoice/SingleList.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReadCmd"
+                roles="INVOICE.DELETE">
+            <forward name="Success" path="/InvoiceDetailForDelete.jsp"/>
+        </action>
+        <action path="/Invoice/Delete"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoiceForm"
+                scope="request"
+                input="/InvoiceDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceDeleteCmd"
+                roles="INVOICE.DELETE">
+            <forward name="Success" path="/Invoice/SingleList.do"/>
+            <forward name="Cancel" path="/Invoice/SingleList.do" redirect="true"/>
+            <forward name="Fail" path="/Invoice/SingleList.do"/>
+        </action>
+        <action path="/Download/Invoice/Document"
+                type="com.piramide.elwis.web.financemanager.action.DownloadInvoiceGenDocumentAction"
+                name="form"
+                scope="request"
+                validate="false">
+        </action>
+
+        <!--Invoice to remind action mappings-->
+        <action path="/Invoice/ToRemind/List"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceToRemindListAction"
+                name="listForm"
+                scope="request"
+                input="/InvoiceToRemindList.jsp"
+                validate="true"
+                parameter="invoiceToRemindList"
+                roles="INVOICEREMINDER.VIEW">
+            <forward name="Success" path="/InvoiceToRemindList.jsp"/>
+        </action>
+        <action path="/Invoice/ToRemind"
+                type="org.apache.struts.actions.ForwardAction"
+                name="invoiceToRemindForm"
+                scope="request"
+                input="/Invoice/ToRemind/List.do"
+                validate="true"
+                parameter="/finance/InvoiceToRemind.jsp"
+                roles="INVOICEREMINDER.CREATE"/>
+        <action path="/Reminder/Bulk/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceReminderBulkCreateAction"
+                name="reminderBulkCreationForm"
+                scope="request"
+                input="/InvoiceToRemind.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReminderBulkCreationCmd"
+                roles="INVOICEREMINDER.CREATE">
+            <forward name="Success" path="/InvoiceReminderSummary.jsp"/>
+            <forward name="Fail" path="/InvoiceToRemind.jsp"/>
+            <forward name="Cancel" path="/Invoice/ToRemind/List.do" redirect="true"/>
+        </action>
+        <action path="/Reminder/Bulk/MergeDocument"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceReminderBulkMergeDocumentAction"
+                name="form"
+                scope="request"
+                validate="false">
+            <forward name="FailMerge" path="/Invoice/ToRemind/List.do" redirect="true"/>
+        </action>
+
+        <!--Ivoice reminders action mappings-->
+        <action path="/Invoice/RemindersList"
+                type="com.piramide.elwis.web.financemanager.action.RemindersListAction"
+                name="remindersListForm"
+                scope="request"
+                input="/RemindersList.jsp"
+                validate="true"
+                parameter="remindersList"
+                roles="INVOICEREMINDER.VIEW">
+            <forward name="Success" path="/RemindersList.jsp"/>
+        </action>
+        <action path="/Invoice/Reminders/Generate/Document"
+                type="com.piramide.elwis.web.financemanager.action.RemindersGenerateDocumentAction"
+                name="form"
+                scope="request"
+                validate="false"
+                roles="INVOICEREMINDER.VIEW">
+            <forward name="Success" path="/Invoice/RemindersList.do"/>
+            <forward name="Fail" path="/Invoice/RemindersList.do"/>
+        </action>
+
+        <!--Invoices to print action mappings-->
+        <action path="/Invoice/RangePrintList"
+                type="com.piramide.elwis.web.financemanager.action.InvoicePrintListAction"
+                name="invoicePrintListForm"
+                scope="request"
+                input="/InvoiceRangePrint.jsp"
+                validate="true"
+                parameter="invoicePrintList"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/InvoiceRangePrint.jsp"/>
+        </action>
+        <action path="/Invoice/RangePrint"
+                type="com.piramide.elwis.web.financemanager.action.InvoicePrintAction"
+                name="invoicePrintForm"
+                scope="request"
+                input="/Invoice/RangePrintList.do"
+                validate="true"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/Invoice/RangePrintList.do"/>
+            <forward name="Fail" path="/Invoice/RangePrintList.do"/>
+        </action>
+
+        <!--Invoices to send via email-->
+        <action path="/Invoice/Send/ViaEmail/List"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceSendViaEmailListAction"
+                name="invoiceSendViaEmailListForm"
+                scope="request"
+                input="/InvoiceSendViaEmailList.jsp"
+                validate="true"
+                parameter="invoiceSendViaEmailList"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/InvoiceSendViaEmailList.jsp"/>
+        </action>
+
+        <action path="/Invoice/Forward/Send/ViaEmail"
+                type="org.apache.struts.actions.ForwardAction"
+                name="invoiceSendViaEmailForwardForm"
+                scope="request"
+                validate="true"
+                input="/Invoice/Send/ViaEmail/List.do"
+                parameter="/finance/InvoiceSendViaEmail.jsp"
+                roles="INVOICE.VIEW">
+        </action>
+
+        <action path="/Invoice/Send/ViaEmail"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceSendViaEmailAction"
+                name="invoiceSendViaEmailForm"
+                scope="request"
+                input="/InvoiceSendViaEmail.jsp"
+                validate="true"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/InvoiceSendViaEmailSummary.jsp"/>
+            <forward name="Cancel" path="/Invoice/Send/ViaEmail/List.do" redirect="true"/>
+        </action>
+
+        <!--InvoicePayment action mapping-->
+        <action path="/InvoicePayment/List"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerListAction"
+                name="listForm"
+                scope="request"
+                input="/InvoicePaymentList.jsp"
+                validate="false"
+                parameter="invoicePaymentList"
+                roles="INVOICEPAYMENT.VIEW">
+            <forward name="Success" path="/InvoicePaymentList.jsp"/>
+        </action>
+        <action path="/InvoicePayment/Forward/CreateInOneStep"
+                type="com.piramide.elwis.web.financemanager.action.InvoicePaymentCreateInOneStepForwardAction"
+                name="invoicePaymentInOneStepForm"
+                scope="request"
+                validate="false"
+                parameter="/finance/InvoicePaymentInOneStep.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="INVOICEPAYMENT.CREATE">
+            <set-property property="paramReWrite" value="dto(bankAccountId)"/>
+        </action>
+        <action path="/InvoicePayment/CreateInOneStep"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="invoicePaymentInOneStepForm"
+                scope="request"
+                input="/InvoicePaymentInOneStep.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePaymentCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="INVOICEPAYMENT.CREATE">
+            <set-property property="paramReWrite" value="dto(bankAccountId)"/>
+
+            <forward name="Success" path="/Invoice/SingleList.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/InvoicePayment/Forward/CreateInOneStep.do" redirect="true"/>
+            <forward name="Cancel" path="/Invoice/SingleList.do" redirect="true"/>
+        </action>
+        <action path="/InvoicePayment/Forward/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoicePaymentCreateForwardAction"
+                name="invoicePaymentForm"
+                scope="request"
+                validate="false"
+                parameter="/finance/InvoicePaymentDetailForCreate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="INVOICEPAYMENT.CREATE">
+            <set-property property="paramReWrite" value="dto(bankAccountId)"/>
+        </action>
+        <action path="/InvoicePayment/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoicePaymentForm"
+                scope="request"
+                input="/InvoicePaymentDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePaymentCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="INVOICEPAYMENT.CREATE">
+            <set-property property="paramReWrite" value="dto(bankAccountId)"/>
+
+            <forward name="Success" path="/InvoicePayment/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/InvoicePayment/Forward/Create.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoicePayment/List.do" redirect="true"/>
+        </action>
+        <action path="/InvoicePayment/Forward/Update"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoicePaymentForm"
+                scope="request"
+                input="/InvoicePayment/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePaymentCmd"
+                roles="INVOICEPAYMENT.VIEW">
+            <forward name="Success" path="/InvoicePaymentDetailForUpdate.jsp"/>
+        </action>
+        <action path="/InvoicePayment/Update"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoicePaymentForm"
+                scope="request"
+                input="/InvoicePaymentDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePaymentCmd"
+                roles="INVOICEPAYMENT.UPDATE">
+            <forward name="Success" path="/InvoicePayment/List.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoicePayment/List.do" redirect="true"/>
+            <forward name="Fail" path="/InvoicePayment/List.do"/>
+        </action>
+        <action path="/InvoicePayment/Forward/Delete"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoicePaymentForm"
+                scope="request"
+                input="/InvoicePayment/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePaymentCmd"
+                roles="INVOICEPAYMENT.DELETE">
+            <forward name="Success" path="/InvoicePaymentDetailForDelete.jsp"/>
+        </action>
+        <action path="/InvoicePayment/Delete"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoicePaymentForm"
+                scope="request"
+                input="/InvoicePaymentDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePaymentCmd"
+                roles="INVOICEPAYMENT.DELETE">
+            <forward name="Success" path="/InvoicePayment/List.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoicePayment/List.do" redirect="true"/>
+            <forward name="Fail" path="/InvoicePayment/List.do"/>
+        </action>
+        <action path="/SearchInvoicePosition"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm"
+                scope="request"
+                input="/SearchInvoicePosition.jsp"
+                validate="false"
+                parameter="invoicePositionSearchList">
+            <forward name="Success" path="/SearchInvoicePosition.jsp"/>
+        </action>
+        <!--InvoicePosition action mapping-->
+        <action path="/InvoicePosition/List"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerListAction"
+                name="listForm"
+                scope="request"
+                input="/InvoicePositionList.jsp"
+                validate="false"
+                parameter="invoicePositionList"
+                roles="INVOICEPOSITION.VIEW">
+            <forward name="Success" path="/InvoicePositionList.jsp"/>
+        </action>
+        <action path="/CreditNoteInvoicePosition/Forward/Create"
+                type="com.piramide.elwis.web.financemanager.action.CreditNoteInvoicePositionCreateForwardAction"
+                name="creditNoteInvoicePositionForm"
+                scope="request"
+                input="/InvoicePosition/List.do"
+                validate="false"
+                parameter="/finance/CreditNoteInvoicePositionDetailForCreate.jsp"
+                roles="INVOICEPOSITION.VIEW"/>
+        <action path="/CreditNoteInvoicePosition/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="creditNoteInvoicePositionForm"
+                scope="request"
+                input="/CreditNoteInvoicePositionDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.CreditNoteInvoicePositionCmd"
+                roles="INVOICEPOSITION.CREATE">
+            <forward name="Success" path="/InvoicePosition/List.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoicePosition/List.do" redirect="true"/>
+        </action>
+        <action path="/InvoicePosition/Forward/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoicePositionCreateForwardAction"
+                name="invoicePositionForm"
+                scope="request"
+                validate="false"
+                parameter="/finance/InvoicePositionDetailForCreate.jsp"
+                roles="INVOICEPOSITION.CREATE">
+            <forward name="Fail" path="/InvoicePosition/List.do"/>
+        </action>
+        <action path="/InvoicePosition/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoicePositionAction"
+                name="invoicePositionForm"
+                scope="request"
+                input="/InvoicePositionDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePositionCmd"
+                roles="INVOICEPOSITION.CREATE">
+            <forward name="Success" path="/InvoicePosition/List.do" redirect="true"/>
+            <forward name="SaveAndNew" path="/InvoicePosition/Forward/Create.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoicePosition/List.do" redirect="true"/>
+        </action>
+        <action path="/InvoicePosition/Forward/Update"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoicePositionForm"
+                scope="request"
+                input="/InvoicePosition/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePositionCmd"
+                roles="INVOICEPOSITION.VIEW">
+            <forward name="Success" path="/InvoicePositionDetailForUpdate.jsp"/>
+        </action>
+        <action path="/InvoicePosition/Update"
+                type="com.piramide.elwis.web.financemanager.action.InvoicePositionAction"
+                name="invoicePositionForm"
+                scope="request"
+                input="/InvoicePositionDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePositionCmd"
+                roles="INVOICEPOSITION.UPDATE">
+            <forward name="Success" path="/InvoicePosition/List.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoicePosition/List.do" redirect="true"/>
+            <forward name="Fail" path="/InvoicePosition/List.do"/>
+        </action>
+        <action path="/InvoicePosition/Forward/Delete"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoicePositionForm"
+                scope="request"
+                input="/InvoicePosition/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePositionCmd"
+                roles="INVOICEPOSITION.DELETE">
+            <forward name="Success" path="/InvoicePositionDetailForDelete.jsp"/>
+            <forward name="Fail" path="/InvoicePosition/List.do"/>
+        </action>
+        <action path="/InvoicePosition/Delete"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoicePositionForm"
+                scope="request"
+                input="/InvoicePositionDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoicePositionCmd"
+                roles="INVOICEPOSITION.DELETE">
+            <forward name="Success" path="/InvoicePosition/List.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoicePosition/List.do" redirect="true"/>
+            <forward name="Fail" path="/InvoicePosition/List.do"/>
+        </action>
+
+        <!--InvoiceReminder action mapping-->
+        <action path="/InvoiceReminder/List"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerListAction"
+                name="listForm"
+                scope="request"
+                input="/InvoiceReminderList.jsp"
+                validate="false"
+                parameter="invoiceReminderList"
+                roles="INVOICEREMINDER.VIEW">
+            <forward name="Success" path="/InvoiceReminderList.jsp"/>
+        </action>
+        <action path="/InvoiceReminder/Forward/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceReminderCreateForwardAction"
+                name="invoiceReminderForm"
+                scope="request"
+                validate="false"
+                parameter="/finance/InvoiceReminderDetailForCreate.jsp"
+                roles="INVOICEREMINDER.CREATE"/>
+        <action path="/InvoiceReminder/Create"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceReminderCreateAction"
+                name="invoiceReminderForm"
+                scope="request"
+                input="/InvoiceReminderDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReminderCmd"
+                roles="INVOICEREMINDER.CREATE">
+            <forward name="Success" path="/InvoiceReminder/List.do"/>
+            <forward name="Cancel" path="/InvoiceReminder/List.do" redirect="true"/>
+            <forward name="GenerationError" path="/InvoiceReminder/Forward/Update.do"/>
+            <forward name="Generation" path="/InvoiceReminder/Forward/Update.do"/>
+        </action>
+        <action path="/InvoiceReminder/Forward/Update"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoiceReminderForm"
+                scope="request"
+                input="/InvoiceReminder/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReminderCmd"
+                roles="INVOICEREMINDER.VIEW">
+            <forward name="Success" path="/InvoiceReminderDetailForUpdate.jsp"/>
+        </action>
+        <action path="/InvoiceReminder/Update"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceReminderUpdateAction"
+                name="invoiceReminderForm"
+                scope="request"
+                input="/InvoiceReminderDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReminderCmd"
+                roles="INVOICEREMINDER.UPDATE">
+            <forward name="Success" path="/InvoiceReminder/List.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoiceReminder/List.do" redirect="true"/>
+            <forward name="Fail" path="/InvoiceReminder/List.do"/>
+            <forward name="Generation" path="/InvoiceReminder/Forward/Update.do"/>
+        </action>
+        <action path="/InvoiceReminder/Forward/Delete"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoiceReminderForm"
+                scope="request"
+                input="/InvoiceReminder/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReminderCmd"
+                roles="INVOICEREMINDER.DELETE">
+            <forward name="Success" path="/InvoiceReminderDetailForDelete.jsp"/>
+        </action>
+        <action path="/InvoiceReminder/Delete"
+                type="com.piramide.elwis.web.financemanager.action.InvoiceManagerAction"
+                name="invoiceReminderForm"
+                scope="request"
+                input="/InvoiceReminderDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.financemanager.InvoiceReminderCmd"
+                roles="INVOICEREMINDER.DELETE">
+            <forward name="Success" path="/InvoiceReminder/List.do" redirect="true"/>
+            <forward name="Cancel" path="/InvoiceReminder/List.do" redirect="true"/>
+            <forward name="Fail" path="/InvoiceReminder/List.do"/>
+        </action>
+        <action path="/Download/InvoiceReminder/Document"
+                type="com.piramide.elwis.web.financemanager.action.DownloadReminderGenDocumentAction"
+                name="form"
+                scope="request"
+                validate="false">
+        </action>
+
+        <!--Begin Alvaro -->
+        <action path="/IncomingInvoice/List"
+                type="com.piramide.elwis.web.common.action.SimpleAdvancedListAction"
+                name="listForm"
+                scope="request"
+                input="/IncomingInvoiceList.jsp"
+                validate="false"
+                parameter="incomingInvoiceList"
+                roles="INCOMINGINVOICE.VIEW">
+            <forward name="Success" path="/IncomingInvoiceList.jsp"/>
+        </action>
+        <action path="/IncomingInvoice/Forward/Create"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceCreateForwardAction"
+                name="incomingInvoiceForm"
+                scope="request"
+                input="/IncomingInvoice/List.do"
+                validate="false"
+                parameter="/finance/IncomingInvoiceDetailForCreate.jsp"
+                roles="INCOMINGINVOICE.CREATE"/>
+
+        <action path="/IncomingInvoice/Create"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceCreateAction"
+                name="incomingInvoiceForm"
+                scope="request"
+                input="/IncomingInvoiceDetailForCreate.jsp"
+                validate="true"
+                roles="INCOMINGINVOICE.CREATE"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingInvoiceCmd">
+            <forward name="Success" path="/IncomingInvoice/Forward/Update.do?dto(op)=read"/>
+            <forward name="SaveAndNew" path="/IncomingInvoice/Forward/Create.do" redirect="true"/>
+            <forward name="Fail" path="/IncomingInvoice/List.do"/>
+            <forward name="Cancel" path="/IncomingInvoice/List.do" redirect="true"/>
+        </action>
+        <action path="/IncomingInvoice/Forward/Update"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingInvoiceForm"
+                scope="request"
+                input="/IncomingInvoice/List.do"
+                validate="false"
+                roles="INCOMINGINVOICE.VIEW"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingInvoiceCmd">
+            <forward name="Success" path="/IncomingInvoiceDetailForUpdate.jsp?tabKey=Finance.IncomingInvoice.detail"/>
+            <forward name="Fail" path="/IncomingInvoice/List.do"/>
+            <forward name="Cancel" path="/IncomingInvoice/List.do" redirect="true"/>
+        </action>
+
+        <action path="/IncomingInvoice/Update"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingInvoiceForm"
+                scope="request"
+                input="/IncomingInvoiceDetailForUpdate.jsp"
+                validate="true"
+                roles="INCOMINGINVOICE.UPDATE"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingInvoiceCmd">
+            <forward name="Success" path="/IncomingInvoice/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail" path="/IncomingInvoice/List.do"/>
+            <forward name="Cancel" path="/IncomingInvoice/List.do" redirect="true"/>
+        </action>
+        <action path="/IncomingInvoice/Forward/Delete"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingInvoiceForm"
+                scope="request"
+                input="/IncomingInvoice/List.do"
+                validate="false"
+                roles="INCOMINGINVOICE.DELETE"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingInvoiceCmd">
+            <forward name="Success" path="/IncomingInvoiceDetailForDelete.jsp"/>
+            <forward name="Fail" path="/IncomingInvoice/List.do"/>
+            <forward name="Cancel" path="/IncomingInvoice/List.do" redirect="true"/>
+        </action>
+
+        <action path="/IncomingInvoice/Delete"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingInvoiceForm"
+                scope="request"
+                input="/IncomingInvoiceDetailForDelete.jsp"
+                validate="false"
+                roles="INCOMINGINVOICE.DELETE"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingInvoiceCmd">
+            <forward name="Success" path="/IncomingInvoice/List.do" redirect="true"/>
+            <forward name="Fail" path="/IncomingInvoice/List.do"/>
+            <forward name="Cancel" path="/IncomingInvoice/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Download/IncomingInvoice/Document"
+                type="com.piramide.elwis.web.financemanager.action.DownloadIncomingInvoiceDocumentAction"
+                name="form"
+                scope="request"
+                validate="false">
+        </action>
+
+        <action path="/IncomingPayment/List"
+                type="com.piramide.elwis.web.financemanager.action.IncomingPaymentListAction"
+                name="listForm"
+                scope="request"
+                input="/IncomingPaymentList.jsp"
+                validate="false"
+                roles="INCOMINGPAYMENT.VIEW"
+                parameter="incomingPaymentList">
+            <forward name="Success" path="/IncomingPaymentList.jsp"/>
+            <forward name="Fail" path="/IncomingInvoice/List.do"/>
+        </action>
+        <action path="/IncomingPayment/Forward/Create"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceForwardAction"
+                name="incomingPaymentForm"
+                scope="request"
+                input="/IncomingInvoice/List.do"
+                validate="false"
+                roles="INCOMINGPAYMENT.CREATE"
+                parameter="/finance/IncomingPaymentDetailForCreate.jsp">
+            <forward name="Fail" path="/IncomingInvoice/List.do"/>
+        </action>
+
+        <action path="/IncomingPayment/Create"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingPaymentForm"
+                scope="request"
+                input="/IncomingPaymentDetailForCreate.jsp"
+                validate="true"
+                roles="INCOMINGPAYMENT.CREATE"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingPaymentCmd">
+            <forward name="Success" path="/IncomingPayment/List.do" redirect="true"/>
+            <forward name="Fail" path="/IncomingPayment/List.do"/>
+            <forward name="Cancel" path="/IncomingPayment/List.do" redirect="true"/>
+        </action>
+        <action path="/IncomingPayment/Forward/Update"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingPaymentForm"
+                scope="request"
+                input="/IncomingPayment/List.do"
+                validate="false"
+                roles="INCOMINGPAYMENT.VIEW"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingPaymentCmd">
+            <forward name="Success" path="/IncomingPaymentDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/IncomingPayment/List.do"/>
+            <forward name="Cancel" path="/IncomingPayment/List.do" redirect="true"/>
+        </action>
+
+        <action path="/IncomingPayment/Update"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingPaymentForm"
+                scope="request"
+                input="/IncomingPaymentDetailForUpdate.jsp"
+                validate="true"
+                roles="INCOMINGPAYMENT.UPDATE"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingPaymentCmd">
+            <forward name="Success" path="/IncomingPayment/List.do" redirect="true"/>
+            <forward name="Fail" path="/IncomingPayment/List.do"/>
+            <forward name="Cancel" path="/IncomingPayment/List.do" redirect="true"/>
+        </action>
+        <action path="/IncomingPayment/Forward/Delete"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingPaymentForm"
+                scope="request"
+                input="/IncomingPayment/List.do"
+                validate="false"
+                roles="INCOMINGPAYMENT.DELETE"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingPaymentCmd">
+            <forward name="Success" path="/IncomingPaymentDetailForDelete.jsp"/>
+            <forward name="Fail" path="/IncomingPayment/List.do"/>
+            <forward name="Cancel" path="/IncomingPayment/List.do" redirect="true"/>
+        </action>
+
+        <action path="/IncomingPayment/Delete"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoiceDefaultAction"
+                name="incomingPaymentForm"
+                scope="request"
+                input="/IncomingPaymentDetailForDelete.jsp"
+                validate="true"
+                roles="INCOMINGPAYMENT.DELETE"
+                parameter="com.piramide.elwis.cmd.financemanager.IncomingPaymentCmd">
+            <forward name="Success" path="/IncomingPayment/List.do" redirect="true"/>
+            <forward name="Fail" path="/IncomingPayment/List.do"/>
+            <forward name="FailFromInvoice" path="/IncomingInvoice/List.do"/>
+            <forward name="Cancel" path="/IncomingPayment/List.do" redirect="true"/>
+        </action>
+        <action path="/Report/IncomingInvoiceList"
+                type="org.apache.struts.actions.ForwardAction"
+                name="incomingInvoiceReportForm"
+                scope="request"
+                parameter="/finance/report/IncomingInvoiceReportList.jsp"
+                validate="false"
+                roles="INCOMINGPAYMENT.VIEW"/>
+
+        <action path="/Report/IncomingInvoiceList/Execute"
+                input="/report/IncomingInvoiceReportList.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.IncomingInvoiceReportAction"
+                name="incomingInvoiceReportForm"
+                scope="request"
+                parameter="incomingInvoiceReportList"
+                validate="false"
+                roles="INCOMINGPAYMENT.VIEW">
+            <forward name="Success" path="/report/InvoiceReportList.jsp"/>
+        </action>
+
+        <action path="/IncomingInvoice/AdvancedSearch"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="incomingInvoiceAdvancedListForm"
+                scope="request"
+                input="/IncomingInvoiceAdvancedSearch.jsp"
+                validate="true"
+                parameter="incomingInvoiceAdvancedList"
+                roles="INCOMINGINVOICE.VIEW">
+            <forward name="Success" path="/IncomingInvoiceAdvancedSearch.jsp"/>
+        </action>
+
+        <!--Incoming Invoices to print action mappings-->
+        <action path="/IncomingInvoice/RangePrintList"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoicePrintListAction"
+                name="incomingInvoicePrintListForm"
+                scope="request"
+                input="/IncomingInvoiceRangePrint.jsp"
+                validate="true"
+                parameter="incomingInvoicePrintList"
+                roles="INCOMINGINVOICE.VIEW">
+            <forward name="Success" path="/IncomingInvoiceRangePrint.jsp"/>
+        </action>
+        <action path="/IncomingInvoice/RangePrint"
+                type="com.piramide.elwis.web.financemanager.action.IncomingInvoicePrintAction"
+                name="incomingInvoicePrintForm"
+                scope="request"
+                input="/IncomingInvoice/RangePrintList.do"
+                validate="true"
+                roles="INCOMINGINVOICE.VIEW">
+            <forward name="Success" path="/IncomingInvoice/RangePrintList.do"/>
+            <forward name="Fail" path="/IncomingInvoice/RangePrintList.do"/>
+        </action>
+
+        <!--End Alvaro-->
+
+        <!--    Actions for statics REPORTS-->
+        <!--Invoice list report-->
+        <action path="/Report/InvoiceList"
+                type="org.apache.struts.actions.ForwardAction"
+                name="invoiceReportForm"
+                scope="request"
+                parameter="/finance/report/InvoiceReportList.jsp"
+                validate="false"
+                roles="INVOICE.VIEW"/>
+        <action path="/Report/InvoiceList/Execute"
+                input="/report/InvoiceReportList.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.InvoiceReportAction"
+                name="invoiceReportForm"
+                scope="request"
+                parameter="invoiceReportList"
+                validate="false"
+                roles="INVOICE.VIEW">
+            <forward name="Success" path="/report/InvoiceReportList.jsp"/>
+        </action>
+        <!--Contract to Invoice report-->
+        <action path="/Report/ContractToInvoiceList"
+                type="com.piramide.elwis.web.financemanager.action.report.ContractInvoiceReportForwardAction"
+                name="contractToInvoiceReportForm"
+                scope="request"
+                parameter="/finance/report/ContractToInvoiceReportList.jsp"
+                validate="false"
+                roles="PRODUCTCONTRACT.VIEW"/>
+        <action path="/Report/ContractToInvoiceList/Execute"
+                input="/report/ContractToInvoiceReportList.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.ContractInvoiceReportAction"
+                name="contractToInvoiceReportForm"
+                scope="request"
+                parameter="contractToInvoiceReportList"
+                validate="false"
+                roles="PRODUCTCONTRACT.VIEW">
+            <forward name="Success" path="/report/ContractToInvoiceReportList.jsp"/>
+        </action>
+
+        <!--invoice customer data export-->
+        <action path="/Report/InvoiceCustomerDataExport"
+                type="org.apache.struts.actions.ForwardAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="/finance/report/InvoiceCustomerDataExportReport.jsp"
+                validate="false"
+                roles="INVOICECUSTOMERDATAEXPORT.VIEW"/>
+        <action path="/Report/InvoiceCustomerDataExport/Execute"
+                input="/report/InvoiceCustomerDataExportReport.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.InvoiceCustomerDataExportReportAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="invoiceCustomerDataExportList"
+                validate="false"
+                roles="INVOICECUSTOMERDATAEXPORT.VIEW">
+            <forward name="Success" path="/report/InvoiceCustomerDataExportReport.jsp"/>
+            <forward name="Fail" path="/report/InvoiceCustomerDataExportError.jsp"/>
+        </action>
+        <!-- invoice partner data export-->
+        <action path="/Report/InvoicePartnerDataExport"
+                type="org.apache.struts.actions.ForwardAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="/finance/report/InvoicePartnerDataExportReport.jsp"
+                validate="false"
+                roles="INVOICEPARTNERDATAEXPORT.VIEW"/>
+        <action path="/Report/InvoicePartnerDataExport/Execute"
+                input="/report/InvoicePartnerDataExportReport.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.InvoicePartnerDataExportReportAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="invoicePartnerDataExportList"
+                validate="false"
+                roles="INVOICEPARTNERDATAEXPORT.VIEW">
+            <forward name="Success" path="/report/InvoicePartnerDataExportReport.jsp"/>
+            <forward name="Fail" path="/report/InvoicePartnerDataExportError.jsp"/>
+        </action>
+        <!-- invoice customer export-->
+        <action path="/Report/InvoiceCustomerExport"
+                type="com.piramide.elwis.web.financemanager.action.report.CustomCSVExportReportForwardAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="/finance/report/InvoiceCustomerExportReport.jsp"
+                validate="false"
+                roles="INVOICECUSTOMEREXPORT.VIEW"/>
+        <action path="/Report/InvoiceCustomerExport/Execute"
+                input="/report/InvoiceCustomerExportReport.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.InvoiceCustomerExportReportAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="invoiceCustomerExportList"
+                validate="false"
+                roles="INVOICECUSTOMEREXPORT.VIEW">
+            <forward name="Success" path="/report/InvoiceCustomerExportReport.jsp"/>
+            <forward name="Fail" path="/report/InvoiceCustomerExportError.jsp"/>
+        </action>
+        <!--invoice partner export-->
+        <action path="/Report/InvoicePartnerExport"
+                type="com.piramide.elwis.web.financemanager.action.report.CustomCSVExportReportForwardAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="/finance/report/InvoicePartnerExportReport.jsp"
+                validate="false"
+                roles="INVOICEPARTNEREXPORT.VIEW"/>
+        <action path="/Report/InvoicePartnerExport/Execute"
+                input="/report/InvoicePartnerExportReport.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.InvoicePartnerExportReportAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="invoiceCustomerExportList"
+                validate="false"
+                roles="INVOICEPARTNEREXPORT.VIEW">
+            <forward name="Success" path="/report/InvoicePartnerExportReport.jsp"/>
+            <forward name="Fail" path="/report/InvoicePartnerExportError.jsp"/>
+        </action>
+
+        <!-- invoice customer payment export-->
+        <action path="/Report/InvoiceCustomerPaymentExport"
+                type="com.piramide.elwis.web.financemanager.action.report.CustomCSVExportReportForwardAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="/finance/report/InvoiceCustomerPaymentExportReport.jsp"
+                validate="false"
+                roles="INVOICECUSTOMERPAYMENTEXPORT.VIEW"/>
+        <action path="/Report/InvoiceCustomerPaymentExport/Execute"
+                input="/report/InvoiceCustomerPaymentExportReport.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.InvoiceCustomerPaymentExportReportAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="invoiceCustomerPaymentExportList"
+                validate="false"
+                roles="INVOICECUSTOMERPAYMENTEXPORT.VIEW">
+            <forward name="Success" path="/report/InvoiceCustomerPaymentExportReport.jsp"/>
+            <forward name="Fail" path="/report/InvoiceCustomerPaymentExportError.jsp"/>
+        </action>
+        <!--invoice partner payment export-->
+        <action path="/Report/InvoicePartnerPaymentExport"
+                type="com.piramide.elwis.web.financemanager.action.report.CustomCSVExportReportForwardAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="/finance/report/InvoicePartnerPaymentExportReport.jsp"
+                validate="false"
+                roles="INVOICEPARTNERPAYMENTEXPORT.VIEW"/>
+        <action path="/Report/InvoicePartnerPaymentExport/Execute"
+                input="/report/InvoicePartnerPaymentExportReport.jsp"
+                type="com.piramide.elwis.web.financemanager.action.report.InvoicePartnerPaymentExportReportAction"
+                name="invoiceCsvExportReportForm"
+                scope="request"
+                parameter="invoiceCustomerPaymentExportList"
+                validate="false"
+                roles="INVOICEPARTNERPAYMENTEXPORT.VIEW">
+            <forward name="Success" path="/report/InvoicePartnerPaymentExportReport.jsp"/>
+            <forward name="Fail" path="/report/InvoicePartnerPaymentExportError.jsp"/>
+        </action>
+
+        <!--Default report action mappings-->
+        <action path="/Report/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportExternalExecute.jsp"/>
+
+        <action path="/Report/Blank" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/common/Blank.jsp"/>
+
+        <action path="/Report/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportExecuteForm" scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteAction"
+                name="reportExecuteForm" scope="request" validate="true" input="/Report/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailColumn" path="/Report/ExecutePage.do"/>
+            <forward name="FailButStay" path="/Report/ExecutePage.do"/>
+        </action>
+
+        <!--jrxml external report-->
+        <action path="/Report/Jrxml/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportJrxmlExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportJrxmlExternalExecute.jsp"/>
+
+        <action path="/Report/Jrxml/External/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+        <action path="/Report/Jrxml/External/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExternalExecuteAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="true" input="/Report/Jrxml/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailButStay" path="/Report/Jrxml/ExecutePage.do"/>
+        </action>
+
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+                /WEB-INF/finance/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/finance/fantabulous.xml"/>
+        <set-property property="moduleParams"
+                      value="invoiceId, contractId, incomingInvoiceId, index, advancedListForward"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams"
+                      value="invoiceId, contractId, incomingInvoiceId, index, advancedListForward"/>
+    </plug-in>
+</struts-config>

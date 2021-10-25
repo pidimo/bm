@@ -1,0 +1,900 @@
+<project name="ELWIS" default="deploy" basedir=".">
+    <description>
+        ELWIS project build
+    </description>
+    <!-- Set global properties for this build -->
+    <property name="app.name" value="ELWIS"/>
+    <property name="app.version" value="6.5.12"/>
+
+    <property environment="env"/>
+    <property name="env.BUILD_NUMBER" value="2"/>
+    <property name="app.build" value="${env.BUILD_NUMBER}"/>
+
+
+    <property file="build.properties"/>
+    <property file="data/fragment/jspreplace.properties"/>
+    <property name="src.jboss.conf" location="data/conf"/>
+
+    <property name="src.java" location="src/java/"/>
+    <property name="src.web" location="src/web/"/>
+    <property name="src.properties" value="src/properties"/>
+    <property name="descriptors" location="src/metadata/"/>
+    <property name="data.rebel" value="data/rebel"/>
+
+    <property name="build.classes" value="build/classes"/>
+    <property name="build.archives" value="build/archives"/>
+    <property name="build.properties" value="build/properties"/>
+    <property name="build.rebel" value="build/rebel"/>
+
+    <property name="build.fragment" location="data/fragment"/>
+
+    <property name="build.classes.test" value="build/classes/test"/>
+    <property name="build.test.result" value="build/testResult"/>
+    <property name="test.specs" location="src/testspecs"/>
+
+    <property name="test.output" value="build/test-report"/>
+    <property name="fantabulous.testng.config" value="data/fantabulous/testng.xml"/>
+
+    <property name="jboss.server" value="default"/>
+    <property name="lib" location="lib"/>
+    <property name="libjodconverter" location="lib/jodconverter"/>
+
+    <property name="package.base" value="**com/piramide/elwis"/>
+    <property name="package.domain" value="**com/piramide/elwis/domain"/>
+    <property name="package.service" value="**com/piramide/elwis/service"/>
+    <property name="package.dto" value="**com/piramide/elwis/dto"/>
+    <property name="package.web" value="**com/piramide/elwis/web"/>
+    <property name="package.cmd" value="**com/piramide/elwis/cmd"/>
+    <property name="package.utils" value="**com/piramide/elwis/utils"/>
+    <property name="package.exception" value="**com/piramide/elwis/exception"/>
+    <property name="package.service.exception" value="**com/piramide/elwis/service/exception"/>
+    <property name="package.test.service" value="**test/acceptance/util/service"/>
+
+
+    <property name="fantabulous.generator.prod"
+              value="org.alfacentauro.fantabulous.sqlgenerator.mysqlgenerator.MySqlGenerator"/>
+
+    <path id="project.class.path">
+        <fileset dir="${lib}">
+            <include name="**/*.jar"/>
+            <exclude name="**/jdt-compiler.jar"/>
+        </fileset>
+        <dirset dir="${build.classes}"/>
+        <dirset dir="${src.web}/WEB-INF/classes"/>
+    </path>
+
+    <path id="project.class.test.path">
+        <fileset dir="${lib}">
+            <include name="**/*.jar"/>
+            <exclude name="**/jdt-compiler.jar"/>
+            <exclude name="**/jaxen-full.jar"/>
+        </fileset>
+        <dirset dir="${build.classes}"/>
+        <dirset dir="${src.web}/WEB-INF/classes"/>
+    </path>
+
+    <path id="project.test.deploy.path">
+        <fileset dir="${build.archives}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <fileset id="warlib" dir="${lib}"
+             includes="**/commons-fileupload.jar
+   **/commons-logging.jar
+   **/commons-validator.jar
+   **/commons-codec-1.2.jar
+   **/sslext.jar
+   **/jstl.jar
+   **/struts-el.jar
+   **/standard.jar
+   **/strutsejb_web.jar
+   **/struts.jar
+   **/fantabulous-web-2.1.7.jar
+   **/saxpath.jar
+   **/titus-2.1.jar
+   **/jcommon-1.0.0.jar
+   **/jfreechart-1.0.12.jar
+   **/jasperreports-4.5.0.jar
+   **/common-0.1.jar
+   **/struts-wml-tags.jar
+   **/etagflt.jar
+   **/expflt.jar
+   **/jatun-commons-fonts-1.1.0.jar
+   **/jcaptcha-all-1.0-RC6.jar
+   **/duke-1.2.jar
+   **/lucene-analyzers-common-4.0.0.jar
+   **/lucene-core-4.0.0.jar
+   **/lucene-queries-4.0.0.jar
+   **/lucene-spatial-4.0.0.jar
+   **/spatial4j-0.3.jar
+   **/spring-beans-2.5.5.jar
+   **/spring-core-2.5.5.jar
+   **/resteasy-jaxrs-3.0.4.Final.jar
+   **/resteasy-jackson-provider-3.0.4.Final.jar
+   **/resteasy-jaxb-provider-3.0.4.Final.jar
+   **/jaxrs-api-3.0.4.Final.jar
+   **/jackson-core-asl-1.9.12.jar
+   **/jackson-jaxrs-1.9.12.jar
+   **/jackson-mapper-asl-1.9.12.jar
+   **/jackson-xc-1.9.12.jar
+   **/scannotation-1.0.3.jar
+   **/json-simple-1.1.1.jar
+   **/jsoup-1.10.2.jar"/>
+
+
+    <fileset id="earlib" dir="${lib}"
+             includes="**/commons-lang-2.0.jar
+   **/CsvJdbc.jar
+   **/WordWriter-v2.0.1.jar
+   **/WordWriter-v2-License.jar
+   **/fantabulous-2.1.7.jar
+   **/cloning-1.9.0.jar
+   **/objenesis-1.2.jar
+   **/jaxen-full.jar
+   **/jdom.jar
+   **/uno.jar
+   **/joda-time-1.2.1.jar
+   **/poi-3.7.jar
+   **/filterbuilder.jar
+   **/htmllexer.jar
+   **/htmlparser.jar
+   **/commons-digester-1.7.jar
+   **/commons-beanutils-1.7.0.jar
+   **/oro-2.0.8.jar
+   **/commons-collections-3.1.jar
+   **/velocity-1.5.jar
+   **/opencsv-2.0.jar
+   **/iText-2.1.7.jar
+   **/bcprov-ext-jdk15on-158.jar
+   **/jatun-commons-email-1.0.12.jar
+   **/nekohtml.jar
+   **/xercesImpl.jar
+   **/mime-util-2.1.jar
+   **/chardet.jar
+   **/apache-mime4j-dom-0.7.2.jar
+   **/apache-mime4j-core-0.7.2.jar"/>
+
+    <fileset id="earlibjodconverter" dir="${libjodconverter}"
+             includes="
+            **/commons-io-1.3.1.jar
+            **/jodconverter-2.2.1.jar
+            **/juh-2.3.0.jar
+            **/jurt-2.3.0.jar
+            **/ridl-2.3.0.jar
+            **/slf4j-api-1.4.3.jar
+            **/slf4j-jdk14-1.4.3.jar
+            **/unoil-2.3.0.jar"/>
+
+    <path id="project.testLib">
+        <fileset dir="${lib}/testlib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${build.classes}"/>
+        <mkdir dir="${build.archives}"/>
+        <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                 classpath="${lib}/ant-contrib-1.0b2.jar"/>
+        <antcall target="init-rebel"/>
+    </target>
+
+    <target name="init-test">
+        <mkdir dir="${build.test.result}"/>
+    </target>
+
+    <target name="init-rebel" unless="isOficialDelivery">
+        <mkdir dir="${build.rebel}"/>
+        <copy todir="${build.rebel}">
+            <fileset dir="${data.rebel}"/>
+            <filterset>
+                <filter token="basedir" value="${basedir}"/>
+            </filterset>
+        </copy>
+    </target>
+
+    <target name="clean" description="clean up">
+        <delete dir="${build.classes}"/>
+        <delete dir="${build.archives}"/>
+        <delete dir="${build.rebel}"/>
+        <delete dir="${env.LOCALAPPDATA}${file.separator}ZeroTurnaround" failonerror="false"/>
+        <!--<exec executable="reg" failifexecutionfails="false">
+            <arg value="delete"/>
+            <arg value="HKEY_CURRENT_USER\Software\JavaSoft\Prefs\jrebel"/>
+            <arg value="/f"/>
+        </exec>-->
+    </target>
+
+    <!-- Compile entire source -->
+    <target name="compile" depends="init" description="Compile Entire Project">
+        <!-- Compile all classes from ${src} into ${build.classes} -->
+        <javac srcdir="${src.java}" destdir="${build.classes}/" classpathref="project.class.path"
+               debug="${compile.debug}" encoding="UTF-8"/>
+    </target>
+
+    <!-- Compile entire source -->
+    <target name="compileclean" depends="clean, init" description="Compile Entire Project">
+        <!-- Compile all classes from ${src} into ${build.classes} -->
+        <javac srcdir="${src.java}" destdir="${build.classes}/" classpathref="project.class.path" encoding="UTF-8"/>
+    </target>
+
+    <target name="common" depends="compile" description="Package DTOs, Utils, Commands">
+        <if>
+            <equals arg1="${isOficialDelivery}" arg2="true"/>
+            <then>
+                <copy tofile="${build.classes}/com/piramide/elwis/utils/configuration/ear-jndi.properties"
+                      file="${build.fragment}/ear-jndi.properties">
+                    <filterset>
+                        <filter token="earJndiName" value="${app.name}-${app.version}"/>
+                    </filterset>
+                </copy>
+            </then>
+        </if>
+
+        <jar destfile="${build.archives}/allcommon.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.cmd}/
+           ${package.dto}/
+           ${package.utils}/
+           ${package.exception}/
+           ${package.service.exception}/"/>
+            <fileset dir="${src.java}"
+                     includes="${package.utils}/configuration/*.properties"/>
+            <fileset dir="${src.java}"
+                     includes="${package.cmd}/admin/copycatalog/util/*.dtd"/>
+            <fileset dir="${src.java}"
+                     includes="${package.cmd}/admin/copycatalog/util/*.xml"/>
+            <fileset dir="${build.rebel}/common/" includes="rebel.xml" erroronmissingdir="false"/>
+        </jar>
+
+    </target>
+
+    <target name="catalog-beans" depends="compile" description="Generate Catalogs Entity Beans Jar File">
+        <jar destfile="${build.archives}/catalogmanager.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.domain}/catalogmanager/"/>
+            <metainf dir="${descriptors}/CatalogManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="contact-beans" depends="compile" description="Generate Contact Entity Beans Jar File">
+        <jar destfile="${build.archives}/contactmanager.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.domain}/contactmanager/"/>
+            <metainf dir="${descriptors}/ContactManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="admin-beans" depends="compile" description="Generate Admin Entity Beans Jar File">
+        <jar destfile="${build.archives}/admin.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.domain}/admin/"/>
+            <metainf dir="${descriptors}/AdminManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="finance-beans" depends="compile" description="Generate finance Entity Beans Jar File">
+        <jar destfile="${build.archives}/finance.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.domain}/financemanager/"/>
+            <metainf dir="${descriptors}/FinanceManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="campaign-beans" depends="compile" description="Generate Admin Entity Beans Jar File">
+        <jar destfile="${build.archives}/campaignmanager.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.domain}/campaignmanager/"/>
+            <metainf dir="${descriptors}/CampaignManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="campaign-service" depends="compile" description="Generate Campaign Service Beans Jar File">
+        <native2ascii encoding="UTF8" src="${src.java}" dest="${build.classes}"
+                      includes="${package.service}/campaign/*.properties"/>
+        <jar destfile="${build.archives}/campaignservice.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.service}/campaign/"/>
+            <metainf dir="${descriptors}/CampaignService/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="common-service" depends="compile" description="Generate Common Service Beans EJB3 Jar File">
+        <jar destfile="${build.archives}/commonservice.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.service}/common/"/>
+            <metainf dir="${descriptors}/CommonService/META-INF/"/>
+        </jar>
+    </target>
+
+
+    <target name="webmail-service" depends="compile" description="Generate Webmail Service Beans Jar File">
+        <native2ascii encoding="UTF8" src="${src.java}" dest="${build.classes}"
+                      includes="${package.service}/webmail/*.properties"/>
+        <jar destfile="${build.archives}/webmailservice.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.service}/webmail/"/>
+            <metainf dir="${descriptors}/WebMailService/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="contact-service" depends="compile" description="Generate Contact service beans">
+        <jar destfile="${build.archives}/contactservice.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.service}/contact/"/>
+            <metainf dir="${descriptors}/ContactService/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="admin-service" depends="compile" description="Generate Admin service beans">
+        <jar destfile="${build.archives}/adminservice.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.service}/admin/"/>
+            <metainf dir="${descriptors}/AdminService/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="product-beans" depends="compile" description="Generate Product Entity Beans Jar File">
+        <jar destfile="${build.archives}/productmanager.jar" compress="false">
+            <fileset dir="${build.classes}" includes="${package.domain}/productmanager/"/>
+            <metainf dir="${descriptors}/ProductManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="sales-beans" depends="compile" description="Generate Sales Entity Beans Jar File">
+        <jar destfile="${build.archives}/sales.jar" compress="false">
+            <fileset dir="${build.classes}" includes="${package.domain}/salesmanager/"/>
+            <metainf dir="${descriptors}/SalesManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="sales-service" depends="compile" description="Generate Sales Service Beans Jar File">
+        <native2ascii encoding="UTF8" src="${src.java}" dest="${build.classes}"
+                      includes="${package.service}/sales/*.properties"/>
+        <jar destfile="${build.archives}/salesservice.jar" compress="false">
+            <fileset dir="${build.classes}" includes="${package.service}/sales/"/>
+            <metainf dir="${descriptors}/SalesService/META-INF/"/>
+        </jar>
+    </target>
+
+
+    <target name="common-beans" depends="compile" description="Generate common beans jar">
+        <jar destfile="${build.archives}/commonbeans.jar">
+            <fileset dir="${build.classes}">
+                <include name="${package.domain}/common/"/>
+            </fileset>
+            <metainf dir="${descriptors}/Common/META-INF/" excludes="**/jboss-service.xml"/>
+        </jar>
+    </target>
+
+    <target name="dashboard-beans" depends="compile" description="Genetate dashboard entity beans Jar file">
+        <jar destfile="${build.archives}/dashboard.jar" compress="false">
+            <fileset dir="${build.classes}">
+                <include name="${package.domain}/dashboard/*.class"/>
+            </fileset>
+            <metainf dir="${descriptors}/DashboardManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="webmail-beans" depends="compile" description="Genetate webmail entity beans Jar file">
+        <jar destfile="${build.archives}/webmail.jar" compress="false">
+            <fileset dir="${build.classes}">
+                <include name="${package.domain}/webmailmanager/*.class"/>
+            </fileset>
+            <metainf dir="${descriptors}/WebMailManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="scheduler-beans" depends="compile" description="Generate webmail entity beans Jar file">
+        <jar destfile="${build.archives}/scheduler.jar" compress="false">
+            <fileset dir="${build.classes}">
+                <include name="${package.domain}/schedulermanager/*.class"/>
+            </fileset>
+            <metainf dir="${descriptors}/SchedulerManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="scheduler-service" depends="compile" description="Generate Scheduler Service Beans Jar File">
+        <native2ascii encoding="UTF8" src="${src.java}" dest="${build.classes}"
+                      includes="${package.service}/scheduler/*.properties"/>
+        <jar destfile="${build.archives}/schedulerservice.jar" compress="false">
+            <fileset dir="${build.classes}" includes="${package.service}/scheduler/*.*"/>
+            <metainf dir="${descriptors}/SchedulerService/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="uimanager-beans" depends="compile" description="Generate UIManager entity beans Jar file">
+        <jar destfile="${build.archives}/uimanager.jar" compress="false">
+            <fileset dir="${build.classes}">
+                <include name="${package.domain}/uimanager/*.class"/>
+            </fileset>
+            <metainf dir="${descriptors}/UIManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="support-beans" depends="compile" description="Generate supports entity beans Jar file">
+        <jar destfile="${build.archives}/support.jar" compress="false">
+            <fileset dir="${build.classes}">
+                <include name="${package.domain}/supportmanager/*.class"/>
+            </fileset>
+            <metainf dir="${descriptors}/SupportManager/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="support-service" depends="compile" description="Generate Support Service Beans Jar File">
+        <jar destfile="${build.archives}/supportservice.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.service}/support/"/>
+            <metainf dir="${descriptors}/SupportService/META-INF/"/>
+        </jar>
+    </target>
+
+    <target name="report-beans" depends="compile" description="Generate reports entity beans Jar file">
+        <jar destfile="${build.archives}/report.jar" compress="false">
+            <fileset dir="${build.classes}">
+                <include name="${package.domain}/reportmanager/*.class"/>
+            </fileset>
+            <metainf dir="${descriptors}/ReportManager/META-INF"/>
+        </jar>
+    </target>
+
+    <target name="project-beans" depends="compile" description="Generate project Entity Beans Jar File">
+        <jar destfile="${build.archives}/project.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.domain}/project/"/>
+            <metainf dir="${descriptors}/ProjectManager/META-INF/"/>
+        </jar>
+    </target>
+
+
+    <target name="copy-jsp" description="Copy resources">
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/elwis.war/">
+            <fileset dir="${src.web}"/>
+        </copy>
+    </target>
+
+    <target name="copy-dashboard-DTD-file">
+        <copy file="${src.java}/com/piramide/elwis/web/dashboard/component/configuration/reader/component-def.dtd"
+              todir="${build.classes}/com/piramide/elwis/web/dashboard/component/configuration/reader/"/>
+    </target>
+
+
+    <target name="deployCampaign-Service" depends="campaign-service">
+        <delete file="${jboss.home}/server/${jboss.server}/deploy/strutsejb.jar"/>
+        <delete file="${jboss.home}/server/${jboss.server}/deploy/campaignservice.jar"/>
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/" file="${build.archives}/campaignservice.jar"
+              overwrite="false"/>
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/" overwrite="false">
+            <fileset dir="${lib}" includes="**/strutsejb.jar"/>
+        </copy>
+    </target>
+
+    <target name="war" depends="compile, war-lib, copy-jsp, deploy-common, copy-dashboard-DTD-file"
+            description="war">
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/elwis.war/WEB-INF/classes">
+            <fileset dir="${build.classes}"
+                     includes="${package.web}/">
+            </fileset>
+            <fileset dir="${build.properties}" includes="**/com/piramide/elwis/web/resources/**.properties"/>
+            <fileset dir="${src.java}" includes="${package.web}/dashboard/**.properties"/>
+            <fileset dir="${src.java}" includes="${package.web}/dashboard/component/configuration/reader/**.dtd"/>
+            <fileset dir="${src.java}" includes="${package.web}/dashboard/component/ui/velocity/templates/**.vm"/>
+            <fileset dir="${src.java}" includes="${package.web}/common/dynamicsearch/xml/**.dtd"/>
+            <fileset dir="${src.java}" includes="${package.web}/common/accessrightdatalevel/xml/**.dtd"/>
+            <fileset dir="${build.rebel}/web" includes="rebel.xml" erroronmissingdir="false"/>
+        </copy>
+
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/" overwrite="false">
+            <fileset dir="${lib}" includes="**/strutsejb.jar"/>
+        </copy>
+    </target>
+
+    <target name="war-lib">
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/elwis.war/WEB-INF/lib" overwrite="false">
+            <fileset refid="warlib"/>
+        </copy>
+    </target>
+
+    <target name="deploy-common" depends="common" description="deploy common package">
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/">
+            <fileset dir="${build.archives}" includes="**/allcommon.jar"/>
+        </copy>
+    </target>
+
+
+    <target name="deploy" depends="gen-resources, catalog-beans, contact-beans, admin-beans, campaign-beans, finance-beans,
+    common-beans, common, campaign-service, common-service, admin-service, contact-service, product-beans, dashboard-beans, webmail-beans, scheduler-beans, uimanager-beans,
+    support-beans, sales-beans, report-beans, project-beans, mbeanservices.sar, webmail-service, scheduler-service, sales-service, support-service, war, war-lib"
+            description="deploys all">
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/" overwrite="true">
+            <fileset dir="${build.archives}"
+                     includes="**/*.jar **/*.sar"/>
+        </copy>
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy/" overwrite="true">
+            <fileset dir="${lib}" includes="**/strutsejb.jar"/>
+        </copy>
+        <copy todir="${jboss.home}/server/${jboss.server}/lib/" overwrite="true"> <!--copy as lib-->
+            <fileset dir="${lib}" includes="**/strutsejb.jar"/>
+        </copy>
+        <copy todir="${jboss.home}/server/${jboss.server}/lib/" overwrite="true"> <!--copy as lib-->
+            <fileset refid="earlib"/>
+            <fileset refid="earlibjodconverter"/>
+        </copy>
+    </target>
+
+    <target name="gen-resources">
+        <mkdir dir="${build.properties}/com/piramide/elwis/web/resources"/>
+
+        <copy todir="${build.properties}/com/piramide/elwis/web/resources/" overwrite="true">
+            <fileset dir="${src.properties}"
+                     includes="**/*.properties"/>
+        </copy>
+    </target>
+
+    <target name="old_gen-resources">
+        <mkdir dir="${build.properties}/com/piramide/elwis/web/resources"/>
+        <get src="https://dev.jatun.net/reselwis/processFile.php?default=1"
+             dest="${build.properties}/com/piramide/elwis/web/resources/ApplicationResources.properties"
+             verbose="true" username="jatundev" password="jatun.dev"/>
+        <!--It is required to have the default .properties and the _en.properties for English locale, don't remove this.-->
+        <get src="https://dev.jatun.net/reselwis/processFile.php?default=1"
+             dest="${build.properties}/com/piramide/elwis/web/resources/ApplicationResources_en.properties"
+             verbose="true" username="jatundev" password="jatun.dev"/>
+        <get src="https://dev.jatun.net/reselwis/processFile.php?default=0&amp;abbreviation=es&amp;language=11"
+             dest="${build.properties}/com/piramide/elwis/web/resources/ApplicationResources_es.properties"
+             verbose="true" username="jatundev" password="jatun.dev"/>
+        <get src="https://dev.jatun.net/reselwis/processFile.php?default=0&amp;abbreviation=fr&amp;language=12"
+             dest="${build.properties}/com/piramide/elwis/web/resources/ApplicationResources_fr.properties"
+             verbose="true" username="jatundev" password="jatun.dev"/>
+    </target>
+
+
+    <target name="elwis.war" depends="gen-styles, gen-resources, compile, jsp2servlets" description="Creates War file.">
+        <war destfile="${build.archives}/elwis.war" webxml="${build.archives}/jsp/web.xml">
+            <fileset dir="${build.archives}/web" excludes="**/*.jsp"/>
+            <classes dir="${build.classes}"
+                     includes="${package.web}/">
+            </classes>
+            <classes dir="${build.properties}" includes="${package.web}/resources/**.properties"/>
+            <classes dir="${src.java}" includes="${package.web}/dashboard/**.properties"/>
+            <classes dir="${src.java}" includes="${package.web}/dashboard/component/configuration/reader/**.dtd"/>
+            <classes dir="${src.java}" includes="${package.web}/dashboard/component/ui/velocity/templates/**.vm"/>
+            <classes dir="${src.java}" includes="${package.web}/common/dynamicsearch/xml/**.dtd"/>
+            <classes dir="${src.java}" includes="${package.web}/common/accessrightdatalevel/xml/**.dtd"/>
+            <classes dir="${build.archives}/jspclasses" includes="**/*.class"/>
+            <lib refid="warlib"/>
+        </war>
+    </target>
+
+    <target name="elwis.ear" depends="compileclean, clean, catalog-beans, contact-beans, admin-beans, campaign-beans, finance-beans,
+    common, common-beans, campaign-service, common-service, admin-service, contact-service, product-beans, report-beans, project-beans, elwis.war, deliverymbeanservices.sar,
+    webmail-beans, scheduler-beans, uimanager-beans,
+    support-beans, sales-beans, dashboard-beans, scheduler-service, webmail-service, sales-service, support-service"
+            description="Ear all modules">
+        <ear destfile="${build.archives}/${app.name}-${app.version}.ear"
+             appxml="${descriptors}/META-INF/application.xml">
+            <fileset dir="${build.archives}/"
+                     includes="**/*.jar **/*.war **/*.sar"/>
+            <fileset dir="${lib}" includes="**/strutsejb.jar"/>
+            <fileset refid="earlib"/>
+            <fileset refid="earlibjodconverter"/>
+            <metainf dir="${descriptors}/META-INF/" includes="**/jboss-app.xml"/>
+        </ear>
+    </target>
+
+    <target name="dist" description="Prepares an Oficial Delivery for Production">
+        <property name="isOficialDelivery" value="true"/>
+        <antcall target="elwis.ear"/>
+    </target>
+
+    <target name="mbeanservices.sar" depends="compile"
+            description="Generate elwis mbean service configurations mbean sar">
+        <delete file="${build.archives}/mbeanservices.sar"/>
+        <jar destfile="${build.archives}/mbeanservices.sar">
+            <fileset dir="${build.classes}">
+                <include name="**/com/piramide/elwis/plugins/jboss/**/*.class"/>
+            </fileset>
+            <metainf dir="${descriptors}/Common/META-INF/" includes="**/jboss-service.xml"/>
+        </jar>
+    </target>
+
+    <target name="deliverymbeanservices.sar" depends="compile"
+            description="Generate elwis mbean service configurations mbean sar">
+        <delete dir="${build.archives}/MBeanDescriptor"/>
+        <mkdir dir="${build.archives}/MBeanDescriptor"/>
+
+
+        <copy todir="${build.archives}/MBeanDescriptor" overwrite="true">
+            <fileset dir="${descriptors}/Common/META-INF/" includes="**/jboss-service.xml"/>
+            <fileset dir="${build.fragment}/" includes="**/emailSenderMBeanFragment.xml"/>
+        </copy>
+
+        <replaceregexp match="@EAR_APP_NAME@" replace="${app.name}-${app.version}.ear">
+            <fileset dir="${build.archives}/MBeanDescriptor/">
+                <include name="**/emailSenderMBeanFragment.xml"/>
+            </fileset>
+        </replaceregexp>
+
+        <loadfile property="readedEmailSenderMBeanXmlFragment"
+                  srcFile="${build.archives}/MBeanDescriptor/emailSenderMBeanFragment.xml"/>
+
+        <replaceregexp match="${emailSenderMBeanXmlFragment}" replace="${readedEmailSenderMBeanXmlFragment}">
+            <fileset dir="${build.archives}/MBeanDescriptor/">
+                <include name="**/jboss-service.xml"/>
+            </fileset>
+        </replaceregexp>
+
+        <loadfile property="readedReminderMBeanXmlFragment" srcFile="${build.fragment}/reminderMBeanFragment.xml"/>
+
+        <replaceregexp match="${reminderMBeanXmlFragment}" replace="${readedReminderMBeanXmlFragment}">
+            <fileset dir="${build.archives}/MBeanDescriptor/">
+                <include name="**/jboss-service.xml"/>
+            </fileset>
+        </replaceregexp>
+
+        <!--load contract end reminder service-->
+        <loadfile property="readedContractEndReminderMBeanXmlFragment"
+                  srcFile="${build.fragment}/contractEndReminderMBeanFragment.xml"/>
+        <replaceregexp match="${contractEndReminderMBeanXmlFragment}"
+                       replace="${readedContractEndReminderMBeanXmlFragment}">
+            <fileset dir="${build.archives}/MBeanDescriptor/">
+                <include name="**/jboss-service.xml"/>
+            </fileset>
+        </replaceregexp>
+
+        <jar destfile="${build.archives}/mbeanservices.sar">
+            <fileset dir="${build.classes}">
+                <include name="**/com/piramide/elwis/plugins/jboss/mbean/sequence/*.class"/>
+                <include name="**/com/piramide/elwis/plugins/jboss/scheduler/*.class"/>
+            </fileset>
+            <metainf dir="${build.archives}/MBeanDescriptor/" includes="**/jboss-service.xml"/>
+        </jar>
+    </target>
+
+    <target name="deploymbeanservices.sar" depends="mbeanservices.sar" description="Deploy sar in server">
+        <copy todir="${jboss.home}/server/default/deploy" overwrite="true">
+            <fileset dir="${build.archives}" includes="**/mbeanservices.sar"/>
+        </copy>
+    </target>
+
+    <target name="deploymbeanservices" depends="deliverymbeanservices.sar"
+            description="Deploy sar in server">
+        <copy todir="${jboss.home}/server/default/deploy" overwrite="true">
+            <fileset dir="${build.archives}" includes="**/mbeanservices.sar"/>
+        </copy>
+    </target>
+
+    <target name="jsp2servlets" description="JSP-to-delivery" depends="init">
+        <delete dir="${build.archives}/jsp"/>
+        <delete dir="${build.archives}/jspclasses"/>
+        <delete dir="${build.archives}/jsp2compile"/>
+        <delete dir="${build.archives}/web"/>
+        <mkdir dir="${build.archives}/jsp"/>
+        <mkdir dir="${build.archives}/jspclasses"/>
+        <mkdir dir="${build.archives}/web"/>
+        <mkdir dir="${build.archives}/webtmp"/>
+        <mkdir dir="${build.archives}/jsp2compile"/>
+
+
+        <copy todir="${build.archives}/jsp2compile" overwrite="true">
+            <fileset dir="${src.web}" excludes="**/FantabulousTest.jsp"/>
+        </copy>
+
+
+        <loadfile property="readedWebmailNotifierFragment"
+                  srcFile="${build.fragment}/webmailNotifierFragment.html"/>
+
+        <replaceregexp match="${webmailNotifierJspFragment}" replace="${readedWebmailNotifierFragment}"
+                       byline="false">
+            <fileset dir="${build.archives}/jsp2compile/layout/ui">
+                <include name="**/main.jsp"/>
+            </fileset>
+        </replaceregexp>
+
+        <!-- to bootstrap mode-->
+        <replaceregexp match="${webmailNotifierJspFragment}" replace="${readedWebmailNotifierFragment}"
+                       byline="false">
+            <fileset dir="${build.archives}/jsp2compile/WEB-INF/jsp/layout/ui">
+                <include name="**/main.jsp"/>
+            </fileset>
+        </replaceregexp>
+
+        <taskdef name="jasper2" classname="org.apache.jasper.JspC" classpathref="project.class.path">
+        </taskdef>
+
+        <taskdef name="foreach" classname="net.sf.antcontrib.logic.ForEach" classpathref="project.class.path"/>
+
+
+        <jasper2 validateXml="false" uriroot="${build.archives}/jsp2compile" outputDir="${build.archives}/jsp"
+                 package="com.piramide.elwis.web.jsp" webXmlFragment="${build.archives}/jsp/webFragment.xml"
+                 verbose="0">
+        </jasper2>
+
+
+        <replaceregexp match="@@VERSION@@" replace="Version: ${app.version} Build: #${app.build}" byline="true">
+            <fileset dir="${build.archives}/jsp/com/piramide/elwis/web/jsp/layout">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
+
+        <replaceregexp match="@@VERSION@@" replace="Version: ${app.version} Build: #${app.build}" byline="true">
+            <fileset dir="${build.archives}/jsp/com/piramide/elwis/web/jsp/common/dashboard">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
+
+        <!-- set version to mode bootstrap in layout-->
+        <replaceregexp match="@@VERSION@@" replace="Version: ${app.version} Build: #${app.build}" byline="true">
+            <fileset dir="${build.archives}/jsp/com/piramide/elwis/web/jsp/WEB_002dINF/jsp/layout">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
+
+        <!-- set version to mode bootstrap in dashboard-->
+        <replaceregexp match="@@VERSION@@" replace="Version: ${app.version} Build: #${app.build}" byline="true">
+            <fileset dir="${build.archives}/jsp/com/piramide/elwis/web/jsp/WEB_002dINF/jsp/dashboard">
+                <include name="**/*.java"/>
+            </fileset>
+        </replaceregexp>
+
+
+        <foreach target="compilejsp" param="currentPath">
+            <path>
+                <dirset dir="${build.archives}/jsp"/>
+            </path>
+        </foreach>
+
+
+        <copy todir="${build.archives}/jsp/" overwrite="true">
+            <fileset dir="${src.web}/WEB-INF/" includes="web.xml"/>
+        </copy>
+
+        <loadfile property="readedWebXmlFragment" srcFile="${build.archives}/jsp/webFragment.xml"/>
+
+        <replace file="${build.archives}/jsp/web.xml" token="${webXmlFragment}" value="${readedWebXmlFragment}"/>
+
+        <loadfile property="readedCompressionFilterXmlFragment" srcFile="${build.fragment}/filterFragment.xml"/>
+
+        <replace file="${build.archives}/jsp/web.xml" token="${compressionFilterXmlFragment}"
+                 value="${readedCompressionFilterXmlFragment}"/>
+
+        <loadfile property="readListenerFilterXmlFragment" srcFile="${build.fragment}/listenerFragment.xml"/>
+
+        <replace file="${build.archives}/jsp/web.xml" token="${listenerXmlFragmentToken}"
+                 value="${readListenerFilterXmlFragment}"/>
+
+
+        <!--package web content-->
+        <copy todir="${build.archives}/webtmp/" overwrite="true">
+            <fileset dir="${src.web}" excludes="**/*.jsp **/*.iml"/>
+        </copy>
+
+        <copy todir="${build.archives}/web/" overwrite="true" includeemptydirs="false">
+            <fileset dir="${build.archives}/webtmp/"/>
+        </copy>
+        <delete dir="${build.archives}/webtmp"/>
+
+
+        <loadfile property="readedGlobalExceptionsFilterXmlFragment" srcFile="${build.fragment}/exceptionFragment.xml"/>
+
+        <replaceregexp match="${globalExceptionsXmlFragment}" replace="${readedGlobalExceptionsFilterXmlFragment}">
+            <fileset dir="${build.archives}/web">
+                <include name="**/struts-config.xml"/>
+            </fileset>
+        </replaceregexp>
+
+        <replaceregexp byline="true">
+            <regexp pattern="fantabulous.sqlgenerator(\s*)=(\s*)([a-zA-Z.]*)"/>
+            <substitution expression="fantabulous.sqlgenerator = ${fantabulous.generator.prod}"/>
+            <fileset dir="${build.archives}/web">
+                <include name="**/fantabulous-config.properties"/>
+            </fileset>
+        </replaceregexp>
+    </target>
+
+    <!--empty value, it will be replaced in build time-->
+    <property name="currentPath" value=""/>
+    <target name="compilejsp">
+        <echo>Compiling path: ${currentPath}</echo>
+        <javac destdir="${build.archives}/jspclasses" optimize="on" debug="on" failonerror="true"
+               srcdir="${currentPath}" classpathref="project.class.path" encoding="UTF-8">
+            <classpath location="${build.archives}/jsp/"/>
+            <include name="*.java"/>
+        </javac>
+
+    </target>
+
+
+    <target name="jboss-config-files">
+        <copy todir="${jboss.home}/server/${jboss.server}/deploy">
+            <fileset dir="${src.jboss.conf}" includes="*.xml"/>
+        </copy>
+    </target>
+
+    <target name="deployScheduler-service" depends="scheduler-service">
+        <delete file="${jboss.home}/server/${jboss.server}/deploy/schedulerservice.jar"/>
+        <copy file="${build.archives}/schedulerservice.jar" todir="${jboss.home}/server/${jboss.server}/deploy"/>
+    </target>
+    <!--alvaro-->
+    <target name="gen-styles" description="generate ApplicationStyles file">
+        <java classname="com.piramide.elwis.web.uimanager.xmlprocessor.XMLProcessor" failonerror="true" fork="true">
+            <arg value="-f"/>
+            <arg value="${src.web}/WEB-INF/uimanager/xmlstyles/elwis_style.xml"/>
+            <classpath refid="project.class.path"/>
+            <classpath>
+                <pathelement location="${lib}/commons-logging.jar"/>
+            </classpath>
+        </java>
+    </target>
+    <target name="clean-jboss"
+            description="Warning, this task clean my Jboss for a deployAll. I don't sure that this works for others JBoss instances. donkeyJote">
+        <delete includeemptydirs="true" failonerror="false">
+            <fileset dir="${jboss.home}/server/${jboss.server}/deploy/" includes="*.jar" excludes="**/strutsejb.jar"/>
+            <fileset dir="${jboss.home}/server/${jboss.server}/deploy/" includes="**/sequenceMBean.sar"/>
+            <fileset dir="${jboss.home}/server/${jboss.server}/deploy/" includes="**/mbeanservices.sar"/>
+            <fileset dir="${jboss.home}/server/${jboss.server}/deploy/elwis.war"/>
+            <fileset dir="${jboss.home}/server/${jboss.server}/work/jboss.web/localhost/bm"/>
+            <fileset dir="${jboss.home}/server/${jboss.server}/tmp/" includes="**/*.*"/>
+        </delete>
+    </target>
+
+    <!--TestSuite-->
+
+
+    <target name="lists-test" description="run fantabulous TestSuite with java" depends="compile">
+        <echo message="testng-run"/>
+        <java fork="yes" classpathref="project.class.path" classname="com.beust.testng.TestNG">
+            <arg value="-d"/>
+            <arg value="${test.output}"/>
+            <arg value="${fantabulous.testng.config}"/>
+            <jvmarg value="-ea"/>
+        </java>
+        <echo>Some of these tests should have failed. Statistics are available at</echo>
+        <echo>${test.output}\index.html for a TestNG HTML report</echo>
+    </target>
+
+    <target name="test-service" depends="compile" description="Generate Test service beans">
+        <jar destfile="${build.archives}/testservice.jar" compress="false">
+            <fileset dir="${build.classes}"
+                     includes="${package.test.service}/testservice"/>
+            <metainf dir="${descriptors}/TestService/META-INF/"/>
+        </jar>
+    </target>
+
+    <!-- acceptance tests test -->
+    <target name="acceptanceTest" depends="init-test, test-service, common, common-beans, contact-beans">
+        <junit fork="yes" printsummary="yes">
+            <classpath refid="project.test.deploy.path"/>
+            <classpath refid="project.class.test.path"/>
+            <classpath refid="project.testLib"/>
+
+            <formatter type="plain"/>
+
+            <batchtest fork="yes" todir="${build.test.result}">
+                <fileset dir="${src.java}">
+                    <include name="**/*Test.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+    <target name="copySpecs">
+        <copy file="${test.specs}/bm/sample/Sample.html" todir="${build.classes}/test/acceptance"/>
+    </target>
+    <target name="run.acceptance.tests" depends="init-test, test-service, common, copySpecs">
+        <junit fork="yes" printsummary="yes">
+            <jvmarg value="-Dconcordion.output.dir=${build.test.result}"/>
+            <classpath refid="project.test.deploy.path"/>
+            <classpath refid="project.class.test.path"/>
+            <classpath refid="project.testLib"/>
+
+            <formatter type="plain"/>
+
+            <batchtest fork="yes" todir="${build.test.result}">
+                <fileset dir="${src.java}">
+                    <include name="**/*SampleTest.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+</project>

@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<!DOCTYPE  lists PUBLIC "-//Alfacentaurto//DTD AC" "../dtd/DTDConfiguration.dtd">-->
+
+<lists>
+    <!--    <list listName="countList">
+            <tables>
+                <table tableName="address" alias="address">
+                    <fields>
+                        <field fieldName="addressid" fieldAlias="addressId" key="true"/>
+                    </fields>
+                </table>
+            </tables>
+            <functions>
+                <function name="count" alias="count_rows">
+                    <param type="field" field="addressId"/>
+                </function>
+            </functions>
+            <configuration>
+                <columns>
+                    <column columnName="rows">
+                        <config>
+                            <fieldsConfig>
+                                <referenceField type="function">count_rows</referenceField>
+                            </fieldsConfig>
+                        </config>
+                    </column>
+                </columns>
+            </configuration>
+        </list>-->
+
+    <list listName="dashboardBirthdayFilterList">
+        <tables>
+            <table tableName="dashbfilter" alias="dashbFilter">
+                <fields>
+                    <field fieldName="filterid" fieldAlias="filterId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="componentid" fieldAlias="componentId" type="integer"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                    <field fieldName="value" fieldAlias="value" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="componentId" operator="EQUAL" type="parameter" parameterName="dbComponentId"/>
+            <conector>And</conector>
+            <condition fieldReference="name" operator="EQUAL" type="parameter" parameterName="employeeIdsFilterName"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="value">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>value</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="contactPersonByEmployeeInnerList">
+        <tables>
+            <table tableName="contactperson" alias="contactperson">
+                <fields>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactPersonAddressId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="active" fieldAlias="contactPersonActive" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="customer" alias="customerOrg">
+                <fields>
+                    <field fieldName="customerid" fieldAlias="customerId" type="integer" key="true"/>
+                    <field fieldName="employeeid" fieldAlias="employeeId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>customerId</pK>
+                <fK>contactPersonAddressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="employeeId" operator="IN" type="list" value="dashboardBirthdayFilterList"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="contactPersonId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactPersonId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="birthdayList" persistence="true">
+        <tables>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="recorduser" fieldAlias="recordUserId" type="integer"/>
+                    <field fieldName="personal" fieldAlias="personal" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="birthday" fieldAlias="birthdayContact" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="cityOfAddress" type="integer"/>
+                    <field fieldName="countryid" fieldAlias="countryOfAddress" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true" type="integer"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                    <field fieldName="zip" fieldAlias="zip"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="countryname" fieldAlias="countryName"/>
+                </fields>
+            </table>
+            <table tableName="customer" alias="customer">
+                <fields>
+                    <field fieldName="customerid" fieldAlias="customerId" type="integer" key="true"/>
+                    <field fieldName="employeeid" fieldAlias="employeeId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>cityId</pK>
+                <fK>cityOfAddress</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>countryId</pK>
+                <fK>countryOfAddress</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>customerId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function name="MOD" alias="date1">
+                <param type="field" field="birthdayContact"/>
+                <param type="constant" value="10000"/>
+            </function>
+            <function name="MOD" alias="date2">
+                <param type="field" field="birthdayContact"/>
+                <param type="constant" value="10000"/>
+            </function>
+            <function name="mod" alias="orderDate">
+                <param type="field" field="birthdayContact"/>
+                <param type="constant" value="10000"/>
+            </function>
+            <function alias="age" class="com.piramide.elwis.utils.dbfunction.AgeReadFunction">
+                <param type="field" field="birthdayContact"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="birthdayContact" operator="IS" type="constant" value="not null"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <conditions evaluateIf="normal">
+                <condition functionReference="date1" operator="GREATER_EQUAL" type="parameter"/>
+                <conector>And</conector>
+                <condition functionReference="date2" operator="LESS_EQUAL" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="special">
+                <condition functionReference="date1" operator="GREATER_EQUAL" type="parameter"/>
+                <conector>And</conector>
+                <condition functionReference="date2" operator="LESS_EQUAL" type="constant" value="1231"/>
+                <conector>Or</conector>
+                <condition functionReference="date2" operator="GREATER_EQUAL" type="constant" value="0101"/>
+                <conector>And</conector>
+                <condition functionReference="date2" operator="LESS_EQUAL" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="enableByEmployee">
+                <condition fieldReference="employeeId" operator="IN" type="list" value="dashboardBirthdayFilterList"/>
+                <conector>Or</conector>
+                <conditions evaluateIf="enableNotRelatedEmployee">
+                    <condition fieldReference="customerId" operator="IS" type="constant" value="NULL"/>
+                    <conector>Or</conector>
+                    <condition fieldReference="employeeId" operator="IS" type="constant" value="NULL"/>
+                </conditions>
+                <conector>Or</conector>
+                <condition fieldReference="addressId" operator="IN" type="list" value="contactPersonByEmployeeInnerList"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="city">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="country">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name3">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name3</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="birtdayComplete">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>birthdayContact</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="birthdayDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>birthdayContact</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="birthday">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">orderDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="age">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">age</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="age"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="addressWithSupplierCodeList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="code" fieldAlias="code" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="code" operator="ANDBIT" type="constant" value="16"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="addressSupplierList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="supplier" alias="supplier">
+                <fields>
+                    <field fieldName="supplierid" fieldAlias="supplierId" key="true" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+        </relationShips>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="supplierId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>supplierId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="addressWithSupplierErrorList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="code" fieldAlias="code" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="addressId" operator="EQUAL" type="field" value="addressId"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressId" operator="IN" type="list" value="addressWithSupplierCodeList"/>
+                <conector>And</conector>
+                <condition fieldReference="addressId" operator="NOT_IN" type="list" value="addressSupplierList"/>
+            </conditions>
+            <conector>Or</conector>
+            <conditions>
+                <condition fieldReference="addressId" operator="NOT_IN" type="list" value="addressWithSupplierCodeList"/>
+                <conector>And</conector>
+                <condition fieldReference="addressId" operator="IN" type="list" value="addressSupplierList"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="addressId"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+</lists>

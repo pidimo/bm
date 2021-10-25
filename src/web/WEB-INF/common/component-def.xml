@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//dashboard/dashboard Config DTD //EN"
+        "http://www.jatun.com/component-def.dtd">
+
+<components>
+    <dataProcessor>com.piramide.elwis.web.dashboard.conf.FantabulousProcessor</dataProcessor>
+    <persistenceProcessor>com.piramide.elwis.web.dashboard.conf.PersistenceProcessor</persistenceProcessor>
+    <conditionEvaluator>com.piramide.elwis.web.dashboard.conf.Evaluator</conditionEvaluator>
+    <converters>
+        <converter name="IntegerToDate" class="com.piramide.elwis.web.dashboard.conf.IntegerToDateDashboardConverter"/>
+        <converter name="LongToDate" class="com.piramide.elwis.web.dashboard.conf.LongToDateDashboardConverter"/>
+        <converter name="BirthdayAge" class="com.piramide.elwis.web.dashboard.conf.BirthdayAgeDashboardConverter"/>
+        <converter name="BirthdayDateConverter"
+                   class="com.piramide.elwis.web.dashboard.conf.BirthdayDateDashboardConverter"/>
+        <converter name="DateTask" class="com.piramide.elwis.web.dashboard.conf.SchedulerTaskDashboardConverter"/>
+        <converter name="TimeTaskConverter" class="com.piramide.elwis.web.dashboard.conf.TimeTaskDashboardConverter"/>
+        <converter name="inboxSizeConverter" class="com.piramide.elwis.web.dashboard.conf.InboxSizeDashboardConverter"/>
+    </converters>
+    <component id="1" name="recent" nameResource="recentList" functionality="CONTACT" permission="VIEW">
+        <columns>
+            <column id="1" name="addressName" resourceKey="Contact.name" order="ASC" default="TRUE" size="35"/>
+            <column id="2" name="sequence" accessColumn="TRUE"/>
+            <column id="3" name="addressId" accessColumn="TRUE"/>
+            <column id="4" name="addressType" accessColumn="TRUE"/>
+            <column id="5" name="name1" accessColumn="TRUE"/>
+            <column id="6" name="name2" accessColumn="TRUE"/>
+            <column id="7" name="name3" accessColumn="TRUE"/>
+            <column id="8" name="city" resourceKey="Contact.city" size="25"/>
+            <column id="9" name="country" resourceKey="Contact.country" order="NONE" size="25"/>
+            <column id="10" name="zip" resourceKey="Contact.zip" size="10"/>
+        </columns>
+        <filters>
+            <rowCounterFilter name="numberOfElements" resourceKey="rowsPerPage" value="5"/>
+        </filters>
+        <windowOptions>
+            <windowOption action="/Dashboard/Component/Configuration/read.do"
+                          iconUrl="/layout/ui/img/configuration.gif"
+                          resourceKey="Common.configuration"/>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <uiProcessor type="LIST"/>
+            <accessUrl url="/contacts/General/RecentAction.do">
+                <params>
+                    <param name="dto(addressId)" columnId="3"/>
+                    <param name="dto(addressType)" columnId="4"/>
+                    <param name="dto(name1)" columnId="5"/>
+                    <param name="dto(name2)" columnId="6"/>
+                    <param name="dto(name3)" columnId="7"/>
+                    <param name="contactId" columnId="3"/>
+                    <param name="module" value="contacts"/>
+                    <param name="index" value="0"/>
+                </params>
+            </accessUrl>
+        </configurations>
+        <params>
+            <param name="FantaListName" value="recentList"/>
+            <param name="module" value="/contacts"/>
+        </params>
+    </component>
+    <component id="2" name="task" nameResource="scheduler.MyTaskList" functionality="TASK" permission="VIEW">
+        <columns>
+            <column id="1" name="title" resourceKey="Task.taskName" default="TRUE" order="NONE" size="29"/>
+            <column id="2" name="startDate" resourceKey="Task.shortStartDate" default="TRUE" converter="DateTask"
+                    order="NONE" size="15"/>
+            <column id="3" name="expireDate" resourceKey="Task.shortExpireDate" default="TRUE" converter="DateTask"
+                    order="DESC" size="15"/>
+            <column id="4" name="status" resourceKey="Task.status" default="TRUE" size="19">
+                <constant value="1" resourceKey="Task.InProgress"/>
+                <constant value="2" resourceKey="Task.notInit"/>
+                <constant value="3" resourceKey="Scheduler.Task.Concluded"/>
+                <constant value="4" resourceKey="Task.Deferred"/>
+                <constant value="5" resourceKey="Task.ToCheck"/>
+            </column>
+            <column id="5" name="taskId" accessColumn="TRUE"/>
+            <column id="6" name="title" accessColumn="TRUE"/>
+            <column id="7" name="startDateTime" accessColumn="TRUE"/>
+            <column id="8" name="expireDateTime" accessColumn="TRUE"/>
+            <column id="9" name="priority" resourceKey="Task.priority" size="15"/>
+            <column id="10" name="expireDate" accessColumn="TRUE">
+                <condition type="date" operator="equal" value="now" style="nowDate"/>
+            </column>
+            <column id="11" name="createDateTime" accessColumn="TRUE" order="DESC"/>
+            <column id="12" name="startTime" resourceKey="Task.startTime" size="9" converter="TimeTaskConverter"/>
+            <column id="13" name="expireTime" resourceKey="Task.expireTime" size="9" converter="TimeTaskConverter"/>
+        </columns>
+        <filters>
+            <filter name="priorityOfTask" resourceKey="Task.priority" view="SELECT" selectId="id"
+                    selectValue="name">
+                <values>
+                    <query>
+                        <params>
+                            <param name="FantaListName" value="selectPriorityList"/>
+                            <param name="module" value="/catalogs"/>
+                            <param name="companyId" value="${sessionScope.user.valueMap['companyId']}"/>
+                            <param name="type" value="SCHEDULER"/>
+                        </params>
+                    </query>
+                </values>
+            </filter>
+            <filter name="statusBk" resourceKey="Task.status" view="SELECT">
+                <values>
+                    <constantClass className="com.piramide.elwis.web.common.util.JSPHelper"
+                                   methodName="getPriorityStatusListForTaskComponent"/>
+                </values>
+            </filter>
+            <rowCounterFilter name="numberOfElements" resourceKey="rowsPerPage" value="5"/>
+        </filters>
+        <windowOptions>
+            <windowOption action="/Dashboard/Component/Configuration/read.do"
+                          iconUrl="/layout/ui/img/configuration.gif"
+                          resourceKey="Common.configuration"/>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <uiProcessor type="LIST"/>
+            <accessUrl url="/Dashboard/Task/ActionSelector.do">
+                <params>
+                    <param name="taskId" columnId="5"/>
+                    <param name="dto(title)" value="6"/>
+                    <param name="dto(recordUserId)" value="${sessionScope.user.valueMap['userId']}"/>
+                    <param name="module" value="scheduler"/>
+                </params>
+            </accessUrl>
+        </configurations>
+        <params>
+            <param name="FantaListName" value="dashboardTaskList"/>
+            <param name="module" value="/scheduler"/>
+        </params>
+    </component>
+    <component id="3" name="salesProcess" nameResource="salesProcessOpen.List" functionality="SALESPROCESS"
+               permission="VIEW">
+        <columns>
+            <column id="1" name="processName" resourceKey="SalesProcess.name" default="TRUE" order="NONE" size="23"/>
+            <column id="2" name="addressName" resourceKey="SalesProcess.contact" default="TRUE" order="NONE" size="23"/>
+            <column id="3" name="endDate" resourceKey="Common.expiration" default="TRUE" converter="IntegerToDate"
+                    order="DESC" size="15"/>
+            <column id="4" name="processId" accessColumn="TRUE"/>
+            <column id="5" name="addressId" accessColumn="TRUE"/>
+            <column id="6" name="processName" accessColumn="TRUE"/>
+            <column id="7" name="priorityName" resourceKey="SalesProcess.priority" size="10"/>
+            <column id="8" name="probability" resourceKey="SalesProcess.probability" patternKey="dashboard.percent"
+                    size="10"/>
+            <column id="9" name="value" resourceKey="SalesProcess.value" patternKey="numberFormat.2DecimalPlaces"
+                    size="14"/>
+        </columns>
+        <filters>
+            <rowCounterFilter name="numberOfElements" resourceKey="rowsPerPage" value="5"/>
+        </filters>
+        <windowOptions>
+            <windowOption action="/Dashboard/Component/Configuration/read.do"
+                          iconUrl="/layout/ui/img/configuration.gif"
+                          resourceKey="Common.configuration"/>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <uiProcessor type="LIST"/>
+            <accessUrl url="/sales/SalesProcess/Forward/Update.do">
+                <params>
+                    <param name="processId" columnId="4"/>
+                    <param name="dto(processId)" columnId="4"/>
+                    <param name="addressId" columnId="5"/>
+                    <param name="dto(processName)" columnId="6"/>
+                    <param name="index" value="0"/>
+                    <param name="module" value="salesprocess"/>
+                </params>
+            </accessUrl>
+        </configurations>
+        <params>
+            <param name="FantaListName" value="salesProcessDashboardList"/>
+            <param name="module" value="/sales"/>
+        </params>
+    </component>
+    <component id="4" name="inbox" nameResource="Webmail.folder.inbox.newMessages" functionality="MAIL"
+               permission="EXECUTE">
+        <columns>
+            <column id="1" name="personalFrom" resourceKey="Webmail.tray.from" default="TRUE" size="20"/>
+            <column id="2" name="mailSubject" resourceKey="Webmail.tray.subject" default="TRUE" size="25"/>
+            <column id="3" name="folderName" resourceKey="Webmail.tray.folder" default="TRUE" size="10"/>
+            <column id="4" name="sentDate" resourceKey="Webmail.tray.date" order="DESC"
+                    converter="LongToDate" size="25"/>
+            <column id="5" name="id" accessColumn="TRUE"/>
+            <column id="6" name="size" resourceKey="Mail.size" converter="inboxSizeConverter" size="10"/>
+        </columns>
+        <filters>
+            <filter name="mailFolderId" resourceKey="Webmail.tray.folder" view="SELECT" selectId="id_folder"
+                    selectValue="name_folder">
+                <values>
+                    <query>
+                        <params>
+                            <param name="FantaListName" value="folderList"/>
+                            <param name="module" value="/webmail"/>
+                            <param name="companyId" value="${sessionScope.user.valueMap['companyId']}"/>
+                            <param name="userMailId" value="${sessionScope.user.valueMap['userId']}"/>
+                        </params>
+                    </query>
+                </values>
+            </filter>
+            <filter name="state" resourceKey="Webmail.mail.status" view="SELECT">
+                <values>
+                    <constantClass className="com.piramide.elwis.web.common.util.JSPHelper"
+                                   methodName="getInboxStateFilter"/>
+                </values>
+            </filter>
+            <rowCounterFilter name="numberOfElements" resourceKey="rowsPerPage" value="5"/>
+        </filters>
+        <windowOptions>
+            <windowOption action="/Dashboard/Component/Configuration/read.do"
+                          iconUrl="/layout/ui/img/configuration.gif"
+                          resourceKey="Common.configuration"/>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <uiProcessor type="LIST"/>
+            <filterPreProcessor>com.piramide.elwis.web.dashboard.conf.InboxFilterProcessor</filterPreProcessor>
+            <accessUrl url="/webmail/Mail/ReadEmail.do">
+                <params>
+                    <param name="dto(mailId)" columnId="5"/>
+                    <param name="module" value="webmail"/>
+                </params>
+            </accessUrl>
+        </configurations>
+        <params>
+            <param name="FantaListName" value="inboxList"/>
+            <param name="module" value="/webmail"/>
+        </params>
+    </component>
+    <component id="5" name="birthday" nameResource="birthdayList" functionality="CONTACT" permission="VIEW">
+        <columns>
+            <column id="1" name="addressName" resourceKey="Contact.name" default="TRUE" order="NONE" size="19"/>
+            <column id="2" name="birthday" resourceKey="Contact.Person.birthday" default="TRUE" order="ASC"
+                    converter="BirthdayDateConverter" size="15"/>
+            <column id="3" name="type" resourceKey="Contact.type" size="9">
+                <constant value="0" resourceKey="Contact.organization"/>
+                <constant value="1" resourceKey="Contact.person"/>
+            </column>
+            <column id="4" name="id" accessColumn="TRUE"/>
+            <column id="5" name="type" accessColumn="TRUE"/>
+            <column id="6" name="name1" accessColumn="TRUE"/>
+            <column id="7" name="name2" accessColumn="TRUE"/>
+            <column id="8" name="name3" accessColumn="TRUE"/>
+            <column id="9" name="age" resourceKey="Contact.age" converter="BirthdayAge" default="TRUE"
+                    order="ASC" size="6"/>
+            <column id="10" name="city" resourceKey="Contact.city" size="19"/>
+            <column id="11" name="country" resourceKey="Contact.country" size="19"/>
+            <column id="12" name="zip" resourceKey="Contact.zip" size="9"/>
+            <column id="13" name="birtdayComplete" accessColumn="TRUE">
+                <condition type="date" operator="equal" value="now" style="nowDate"/>
+            </column>
+        </columns>
+        <filters>
+            <filter name="rangeOfDate" resourceKey="dashboard.rangeBirthDay" type="INTEGER" view="RANGE">
+                <values>
+                    <default value="5"/>
+                </values>
+            </filter>
+            <staticFilter name="birthdayViewType"/>
+            <staticFilter name="birthdayEmployeeIds" multipleValue="TRUE"/>
+            <staticFilter name="viewNotRelatedEmployee"/>
+            <rowCounterFilter name="numberOfElements" resourceKey="rowsPerPage" value="5"/>
+        </filters>
+        <windowOptions>
+            <windowOption action="/SearchBirthDayList.do"
+                          iconUrl="/layout/ui/img/minisearch.gif"
+                          resourceKey="Common.search"/>
+            <windowOption action="/Birthday/Dashboard/Component/Configuration/read.do"
+                          iconUrl="/layout/ui/img/configuration.gif"
+                          resourceKey="Common.configuration"/>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <uiProcessor type="LIST"/>
+            <filterPreProcessor>com.piramide.elwis.web.dashboard.conf.BirthdayFilterProcessor</filterPreProcessor>
+            <accessUrl url="/contacts/General/RecentAction.do">
+                <params>
+                    <param name="contactId" columnId="4"/>
+                    <param name="dto(addressId)" columnId="4"/>
+                    <param name="dto(addressType)" columnId="5"/>
+                    <param name="dto(name1)" columnId="6"/>
+                    <param name="dto(name2)" columnId="7"/>
+                    <param name="dto(name3)" columnId="8"/>
+                    <param name="listId" value="addressList"/>
+                    <param name="module" value="contacts"/>
+                    <param name="index" value="0"/>
+                    <param name="m" value="1"/>
+                </params>
+            </accessUrl>
+        </configurations>
+        <params>
+            <param name="FantaListName" value="birthdayList"/>
+            <param name="module" value=""/>
+        </params>
+    </component>
+    <component id="6" name="appointment" nameResource="scheduler.AppointmentList" functionality="APPOINTMENT"
+               permission="VIEW">
+        <windowOptions>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <componentUrl url="/scheduler/DashboardAppointmentView.do">
+                <params>
+                    <param name="module" value="scheduler"/>
+                    <param name="type" value="1"/>
+                    <param name="schedulerUserId" value="${sessionScope.user.valueMap['userId']}"/>
+                </params>
+            </componentUrl>
+        </configurations>
+    </component>
+    <component id="7" name="article" nameResource="Dashboard.articles" functionality="ARTICLE" permission="VIEW">
+        <columns>
+            <column id="1" name="articleTitle" resourceKey="Article.title" default="TRUE" order="NONE" size="25"/>
+            <column id="2" name="ownerName" resourceKey="Article.ownerName" default="TRUE" size="18"/>
+            <column id="3" name="creationDate" resourceKey="Article.createDate" default="TRUE" order="DESC"
+                    converter="LongToDate" size="25"/>
+            <column id="4" name="number" resourceKey="Article.number" size="7"/>
+            <column id="5" name="categoryName" resourceKey="Article.categoryName" size="20"/>
+            <column id="6" name="articleId" accessColumn="TRUE"/>
+            <column id="7" name="articleTitle" accessColumn="TRUE"/>
+        </columns>
+        <filters>
+            <filter name="numberOfDaysBefore" resourceKey="dashboard.numberOfDaysBefore" view="TEXT" type="INTEGER">
+                <values>
+                    <default value="7"/>
+                </values>
+            </filter>
+            <rowCounterFilter name="numberOfElements" resourceKey="rowsPerPage" value="5"/>
+        </filters>
+        <windowOptions>
+            <windowOption action="/Dashboard/Component/Configuration/read.do"
+                          iconUrl="/layout/ui/img/configuration.gif"
+                          resourceKey="Common.configuration"/>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <uiProcessor type="LIST"/>
+            <filterPreProcessor>com.piramide.elwis.web.dashboard.conf.ArticleFilterProcessor</filterPreProcessor>
+            <accessUrl url="/support/Article/Forward/Update.do">
+                <params>
+                    <param name="dto(articleId)" columnId="6"/>
+                    <param name="dto(articleTitle)" columnId="7"/>
+                    <param name="articleId" columnId="6"/>
+                    <param name="index" value="0"/>
+                </params>
+            </accessUrl>
+        </configurations>
+        <params>
+            <param name="FantaListName" value="articleAdvancedSearch"/>
+            <param name="module" value="/support"/>
+            <param name="userType" value="${sessionScope.user.valueMap['userType']}"/>
+            <param name="timeZone" value="${sessionScope.user.valueMap['dateTimeZone']}"/>
+        </params>
+    </component>
+    <component id="8" name="supportcase" nameResource="Dashboard.supportCase" functionality="CASE" permission="VIEW">
+        <columns>
+            <column id="1" name="caseTitle" resourceKey="Common.title" default="TRUE" order="NONE" size="19"/>
+            <column id="2" name="typeName" resourceKey="CaseType.title" default="TRUE" size="9"/>
+            <column id="3" name="priorityName" resourceKey="Priority.title" default="TRUE" size="19"/>
+            <column id="4" name="openDate" resourceKey="Common.openDate" default="TRUE" converter="IntegerToDate"
+                    order="DESC" size="10"/>
+            <column id="5" name="number" resourceKey="Common.number" size="9"/>
+            <column id="6" name="stateName" resourceKey="State.title" size="10"/>
+            <column id="7" name="openByUser" resourceKey="Common.openBy" size="19"/>
+            <column id="8" name="id" accessColumn="TRUE"/>
+            <column id="9" name="caseTitle" accessColumn="TRUE"/>
+        </columns>
+        <filters>
+            <rowCounterFilter name="numberOfElements" resourceKey="rowsPerPage" value="5"/>
+        </filters>
+        <windowOptions>
+            <windowOption action="/Dashboard/Component/Configuration/read.do"
+                          iconUrl="/layout/ui/img/configuration.gif"
+                          resourceKey="Common.configuration"/>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <uiProcessor type="LIST"/>
+            <filterPreProcessor>com.piramide.elwis.web.dashboard.conf.SupportCaseFilterProcesor</filterPreProcessor>
+            <accessUrl url="/support/Case/Forward/Update.do">
+                <params>
+                    <param name="dto(caseTitle)" columnId="9"/>
+                    <param name="caseId" columnId="8"/>
+                    <param name="index" value="0"/>
+                </params>
+            </accessUrl>
+        </configurations>
+        <params>
+            <param name="FantaListName" value="caseList"/>
+            <param name="module" value="/support"/>
+        </params>
+    </component>
+    <component id="9" name="openCampaignActivity" nameResource="Dashboard.openCampaignActivity" functionality="CAMPAIGNACTIVITY" permission="VIEW">
+        <columns>
+            <column id="1" name="title" resourceKey="CampaignActivity.title" default="TRUE" order="NONE" size="30"/>
+            <column id="2" name="state" resourceKey="CampaignActivity.state" default="TRUE" size="13">
+                <constant value="1" resourceKey="Activity.status.planned"/>
+                <constant value="2" resourceKey="Activity.status.InProgress"/>
+                <constant value="3" resourceKey="Activity.status.concluded"/>
+            </column>
+            <column id="3" name="startDate" resourceKey="CampaignActivity.startDate" default="TRUE" converter="IntegerToDate" order="DESC" size="10"/>
+            <column id="4" name="closeDate" resourceKey="CampaignActivity.closeDate" converter="IntegerToDate" size="10"/>
+            <column id="5" name="activityId" accessColumn="TRUE"/>
+            <column id="6" name="campaignId" accessColumn="TRUE"/>
+            <column id="7" name="title" accessColumn="TRUE"/>
+            <column id="8" name="campaignName" resourceKey="Campaign" size="18"/>
+        </columns>
+        <filters>
+            <rowCounterFilter name="numberOfElements" resourceKey="rowsPerPage" value="5"/>
+        </filters>
+        <windowOptions>
+            <windowOption action="/Dashboard/Component/Configuration/read.do"
+                          iconUrl="/layout/ui/img/configuration.gif"
+                          resourceKey="Common.configuration"/>
+            <windowOption action="/Dashboard/ComponentClose.do"
+                          iconUrl="/layout/ui/img/close.gif"
+                          resourceKey="Common.close"/>
+        </windowOptions>
+        <configurations>
+            <uiProcessor type="LIST"/>
+            <accessUrl url="/campaign/CampaignActivity/Forward/Update.do">
+                <params>
+                    <param name="dto(title)" columnId="7"/>
+                    <param name="dto(activityId)" columnId="5"/>
+                    <param name="campaignId" columnId="6"/>
+                    <param name="module" value="campaign"/>
+                    <param name="index" value="3"/>
+                </params>
+            </accessUrl>
+        </configurations>
+        <params>
+            <param name="FantaListName" value="dashboardCampaignActivityList"/>
+            <param name="module" value="/campaign"/>
+        </params>
+    </component>
+</components>

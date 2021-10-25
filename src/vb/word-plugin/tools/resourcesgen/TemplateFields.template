@@ -1,0 +1,53 @@
+<elwis-config>
+<toolbar key="BAR_FIELDS" position="top" protection="1" visible="true">
+	<control type="popup">
+		<gui key="POP_FIELDS" begingroup = "true" style="icon-caption" faceid="6" tooltip="TIP_POPUP_BAR"/>	
+	<!-- style -> "icon" | "caption" -->
+		<subcontrol type="button" > 
+			<gui  style="icon-caption" faceid="6" key="BTN_COMPANY_NAME" tooltip="TIP_COMPANY_NAME"/>	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="COMPANY_NAME">PESTES</parameter>
+				</parameters>
+			</operation>
+		</subcontrol>
+		<subcontrol type="button" > 
+			<gui style="caption" faceid="6" key="BTN_COMPANY_STREET" tooltip="TIP_COMPANY_STREET"/>	
+			<operation name="addField">
+				<parameters>
+					<parameter name="field" value="COMPANY_STREET"/>
+					<parameter name="hasEdit" value="false"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+	</control>
+
+<!-- Campaign PopUp -->
+	<control type="popup">
+		<gui key="POP_CAMPAIGN" begingroup = "false" style="icon-caption" faceid="30" tooltip="POPUP.CAMPAIGN"/>	
+	<!-- style -> "icon" | "caption" | "icon-caption"-->
+		<subcontrol type="button" > 
+			<gui  style="icon-caption" faceid="100" key="BTN_MAKE_CAMPAIGN" tooltip="TIP_MAKE_CAMPAIGN"/>	
+			<operation name="addBookmark">
+				<parameters>
+					<parameter name="type" value="PAGE"/>
+					<parameter name="name" value="campaign"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+	</control>
+<!-- SalesProcess PopUp -->
+	<control type="popup">
+		<gui key="POP_SALESPROCESS" begingroup = "false" style="icon-caption" faceid="50" tooltip="POPUP.SALES.PROCESS"/>	
+	<!-- style -> "icon" | "caption" | "icon-caption"-->
+		<subcontrol type="button" > 
+			<gui  style="icon-caption" faceid="200" key="BTN_ADD_TABLE" tooltip="TIP_ADD_TABLE"/>	
+			<operation name="addTable">
+				<parameters>
+					<parameter name="name" value="salesprocess"/>
+				</parameters>
+			</operation>
+		</subcontrol>
+	</control>
+</toolbar>
+</elwis-config>

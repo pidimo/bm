@@ -1,0 +1,22 @@
+<%@ taglib uri="/WEB-INF/c.tld" prefix="c" %>
+<c:set var="helpResourceKey" value="help.dashboard.home" scope="request"/>
+
+<c:set var="jsLoad" scope="request">
+    onload="read()"
+</c:set>
+
+<c:set var="pagetitle" value="Common.home" scope="request"/>
+<c:set var="windowTitle" value="Common.home" scope="request"/>
+
+<c:choose>
+    <c:when test="${sessionScope.isBootstrapUI}">
+        <c:set var="body" value="/WEB-INF/jsp/dashboard/Container.jsp" scope="request"/>
+        <c:import url="/WEB-INF/jsp/layout/ui/main.jsp"/>
+    </c:when>
+    <c:otherwise>
+        <c:set var="body" value="/common/dashboard/Container.jsp" scope="request"/>
+        <c:import url="${sessionScope.layout}/main.jsp"/>
+    </c:otherwise>
+</c:choose>
+
+

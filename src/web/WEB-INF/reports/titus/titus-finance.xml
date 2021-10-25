@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN"
+        "http://www.jatun.com/titus-config-1.0.dtd">
+
+
+<databasestructure>
+    <database>
+        <table tablename="invoice" resource="Report.functionality.invoice">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="creditnoteofid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="currencyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="documentid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="invoiceid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="invoicedate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="Invoice.invoiceDate"/>
+                <field fieldname="notesid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="number" dbtype="string" resource="Invoice.number"/>
+                <field fieldname="openamount" dbtype="decimal" columntype="decimal" resource="Invoice.openAmount"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="payconditionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="paymentdate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="Invoice.paymentDate"/>
+                <field fieldname="reminderlevel" dbtype="integer" columntype="integer"
+                       resource="Invoice.reminderLevel"/>
+                <field fieldname="reminderdate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="Invoice.reminderDate"/>
+                <field fieldname="ruleformat" dbtype="string" iscolumnview="false"/>
+                <field fieldname="rulenumber" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="type" dbtype="short" columntype="string" converter="invoiceTypeConverter"
+                       resource="Invoice.type"/>
+                <field fieldname="totalamountnet" dbtype="decimal" columntype="decimal"
+                       resource="Invoice.totalAmountNet" istotalize="true" converter="decimalConverter"/>
+                <field fieldname="totalamountgross" dbtype="decimal" columntype="decimal"
+                       resource="Invoice.totalAmountGross" istotalize="true" converter="decimalConverter"/>
+                <field fieldname="templateid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="invoiceid">
+                <inverserelation relationtype="left-join" tablename="invoicereminder" keys="invoiceid"
+                                 resource="Report.inverseRelation.invoiceReminder"/>
+                <inverserelation relationtype="left-join" tablename="invoiceposition" keys="invoiceid"
+                                 resource="Report.inverseRelation.invoicePosition"/>
+                <inverserelation relationtype="left-join" tablename="invoicepayment" keys="invoiceid"
+                                 resource="Report.inverseRelation.invoicePayment"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.address.contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="contactperson" relationtype="left-join"
+                            resource="Report.foreignRelation.contactPerson">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                    <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="currency" relationtype="left-join"
+                            resource="Report.foreignRelation.currency">
+                    <keyref fieldref="currencyid" foreignfieldref="currencyid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.text" strongrelation="true">
+                    <keyref fieldref="notesid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="Invoice.notes"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="paycondition" relationtype="left-join"
+                            resource="Report.foreignRelation.payCondition">
+                    <keyref fieldref="payconditionid" foreignfieldref="payconditionid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="invoicetemplate" relationtype="left-join"
+                            resource="Report.foreignRelation.invoiceTemplate">
+                    <keyref fieldref="templateid" foreignfieldref="templateid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <constantfilter fieldref="type" resource="Invoice.type">
+                    <values typevalue="resource">
+                        <value key="1" showvalue="Invoice.type.invoice"/>
+                        <value key="2" showvalue="Invoice.type.creditNote"/>
+                    </values>
+                </constantfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="finances"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="invoiceposition" resource="Report.functionality.invoicePosition">
+            <fields>
+                <field fieldname="accountid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contractid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="discount" dbtype="decimal" iscolumnview="false"/>
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="invoiceid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="paystepid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="number" dbtype="integer" columntype="integer" resource="InvoicePosition.number"/>
+                <field fieldname="positionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="quantity" dbtype="decimal" columntype="decimal" resource="InvoicePosition.quantity"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="totalprice" dbtype="decimal" columntype="decimal"
+                       resource="InvoicePosition.totalPrice" istotalize="true" converter="decimalConverter"/>
+                <field fieldname="totalpricegross" dbtype="decimal" columntype="decimal"
+                       resource="InvoicePosition.totalPriceGross" istotalize="true" converter="decimalConverter"/>
+                <field fieldname="unit" dbtype="string" resource="InvoicePosition.unit"/>
+                <field fieldname="unitprice" dbtype="decimal" columntype="decimal" resource="InvoicePosition.unitPrice"
+                       istotalize="true" converter="decimalFourDigitsConverter"/>
+                <field fieldname="unitpricegross" dbtype="decimal" columntype="decimal" resource="InvoicePosition.unitPriceGross"
+                       istotalize="true" converter="decimalFourDigitsConverter"/>
+                <field fieldname="vatid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="positionid">
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="account" relationtype="left-join"
+                            resource="Report.foreignRelation.account">
+                    <keyref fieldref="accountid" foreignfieldref="accountid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="productcontract" relationtype="left-join"
+                            resource="Report.foreignRelation.productContract">
+                    <keyref fieldref="contractid" foreignfieldref="contractid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.text" strongrelation="true">
+                    <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="InvoicePosition.text"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="invoice" relationtype="left-join"
+                            resource="Report.foreignRelation.invoice">
+                    <keyref fieldref="invoiceid" foreignfieldref="invoiceid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="paymentstep" relationtype="left-join"
+                            resource="Report.foreignRelation.paymentStep">
+                    <keyref fieldref="paystepid" foreignfieldref="paystepid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="product" relationtype="left-join"
+                            resource="Report.foreignRelation.product">
+                    <keyref fieldref="productid" foreignfieldref="productid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="vat" relationtype="left-join" resource="Report.foreignRelation.vat">
+                    <keyref fieldref="vatid" foreignfieldref="vatid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="finances"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="invoicereminder" resource="Report.functionality.invoiceReminder">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="date" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="InvoiceReminder.date"/>
+                <field fieldname="descriptionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="documentid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="invoiceid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="reminderid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="reminderlevelid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="reminderid">
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.text" strongrelation="true">
+                    <keyref fieldref="descriptionid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="InvoiceReminder.text"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="invoice" relationtype="left-join"
+                            resource="Report.foreignRelation.invoice">
+                    <keyref fieldref="invoiceid" foreignfieldref="invoiceid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="reminderlevel" relationtype="left-join"
+                            resource="Report.foreignRelation.reminderLevel">
+                    <keyref fieldref="reminderlevelid" foreignfieldref="reminderlevelid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="finances"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="invoicepayment" resource="Report.functionality.invoicePayment">
+            <fields>
+                <field fieldname="amount" dbtype="decimal" columntype="decimal" resource="InvoicePayment.amount"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="creditnoteid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="invoiceid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="paydate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="InvoicePayment.payDate"/>
+                <field fieldname="paymentid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="paymentid">
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.text" strongrelation="true">
+                    <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="InvoicePayment.text"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="invoice" relationtype="left-join"
+                            resource="Report.foreignRelation.invoice">
+                    <keyref fieldref="invoiceid" foreignfieldref="invoiceid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="finances"/>
+            </modulefunctionality>
+        </table>
+    </database>
+</databasestructure>

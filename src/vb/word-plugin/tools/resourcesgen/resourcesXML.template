@@ -1,0 +1,20 @@
+
+
+<% listFields.each_pair do |lkey, _mapFields| %>
+   <% _mapFields.each_pair do |mkey, _fields| %>
+	 <% _fields.each_pair do  |fkey, field| %>
+#define IDS_<%= field.idName %> <%= field.id %>
+	 <% end %>
+      <% end %>
+<% end %>
+
+STRINGTABLE
+BEGIN
+<% listFields.each_pair do |lkey, _mapFields| %>
+   <% _mapFields.each_pair do |mkey, _fields| %>
+	 <% _fields.each_pair do |fkey, field| %>
+    IDS_<%= field.idName %>,   "<%= field.resource %>"
+         <% end %>
+      <% end %>
+<% end %>
+END

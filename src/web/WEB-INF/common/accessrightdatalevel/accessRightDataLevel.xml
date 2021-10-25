@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE accessrightdatalevel PUBLIC "-//jatun/access right data level DTD //EN"
+        "http://www.jatun.com/accessRightDataLevel-config.dtd">
+
+<accessrightdatalevel>
+    <datalevelconfig name="addressAccess">
+        <lists>
+            <!--contact-->
+            <list listName="addressesAlreadyContactPersonOfList" aliasfield="addressIdA2,addressIdA1"/>
+            <list listName="addressesNoContactPerson" aliasfield="addressIdA1"/>
+            <list listName="advancedAddressesAlreadyContactPersonOfList" aliasfield="addressIdA2,addressIdA1"/>
+            <list listName="advancedAddressesNoContactPerson" aliasfield="addressIdA1"/>
+
+            <list listName="addressBaseList" aliasfield="addressId"/>
+            <list listName="addressList" aliasfield="addressId"/>
+            <list listName="advancedAddressList" aliasfield="addressId"/>
+            <list listName="personSearchList" aliasfield="addressId"/>
+            <list listName="personSearchList_CPerson" aliasfield="addressId"/>
+            <list listName="organizationSearchList" aliasfield="addressId"/>
+            <list listName="searchAddressList" aliasfield="addressId"/>
+            <list listName="contactReportList" aliasfield="addressId"/>
+            <list listName="contactSingleReportList" aliasfield="addressId"/>
+            <list listName="webmailAddressList" aliasfield="addressId"/>
+            <list listName="webmailSearchAddressList" aliasfield="addressId"/>
+            <list listName="productContractAddressList" aliasfield="addressId"/>
+
+            <list listName="communicationList" aliasfield="addressId"/>
+            <list listName="communicationAdvancedSearchList" aliasfield="addressId"/>
+            <list listName="communicationOverviewList" aliasfield="addressId"/>
+
+            <list listName="contactPersonList" aliasfield="contactPersonId"/>
+            <list listName="searchContactPersonList" aliasfield="contactPersonId"/>
+            <list listName="mobile/contactPersonList" aliasfield="contactPersonId"/>
+            <list listName="contactPersonInfoList" aliasfield="contactPersonId"/>
+
+            <list listName="additionalAddressList" aliasfield="addressId"/>
+            <list listName="bankAccountList" aliasfield="addressId"/>
+            <list listName="customerSearchList" aliasfield="customerId"/>
+
+            <list listName="recentList" aliasfield="recentAddressId"/>
+            <list listName="favoriteList" aliasfield="recentAddressId"/>
+
+            <list listName="employeeBaseList" aliasfield="employeeId"/>
+            <list listName="employeeList" aliasfield="employeeId"/>
+            <list listName="searchNotUserEmployeeList" aliasfield="employeeId"/>
+            <list listName="employeeReportList" aliasfield="employeeId"/>
+
+            <list listName="contactPersonReportList" aliasfield="address_Id,contactPersonId"/>
+            <list listName="departmentReportList" aliasfield="contactAddress_Id"/>
+            <list listName="customerReportList" aliasfield="customerId"/>
+            <list listName="supplierReportList" aliasfield="supplierId"/>
+            <list listName="communicationReportList" aliasfield="addressId"/>
+
+            <list listName="personJobInformationList" aliasfield="addressid"/>
+
+            <list listName="addressSingleAccessList" aliasfield="addressId"/>
+
+            <!--campaign-->
+            <list listName="greatQuery" aliasfield="addressid"/>
+            <list listName="queryAddress" aliasfield="addressid"/>
+            <list listName="queryContactPerson" aliasfield="addressid"/>
+            <!--<list listName="campaignContactReportList" aliasfield="contactNameId"/>-->
+
+            <!--common-->
+            <list listName="birthdayList" aliasfield="addressId"/>
+
+            <!--product-->
+            <list listName="competitorImportList" aliasfield="competitorContactId"/>
+            <list listName="productSupplierBaseList" aliasfield="addressId"/>
+            <list listName="productSupplierList" aliasfield="addressId"/>
+            <list listName="supplierProductList" aliasfield="addressId"/>
+            <list listName="competitorProductList" aliasfield="competitorProId"/>
+
+            <list listName="supplierSearchList" aliasfield="supplierId"/>
+            <list listName="competitorReportList" aliasfield="competitorProId"/>
+
+            <!--sale-->
+            <list listName="salePositionList" aliasfield="customerId_FK"/>
+            <list listName="salePositionForProductsList" aliasfield="customerId_FK"/>
+
+            <list listName="salesProcessBaseList" aliasfield="processAddressId"/>
+            <list listName="salesProcessList" aliasfield="processAddressId"/>
+            <list listName="salesProcessAdvancedList" aliasfield="processAddressId"/>
+            <list listName="salesProcessSearchList" aliasfield="processAddressId"/>
+            <list listName="salesProcessDashboardList" aliasfield="processAddressId"/>
+
+            <list listName="saleBaseList" aliasfield="customerId_FK"/>
+            <list listName="saleBySaleProcessList" aliasfield="customerId_FK"/>
+            <list listName="saleSingleList" aliasfield="customerId_FK"/>
+            <list listName="saleAdvancedList" aliasfield="customerId_FK"/>
+
+            <list listName="productContractBaseList" aliasfield="addressId_FK"/>
+            <list listName="productContractSingleList" aliasfield="addressId_FK"/>
+            <list listName="productContractMainSingleList" aliasfield="addressId_FK"/>
+            <list listName="productContractSearchList" aliasfield="addressId_FK"/>
+            <list listName="productContractAdvancedList" aliasfield="addressId_FK"/>
+            <list listName="contractToInvoiceList" aliasfield="addressId_FK"/>
+            <list listName="contractToInvoiceSaleList" aliasfield="addressId_FK"/>
+
+            <list listName="salesProcessReportList" aliasfield="processAddressId"/>
+
+            <list listName="contractOverviewReportBaseList" aliasfield="addressId_FK"/>
+            <list listName="contractOverviewReportList" aliasfield="addressId_FK"/>
+            <list listName="ContractOverviewSummaryReportList" aliasfield="addressId_FK"/>
+
+            <!--finance-->
+            <list listName="invoiceBaseList" aliasfield="addressId_FK"/>
+            <list listName="invoiceSingleList" aliasfield="addressId_FK"/>
+            <list listName="invoiceSingleForContactList" aliasfield="addressId_FK"/>
+            <list listName="invoiceAdvancedList" aliasfield="addressId_FK"/>
+            <list listName="invoiceSearchList" aliasfield="addressId_FK"/>
+            <list listName="invoicePrintList" aliasfield="addressId_FK"/>
+            <list listName="invoiceSendViaEmailList" aliasfield="addressId_FK"/>
+            <list listName="invoiceToRemindList" aliasfield="addressId_FK"/>
+            <list listName="remindersList" aliasfield="addressId_FK"/>
+            <list listName="saleInvoicedDocumentList" aliasfield="addressId_FK"/>
+            <list listName="invoiceByContractList" aliasfield="addressId_FK"/>
+
+            <list listName="incomingInvoiceBaseList" aliasfield="supplierNameId"/>
+            <list listName="incomingInvoiceLightBaseList" aliasfield="supplierNameId"/>
+            <list listName="incomingInvoiceList" aliasfield="supplierNameId"/>
+            <list listName="incomingInvoiceReportList" aliasfield="supplierNameId"/>
+            <list listName="incomingInvoiceAdvancedList" aliasfield="supplierNameId"/>
+            <list listName="incomingInvoicePrintList" aliasfield="supplierNameId"/>
+            <list listName="incomingInvoiceSummaryReportList" aliasfield="supplierNameId"/>
+
+            <list listName="invoiceReportBaseList" aliasfield="addressId_FK"/>
+            <list listName="invoiceReportList" aliasfield="addressId_FK"/>
+            <list listName="invoiceSummaryReportList" aliasfield="addressId_FK"/>
+
+            <list listName="contractToInvoiceReportBaseList" aliasfield="addressId_FK"/>
+            <list listName="contractToInvoiceReportList" aliasfield="addressId_FK"/>
+            <list listName="ContractInvoiceSummaryReportList" aliasfield="addressId_FK"/>
+
+        </lists>
+        <tables>
+            <table tablename="address" relationfield="addressid"/>
+            <table tablename="contactperson" relationfield="addressid"/>
+            <table tablename="contact" relationfield="addressid"/>
+            <table tablename="customer" relationfield="customerid"/>
+            <table tablename="supplier" relationfield="supplierid"/>
+            <table tablename="bankaccount" relationfield="addressid"/>
+            <table tablename="prodsupplier" relationfield="supplierid"/>
+            <table tablename="competitorproduct" relationfield="competitorid"/>
+            <table tablename="saleposition" relationfield="customerid"/>
+            <table tablename="salesprocess" relationfield="addressid"/>
+            <table tablename="sale" relationfield="customerid"/>
+            <table tablename="productcontract" relationfield="addressid"/>
+            <table tablename="invoice" relationfield="addressid"/>
+            <table tablename="incominginvoice" relationfield="supplierid"/>
+            <table tablename="employee" relationfield="employeeid"/>
+        </tables>
+    </datalevelconfig>
+    <datalevelconfig name="articleAccess">
+        <lists>
+            <list listName="articleList" aliasfield="articleId"/>
+            <list listName="articleAdvancedSearch" aliasfield="articleId"/>
+            <list listName="importArticleList" aliasfield="articleId"/>
+            <list listName="relationList" aliasfield="articleId"/>
+
+            <list listName="articleSingleAccessList" aliasfield="articleId"/>
+            <list listName="articleReportList" aliasfield="articleId"/>
+        </lists>
+        <tables>
+            <table tablename="article" relationfield="articleid"/>
+        </tables>
+    </datalevelconfig>
+</accessrightdatalevel>

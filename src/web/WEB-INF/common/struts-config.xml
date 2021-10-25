@@ -1,0 +1,504 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <form-beans>
+
+        <!--ivan-->
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="fantabulousForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="uploadForm" type="com.piramide.elwis.web.contactmanager.form.UploadForm"/>
+        <form-bean name="trialCompanyForm" type="com.piramide.elwis.web.admin.form.TrialCompanyForm"/>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+
+        <form-bean name="logonForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+
+        <form-bean name="componentForm" type="com.piramide.elwis.web.dashboard.form.ComponentForm"/>
+        <form-bean name="containerConfigurationForm"
+                   type="com.piramide.elwis.web.dashboard.form.ContainerConfigurationForm"/>
+        <!--end ivan-->
+        <!--miky-->
+        <form-bean name="styleSheetForm" type="com.piramide.elwis.web.uimanager.form.StyleSheetForm"/>
+        <form-bean name="userForm" type="com.piramide.elwis.web.admin.form.UserForm"/>
+        <form-bean name="passForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="plannedPassForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="companyForm" type="com.piramide.elwis.web.contactmanager.form.CompanyPreferencesForm"/>
+        <form-bean name="companyLogoForm" type="com.piramide.elwis.web.contactmanager.form.CompanyLogoForm"/>
+        <form-bean name="demoAccountForm" type="com.piramide.elwis.web.admin.form.DemoAccountForm"/>
+        <form-bean name="companyDemoCreateForm" type="com.piramide.elwis.web.admin.form.CompanyDemoCreateForm"/>
+        <!--end miky-->
+        <form-bean name="configurationForm" type="com.piramide.elwis.web.schedulermanager.form.ConfigurationForm"/>
+        <form-bean name="notificationForm" type="com.piramide.elwis.web.admin.form.NotificationForm"/>
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="Logoff" contextRelative="true" path="/index.jsp"/>
+        <forward name="Logon" contextRelative="true" path="/index.jsp"/>
+        <forward name="Timeout" contextRelative="true" path="/index.jsp?expired=1"/>
+    </global-forwards>
+
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/Upload" type="com.piramide.elwis.web.common.action.UploadFreeTreeAction" name="uploadForm"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.common.UploadFreeTextCmd">
+        </action>
+
+        <!--<action path="/fantabulous" type="org.alfacentauro.fantabulous.web.action.FantabulousAction " name="fantabulousForm"-->
+        <!--<action path="/SimpleService" type="com.piramide.elwis.web.admin.action.SimpleLogonAction" scope="request"/>-->
+
+        <action path="/FantabulousTest" type="org.alfacentauro.fantabulous.web.action.FantabulousTestAction"
+                scope="request">
+            <forward name="success" path="/FantabulousTest.jsp"/>
+        </action>
+
+
+        <action path="/Fantabulous" type="org.alfacentauro.fantabulous.web.action.FantabulousAction"
+                scope="request" parameter="communicationList" name="fantabulousForm">
+            <forward name="success" path="/fantabulous.jsp"/>
+        </action>
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+        <action path="/Index" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/index.jsp"/>
+
+
+        <action path="/Logon" type="com.piramide.elwis.web.admin.action.LogonAction" name="logonForm" scope="request"
+                input="/index.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.LogonCmd">
+            <forward name="Success" contextRelative="true" path="/Dashboard/Container/DrawContainer.do"/>
+            <forward name="Fail" path="/index.jsp?validate=1"/>
+            <forward name="ChangePassword" path="/PlannedUserPasswordChange.jsp"/>
+            <forward name="OtherUserConnected" path="/BannedConectedUser.jsp"/>
+        </action>
+
+        <action path="/ExternalLogon" type="com.piramide.elwis.web.admin.action.LogonAction" name="logonForm"
+                scope="request"
+                input="/index.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.LogonCmd">
+            <forward name="Success" contextRelative="true" path="/common/ExternalSuccessLogon.jsp"/>
+            <forward name="Fail" path="/index.jsp?validate=1"/>
+            <forward name="ChangePassword" path="/PlannedUserPasswordChange.jsp"/>
+            <forward name="OtherUserConnected" path="/BannedConectedUser.jsp"/>
+        </action>
+
+        <action path="/Logoff" type="com.piramide.elwis.web.admin.action.LogoffAction"
+                name="form"
+                scope="request"
+                validate="false">
+        </action>
+
+        <action path="/Banned/PreviousUserConnected" type="com.piramide.elwis.web.admin.action.BannedPreviousUserConnectedAction" name="form"
+                scope="request" input="/index.jsp" validate="false">
+            <forward name="Success" contextRelative="true" path="/Dashboard/Container/DrawContainer.do"/>
+        </action>
+
+        <action path="/test" type="com.piramide.elwis.web.test.TestAction" scope="request">
+            <forward name="success" path="/test.jsp"/>
+            <forward name="fail" path="/test.jsp"/>
+        </action>
+
+        <action path="/Home" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/Home.jsp"/>
+
+        <!--ivan-->
+        <action path="/Company/Forward/CreateTrial"
+                type="com.piramide.elwis.web.admin.action.CompanyTrialCreateForwardAction"
+                name="form"
+                scope="request"
+                input="/index.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.CompanyCreateCmd">
+            <forward name="Success" path="/admin/CompanyTrialDetailForCreate.jsp"/>
+            <forward name="Fail" path="/index.jsp"/>
+        </action>
+
+        <action path="/Company/CreateTrial" type="com.piramide.elwis.web.admin.action.CompanyTrialCreateAction"
+                name="trialCompanyForm"
+                scope="request" input="/admin/CompanyTrialDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.admin.CompanyCreateCmd">
+            <forward name="Success" path="/Logon.do" redirect="true"/>
+            <forward name="Cancel" path="/index.jsp"/>
+        </action>
+
+
+        <action path="/SearchBirthDayList" type="com.piramide.elwis.web.contactmanager.action.BirthdayListAction"
+                name="listForm"
+                scope="request" input="/Home.jsp" validate="false"
+                parameter="birthdayList">
+            <forward name="Success" path="/SearchBirthDayList.jsp"/>
+            <forward name="Cancel" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+
+        <action path="/Dashboard/Container/DrawContainer"
+                type="com.piramide.elwis.web.dashboard.action.DashboardContainerAction"
+                name="containerConfigurationForm"
+                scope="request"
+                input="/index.jsp"
+                validate="false">
+            <forward name="Success" path="/dashboard/Container.jsp"/>
+        </action>
+
+        <action path="/Dashboard/Container/Read"
+                type="com.piramide.elwis.web.dashboard.action.DashboardContainerAction"
+                name="containerConfigurationForm"
+                scope="request"
+                validate="false"
+                input="Container.jsp"
+                roles="DASHBOARD.VIEW">
+            <forward name="Success" path="/dashboard/ContainerConfiguration.jsp"/>
+        </action>
+        <action path="/Dashboard/Container/Save"
+                type="com.piramide.elwis.web.dashboard.action.DashboardContainerAction"
+                name="containerConfigurationForm"
+                scope="request"
+                validate="true"
+                input="/ContainerConfiguration.jsp"
+                roles="DASHBOARD.UPDATE">
+            <forward name="Success" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+            <forward name="Cancel" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+        <action path="/Dashboard/ComponentClose"
+                type="com.piramide.elwis.web.dashboard.action.DashboardContainerAction"
+                name="form"
+                scope="request"
+                validate="false"
+                input="Container.jsp"
+                roles="DASHBOARD.UPDATE">
+            <forward name="Success" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+        <action path="/Dashboard/Container/DrawComponent"
+                type="com.piramide.elwis.web.dashboard.action.DrawComponentAction"
+                name="componentForm"
+                scope="request"
+                validate="false">
+        </action>
+        <action path="/Dashboard/Component/Configuration/read"
+                type="com.piramide.elwis.web.dashboard.action.ReadComponentConfigurationAction"
+                name="componentForm"
+                scope="request"
+                validate="false"
+                input="/Container.jsp"
+                roles="DASHBOARD.VIEW">
+            <forward name="Success" path="/dashboard/ComponentConfiguration.jsp"/>
+            <forward name="Fail" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+        <action path="/Dashboard/Component/Configuration/save"
+                type="com.piramide.elwis.web.dashboard.action.SaveComponentConfigurationAction"
+                name="componentForm"
+                scope="request"
+                validate="true"
+                input="/dashboard/ComponentConfiguration.jsp"
+                roles="DASHBOARD.UPDATE">
+            <forward name="Success" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+            <forward name="Cancel" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+        <action path="/Dashboard/Task/ActionSelector"
+                type="com.piramide.elwis.web.dashboard.action.TaskSelectorAction"
+                name="form"
+                scope="request"
+                validate="true"
+                input="/Container.jsp">
+            <forward name="Scheduler" path="/scheduler/Task/Forward/Update.do"/>
+            <forward name="Sales" path="/sales/Task/Forward/Update.do"/>
+        </action>
+
+        <action path="/Birthday/Dashboard/Component/Configuration/read"
+                type="com.piramide.elwis.web.dashboard.action.ReadComponentConfigurationAction"
+                name="componentForm"
+                scope="request"
+                validate="false"
+                input="/Container.jsp"
+                roles="DASHBOARD.VIEW">
+            <forward name="Success" path="/dashboard/BirthdayComponentConfiguration.jsp"/>
+            <forward name="Fail" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+        <action path="/Birthday/Dashboard/Component/Configuration/save"
+                type="com.piramide.elwis.web.dashboard.action.SaveComponentConfigurationAction"
+                name="componentForm"
+                scope="request"
+                validate="true"
+                input="/dashboard/BirthdayComponentConfiguration.jsp"
+                roles="DASHBOARD.UPDATE">
+            <forward name="Success" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+            <forward name="Cancel" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+
+        <!--end ivan-->
+        <!--begin miky-->
+        <!--user style-->
+        <action path="/UIManager/Forward/UserStyleSheet"
+                type="com.piramide.elwis.web.uimanager.action.StyleSheetForwardAction" name="styleSheetForm"
+                scope="request" validate="false" parameter="/uimanager/StyleConfigurable.jsp"
+                roles="USERINTERFACE.VIEW">
+        </action>
+
+        <action path="/UIManager/Create/UserStyleSheet" type="com.piramide.elwis.web.uimanager.action.StyleSheetAction"
+                name="styleSheetForm"
+                scope="request" validate="true" parameter="com.piramide.elwis.cmd.uimanager.StyleSheetCmd"
+                input="/uimanager/StyleConfigurable.jsp" roles="USERINTERFACE.UPDATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="stylesheet"/>
+            <forward name="Success" path="/UIManager/Forward/UserStyleSheet.do"/>
+            <forward name="Fail" path="/UIManager/Forward/UserStyleSheet.do"/>
+            <forward name="Change" path="/UIManager/Change/UserStyleSheet.do"/>
+            <forward name="Cancel" path="/UIManager/Forward/UserStyleSheet.do" redirect="true"/>
+        </action>
+
+        <action path="/UIManager/Change/UserStyleSheet"
+                type="com.piramide.elwis.web.uimanager.action.ChangeStyleSheetAction" name="form"
+                scope="request" validate="false" parameter="/UIManager/Forward/UserStyleSheet.do">
+        </action>
+
+        <!--company style-->
+        <action path="/UIManager/Forward/CompanyStyleConfigurable"
+                type="com.piramide.elwis.web.uimanager.action.CompanyStyleConfigurableAction" name="styleSheetForm"
+                scope="request" validate="false" parameter="/UIManager/Forward/CompanyStyleSheet.do"
+                roles="COMPANYINTERFACE.VIEW">
+        </action>
+
+        <action path="/UIManager/Forward/CompanyStyleSheet"
+                type="com.piramide.elwis.web.uimanager.action.StyleSheetForwardAction" name="styleSheetForm"
+                scope="request" validate="false" parameter="/uimanager/CompanyStyleConfigurable.jsp"
+                roles="COMPANYINTERFACE.VIEW">
+        </action>
+
+        <action path="/UIManager/Create/CompanyStyleSheet"
+                type="com.piramide.elwis.web.uimanager.action.StyleSheetAction" name="styleSheetForm"
+                scope="request" validate="true" parameter="com.piramide.elwis.cmd.uimanager.StyleSheetCmd"
+                input="/uimanager/CompanyStyleConfigurable.jsp" roles="COMPANYINTERFACE.UPDATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="stylesheet"/>
+            <forward name="Success" path="/UIManager/Forward/CompanyStyleSheet.do"/>
+            <forward name="Fail" path="/UIManager/Forward/CompanyStyleSheet.do"/>
+            <forward name="Change" path="/UIManager/Change/CompanyStyleSheet.do?isCompany=true"/>
+            <forward name="Cancel" path="/UIManager/Forward/CompanyStyleConfigurable.do" redirect="true"/>
+        </action>
+
+        <action path="/UIManager/Change/CompanyStyleSheet"
+                type="com.piramide.elwis.web.uimanager.action.ChangeStyleSheetAction" name="form"
+                scope="request" validate="false" parameter="/UIManager/Forward/CompanyStyleSheet.do">
+        </action>
+
+        <!--put style sheet-->
+        <action path="/UIManager/Put/StyleSheet" type="com.piramide.elwis.web.uimanager.action.PutStyleSheetAction"
+                name="form"
+                scope="request" validate="false" parameter="com.piramide.elwis.cmd.uimanager.StyleSheetCmd">
+        </action>
+
+        <!--popups-->
+        <action path="/UIManager/Forward/SelectMosaicPicker" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/uimanager/MosaicPicker.jsp">
+        </action>
+
+        <!--confirmation-->
+        <action path="/UIManager/User/Confirmation" type="org.apache.struts.actions.ForwardAction" name="styleSheetForm"
+                scope="request" validate="false" parameter="/uimanager/StyleConfigurable.jsp"
+                roles="USERINTERFACE.UPDATE">
+        </action>
+        <action path="/UIManager/Company/Confirmation"
+                type="com.piramide.elwis.web.uimanager.action.CompanyStyleConfigurableAction" name="styleSheetForm"
+                scope="request" validate="false" parameter="/uimanager/CompanyStyleConfigurable.jsp"
+                roles="USERINTERFACE.UPDATE">
+        </action>
+
+        <!-- todo: this is only to test migration-->
+        <action path="/Migration/Layout/User"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="form"
+                scope="request"
+                input="/index.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.uimanager.migration.UIMigrationBatchProcessCmd">
+            <forward name="Success" path="/UserPreferences/User.do"/>
+            <forward name="Fail" path="/UserPreferences/User.do"/>
+        </action>
+
+        <!-- user setting -->
+        <action path="/UserPreferences/User"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userForm"
+                scope="request"
+                input="/index.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.admin.UserCmd">
+            <forward name="Success" path="/admin/User.jsp"/>
+        </action>
+
+        <action path="/User/Save"
+                type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="userForm"
+                scope="request"
+                input="/admin/User.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.admin.UserCmd"
+                roles="USERSETTINGS.UPDATE"><!-- this one no needs access validation-->
+            <forward name="Success" path="/admin/User.jsp"/>
+            <forward name="fail" path="/admin/User.jsp"/>
+            <forward name="Cancel" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+
+        <action path="/UserPreferences/UserPassword" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="passForm"
+                scope="request" input="/index.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.UserCmd"
+                roles="USERSETTINGS.VIEW">
+            <forward name="Success" path="/admin/UserPassword.jsp"/>
+        </action>
+
+        <action path="/User/PasswordUpdate" type="com.piramide.elwis.web.common.action.DefaultAction" name="passForm"
+                scope="request" input="/admin/UserPassword.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.admin.UserCmd"
+                roles="USERSETTINGS.UPDATE"><!-- this one no needs access validation-->
+            <forward name="Success" path="/admin/UserPassword.jsp"/>
+            <forward name="fail" path="/admin/UserPassword.jsp"/>
+            <forward name="Cancel" path="/Dashboard/Container/DrawContainer.do" redirect="true"/>
+        </action>
+
+        <action path="/User/Planned/PasswordUpdate" type="com.piramide.elwis.web.admin.action.PlannedUserPasswordChangeAction"
+                name="plannedPassForm"
+                scope="request" input="/PlannedUserPasswordChange.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.admin.UserPasswordChangeUpdateCmd">
+            <forward name="Success" path="/index.jsp"/>
+            <forward name="Fail" path="/index.jsp"/>
+        </action>
+
+        <!--Company preferences-->
+        <action path="/Company/Forward/Update"
+                type="com.piramide.elwis.web.contactmanager.action.ContactManagerAction"
+                name="companyForm"
+                scope="request"
+                input="/contacts/CompanyPreferences.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.CompanyCmd">
+            <forward name="Success" path="/contacts/CompanyPreferences.jsp"/>
+        </action>
+
+        <action path="/Company/Update"
+                type="com.piramide.elwis.web.contactmanager.action.ContactManagerAction"
+                name="companyForm"
+                scope="request"
+                input="/contacts/CompanyPreferences.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.contactmanager.CompanyCmd"
+                roles="COMPANYPREFERENCES.UPDATE">
+            <forward name="Success" path="/Company/Forward/Update.do?dto(op)="/>
+            <forward name="Cancel" path="/Dashboard/Container/DrawContainer.do"/>
+        </action>
+
+        <!--company logo-->
+        <action path="/CompanyLogo/Forward/Update"
+                type="com.piramide.elwis.web.contactmanager.action.ContactManagerAction" name="companyLogoForm"
+                scope="request" input="/contacts/CompanyPreferences.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.CompanyCmd" roles="COMPANYLOGO.VIEW">
+            <forward name="Success" path="/contacts/CompanyPreferences.jsp"/>
+        </action>
+
+        <action path="/Company/LogoUpdate" type="com.piramide.elwis.web.contactmanager.action.ContactManagerAction"
+                name="companyLogoForm"
+                scope="request" input="/contacts/CompanyPreferences.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.contactmanager.CompanyCmd" roles="COMPANYLOGO.UPDATE">
+            <forward name="Success" path="/Company/Change/Logo.do"/>
+            <forward name="Cancel" path="/Dashboard/Container/DrawContainer.do"/>
+        </action>
+        <action path="/Company/Change/Logo" type="com.piramide.elwis.web.uimanager.action.ChangeCompanyLogoAction"
+                name="form"
+                scope="request" validate="false" parameter="/contacts/CompanyPreferences.jsp">
+        </action>
+        <action path="/Company/DownloadLogoImage"
+                type="com.piramide.elwis.web.productmanager.action.DownloadProductImageAction" name="form"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.productmanager.DownloadProductImageCmd">
+        </action>
+
+        <!-- demo account-->
+        <action path="/DemoAccount/Front"
+                type="org.apache.struts.actions.ForwardAction"
+                name="demoAccountForm"
+                validate="false"
+                parameter="/admin/DemoAccountFrontDetailForCreate.jsp"/>
+
+        <action path="/DemoAccount/Front/Create"
+                type="com.piramide.elwis.web.admin.action.DemoAccountFrontCreateAction"
+                name="demoAccountForm"
+                input="/admin/DemoAccountFrontDetailForCreate.jsp"
+                validate="true"
+                scope="request"
+                parameter="com.piramide.elwis.cmd.admin.DemoAccountCmd">
+            <forward name="Success" path="/admin/DemoAccountSuccess.jsp"/>
+            <forward name="Fail" path="/DemoAccount/Front.do"/>
+        </action>
+
+        <action path="/DemoAccount/Company/Create"
+                type="com.piramide.elwis.web.admin.action.CompanyDemoCreateAction"
+                name="companyDemoCreateForm"
+                scope="request"
+                input="/admin/DemoAccountCompanyCreateRedirect.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.admin.CompanyDemoCreateCmd">
+            <forward name="Success" path="/admin/DemoAccountCompanyCreateRedirect.jsp"/>
+        </action>
+
+        <!--end miky-->
+
+        <!-- preferencias de SCHEDULER  -->
+        <action path="/Configuration/Forward/Update"
+                type="com.piramide.elwis.web.schedulermanager.action.SchedulerDefaultAction"
+                name="configurationForm" scope="request" validate="false" input="/scheduler/DayList.do"
+                roles="PREFERENCE.UPDATE"
+                parameter="com.piramide.elwis.cmd.schedulermanager.SchedulerConfigurationCmd">
+            <forward name="Success" path="/scheduler/SchedulerConfiguration.jsp"/>
+        </action>
+
+        <action path="/Configuration/Update"
+                type="com.piramide.elwis.web.schedulermanager.action.SchedulerDefaultAction"
+                name="configurationForm" scope="request" validate="true" input="/scheduler/SchedulerConfiguration.jsp"
+                parameter="com.piramide.elwis.cmd.schedulermanager.SchedulerConfigurationCmd" roles="PREFERENCE.UPDATE">
+            <forward name="Success" path="/Configuration/Forward/Update.do"/>
+        </action>
+
+        <!-- notifications - reminders  -->
+        <action path="/Notification/Forward/Update" type="com.piramide.elwis.web.admin.action.NotificationAction"
+                name="notificationForm" scope="request" validate="false" input="/common/UserPreferences/User.do"
+                parameter="com.piramide.elwis.cmd.admin.NotificationCmd"
+                roles="USERSETTINGS.VIEW">
+            <forward name="Success" path="/admin/Notification.jsp"/>
+        </action>
+
+        <action path="/Notification/Update" type="com.piramide.elwis.web.admin.action.NotificationAction"
+                name="notificationForm" scope="request" validate="true" input="/admin/Notification.jsp"
+                parameter="com.piramide.elwis.cmd.admin.NotificationCmd"
+                roles="USERSETTINGS.UPDATE">
+            <forward name="Success" path="/Notification/Forward/Update.do?view=true"/>
+            <forward name="Fail" path="/Notification/Forward/Update.do"/>
+        </action>
+
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+                /WEB-INF/common/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/common/fantabulous.xml"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="index, category,contactId,flagCompany,paramSection,isLogoCompany, demoLocale"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.dashboard.component.web.plugin.struts.DashboardPlugIn">
+        <set-property property="configFile" value="/WEB-INF/common/component-def.xml"/>
+    </plug-in>
+
+</struts-config>

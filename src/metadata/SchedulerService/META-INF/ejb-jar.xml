@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ejb-jar xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd"
+         version="2.1">
+    <enterprise-beans>
+        <session>
+            <ejb-name>SchedulerService</ejb-name>
+            <local-home>com.piramide.elwis.service.scheduler.SchedulerServiceHome</local-home>
+            <local>com.piramide.elwis.service.scheduler.SchedulerService</local>
+            <ejb-class>com.piramide.elwis.service.scheduler.SchedulerServiceBean</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
+        <message-driven>
+            <ejb-name>BatchRestoreRecurrenceReminder</ejb-name>
+            <ejb-class>com.piramide.elwis.service.scheduler.BatchRestoreRecurrenceReminderBean</ejb-class>
+            <messaging-type>javax.jms.MessageListener</messaging-type>
+            <transaction-type>Container</transaction-type>
+            <activation-config>
+                <activation-config-property>
+                    <activation-config-property-name>destinationType</activation-config-property-name>
+                    <activation-config-property-value>javax.jms.Queue</activation-config-property-value>
+                </activation-config-property>
+                <activation-config-property>
+                    <activation-config-property-name>acknowledgeMode</activation-config-property-name>
+                    <activation-config-property-value>Auto-acknowledge</activation-config-property-value>
+                </activation-config-property>
+                <activation-config-property>
+                    <activation-config-property-name>subscriptionDurability</activation-config-property-name>
+                    <activation-config-property-value>Durable</activation-config-property-value>
+                </activation-config-property>
+            </activation-config>
+        </message-driven>
+    </enterprise-beans>
+    <assembly-descriptor>
+        <container-transaction>
+            <method>
+                <ejb-name>SchedulerService</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+        <container-transaction>
+            <method>
+                <ejb-name>BatchRestoreRecurrenceReminder</ejb-name>
+                <method-name>*</method-name>
+            </method>
+            <trans-attribute>Required</trans-attribute>
+        </container-transaction>
+    </assembly-descriptor>
+</ejb-jar>

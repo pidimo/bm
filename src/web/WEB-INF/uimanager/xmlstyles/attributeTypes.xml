@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!DOCTYPE ATTRIBUTETYPES SYSTEM "uimanager.dtd">
+
+<ATTRIBUTETYPES>
+	<attributeType name="FONT">
+		<valueList>
+			<valueItem name="Times New Roman" value="Times New Roman"/>
+			<valueItem name="Courier New" value="Courier New"/>
+			<valueItem name="Arial" value="Arial"/>
+			<valueItem name="Verdana" value="Verdana"/>
+			<valueItem name="Roman" value="Roman"/>
+            <valueItem name="Tahoma" value="Tahoma"/>
+            <valueItem name="Open Sans" value="Open Sans"/>
+            <valueItem name="Helvetica" value="Helvetica"/>
+            <valueItem name="Helvetica Neue" value="Helvetica Neue"/>
+		</valueList>
+	</attributeType>
+	
+    <attributeType name="URL_TITLEIMG">
+		<valueList>
+			<valueItem name="red" value="" url="layout/ui/img/bg/title/contacts.gif" />
+            <valueItem name="red" value="" url="layout/ui/img/bg/title/administration.gif" />
+            <valueItem name="red" value="" url="layout/ui/img/bg/title/campaigns.gif" />
+            <valueItem name="red" value="" url="layout/ui/img/bg/title/configuration.gif" />
+            <valueItem name="red" value="" url="layout/ui/img/bg/title/principal.gif" />
+            <valueItem name="red" value="" url="layout/ui/img/bg/title/products.gif" />
+		</valueList>
+	</attributeType>
+    <attributeType name="FONT_SIZE">
+		<valueList>
+            <valueItem name="7px" value="7px" />
+            <valueItem name="8px" value="8px" />
+            <valueItem name="9px" value="9px" />
+			<valueItem name="10px" value="10px" />
+            <valueItem name="11px" value="11px" />
+            <valueItem name="12px" value="12px" />
+            <valueItem name="13px" value="13px" />
+            <valueItem name="14px" value="14px" />
+            <valueItem name="15px" value="15px" />
+            <valueItem name="16px" value="16px" />
+            <valueItem name="17px" value="17px" />
+            <valueItem name="18px" value="18px" />
+            <valueItem name="19px" value="19px" />
+            <valueItem name="20px" value="20px" />
+		</valueList>
+	</attributeType>
+    <attributeType name="SIZE">
+		<valueList>
+            <valueItem name="7px" value="7px" />
+            <valueItem name="8px" value="8px" />
+            <valueItem name="9px" value="9px" />
+			<valueItem name="10px" value="10px" />
+            <valueItem name="11px" value="11px" />
+            <valueItem name="12px" value="12px" />
+            <valueItem name="13px" value="13px" />
+            <valueItem name="14px" value="14px" />
+            <valueItem name="15px" value="15px" />
+            <valueItem name="16px" value="16px" />
+            <valueItem name="17px" value="17px" />
+            <valueItem name="18px" value="18px" />
+            <valueItem name="19px" value="19px" />
+            <valueItem name="20px" value="20px" />
+		</valueList>
+	</attributeType>
+    <attributeType name="WIDTH_SIZE">
+		<valueList>
+            <valueItem name="100px" value="100px" />
+            <valueItem name="110px" value="110px" />
+            <valueItem name="150px" value="150px" />
+            <valueItem name="200px" value="200px" />
+		</valueList>
+	</attributeType>
+
+    <attributeType name="FONT_WEIGHT">
+		<valueList>
+			<valueItem name="normal" value="normal"/>
+			<valueItem name="bolder" value="bolder"/>
+			<valueItem name="bold" value="bold"/>
+			<valueItem name="lighter" value="lighter"/>
+		</valueList>
+	</attributeType>
+
+    <attributeType name="URL_LISTHEADERIMG">
+		<valueList>
+			<valueItem name="red" value="" url="layout/ui/img/bg.gif" />
+		</valueList>
+	</attributeType>
+
+    <attributeType name="textarea_width">
+        <valueList>
+            <valueItem name="small" value="50" resource="UIManager.small"/>
+            <valueItem name="medium" value="100" resource="UIManager.medium"/>
+            <valueItem name="large" value="150" resource="UIManager.large"/>
+        </valueList>
+    </attributeType>
+
+    <attributeType name="textarea_height">
+        <valueList>
+            <valueItem name="small" value="10" resource="UIManager.small"/>
+            <valueItem name="tall" value="20" resource="UIManager.tall"/>
+        </valueList>
+    </attributeType>
+
+    <!-- bootstrap types-->
+    <attributeType name="FONT_SIZE_BOOTSTRAP">
+        <valueList>
+            <valueItem name="10px" value="10px" />
+            <valueItem name="11px" value="11px" />
+            <valueItem name="12px" value="12px" />
+            <valueItem name="13px" value="13px" />
+        </valueList>
+    </attributeType>
+
+
+
+</ATTRIBUTETYPES>

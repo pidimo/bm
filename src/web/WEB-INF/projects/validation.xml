@@ -1,0 +1,376 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+    <formset>
+        <form name="projectForm">
+            <field property="name" depends="required">
+                <arg0 key="Project.name" resource="true"/>
+            </field>
+            <field property="startDate" depends="required, validDate">
+                <arg0 key="Project.startDate" resource="true"/>
+            </field>
+            <field property="endDate" depends="validDate">
+                <arg0 key="Project.endDate" resource="true"/>
+            </field>
+            <field property="toBeInvoiced" depends="required">
+                <arg0 key="Project.toBeInvoiced" resource="true"/>
+            </field>
+            <field property="status" depends="required">
+                <arg0 key="Project.status" resource="true"/>
+            </field>
+            <field property="hasTimeLimit" depends="booleanCheckBox"/>
+            <field property="plannedInvoice" depends="requiredif, decimalNumber">
+                <arg0 key="Project.plannedInvoice" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>hasTimeLimit</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="plannedNoInvoice" depends="requiredif, decimalNumber">
+                <arg0 key="Project.plannedNoInvoice" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>hasTimeLimit</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="totalInvoice" depends="decimalNumber">
+                <arg0 key="Project.totalInvoice" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+            </field>
+            <field property="totalNoInvoice" depends="decimalNumber">
+                <arg0 key="Project.totalNoInvoice" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+            </field>
+            <field property="customerId" depends="foreignKey">
+                <arg0 key="Project.customer" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+            <field property="contactPersonId" depends="compoundForeignKey">
+                <arg0 key="Project.contactPerson" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contactperson</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>contactPersonId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>contactpersonid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>customerId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>addressid</var-value>
+                </var>
+            </field>
+            <field property="responsibleId" depends="required, foreignKey">
+                <arg0 key="Project.responsible" resource="true"/>
+                <arg1 key="table=elwisuser"/>
+                <arg2 key="column=userid"/>
+            </field>
+            <field property="accountId" depends="foreignKey">
+                <arg0 key="Project.account" resource="true"/>
+                <arg1 key="table=account"/>
+                <arg2 key="column=accountid"/>
+            </field>
+        </form>
+        <!--ProjectTime form validations-->
+        <form name="projectTimeForm">
+            <field property="userId" depends="required, foreignKey">
+                <arg0 key="ProjectTime.userName" resource="true"/>
+                <arg1 key="table=elwisuser"/>
+                <arg2 key="column=userid"/>
+            </field>
+            <field property="assigneeId" depends="required, foreignKey">
+                <arg0 key="ProjectTime.assignee" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+            <field property="date" depends="required, validDate">
+                <arg0 key="ProjectTime.date" resource="true"/>
+            </field>
+            <field property="time"  depends="required, decimalNumber">
+                <arg0 key="ProjectTime.time" resource="true"/>
+                <arg1 key="maxInt=3"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="activityId"  depends="foreignKey">
+                <arg0 key="ProjectTime.activityName" resource="true"/>
+                <arg1 key="table=projectactivity"/>
+                <arg2 key="column=projectactivityid"/>
+            </field>
+            <field property="subProjectId"  depends="foreignKey">
+                <arg0 key="ProjectTime.subProjectName" resource="true"/>
+                <arg1 key="table=subproject"/>
+                <arg2 key="column=subprojectid"/>
+            </field>
+        </form>
+        <form name="projectTimeRegistrationForm">
+            <field property="userId" depends="required, foreignKey">
+                <arg0 key="ProjectTime.userName" resource="true"/>
+                <arg1 key="table=elwisuser"/>
+                <arg2 key="column=userid"/>
+            </field>
+            <field property="assigneeId" depends="required, foreignKey">
+                <arg0 key="ProjectTime.assignee" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+            <field property="date" depends="required, validDate">
+                <arg0 key="ProjectTime.date" resource="true"/>
+            </field>
+            <field property="time"  depends="required, decimalNumber">
+                <arg0 key="ProjectTime.time" resource="true"/>
+                <arg1 key="maxInt=3"/>
+                <arg2 key="maxFloat=2"/>
+            </field>
+            <field property="activityId"  depends="foreignKey">
+                <arg0 key="ProjectTime.activityName" resource="true"/>
+                <arg1 key="table=projectactivity"/>
+                <arg2 key="column=projectactivityid"/>
+            </field>
+            <field property="subProjectId"  depends="foreignKey">
+                <arg0 key="ProjectTime.subProjectName" resource="true"/>
+                <arg1 key="table=subproject"/>
+                <arg2 key="column=subprojectid"/>
+            </field>
+        </form>
+        <!--Project User form validations-->
+        <form name="projectUserForm">
+            <field property="addressId" depends="required, foreignKey">
+                <arg0 key="ProjectAssignee.userName" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+        </form>
+        <!--ProjectActivity form validation-->
+        <form name="projectActivityForm">
+            <field property="name" depends="required, unique">
+                <arg0 key="ProjectActivity.name" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>projectactivity</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>activityname</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId, projectid=projectId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>activityId=projectactivityid</var-value>
+                </var>
+            </field>
+        </form>
+        <!--SubProject form validation-->
+        <form name="subProjectForm">
+            <field property="name" depends="required, unique">
+                <arg0 key="SubProject.name" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>subproject</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>subprojectname</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId, projectid=projectId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>subProjectId=subprojectid</var-value>
+                </var>
+            </field>
+        </form>
+        <form name="projectTimeLimitForm">
+            <field property="assigneeId" depends="required, foreignKey">
+                <arg0 key="ProjectTimeLimit.assignee" resource="true"/>
+                <arg1 key="table=address"/>
+                <arg2 key="column=addressid"/>
+            </field>
+            <field property="subProjectId"  depends="required, foreignKey">
+                <arg0 key="ProjectTimeLimit.subProject" resource="true"/>
+                <arg1 key="table=subproject"/>
+                <arg2 key="column=subprojectid"/>
+            </field>
+
+            <field property="hasTimeLimit" depends="booleanCheckBox"/>
+
+            <field property="invoiceLimit" depends="required, decimalNumber">
+                <arg0 key="ProjectTimeLimit.invoiceLimit" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+            </field>
+            <field property="noInvoiceLimit" depends="required, decimalNumber">
+                <arg0 key="ProjectTimeLimit.noInvoiceLimit" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+            </field>
+        </form>
+
+        <form name="projectReportForm">
+            <field property="startStartDate" depends="validDates">
+                <arg0 key="Project.startDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endStartDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="startEndDate" depends="validDates">
+                <arg0 key="Project.endDate" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endEndDate</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="plannedAmount1" depends="decimalNumbers">
+                <arg0 key="Project.plannedInvoice" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+                <msg name="decimalNumbers" key="error.decimalNumbers.invalid1DecimalPlaces"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>plannedAmount2</var-value>
+                </var>
+            </field>
+            <field property="totalInvoiceAmount1" depends="decimalNumbers">
+                <arg0 key="Project.totalInvoice" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+                <msg name="decimalNumbers" key="error.decimalNumbers.invalid1DecimalPlaces"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>totalInvoiceAmount2</var-value>
+                </var>
+            </field>
+            <field property="plannedNoAmount1" depends="decimalNumbers">
+                <arg0 key="Project.plannedNoInvoice" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+                <msg name="decimalNumbers" key="error.decimalNumbers.invalid1DecimalPlaces"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>plannedNoAmount2</var-value>
+                </var>
+            </field>
+            <field property="totalNoInvoiceAmount1" depends="decimalNumbers">
+                <arg0 key="Project.totalNoInvoice" resource="true"/>
+                <arg1 key="maxInt=6"/>
+                <arg2 key="maxFloat=1"/>
+                <msg name="decimalNumbers" key="error.decimalNumbers.invalid1DecimalPlaces"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>totalNoInvoiceAmount2</var-value>
+                </var>
+            </field>
+        </form>
+        <form name="projectTimesReportForm">
+            <field property="startProjectTime" depends="validDates">
+                <arg0 key="Project.report.timePeriod" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endProjectTime</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="timeFrom" depends="decimalNumbers">
+                <arg0 key="ProjectTime.time" resource="true"/>
+                <arg1 key="maxInt=4"/>
+                <arg2 key="maxFloat=1"/>
+                <msg name="decimalNumbers" key="error.decimalNumbers.invalid1DecimalPlaces"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>timeTo</var-value>
+                </var>
+            </field>
+        </form>
+        <form name="projectTimesAdvancedSearchForm">
+            <field property="startProjectTime" depends="validDates">
+                <arg0 key="Project.report.timePeriod" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endProjectTime</var-value>
+                </var>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="timeFrom" depends="decimalNumbers">
+                <arg0 key="ProjectTime.time" resource="true"/>
+                <arg1 key="maxInt=4"/>
+                <arg2 key="maxFloat=1"/>
+                <msg name="decimalNumbers" key="error.decimalNumbers.invalid1DecimalPlaces"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>timeTo</var-value>
+                </var>
+            </field>
+        </form>
+    </formset>
+</form-validation>
+

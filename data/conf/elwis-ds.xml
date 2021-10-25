@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<!-- DataSource config for ELWIS  application -->
+<datasources>
+    <!--datasource for mysql -->
+    <!-- <local-tx-datasource>
+        <jndi-name>elwisDS</jndi-name>
+        <connection-url>jdbc:mysql://10.0.0.11:3308/elwis2?useUnicode=true&amp;characterEncoding=UTF-8</connection-url>
+        <driver-class>com.mysql.jdbc.Driver</driver-class>
+        <user-name>jatundev</user-name>
+        <password>jdev.pwd</password>
+        <min-pool-size>5</min-pool-size>
+        <max-pool-size>100</max-pool-size>
+        <blocking-timeout-millis>5000</blocking-timeout-millis>
+        <idle-timeout-minutes>30</idle-timeout-minutes>
+        <valid-connection-checker-class-name>com.mysql.jdbc.integration.jboss.MysqlValidConnectionChecker
+        </valid-connection-checker-class-name>
+        <exception-sorter-class-name>com.mysql.jdbc.integration.jboss.ExtendedMysqlExceptionSorter
+        </exception-sorter-class-name>
+        <metadata>
+            <type-mapping>mySQL</type-mapping>
+        </metadata>
+    </local-tx-datasource>-->
+
+
+    <!--datasource for informix 10-->
+    <local-tx-datasource>
+        <jndi-name>elwisDS</jndi-name>
+        <connection-url>
+            jdbc:informix-sqli://10.0.0.11:11980/elwis2:INFORMIXSERVER=ids_server;IFX_ISOLATION_LEVEL=1;CLIENT_LOCALE=en_us.utf8
+        </connection-url>
+        <driver-class>com.informix.jdbc.IfxDriver</driver-class>
+        <user-name>informixds</user-name>
+        <password>idsserver10</password>
+        <exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.InformixExceptionSorter
+        </exception-sorter-class-name>
+        <min-pool-size>5</min-pool-size>
+        <max-pool-size>100</max-pool-size>
+        <metadata>
+            <type-mapping>InformixDB</type-mapping>
+        </metadata>
+    </local-tx-datasource>
+
+
+    <!--Note: only one datasource must be enabled at time-->
+</datasources>

@@ -1,0 +1,68 @@
+  <!ELEMENT lists (list+)>
+  <!ELEMENT list  ( tables+, relationShips*, conditions, configuration ) >
+  <!ATTLIST list listName CDATA #REQUIRED>
+<!-- Add for status-->
+  <!ATTLIST list persistence CDATA "true">
+  <!ATTLIST list executeFirstTime CDATA "true">
+  <!ATTLIST list alwaysRead CDATA "true">
+<!-- to here -->
+  <!ATTLIST list distinct CDATA "true">
+  <!ATTLIST list extends CDATA>
+  <!ELEMENT tables (table+)>
+  <!ELEMENT relationShips (relationShip*)>
+  <!ATTLIST  table tableName CDATA >
+  <!ATTLIST  table alias CDATA #REQUIRED>
+  <!ELEMENT  table  ( fields+ )>
+  <!ELEMENT  fields (field+)>
+  <!ELEMENT  field >
+  <!ATTLIST  field fieldName CDATA #REQUIRED>
+  <!ATTLIST  field  fieldAlias CDATA #REQUIRED>
+  <!ATTLIST  field  key CDATA "true">
+  <!ELEMENT  relationShip  (leftJoin?, outerJoin? fK, pK, conditions?)>
+  <!ELEMENT  leftJoin  (#PCDATA)>
+  <!ELEMENT  outerJoin  (#PCDATA)>
+  <!ELEMENT  fK (#PCDATA)>
+  <!ELEMENT  pK (#PCDATA)>
+  <!ELEMENT  referenceField (#PCDATA)>
+
+  <!--<!ELEMENT Configuration (List+)>-->
+  <!ELEMENT  configuration  (  columns , defaultOrder?)>
+  <!ELEMENT  columns (  column+ )>
+  <!ELEMENT  column  ( config, function? )>
+  <!ATTLIST  column  columnName CDATA #REQUIRED>
+  <!ELEMENT  config  (  fieldsConfig | formats , fieldsOrder )>
+  <!ELEMENT  fieldsConfig  ( referenceField+  )>
+  <!ATTLIST  fieldsConfig separator CDATA>
+  <!ELEMENT  formats  (  format+ )>
+  <!ELEMENT  format ( conditions, fieldFormat )>
+  <!ELEMENT  fieldFormat  ( referenceField  separator fieldFormat
+                          | referenceField separator>
+                          | referenceField)>
+  <!ELEMENT  separator  ( #PCDATA )>
+  <!ELEMENT  defaultOrder  ( columnOrder )>
+  <!ATTLIST  defaultOrder  orderBy ( ASC | DESC) #REQUIRED>
+  <!ELEMENT  columnOrder>
+  <!ATTLIST  columnOrder  columnName CDATA #REQUIRED>
+ <!ELEMENT  fieldsOrder  ( referenceField+ )>
+  <!ELEMENT  function (  AVG
+   |  COUNT
+   |  SUM
+   |  MAX
+   |  MIN )>
+  <!ELEMENT   where   (  conditions
+     |  conditions groupBy
+     |  between ) >
+  <!ELEMENT  groupBy   (   referenceField+  having  )>
+  <!ELEMENT  between  (  value value  )>
+  <!ELEMENT  having  (  conditions  )>
+  <!ELEMENT  operator  ( EQUAL  | DISTINCT | EQUAL_GREATER | EQUAL_LESS | LESS | GREATER )>
+  <!ELEMENT  conditions  ( condition   |   condition   conector   conditions )>
+  <!ATTLIST  condition fieldReference CDATA #REQUIRED>
+  <!ATTLIST  condition operator (LIKE | LIKE2 | EQUAL | GREATER | LESS |GREATER_EQUAL | LESS_EQUAL | DISTINCT | ANDBIT) #REQUIRED>
+  <!ATTLIST  condition type ( constant | parameter | field) CDATA #REQUIRED>
+  <!ATTLIST  condition value  CDATA>
+  <!ELEMENT  condition>
+  <!ELEMENT  conector     (  AND    |   OR  )>
+  <!ELEMENT  parameter >
+  <!ELEMENT  constant >
+

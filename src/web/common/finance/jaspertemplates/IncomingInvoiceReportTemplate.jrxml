@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--created by alvaro-->
+
+<jasperReport
+        xmlns="http://jasperreports.sourceforge.net/jasperreports"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+
+        name="IncomingInvoiceAmounts"
+        columnCount="1"
+        pageWidth="792"
+        pageHeight="612"
+        columnWidth="742"
+        columnSpacing="0"
+        leftMargin="30"
+        rightMargin="20"
+        topMargin="30"
+        bottomMargin="30"
+        whenNoDataType="AllSectionsNoDetail"
+        isTitleNewPage="false"
+        isSummaryNewPage="false"
+        scriptletClass="com.piramide.elwis.web.financemanager.action.report.scriptlet.IncomingInvoiceAmountsScriptlet"
+        resourceBundle="com.piramide.elwis.web.resources.ApplicationResources">
+    <property name="ireport.scriptlethandling" value="0"/>
+    <property name="ireport.encoding" value="UTF-8"/>
+    <import value="java.util.*"/>
+    <import value="net.sf.jasperreports.engine.*"/>
+    <import value="net.sf.jasperreports.engine.data.*"/>
+
+    <style
+            name="Title_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="20"
+            isBold="true"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"/>
+    <style
+            name="Row_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"/>
+    <style
+            name="ColumnHeader_Style"
+            isDefault="true"
+            backcolor="#CCCCCC"
+            fontName="Verdana"
+            fontSize="9"
+            isBold="true"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"/>
+    <style
+            name="PageNumber_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="10"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"/>
+    <style
+            name="GroupHeader_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="12"
+            isBold="true"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana-Bold"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"/>
+    <style
+            name="GroupFooter_Style"
+            isDefault="true"
+            fontName="Verdana"
+            fontSize="10"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"/>
+    <style
+            name="Summary_Style"
+            isDefault="true"
+            backcolor="#F8F8F8"
+            fontName="Verdana"
+            fontSize="10"
+            isBold="false"
+            isItalic="false"
+            isUnderline="false"
+            isStrikeThrough="false"
+            pdfFontName="Verdana"
+            pdfEncoding="Identity-H"
+            isPdfEmbedded="true"/>
+
+    <variable name="invoiceTotalVar" class="java.util.Map" resetType="Report" incrementType="Report"
+              calculation="System">
+        <initialValueExpression><![CDATA[(new java.util.LinkedHashMap())]]></initialValueExpression>
+    </variable>
+    <variable name="creditNoteTotalVar" class="java.util.Map" resetType="Report" incrementType="Report"
+              calculation="System">
+        <initialValueExpression><![CDATA[(new java.util.LinkedHashMap())]]></initialValueExpression>
+    </variable>
+
+    <!--*************TITLE BAND******************-->
+    <title>
+        <band height="125" isSplitAllowed="true">
+            <!--*****************1st Line*******************-->
+            <image scaleImage="RetainShape" onErrorType="Icon" evaluationTime="Now" hyperlinkType="None"
+                   hyperlinkTarget="Self">
+                <reportElement
+                        x="0"
+                        y="0"
+                        width="150"
+                        height="50"
+                        key="COMPANY_LOGO_ELEMENT"
+                        isRemoveLineWhenBlank="true">
+                    <printWhenExpression>
+                        <![CDATA[$P{IS_TITLE_IMAGE_STREAM}.booleanValue()?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+                </reportElement>
+                <graphicElement stretchType="NoStretch"/>
+                <imageExpression class="java.io.InputStream"><![CDATA[$P{TITLE_IMAGE_STREAM}]]></imageExpression>
+            </image>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="0"
+                        y="4"
+                        width="100"
+                        height="13"
+                        key="date_text"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box padding="1">
+                    <pen lineWidth="0.0" lineColor="#000000" lineStyle="Solid"/>
+                </box>
+                <textElement textAlignment="Left"/>
+                <textFieldExpression class="java.lang.String"><![CDATA[com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatDate(
+                                    com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_DATEINT,
+                                    (com.piramide.elwis.utils.DateUtils.dateToInteger(new Date()).toString()),
+                                    $R{datePattern},
+                                    $P{REPORT_LOCALE}.toString(),
+                                    $P{REPORT_TIMEZONE}.toString())]]>
+                </textFieldExpression>
+            </textField>
+            <!--***************************2nd Line***************************-->
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Title_Style"
+                        mode="Opaque"
+                        x="0"
+                        y="51"
+                        width="718"
+                        height="28"
+                        forecolor="#000000"
+                        backcolor="#FFFFFF"
+                        key="TITLE_REPORT_ELEMENT"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <textFieldExpression class="java.lang.String"><![CDATA[$P{REPORT_TITLE}]]></textFieldExpression>
+            </textField>
+            <!--***************************3rd Line***************************-->
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="0"
+                        y="79"
+                        width="718"
+                        height="13"
+                        key="rangeDate_text1"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box padding="1">
+                    <pen lineWidth="0.0" lineColor="#000000" lineStyle="Solid"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$P{RANGEDATE_INVOICE_PARAM}]]></textFieldExpression>
+            </textField>
+            <!--***************************4th Line***************************-->
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="0"
+                        y="93"
+                        width="718"
+                        height="13"
+                        key="rangeDate_text2"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box padding="1">
+                    <pen lineWidth="0.0" lineColor="#000000" lineStyle="Solid"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$P{RANGEDATE_RECEIPT_PARAM}]]></textFieldExpression>
+            </textField>
+            <!--***************************4th Line***************************-->
+            <textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="0"
+                        y="107"
+                        width="718"
+                        height="13"
+                        key="rangeDate_text3"
+                        stretchType="RelativeToTallestObject"
+                        positionType="Float"/>
+                <box padding="1">
+                    <pen lineWidth="0.0" lineColor="#000000" lineStyle="Solid"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[$P{RANGEDATE_PAIDUNTIL_PARAM}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="0" isSplitAllowed="true"/>
+    </pageHeader>
+    <!--*********Column Header***********-->
+    <columnHeader>
+        <band height="12" isSplitAllowed="true">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="0"
+                        y="0"
+                        width="80"
+                        height="12"
+                        key="invoiceNumberHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.invoiceNumber}]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="80"
+                        y="0"
+                        width="100"
+                        height="12"
+                        key="supplierHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.supplierName}]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="180"
+                        y="0"
+                        width="60"
+                        height="12"
+                        key="invoiceDateHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.invoiceDate}]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="240"
+                        y="0"
+                        width="60"
+                        height="12"
+                        key="paidUntilHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.paidUntil}]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="300"
+                        y="0"
+                        width="60"
+                        height="12"
+                        key="typeHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject">
+                </reportElement>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.type}]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="360"
+                        y="0"
+                        width="60"
+                        height="12"
+                        key="currencyHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject">
+                </reportElement>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.currency}]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="420"
+                        y="0"
+                        width="75"
+                        height="12"
+                        key="amountNetHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject">
+                </reportElement>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.amountNet}]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="495"
+                        y="0"
+                        width="75"
+                        height="12"
+                        key="vatAmountHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.vatAmount}]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="570"
+                        y="0"
+                        width="75"
+                        height="12"
+                        key="amountGrossHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject">
+                </reportElement>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.amountGross}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="ColumnHeader_Style"
+                        x="645"
+                        y="0"
+                        width="75"
+                        height="12"
+                        key="openAmountHeader"
+                        forecolor="black"
+                        backcolor="lightGray"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[$R{Finance.incomingInvoice.openAmount}]]>
+                </textFieldExpression>
+            </textField>
+
+
+        </band>
+    </columnHeader>
+
+
+    <!--***********DETAIL******-->
+    <detail>
+        <band height="12" isSplitAllowed="true">
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="0"
+                        y="0"
+                        width="80"
+                        height="12"
+                        key="invoiceNumberField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                                $P{COLUMN_FORMAT_INVOICENUMBER},
+                                (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                    new com.jatun.titus.reportgenerator.util.Pair("invoiceNumber",$F{invoiceNumber})
+                                }),
+                                $P{FANTABULOUS_PARAMETERS})
+                    ]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="80"
+                        y="0"
+                        width="100"
+                        height="12"
+                        key="supplierField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                                $P{COLUMN_FORMAT_SUPPLIERNAME},
+                                (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                    new com.jatun.titus.reportgenerator.util.Pair("supplierName1",$F{supplierName1}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("supplierName2",$F{supplierName2}),
+                                    new com.jatun.titus.reportgenerator.util.Pair("addressType",$F{addressType}),
+                                }),
+                                $P{FANTABULOUS_PARAMETERS})
+                    ]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="180"
+                        y="0"
+                        width="60"
+                        height="12"
+                        key="invoiceDateField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatDate(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_DATEINT,
+                                ($F{invoiceDate}),
+                                $R{datePattern},
+                                $P{REPORT_LOCALE}.toString(),
+                                $P{REPORT_TIMEZONE}.toString())
+                    ]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="240"
+                        y="0"
+                        width="60"
+                        height="12"
+                        key="paidUntilField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatDate(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_DATEINT,
+                                ($F{paidUntil}),
+                                $R{datePattern},
+                                $P{REPORT_LOCALE}.toString(),
+                                $P{REPORT_TIMEZONE}.toString())
+                    ]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="300"
+                        y="0"
+                        width="60"
+                        height="12"
+                        key="typeField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject">
+                </reportElement>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[
+                        com.piramide.elwis.web.salesmanager.el.Functions.getInvoiceTypeName($F{type},
+                                                                                            $P{REPORT_LOCALE}.toString())
+                    ]]>
+                </textFieldExpression>
+            </textField>
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="360"
+                        y="0"
+                        width="60"
+                        height="12"
+                        key="currencyField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject">
+                </reportElement>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Left">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String"><![CDATA[
+                    com.jatun.titus.reportgenerator.util.FormatFieldUtil.i.formatStrOrIcon(
+                                com.jatun.titus.reportgenerator.util.ReportGeneratorConstants.FIELD_TYPE_STRING,
+                                $P{COLUMN_FORMAT_CURRENCYLABEL},
+                                (new com.jatun.titus.reportgenerator.util.Pair[]{
+                                    new com.jatun.titus.reportgenerator.util.Pair("currencyLabel",$F{currencyLabel})
+                                }),
+                                $P{FANTABULOUS_PARAMETERS})
+                    ]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false"
+                       evaluationTime="Now" hyperlinkType="None" hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="420"
+                        y="0"
+                        width="75"
+                        height="12"
+                        key="amountNetField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject">
+                </reportElement>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Right">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.math.BigDecimal"><![CDATA[
+                        com.piramide.elwis.utils.ReportHelper.getValueAsBigDecimal($F{amountNet})
+                    ]]>
+                </textFieldExpression>
+                <patternExpression>$R{numberFormat.2DecimalPlaces}</patternExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false"
+                       evaluationTime="Now" hyperlinkType="None" hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="495"
+                        y="0"
+                        width="75"
+                        height="12"
+                        key="vatAmountField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Right">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.math.BigDecimal"><![CDATA[
+                        com.piramide.elwis.utils.ReportHelper.substractDecimalAmounts($F{amountGross}, $F{amountNet})
+                            ]]>
+                </textFieldExpression>
+                <patternExpression>$R{numberFormat.2DecimalPlaces}</patternExpression>
+            </textField>
+
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false"
+                       evaluationTime="Now" hyperlinkType="None" hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="570"
+                        y="0"
+                        width="75"
+                        height="12"
+                        key="amountGrossField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject">
+                </reportElement>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Right">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.math.BigDecimal"><![CDATA[
+                        com.piramide.elwis.utils.ReportHelper.getValueAsBigDecimal($F{amountGross})
+                    ]]>
+                </textFieldExpression>
+                <patternExpression>$R{numberFormat.2DecimalPlaces}</patternExpression>
+            </textField>
+
+
+            <textField isStretchWithOverflow="true" isBlankWhenNull="false"
+                       evaluationTime="Now" hyperlinkType="None" hyperlinkTarget="Self">
+                <reportElement
+                        style="Row_Style"
+                        x="645"
+                        y="0"
+                        width="75"
+                        height="12"
+                        key="openAmountField"
+                        mode="Opaque"
+                        stretchType="RelativeToTallestObject"/>
+                <box leftPadding="1" rightPadding="1">
+                    <pen lineWidth="1.0" lineColor="#000000"/>
+                </box>
+                <textElement textAlignment="Right">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.math.BigDecimal"><![CDATA[
+                        com.piramide.elwis.utils.ReportHelper.getValueAsBigDecimal($F{openAmount})    
+                    ]]>
+                </textFieldExpression>
+                <patternExpression>$R{numberFormat.2DecimalPlaces}</patternExpression>
+            </textField>
+
+
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="0" isSplitAllowed="true"/>
+    </columnFooter>
+    <pageFooter>
+        <band height="40" isSplitAllowed="true">
+            <line direction="TopDown">
+                <reportElement
+                        x="0"
+                        y="10"
+                        width="718"
+                        height="1"
+                        key="PAGE_FOOTER_LINE"/>
+                <graphicElement stretchType="NoStretch"/>
+            </line>
+            <textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"
+                       hyperlinkTarget="Self">
+                <reportElement
+                        style="PageNumber_Style"
+                        mode="Transparent"
+                        x="699"
+                        y="18"
+                        width="20"
+                        height="15"
+                        forecolor="#000000"
+                        backcolor="#FFFFFF"
+                        key="PAGE_FOOTER_NUMBER"/>
+                <textElement textAlignment="Right" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+                    <font/>
+                </textElement>
+                <textFieldExpression class="java.lang.String">
+                    <![CDATA[String.valueOf($V{PAGE_NUMBER})]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+    <summary>
+        <band height="40" isSplitAllowed="true">
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="8"
+                        width="500"
+                        height="10"
+                        key="invoiceSumarySubreport">
+                    <printWhenExpression>
+                        <![CDATA[$V{invoiceTotalVar}.isEmpty() ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <subreportParameter name="SUMMARYTOTAL_PARAM">
+                    <subreportParameterExpression><![CDATA[$V{invoiceTotalVar}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="SUMMARYTITLE_PARAM">
+                    <subreportParameterExpression>
+                        <![CDATA[$R{Invoice.report.invoiceSummary}]]></subreportParameterExpression>
+                </subreportParameter>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_INVOICESUMMARY}]]></subreportExpression>
+            </subreport>
+            <subreport isUsingCache="true">
+                <reportElement
+                        x="0"
+                        y="25"
+                        width="500"
+                        height="10"
+                        key="invoiceSumarySubreport-1"
+                        positionType="Float">
+                    <printWhenExpression>
+                        <![CDATA[$V{creditNoteTotalVar}.isEmpty() ? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+                </reportElement>
+                <parametersMapExpression><![CDATA[$P{REPORT_PARAMETERS_MAP}]]></parametersMapExpression>
+                <subreportParameter name="SUMMARYTOTAL_PARAM">
+                    <subreportParameterExpression><![CDATA[$V{creditNoteTotalVar}]]></subreportParameterExpression>
+                </subreportParameter>
+                <subreportParameter name="SUMMARYTITLE_PARAM">
+                    <subreportParameterExpression>
+                        <![CDATA[$R{Invoice.report.creditNoteSummary}]]></subreportParameterExpression>
+                </subreportParameter>
+                <connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport">
+                    <![CDATA[$P{SUBREPORT_CREDITNOTESUMMARY}]]></subreportExpression>
+            </subreport>
+        </band>
+    </summary>
+</jasperReport>

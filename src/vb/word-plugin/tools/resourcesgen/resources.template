@@ -1,0 +1,47 @@
+<% listFields.each_pair do |lkey, _mapFields| 
+FIELDS_RES.each(' ') {|s|  
+ mkey=s.strip
+ _fields = _mapFields[mkey]
+ fkeys = _fields.keys.sort
+   
+fkeys.each{|x|
+_field = _fields[x]
+
+auxLang = x[-3,3]
+generateResources = true
+
+if auxLang == "_DE" || auxLang == "_ES"
+keyResource = x[0, x.length-3]
+#if auxLang == "_DE"
+#puts "Res#{auxLang}:#{x}"
+#end
+
+generateResources = allFields.has_key?(keyResource)
+end 
+puts "Res: #{x} ->#{lkey == english || generateResources}"
+
+if lkey == english || generateResources
+%>
+ #define IDS_<%=_field.idName %> <%= _field.id %> 
+<% end }} end %>
+
+STRINGTABLE
+BEGIN
+<% listFields.each_pair do |lkey, _mapFields| 
+FIELDS_RES.each(' ') {|s|  
+ mkey=s.strip
+ _fields = _mapFields[mkey] 
+ _fields.each_pair do |fkey, _field| 
+
+auxLang = fkey[-3,3]
+generateResources = true
+
+if auxLang == "_DE" || auxLang = "_ES"
+keyResource = fkey[0, fkey.length-3]
+#puts "Res#{keyResource}"
+generateResources = allFields.has_key?(keyResource)
+end 
+if lkey == english || generateResources%>
+    IDS_<%= _field.idName %>,   "<%= _field.resource %>"
+<% end end } end %>
+END

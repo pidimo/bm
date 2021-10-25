@@ -1,0 +1,407 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+
+	<formset>
+        <form name="addressForm">
+            <field property="companyId" depends="checkEntry">
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>address</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>1</var-value>
+                </var>
+            </field>
+            <field property="titleId" depends="foreignKey">
+                <arg0 key="Contact.Person.title" resource="true"/>
+                <arg1 key="table=title"/>
+                <!--table-->
+                <arg2 key="column=titleid"/>
+                <!--primary key column-->
+            </field>
+            <field property="languageId" depends="foreignKey">
+                <arg0 key="Contact.language" resource="true"/>
+                <arg1 key="table=language"/>
+                <!--table-->
+                <arg2 key="column=languageid"/>
+                <!--primary key column-->
+            </field>
+            <field property="salutationId" depends="foreignKey">
+                <arg0 key="Contact.Person.salutation" resource="true"/>
+                <arg1 key="table=salutation"/>
+                <!--table-->
+                <arg2 key="column=salutationid"/>
+                <!--primary key column-->
+            </field>
+            <field property="countryId" depends="foreignKey">
+                <arg0 key="Contact.country" resource="true"/>
+                <arg1 key="table=country"/>
+                <!--table-->
+                <arg2 key="column=countryid"/>
+                <!--primary key column-->
+            </field>
+        </form>
+
+        <form name="contactPersonForm">
+            <field property="name1" depends="required">
+                <arg0 key="Contact.Person.lastname" resource="true"/>
+            </field>
+            <field property="titleId" depends="foreignKey">
+                <arg0 key="Contact.Person.title" resource="true"/>
+                <arg1 key="table=title"/>
+                <arg2 key="column=titleid"/>
+            </field>
+            <field property="languageId" depends="foreignKey">
+                <arg0 key="Contact.language" resource="true"/>
+                <arg1 key="table=language"/>
+                <arg2 key="column=languageid"/>
+            </field>
+            <field property="salutationId" depends="foreignKey">
+                <arg0 key="Contact.Person.salutation" resource="true"/>
+                <arg1 key="table=salutation"/>
+                <arg2 key="column=salutationid"/>
+            </field>
+            <field property="departmentId" depends="foreignKey">
+                <arg0 key="ContactPerson.department" resource="true"/>
+                <arg1 key="table=department"/>
+                <!--table-->
+                <arg2 key="column=departmentid"/>
+                <!--primary key column-->
+            </field>
+            <field property="personTypeId" depends="foreignKey">
+                <arg0 key="ContactPerson.personType" resource="true"/>
+                <arg1 key="table=persontype"/>
+                <!--table-->
+                <arg2 key="column=persontypeid"/>
+                <!--primary key column-->
+            </field>
+        </form>
+
+        <form name="appointmentForm">
+            <field property="companyId" depends="checkEntry">
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>appointment</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>6</var-value>
+                </var>
+            </field>
+            <field property="title" depends="required">
+                <arg0 key="Appointment.name" resource="true"/>
+            </field>
+            <field property="appointmentTypeId" depends="required, foreignKey">
+                <arg0 key="Appointment.appType" resource="true"/>
+                <arg1 key="table=appointmenttype"/> <!--table-->
+                <arg2 key="column=apptypeid"/> <!--primary key column-->
+            </field>
+            <field property="addressId" depends="foreignKey">
+                <arg0 key="Appointment.contact" resource="true"/>
+                <arg1 key="table=address"/> <!--table-->
+                <arg2 key="column=addressid"/> <!--primary key column-->
+            </field>
+            <field property="contactPersonId" depends="compoundForeignKey">
+                <arg0 key="ContactPerson" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>contactperson</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>contactPersonId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[0]</var-name>
+                    <var-value>contactpersonid</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>addressId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB[1]</var-name>
+                    <var-value>addressid</var-value>
+                </var>
+            </field>
+            <field property="priorityId" depends="foreignKey">
+                <arg0 key="Task.priority" resource="true"/>
+                <arg1 key="table=priority"/> <!--table-->
+                <arg2 key="column=priorityid"/> <!--primary key column-->
+            </field>
+            <field property="userId" depends="foreignKey">
+                <arg0 key="Appointment.owner" resource="true"/>
+                <arg1 key="table=elwisuser"/> <!--table-->
+                <arg2 key="column=userid"/> <!--primary key column-->
+            </field>
+            <field property="startDate" depends="required, validDate">
+                <arg0 key="Appointment.startDate" resource="true"/>
+            </field>
+            <field property="endDate" depends="required, validDate">
+                <arg0 key="Appointment.endDate" resource="true"/>
+            </field>
+            <field property="timeBefore_2" depends="unsignedInteger">
+                <arg0 key="Appointment.timeBefore" resource="true"/>
+            </field>
+            <!--recurrence-->
+            <field property="ruleType" depends="requiredif">
+                <arg0 key="Appointment.Recurrence.recurType" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+            </field>
+            <field property="rangeType" depends="requiredif">
+                <arg0 key="Scheduler.appointment.search.rangeview" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+            </field>
+            <field property="recurEveryDay" depends="requiredif, unsignedInteger">
+                <arg0 key="Appointment.Recurrence.every" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>ruleType</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>1</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[1]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldJoin</var-name>
+                    <var-value>AND</var-value>
+                </var>
+            </field>
+            <field property="recurEveryWeek" depends="requiredif, unsignedInteger">
+                <arg0 key="Appointment.Recurrence.every" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>ruleType</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>2</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[1]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldJoin</var-name>
+                    <var-value>AND</var-value>
+                </var>
+            </field>
+            <field property="recurEveryMonth" depends="requiredif, unsignedInteger">
+                <arg0 key="Appointment.Recurrence.every" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>ruleType</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>3</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[1]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldJoin</var-name>
+                    <var-value>AND</var-value>
+                </var>
+            </field>
+            <field property="recurEveryYear" depends="requiredif, unsignedInteger">
+                <arg0 key="Appointment.Recurrence.every" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>ruleType</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>4</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[1]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldJoin</var-name>
+                    <var-value>AND</var-value>
+                </var>
+            </field>
+            <field property="rangeValueText" depends="requiredif, unsignedInteger">
+                <arg0 key="Appointment.Recurrence.numberOcc" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>rangeType</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>2</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[1]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldJoin</var-name>
+                    <var-value>AND</var-value>
+                </var>
+            </field>
+            <field property="rangeValueDate" depends="requiredif, validDate">
+                <arg0 key="Appointment.endDate" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>rangeType</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>3</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[1]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldJoin</var-name>
+                    <var-value>AND</var-value>
+                </var>
+            </field>
+            <field property="ruleValueTypeMonth" depends="requiredif">
+                <arg0 key="Appointment.Recurrence.recurValueType" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>ruleType</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>3</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[1]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldJoin</var-name>
+                    <var-value>AND</var-value>
+                </var>
+            </field>
+            <field property="ruleValueTypeYear" depends="requiredif">
+                <arg0 key="Appointment.Recurrence.recurValueType" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>ruleType</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>4</var-value>
+                </var>
+                <var>
+                    <var-name>field[1]</var-name>
+                    <var-value>isRecurrence</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[1]</var-name>
+                    <var-value>NOTNULL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldJoin</var-name>
+                    <var-value>AND</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="emailForm">
+            <field property="mailAccountId" depends="required">
+                <arg0 key="Mail.from" resource="true"/>
+            </field>
+            <field property="to" depends="required">
+                <arg0 key="Mail.to" resource="true"/>
+            </field>
+            <field property="mailSubject" depends="required">
+                <arg0 key="Mail.subject" resource="true"/>
+            </field>
+        </form>
+
+    </formset>
+
+</form-validation>

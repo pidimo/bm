@@ -1,0 +1,3281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>JSP 2.0 taglibraries and functions</description>
+    <tlib-version>2.0</tlib-version>
+    <short-name>app2</short-name>
+
+    <tag>
+        <description>Checks if functionality with given permission is not access restricted</description>
+        <name>checkAccessRight</name>
+        <tag-class>com.piramide.elwis.web.admin.taglib.PermissionTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>functionality</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>permission</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>var</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <description>executing a submit button tag</description>
+        <name>securitySubmit</name>
+        <tag-class>com.piramide.elwis.web.common.taglib.SecuritySubmitTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>alt</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>altKey</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>disabled</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>indexed</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onblur</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onchange</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onclick</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>ondblclick</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onfocus</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onkeydown</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onkeypress</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onkeyup</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onmousedown</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onmousemove</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onmouseout</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onmouseover</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>onmouseup</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>property</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>style</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>styleId</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>tabindex</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>title</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>titleKey</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>value</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>operation</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>functionality</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <!--Alvaro-->
+    <tag>
+        <description>Retrieves a column data of a relationship between two tables</description>
+        <name>relationData</name>
+        <tag-class>com.piramide.elwis.web.common.taglib.RelationDataTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>table1</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>table2</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>column</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>id</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>table1FkName</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>table2PkName</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>table1SearchFieldName</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>table1SearchFieldValue</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>truncateTo</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>table2SearchFieldName</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>table2SearchFieldValue</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>column2</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>isNull</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <description>Checks the system language and shows the values if this traducible asociations</description>
+        <name>systemLanguage</name>
+        <tag-class>com.piramide.elwis.web.common.taglib.SystemLanguageTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>labelStyleClass</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>containStypeClass</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>selectStyleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>labelWidth</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>containWidth</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>label</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>languageId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>property</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>operation</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>visible</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>mode</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>messages</name>
+        <tag-class>com.piramide.elwis.web.common.taglib.MessagesTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>id</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>name</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>message</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>messagesMobil</name>
+        <tag-class>com.piramide.elwis.web.common.taglib.MessagesMobilTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>id</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>name</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>message</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>dashboardListHelper</name>
+        <tag-class>com.piramide.elwis.web.common.taglib.DashboardHelperTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>fantabulousListName</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>rowsPerPage</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            Tag to write or store in the page session the URL to be used in the javascript
+            window.location property.
+            This classs has the responsability to encode the URL and add the parameters
+            to the url and then write a jscript compatible url.
+            e.g. window.location = 'urltogo.jsp?param1=' + document.getElementById('fieldId');
+            Using this tag with window.location is neede to add the ' and ' for the value,
+            this quotes are generate automatically by this tag.
+        </description>
+        <name>jScriptUrl</name>
+        <tag-class>com.piramide.elwis.web.common.taglib.JScriptUrlTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>url</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>var</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>isHrefObj</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>addModuleParams</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>addModuleName</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <description>
+            Use to add params to JSCriptUrlTag, to be used to
+            generate the jscript string ready to be used to assign to window.location
+        </description>
+        <name>jScriptUrlParam</name>
+        <tag-class>com.piramide.elwis.web.common.taglib.JScriptUrlParamTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>param</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <description>Render the category tabs as links</description>
+        <name>categoryTabLink</name>
+        <tag-class>com.piramide.elwis.web.catalogmanager.taglib.CategoryTabLinkTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>id</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>action</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>categoryConstant</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>finderName</name>
+            <required>true</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>styleClass</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>showStartSeparator</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <description>Add finder value in categoryTabLink Tag</description>
+        <name>categoryFinderValue</name>
+        <tag-class>com.piramide.elwis.web.catalogmanager.taglib.FinderValueTag</tag-class>
+        <body-content>JSP</body-content>
+        <attribute>
+            <name>forId</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <function>
+        <description>Return a element from Map when the KEY is variable</description>
+        <name>mapElement</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.Object mapElement( java.util.Map, java.lang.String )</function-signature>
+    </function>
+    <function>
+        <description>Return String with value of string1 + string2</description>
+        <name>concat</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String concat( java.lang.String, java.lang.String )</function-signature>
+    </function>
+    <function>
+        <description>Converts date to elwis format</description>
+        <name>intToDate</name>
+        <function-class>com.piramide.elwis.utils.DateUtils</function-class>
+        <function-signature>java.util.Date integerToDate( java.lang.Integer )</function-signature>
+    </function>
+    <function>
+        <description>Converts date to elwis format</description>
+        <name>getDateWithTimeZone</name>
+        <function-class>com.piramide.elwis.utils.DateUtils</function-class>
+        <function-signature>java.lang.String getFormattedDateTimeWithTimeZone(java.lang.String,
+            org.joda.time.DateTimeZone, java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check if the user has an access right</description>
+        <name>hasAccessRight</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>boolean hasAccessRight( javax.servlet.ServletRequest, java.lang.String, java.lang.String
+            )
+        </function-signature>
+    </function>
+    <function>
+        <description></description>
+        <name>checkPermissionAllowed</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.util.List checkPermissionAllowed( java.lang.Byte, java.util.Collection,
+            java.lang.Integer,
+            java.lang.Integer )
+        </function-signature>
+    </function>
+    <function>
+        <description>Return default probabilities list</description>
+        <name>defaultProbabilities</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List defaultProbabilities()</function-signature>
+    </function>
+
+    <function>
+        <description>Return default communication types list</description>
+        <name>defaultCommunicationTypes</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List defaultCommunicationTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return default media types list</description>
+        <name>defaultMediaTypes</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List defaultMediaTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>finds an element into list of DTO's</description>
+        <name>findValue</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.Object findValue( java.lang.String, java.lang.String, java.lang.String,
+            java.util.List )
+        </function-signature>
+    </function>
+    <function>
+        <description>Return default action discount type</description>
+        <name>actionDiscountTypes</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List actionDiscountTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Check if user has alt least one of the functionalities contained within a map</description>
+        <name>checkSomeAccessRights</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>boolean checkSomeAccessRights( javax.servlet.ServletRequest,
+            java.util.Map)
+        </function-signature>
+    </function>
+    <function>
+        <description>Encode string which is added as param in a url e.g. param1=${app2:encode(contactName)}
+        </description>
+        <name>encode</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String encode(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>return a fmt localized message</description>
+        <name>getMessage</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String getMessage( javax.servlet.ServletRequest,
+            java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of telecomtypes</description>
+        <name>getTelecomTypes</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List getTelecomTypes( javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Increment by one a integer value and put its value on pageconext again</description>
+        <name>incrementByOne</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String incrementByOne(javax.servlet.jsp.PageContext,
+            java.lang.String)
+        </function-signature>
+    </function>
+
+    <!--WEBMAIL-->
+
+    <function>
+        <description>Gets values from a list of fantabulous for the telecomNumbers in AddAddressGroup</description>
+        <name>getTelecomsDataCollection</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.ArrayList getTelecomsDataCollection(javax.servlet.http.HttpServletRequest,
+            java.lang.Object, java.lang.Object)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Format a datetime</description>
+        <name>getLocaleFormattedDateTime</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.String getFormattedDateTimeWithTimeZoneAndLocale(java.lang.String,
+            org.joda.time.DateTimeZone, java.lang.String, java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>get mbytes value from bytes value</description>
+        <name>getMBytesValueFromBytes</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.String getMBytesValueFromBytes(java.lang.String)</function-signature>
+    </function>
+
+    <!--End Alvaro-->
+    <!-- begin miky -->
+    <function>
+        <description>Return list of telecomtypes of type EMAIL</description>
+        <name>getTelecomTypesOfEmails</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getTelecomTypesOfEmails( javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of condition keys</description>
+        <name>getConditionsKeys</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getConditionsKeys( javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of conditions name keys</description>
+        <name>getConditionNameKeys</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getConditionNameKeys( javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <!--uimanager-->
+    <function>
+        <description>Return list of constants for style attributes for an type</description>
+        <name>getAttributeValuesForType</name>
+        <function-class>com.piramide.elwis.web.uimanager.el.Functions</function-class>
+        <function-signature>java.util.List getAttributeValuesForType(java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return true or false</description>
+        <name>attributeIsOfTypeColor</name>
+        <function-class>com.piramide.elwis.web.uimanager.el.Functions</function-class>
+        <function-signature>boolean attributeIsOfTypeColor(java.lang.String, boolean)</function-signature>
+    </function>
+    <function>
+        <description>Return true or false</description>
+        <name>attributeShowInSelect</name>
+        <function-class>com.piramide.elwis.web.uimanager.el.Functions</function-class>
+        <function-signature>boolean attributeShowInSelect(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return true or false</description>
+        <name>attributeIsOfTypeGradient</name>
+        <function-class>com.piramide.elwis.web.uimanager.el.Functions</function-class>
+        <function-signature>boolean attributeIsOfTypeGradient(java.lang.String,java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return true or false</description>
+        <name>attributeIsOfTypeBoxShadow</name>
+        <function-class>com.piramide.elwis.web.uimanager.el.Functions</function-class>
+        <function-signature>boolean attributeIsOfTypeBoxShadow(java.lang.String,java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return list of section of the xml file</description>
+        <name>getSectionListOfXmlFile</name>
+        <function-class>com.piramide.elwis.web.uimanager.el.Functions</function-class>
+        <function-signature>java.util.List getSectionListOfXmlFile(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return the style sheet type by UI mode</description>
+        <name>getStyleSheetTypeByUIMode</name>
+        <function-class>com.piramide.elwis.web.uimanager.el.Functions</function-class>
+        <function-signature>java.lang.Integer getStyleSheetTypeByUIMode(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <!--userpreferences-->
+    <function>
+        <description>Return list of time zones</description>
+        <name>getTimeZones</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.util.List getTimeZones(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <!--scheduler-->
+    <function>
+        <description>Return list of user that can view my calendar</description>
+        <name>getUserViewCalendar</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.util.List getUserViewCalendar(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Return the dateTmeZone for some schedulerUserId</description>
+        <name>getSchedulerUserDateTimeZone</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>org.joda.time.DateTimeZone
+            getSchedulerUserDateTimeZone(java.lang.Integer,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of user that can view calendar</description>
+        <name>getCalendarUsers</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.util.List getCalendarUsers(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return The external user name and time zone</description>
+        <name>getExternalCalendarUser</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.lang.String getExternalCalendarUser(java.lang.Integer,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>
+        </description>
+        <name>registerUserToCheckAccessRights</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.lang.Long registerUserToCheckAccessRights(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>
+            Check if the session user can be add appointments for another application users,
+            return true if it can be done and false in other case.
+        </description>
+        <name>isAddAppointmentPermissionEnabled</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean isAddAppointmentPermissionEnabled(javax.servlet.ServletRequest,java.lang.Long)
+        </function-signature>
+    </function>
+    <function>
+        <description>
+            Return the scheduler access rights for some appointment userId in relation to the session user.
+        </description>
+        <name>getSchedulerUserPermissions</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.util.Map getSchedulerUserPermissions(java.lang.Integer,javax.servlet.ServletRequest,
+            java.lang.Long)
+        </function-signature>
+    </function>
+    <function>
+        <description>Clear the scheduler access rights that will be cached in SchedulerAccessRightChecker singleton
+        </description>
+        <name>clearSchedulerUserPermissions</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>void clearSchedulerUserPermissions(javax.servlet.ServletRequest, java.lang.Long)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return single appointment filters for search</description>
+        <name>getSingleAppointmentFilters</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.util.List getSingleAppointmentFilters(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return default single appointment filter</description>
+        <name>getDefaultSingleAppointmentFilter</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.lang.Integer getDefaultSingleAppointmentFilter()</function-signature>
+    </function>
+    <function>
+        <description>Initialize the scheduler user id</description>
+        <name>initializeSchedulerUserId</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>void initializeSchedulerUserId(javax.servlet.http.HttpServletRequest)</function-signature>
+    </function>
+    <!--reports-->
+    <function>
+        <description>Return list of columns with message</description>
+        <name>getColumnsWithMessage</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getColumnsWithMessage(java.util.List,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return compose column label by titus path</description>
+        <name>composeColumnLabelByTitusPath</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String composeColumnLabelByTitusPath(java.lang.String, java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of operators to report filter</description>
+        <name>getReportFilterOperators</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getReportFilterOperators(java.lang.String, java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of operators to report query param filter</description>
+        <name>getReportQueryParamOperators</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getReportQueryParamOperators(java.lang.String, java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return compose operator value to report filter</description>
+        <name>composeOperatorValue</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String composeOperatorValue(java.lang.String, java.lang.String, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return view to filter value of this operator</description>
+        <name>getViewFilterValue</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String getViewFilterValue(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return filter operator message</description>
+        <name>getOperatorMenssage</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String getOperatorMenssage(java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return filter value to view</description>
+        <name>composeFilterValueToView</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String composeFilterValueToView(java.lang.String, java.lang.String,
+            java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>parser integer to date with an pattern</description>
+        <name>parseIntegerToDate</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String parseIntegerToDate(java.lang.String, java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>parser filter value</description>
+        <name>parserFilterValue</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String parserFilterValue(java.lang.String, java.lang.String, java.lang.String,
+            boolean, javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of constant filter values</description>
+        <name>getFilterConstantValues</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getFilterConstantValues(java.lang.String, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return value of an map by key</description>
+        <name>getMapValueByKey</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String getMapValueByKey(java.util.Map, java.lang.Object)</function-signature>
+    </function>
+    <function>
+        <description>Return primary key value of db filter</description>
+        <name>getPrimaryKeyValue</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String getPrimaryKeyValue(java.util.Map, java.util.List)</function-signature>
+    </function>
+    <function>
+        <description>Return true if is db filter</description>
+        <name>isDbFilter</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>boolean isDbFilter(java.lang.String, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return true if is constant filter</description>
+        <name>isConstantFilter</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>boolean isConstantFilter(java.lang.String, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of report page sizes</description>
+        <name>getReportPageSizes</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getReportPageSizes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of report document formats</description>
+        <name>getReportFormats</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getReportFormats(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of csv report delimiters</description>
+        <name>getCsvFieldDelimiters</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getCsvFieldDelimiters()</function-signature>
+    </function>
+    <function>
+        <description>Return list of report export charset</description>
+        <name>getReportCharsetList</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getReportCharsetList(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return user csv report delimiter config</description>
+        <name>readUserCsvDelimiterConfig</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String readUserCsvDelimiterConfig(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return user report charset config</description>
+        <name>readUserReportCharsetConfig</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String readUserReportCharsetConfig(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return String, whit converter applied</description>
+        <name>compoundColumnConverter</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String compoundColumnConverter(java.util.Map, java.lang.Object, java.util.Map,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of report page orientations</description>
+        <name>getReportPageOrientations</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getReportPageOrientations(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of constant filter values</description>
+        <name>applyConverterDbToViewInSimpleField</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String applyConverterDbToViewInSimpleField(java.lang.String, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return titus path decoded</description>
+        <name>decodeFieldPath</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String decodeFieldPath(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return true if is db filter that show in select</description>
+        <name>isDbFilterInSelect</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>boolean isDbFilterInSelect(java.lang.String, javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of values of execute an db filter</description>
+        <name>getValuesOfDbFilterToSelect</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getValuesOfDbFilterToSelect(java.lang.String, javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of values of an filter</description>
+        <name>getValuesOfFilter</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String getValuesOfFilter(java.lang.String, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of report filters dtos</description>
+        <name>getAllReportFilters</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getAllReportFilters(java.lang.String, javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return true if report sourceType is jrxml</description>
+        <name>isJrxmlSourceTypeReport</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>boolean isJrxmlSourceTypeReport(java.lang.String)
+        </function-signature>
+    </function>
+    <!--chart-->
+    <function>
+        <description>Return list of chart types</description>
+        <name>getChartTypeList</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getChartTypeList(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of chart position</description>
+        <name>getChartPositionList</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getChartPositionList(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of chart orientation</description>
+        <name>getChartOrientationList</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getChartOrientationList(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return chart type view how string</description>
+        <name>composeChartTypeView</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String composeChartTypeView(int, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of column totalize with resources to chart</description>
+        <name>getChartTotalizersWithResource</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getChartTotalizersWithResource(java.util.List, javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of column groups with resources to chart</description>
+        <name>getChartColumnGroupsWithResource</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.util.List getChartColumnGroupsWithResource(java.util.List, java.lang.String,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <!--campaign-->
+    <function>
+        <description>Return map the status of campaign contact responsible (color and title)</description>
+        <name>getResponsibleStatus</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.Map
+            getResponsibleStatus(java.lang.String,java.lang.String,java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return boolean, verify if an campaing contact already has assigned an sales process</description>
+        <name>campaignContactHasSalesProcess</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>boolean
+            campaignContactHasSalesProcess(java.lang.String,java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of responsible type to generate html mail</description>
+        <name>getResponsibleSendType</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getResponsibleSendType(java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of sender employees to generate html mail</description>
+        <name>getSenderEmployeeList</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSenderEmployeeList(java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of address emails to sender employee</description>
+        <name>getSenderEmployeeEmails</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSenderEmployeeEmails(java.lang.String, java.lang.String, java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return boolean, verify if the campaign has only one template</description>
+        <name>campaignHasOnlyOneTemplate</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>boolean campaignHasOnlyOneTemplate(java.lang.String, java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of telecom types and replace all '"' characters existent in name
+            of telecom type to '\"'.
+        </description>
+        <name>getTelecomTypesToHTMLElwisPlugin</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getTelecomTypesToHTMLElwisPlugin(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of all translation to telecom type and replace all '"' characters existent in name
+            of telecom type to '\"'.
+        </description>
+        <name>getTelecomTypeAllTranslation</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getTelecomTypeAllTranslation(java.lang.String, javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return all translation for this resource as javascript array strign notation
+        </description>
+        <name>writeResourceTranslationAsJSArray</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.lang.String writeResourceTranslationAsJSArray(java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of users to create task for activity responsibles
+        </description>
+        <name>getActivityCreateTaskUsers</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getActivityCreateTaskUsers(java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of campaign activities without el current activity
+        </description>
+        <name>getActivitiesToCopyContacts</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getActivitiesToCopyContacts(java.lang.String, java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return boolean, verify if responsible user for activity contact already created task
+        </description>
+        <name>activityUserHasTaskCreated</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>boolean activityUserHasTaskCreated(java.lang.String, java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return boolean, verify if communication is created from campaign generation
+        </description>
+        <name>isCampaignGenerationCommunication</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>boolean isCampaignGenerationCommunication(java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>verify if communication is created from campaign generation and get campaignId and campaignName
+        </description>
+        <name>getGenerationCampaignInfo</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.Map getGenerationCampaignInfo(java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of document generation order by columns
+        </description>
+        <name>getDocumentGenerationOrderBy</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getDocumentGenerationOrderBy(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of order type "ascending, descending"
+        </description>
+        <name>getDocumentColumnOrderType</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getDocumentColumnOrderType(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of has/has not email selection criteria
+        </description>
+        <name>getHasHasNotEmailCriteria</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getHasHasNotEmailCriteria(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of sender prefix type
+        </description>
+        <name>getSenderPrefixType</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSenderPrefixType(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return boolean, verify if exist send failed recipients</description>
+        <name>existCampaignSentLogFailedRecipients</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>boolean existCampaignSentLogFailedRecipients(java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return String, summary of campaign sent log</description>
+        <name>getCampaignSentLogSummary</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.lang.String getCampaignSentLogSummary(java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return count of generation recipients</description>
+        <name>getCampaignGenerationRecipients</name>
+        <function-class>com.piramide.elwis.web.campaignmanager.el.Functions</function-class>
+        <function-signature>java.lang.Integer getCampaignGenerationRecipients(java.lang.String,java.lang.String)
+        </function-signature>
+    </function>
+    <!--scheduler-->
+    <function>
+        <description>Check add scheduler permission</description>
+        <name>hasAddAppointmentPermission</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean hasAddAppointmentPermission(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Check edit scheduler permission</description>
+        <name>hasEditAppointmentPermission</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean hasEditAppointmentPermission(java.lang.Byte,java.lang.Byte,boolean)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check edit user scheduler permission</description>
+        <name>hasUserEditAppointmentPermission</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean hasUserEditAppointmentPermission(java.lang.Integer,java.lang.Integer,boolean)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check del scheduler permission</description>
+        <name>hasDelAppointmentPermission</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean hasDelAppointmentPermission(java.lang.Byte,java.lang.Byte,boolean)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check read scheduler permission</description>
+        <name>hasReadAppointmentPermission</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean hasReadAppointmentPermission(java.lang.Byte,java.lang.Byte,boolean)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check only anonymous scheduler permission</description>
+        <name>hasOnlyAnonymousAppPermission</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean hasOnlyAnonymousAppPermission(java.lang.Byte,java.lang.Byte,boolean)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check only anonymous scheduler permission in public and private app</description>
+        <name>hasOnlyAnonymousAppPermissionPublicAndPrivate</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean hasOnlyAnonymousAppPermissionPublicAndPrivate(java.lang.Byte,java.lang.Byte)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get user view access to appointment</description>
+        <name>getProcessPermitedInAppoimtment</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.lang.String
+            getProcessPermitedInAppoimtment(java.lang.Byte,java.lang.Byte,java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of output view type for overview calendar of other user
+        </description>
+        <name>getOverviewCalendarOutputTypes</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.util.List getOverviewCalendarOutputTypes(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of all users that with permission to view calendar
+        </description>
+        <name>getOverviewCalendarUsers</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.util.List getOverviewCalendarUsers(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return the label of the user task status
+        </description>
+        <name>getUserTaskStatusLabel</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.lang.String getUserTaskStatusLabel(java.lang.String, java.lang.String)
+        </function-signature>
+    </function>
+    <!--webmail-->
+    <function>
+        <description>Return list of fonts defined in html editor</description>
+        <name>getHtmlEditorFonts</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getHtmlEditorFonts()</function-signature>
+    </function>
+    <function>
+        <description>Return list of font sizes defined in html editor</description>
+        <name>getHtmlEditorFontSizes</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getHtmlEditorFontSizes()</function-signature>
+    </function>
+
+    <function>
+        <description>Return user mail configuration as Map</description>
+        <name>readUserMailConfiguration</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.Map readUserMailConfiguration(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of column to show types</description>
+        <name>getColumnToShowTypes</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getColumnToShowTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Return label of column to show type</description>
+        <name>getColumnToShowLabel</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.String getColumnToShowLabel(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return folder column to show</description>
+        <name>getFolderColumnToShow</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.String getFolderColumnToShow(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true if has mail contacts</description>
+        <name>hasMailContact</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean hasMailContact(java.lang.String,java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true if has mail be related with mail contact</description>
+        <name>allRecipientsWithMailContact</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean allRecipientsWithMailContact(java.lang.String,java.lang.String,java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true if mail contact is related with contact of type action</description>
+        <name>isActionMailContact</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean isActionMailContact(java.lang.String,java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true if mail contact is related with contact of type action</description>
+        <name>isSupportActivityMailContact</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean isSupportActivityMailContact(java.lang.String,java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true if user has default mail account configured</description>
+        <name>hasDefaultMailAccount</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean hasDefaultMailAccount(javax.servlet.http.HttpServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true contain read state</description>
+        <name>hasMailStateRead</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean hasMailStateRead(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true contain answered state</description>
+        <name>hasMailStateAnswered</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean hasMailStateAnswered(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true contain forward state</description>
+        <name>hasMailStateForward</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean hasMailStateForward(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return boolean, true contain send state</description>
+        <name>hasMailStateSend</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>boolean hasMailStateSend(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return List, the temporal attach saved</description>
+        <name>readMailTemporalAttachs</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List readMailTemporalAttachs(java.lang.String,javax.servlet.http.HttpServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return List, the temporal attach saved</description>
+        <name>getTokenFieldFormRecipients</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getTokenFieldFormRecipients(java.lang.String,net.java.dev.strutsejb.web.DefaultForm,javax.servlet.http.HttpServletRequest)</function-signature>
+    </function>
+
+    <!--Sales-->
+    <function>
+        <description>Return Max reminder level for company</description>
+        <name>getMaxReminderLevel</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.lang.Integer getMaxReminderLevel(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return contract pay method name</description>
+        <name>getPayMethodName</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.lang.String getPayMethodName(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of contract income types</description>
+        <name>getContractIncomeTypes</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getContractIncomeTypes(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return sale invoice info as Map</description>
+        <name>getOnlyOneSaleInvoiceInfoMap</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.Map getOnlyOneSaleInvoiceInfoMap(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+
+    <!--catalogs-->
+    <function>
+        <description>check if tableId is Address and contact person category</description>
+        <name>isAddressContactPersonCategory</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isAddressContactPersonCategory(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return list of template media types</description>
+        <name>getTemplateMediaType</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List getTemplateMediaType(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return message of media type</description>
+        <name>getMediaTypeMessage</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.String getMediaTypeMessage(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of address relation types</description>
+        <name>getAddressRelationTypeTypeList</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List getAddressRelationTypeTypeList(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return the field value of customer business area category</description>
+        <name>readCustomerBusinessAreaCategoryFieldValue</name>
+        <function-class>com.piramide.elwis.web.common.el.CategoryFunctions</function-class>
+        <function-signature>java.lang.String readCustomerBusinessAreaCategoryFieldValue(java.lang.Object,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <!--contacts-->
+    <function>
+        <description>Return communication document info as Map</description>
+        <name>getCommunicationDocumentInfo</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.Map getCommunicationDocumentInfo(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>process address user group access right</description>
+        <name>buildAddressUserGroupAccessRightValues</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>void
+            buildAddressUserGroupAccessRightValues(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>get import profile dto</description>
+        <name>getImportProfileDTO</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>com.piramide.elwis.dto.contactmanager.ImportProfileDTO
+            getImportProfileDTO(java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Build import profile column names</description>
+        <name>buildHeaderProfileColumns</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            buildHeaderProfileColumns(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Build import profile column names</description>
+        <name>buildHeaderProfileContactPersonColumns</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            buildHeaderProfileContactPersonColumns(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Build import deduplication items values</description>
+        <name>buildImportDeduplicationItemValues</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            buildImportDeduplicationItemValues(java.lang.Integer,java.lang.Integer,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Build import deduplication items values</description>
+        <name>buildImportContactPersonDeduplicationItemValues</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            buildImportContactPersonDeduplicationItemValues(java.lang.Integer,java.lang.Integer,java.lang.Integer,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get import address merge values</description>
+        <name>getImportMergeValuesList</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            getImportMergeValuesList(java.lang.Integer,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Build contact column names</description>
+        <name>buildHeaderContactDeduplicationColumns</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            buildHeaderContactDeduplicationColumns(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Build contact deduplication items values</description>
+        <name>buildContactDeduplicationItemValues</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            buildContactDeduplicationItemValues(java.lang.Integer,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get contact address merge values</description>
+        <name>getContactMergeSelectValuesList</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            getContactMergeSelectValuesList(java.lang.Integer,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>verify if item is in selected merge</description>
+        <name>isContactMergeSelectedItem</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>boolean isContactMergeSelectedItem(java.lang.String,java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>verify if import record has child contact person duplicates</description>
+        <name>importRecordFixedHasDuplicateContactPerson</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>boolean importRecordFixedHasDuplicateContactPerson(java.lang.Integer)</function-signature>
+    </function>
+    <function>
+        <description>count all company address</description>
+        <name>countCompanyAddress</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.lang.Integer countCompanyAddress(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>get customer invoice shipping types</description>
+        <name>getCustomerInvoiceShippingList</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List getCustomerInvoiceShippingList(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <!--admin-->
+    <function>
+        <description>available and assigned password change roles</description>
+        <name>getPasswordChangeRoles</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.util.Map getPasswordChangeRoles(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Evaluate if time is old related to current time millis</description>
+        <name>isOldRelatedToCurrentTime</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>boolean isOldRelatedToCurrentTime(java.lang.Long,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>User group type list</description>
+        <name>getUserGroupTypes</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.util.List getUserGroupTypes(javax.servlet.http.HttpServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>User group type message</description>
+        <name>getUserGroupMessage</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.lang.String
+            getUserGroupMessage(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Verify is User is root user</description>
+        <name>isRootUser</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>boolean isRootUser(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Verify is company is enabled for access from mobile</description>
+        <name>isCompanyEnabledToMobileAccess</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>boolean isCompanyEnabledToMobileAccess(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get user info as Map</description>
+        <name>getUserMap</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.util.Map getUserMap(java.lang.Object)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get user info as Map by address id</description>
+        <name>getUserMapByAddressId</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.util.Map getUserMapByAddressId(java.lang.Object,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Company type list</description>
+        <name>getCompanyTypes</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.util.List getCompanyTypes(javax.servlet.http.HttpServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Get the company type resource message</description>
+        <name>getCompanyTypeMessage</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.lang.String getCompanyTypeMessage(java.lang.String,javax.servlet.http.HttpServletRequest)</function-signature>
+    </function>
+    <!--finance-->
+    <function>
+        <description>Return invoice info as dto map</description>
+        <name>getInvoice</name>
+        <function-class>com.piramide.elwis.web.financemanager.el.Functions</function-class>
+        <function-signature>com.piramide.elwis.dto.financemanager.InvoiceDTO
+            getInvoice(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return incoming invoice info as map</description>
+        <name>getIncomingInvoiceInfoMap</name>
+        <function-class>com.piramide.elwis.web.financemanager.el.Functions</function-class>
+        <function-signature>java.util.Map
+            getIncomingInvoiceInfoMap(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Return list of dynamic search properties</description>
+        <name>getDynamicSearchPropertiesList</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.util.List
+            getDynamicSearchPropertiesList(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of dynamic search field operators</description>
+        <name>getDynamicSearchFieldOperatorList</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>java.util.List
+            getDynamicSearchFieldOperatorList(java.lang.String,java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return true or false</description>
+        <name>isDynamicSearchOneBoxView</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>boolean isDynamicSearchOneBoxView(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return true or false</description>
+        <name>isDynamicSearchTwoBoxView</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>boolean isDynamicSearchTwoBoxView(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Return true or false</description>
+        <name>isDynamicSearchSelectView</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>boolean isDynamicSearchSelectView(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Verify if dynamic search field is of type date</description>
+        <name>searchFieldIsDateType</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>boolean
+            searchFieldIsDateType(java.lang.String,java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Verify if dynamic search field is of type decimal</description>
+        <name>searchFieldIsDecimalType</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>boolean
+            searchFieldIsDecimalType(java.lang.String,java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Verify if dynamic search field is of type integer</description>
+        <name>searchFieldIsIntegerType</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>boolean
+            searchFieldIsIntegerType(java.lang.String,java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Verify if dynamic search field is of type number</description>
+        <name>searchFieldIsNumberType</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>boolean
+            searchFieldIsNumberType(java.lang.String,java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>find category field with values, this is of type singel select or compound select</description>
+        <name>findCategoryFieldWithValues</name>
+        <function-class>com.piramide.elwis.web.common.dynamicsearch.el.DynamicSearchUtil</function-class>
+        <function-signature>java.util.Map
+            findCategoryFieldWithValues(java.lang.String,java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Return list of dashboard birthday view type</description>
+        <name>getDashboardBirthdayViewTypes</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.util.List getDashboardBirthdayViewTypes(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>build selected and available employees, set in request</description>
+        <name>buildDashboardBirthdayEmployeeViewValues</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>void
+            buildDashboardBirthdayEmployeeViewValues(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <!-- product-->
+    <function>
+        <description>Find product pictures by product id</description>
+        <name>findProductPictureByProductIdDTOList</name>
+        <function-class>com.piramide.elwis.web.productmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            findProductPictureByProductIdDTOList(java.lang.Object,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Find product picture by product, return first</description>
+        <name>findProductPictureByProductIdFirst</name>
+        <function-class>com.piramide.elwis.web.productmanager.el.Functions</function-class>
+        <function-signature>java.util.Map
+            findProductPictureByProductIdFirst(java.lang.Object,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Find company product type id of type EVENT</description>
+        <name>findProductTypeIdOfEventType</name>
+        <function-class>com.piramide.elwis.web.productmanager.el.Functions</function-class>
+        <function-signature>java.lang.Integer findProductTypeIdOfEventType(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Count sale positions by product</description>
+        <name>countSalePositionByProduct</name>
+        <function-class>com.piramide.elwis.web.productmanager.el.Functions</function-class>
+        <function-signature>java.lang.Integer countSalePositionByProduct(java.lang.Object)
+        </function-signature>
+    </function>
+
+    <!-- web document-->
+    <function>
+        <description>variables fields by variable type</description>
+        <name>getWebDocumentFieldsByVariableType</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.VariableFunctions</function-class>
+        <function-signature>java.util.List
+            getWebDocumentFieldsByVariableType(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <!--bm app-->
+    <function>
+        <description>escape text as JSON specification</description>
+        <name>escapeJSON</name>
+        <function-class>com.piramide.elwis.web.bmapp.el.Functions</function-class>
+        <function-signature>java.lang.String escapeJSON(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Fantabulous list executed result info as Map</description>
+        <name>getFantabulousListResultInfo</name>
+        <function-class>com.piramide.elwis.web.bmapp.el.Functions</function-class>
+        <function-signature>java.util.Map
+            getFantabulousListResultInfo(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get date time as millis</description>
+        <name>getDateTimeAsMillis</name>
+        <function-class>com.piramide.elwis.web.bmapp.el.Functions</function-class>
+        <function-signature>java.lang.Long
+            getDateTimeAsMillis(java.lang.Object,java.lang.Object,java.lang.Object,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get mail from address info</description>
+        <name>getMailAddressInfo</name>
+        <function-class>com.piramide.elwis.web.bmapp.el.Functions</function-class>
+        <function-signature>java.util.Map
+            getMailAddressInfo(java.lang.String,java.lang.String,java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Find cities by country</description>
+        <name>findCountryCityDTOList</name>
+        <function-class>com.piramide.elwis.web.bmapp.el.Functions</function-class>
+        <function-signature>java.util.List findCountryCityDTOList(java.lang.Object,java.lang.Object)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get default user mail account info</description>
+        <name>getDefaultUserMailAccountInfo</name>
+        <function-class>com.piramide.elwis.web.bmapp.el.Functions</function-class>
+        <function-signature>java.util.Map getDefaultUserMailAccountInfo(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check participant of event</description>
+        <name>checkAlreadyIsParticipantInEvent</name>
+        <function-class>com.piramide.elwis.web.bmapp.el.Functions</function-class>
+        <function-signature>boolean
+            checkAlreadyIsParticipantInEvent(java.lang.Integer,java.lang.Integer,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <!-- jquery validations-->
+    <function>
+        <description>Return list of validation properties</description>
+        <name>getStrutsFormValidationItems</name>
+        <function-class>com.piramide.elwis.web.common.el.JQueryValidationFunctions</function-class>
+        <function-signature>java.util.List
+            getStrutsFormValidationItems(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return jQuery validation rules for struts form</description>
+        <name>writeJQueryValidationRules</name>
+        <function-class>com.piramide.elwis.web.common.el.JQueryValidationFunctions</function-class>
+        <function-signature>java.util.Map
+            writeJQueryValidationRules(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <!-- end miky -->
+
+    <function>
+        <description>Check if the user has access to configuration module.
+            It checks if every category of comfiguration menu which has a map of elements of menu is empty or not.
+        </description>
+        <name>checkConfigurationMenuAccess</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>boolean checkConfigurationMenuAccess(java.util.Map)</function-signature>
+    </function>
+    <function>
+        <description>return the first value of a linked hashmap</description>
+        <name>getFirstValueOfLinkedMap</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.Object getFirstValueOfLinkedMap(java.util.Map)</function-signature>
+    </function>
+
+    <function>
+        <description>Return list of all scheduler permissions</description>
+        <name>getSchedulerPermissions</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String checkSchedulerGrantAccess(javax.servlet.ServletRequest,
+            java.lang.String)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Check scheduler permission</description>
+        <name>checkSchedulerPermission</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>boolean checkSchedulerPermission(java.lang.Byte, java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <description>Compare String and integer value</description>
+        <name>isEqual</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean isEqual(java.lang.Integer, java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <description>Get localized full date strig</description>
+        <name>getUserLocalizedCurrentDate</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String
+            getUserLocalizedCurrentDate(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <!--<description>Convert the string millis to long for compare with second parameter</description>-->
+        <description>Get localized full date strig</description>
+        <name>stringDateIsBefore</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>boolean stringDateIsBefore(java.lang.Object, java.lang.Long)</function-signature>
+    </function>
+    <function>
+        <description>Get current date as integer, the date is calculated from DateTime taking care or
+            DateTimeZone
+        </description>
+        <name>getCurrentDateAsInteger</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.Integer getCurrentDateAsInteger(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Returns a string with the instant value of System.currentTimeMillis() (it can be used for
+            id's)
+        </description>
+        <name>getCurrentTimeMillis</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String getCurrentTimeMillis()</function-signature>
+    </function>
+
+    <function>
+        <description>Encode String to JavaScript encoding (like escape javascript function)</description>
+        <name>jscriptEncode</name>
+        <function-class>com.piramide.elwis.web.common.util.JavaScriptEncoder</function-class>
+        <function-signature>java.lang.String encodeForParam(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <description>this method converts the text to html, the only thing doing here is to replace the return carriage
+            by BR html tag
+        </description>
+        <name>convertTextToHtml</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String convertTextToHtml(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>recover the resource of functionality</description>
+        <name>getFunctionalityResource</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String getFunctionnalityResource(java.lang.String,
+            javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>recover the resource of module</description>
+        <name>getModuleResource</name>
+        <function-class>com.piramide.elwis.web.reports.el.Functions</function-class>
+        <function-signature>java.lang.String getModuleResource(java.lang.String, javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>This function filter the special characters that belogs to html, like less than and greater than
+            symbols
+            which are used to represent html tags. This functionc converts less than symbol to &gt; ...and so on.
+        </description>
+        <name>filterForHtml</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String filterForHtml(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description></description>
+        <name>divide</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String divide(java.lang.Integer, java.lang.Integer)</function-signature>
+    </function>
+    <function>
+        <description></description>
+        <name>getCampaignActivityStatusList</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List getActivityStatusList(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description></description>
+        <name>getCampaignTemplateDocumentType</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List getTemplateDocumentType(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description></description>
+        <name>getIndexTab</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.lang.Integer getIndexPositionFromTab(java.lang.String, javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>recover status list of campaign</description>
+        <name>getCampaignStatusList</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.ArrayList getStatusList(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description></description>
+        <name>filterMultipleSelectValues</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>void filterMultipleSelectValues(java.util.Map, java.util.List,
+            javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>Return list of Support Priority</description>
+        <name>getSupportPriority</name>
+        <function-class>com.piramide.elwis.web.supportmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSupportPriority(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Return list of Support Case types</description>
+        <name>getSupportCaseType</name>
+        <function-class>com.piramide.elwis.web.supportmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSupportCaseType(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Return list of Support Severity Case</description>
+        <name>getSupportSeverityCase</name>
+        <function-class>com.piramide.elwis.web.supportmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSupportSeverityCase(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Return list of Support Work Level</description>
+        <name>getSupportWorkLevel</name>
+        <function-class>com.piramide.elwis.web.supportmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSupportWorkLevel(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Return list of Support Status</description>
+        <name>getSupportStatus</name>
+        <function-class>com.piramide.elwis.web.supportmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSupportStatus(javax.servlet.ServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Build values for manage article access security</description>
+        <name>buildArticleUserGroupAccessRightValues</name>
+        <function-class>com.piramide.elwis.web.supportmanager.el.Functions</function-class>
+        <function-signature>void
+            buildArticleUserGroupAccessRightValues(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>verify if request user is with acces to article</description>
+        <name>userWithAccessToArticleOnDataLevel</name>
+        <function-class>com.piramide.elwis.web.supportmanager.el.Functions</function-class>
+        <function-signature>boolean
+            userWithAccessToArticleOnDataLevel(java.lang.String,javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+
+    <function>
+        <description>returns true if trial company is enabled</description>
+        <name>createTrialCompany</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.lang.Boolean createTrialCompany()</function-signature>
+    </function>
+    <function>
+        <description>returns List of resource and values of company template types</description>
+        <name>getCompanyTemplateType</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.util.List getCompanyTemplateTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>returns System language resource</description>
+        <name>getSystemLanguageResource</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>java.lang.String getSystemLanguageResource(java.lang.String)</function-signature>
+    </function>
+
+    <function>
+        <description>See String.replaceAll</description>
+        <name>replaceAll</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String replaceAll(java.lang.String,java.lang.String,java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Sort telecomt by position</description>
+        <name>sortTelecomsByPosition</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>void sortTelecomsByPosition(java.util.Map)</function-signature>
+    </function>
+    <function>
+        <description>verify if user use html editor</description>
+        <name>useHtmlEditor</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.Boolean useHtmlEditor(java.lang.Integer,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>verify if user has configurated email account</description>
+        <name>hasEmailAccount</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.Boolean hasEmailAccount(java.lang.Integer,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>return list that contain category table options(address, customer, etc)</description>
+        <name>getCategoryTableTypes</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List getCategoryTablesList(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>return list that contain category table options(address, customer, etc)</description>
+        <name>getCategoryTablesListExtended</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List getCategoryTablesListExtended(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>return list that contain category types options (text, simple select, multiple select, etc)
+        </description>
+        <name>getCategoryTypes</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.util.List getCategoryTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>return Category type by constant</description>
+        <name>getCategoryType</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getCategoryType(java.lang.Integer,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>return category table type by constant</description>
+        <name>getCategoryTableType</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getCategoryTable(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>check if category type is Single select</description>
+        <name>isCategorySingleSelect</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isCategorySingleSelect(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>check if category type is compound select</description>
+        <name>isCategoryCompoundSelect</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isCategoryCompoundSelect(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>check if category type is decimal</description>
+        <name>isCategoryDecimal</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isCategoryDecimal(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>check if category type is Integer</description>
+        <name>isCategoryInteger</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isCategoryInteger(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>check if category type is Date</description>
+        <name>isCategoryDate</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isCategoryDate(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>check if category type is Text</description>
+        <name>isCategoryText</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isCategoryText(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>check if category type is Link</description>
+        <name>isCategoryLink</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isLinkValue(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>check if category type is FreeText</description>
+        <name>isCategoryFreeText</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isFreText(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>check if category type is Attach</description>
+        <name>isCategoryAttach</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isAttach(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Check if category has enabled hasSubCategories</description>
+        <name>hasSubCategories</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.lang.Boolean hasSubCategories(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read category tabs</description>
+        <name>getCategoryTabs</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            buildCategoryTabs(java.lang.String,java.lang.String,java.util.List,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read category tab</description>
+        <name>getCategoryTab</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>com.piramide.elwis.dto.catalogmanager.categoryUtil.WebCategoryTab
+            buildCategoryTab(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read category</description>
+        <name>getCategory</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>com.piramide.elwis.dto.catalogmanager.CategoryDTO
+            getCategory(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read category</description>
+        <name>getCategoryWithModuleTable</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>com.piramide.elwis.dto.catalogmanager.CategoryDTO
+            getCategory(java.lang.String,java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read categoryValues</description>
+        <name>getCategoryValues</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List readCategoryValues(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>filter multiple select values</description>
+        <name>buildMultipleSelectValues</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>void buildMultipleSelectValues(java.util.List,java.util.List,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>get defaultForm property</description>
+        <name>getFormField</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.Object
+            getFormField(java.lang.String,java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read children categories</description>
+        <name>readChildrenCategories</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List readChildrenCategories(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read cache values from session</description>
+        <name>readCacheInAJAXRequest</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>void readCacheInAJAXRequest(javax.servlet.jsp.PageContext,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>build message string</description>
+        <name>buildAJAXMessage</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.String buildAJAXMessage(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read Categories without groups</description>
+        <name>buildCategoriesWithoutGroups</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            buildCategoriesWithoutGroups(java.lang.String,java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>read groups without Tabs</description>
+        <name>buildGroupsWithoutTabs</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List buildGroupsWithoutTabs(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>replace special characters for download action in category values</description>
+        <name>encodeDownloadAction</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.String encodeDownloadAction(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>This function returns the formatted address complete name for a person or organization
+            if the address is not found, it returns an empty string
+        </description>
+        <name>getAddressName</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.lang.String getAddressName(java.lang.Object)</function-signature>
+    </function>
+    <function>
+        <description>This function returns address light fields as Map</description>
+        <name>getAddressMap</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.Map getAddressMap(java.lang.Object)</function-signature>
+    </function>
+    <function>
+        <description>This function returns address telecoms as Map</description>
+        <name>getAddressTelecomsMap</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.Map getAddressTelecomsMap(java.lang.Object)</function-signature>
+    </function>
+    <function>
+        <description>Check relation for categoryvalue</description>
+        <name>checkRelation</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>boolean checkRelation(java.lang.String,java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check tabs for children and parent categories</description>
+        <name>isChildrenCategoryInOtherTab</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>boolean
+            isChildrenCategoryInOtherTab(java.lang.String,java.lang.String,java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Parse euro characted</description>
+        <name>filterAjaxResponse</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String filterAjaxResponse(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>SequenceRule type list</description>
+        <name>getSequenceRuleTypes</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSequenceRuleTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>SequenceRule resettype list</description>
+        <name>getSequeceRuleResetTypes</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSequeceRuleResetTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Search Label in list of LabelValueBeans</description>
+        <name>searchLabel</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.lang.String searchLabel(java.util.List,java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Returns Company Languages List of LanguagesDTO objects</description>
+        <name>getCompanyLanguages</name>
+        <function-class>com.piramide.elwis.web.catalogmanager.el.Functions</function-class>
+        <function-signature>java.util.List getCompanyLanguages(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Returns Invoice types list</description>
+        <name>getInvoiceTypes</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSequeceRuleResetTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Returns List of InvoiceVatDTOs</description>
+        <name>getInvoiceVats</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getInvoiceVats(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Verify that payments can be made by the invoice</description>
+        <name>canPayInvoice</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>boolean canPayInvoice(java.lang.String,javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Verify if the invoice has zero as open amount</description>
+        <name>hasZeroOpenAmount</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>boolean hasZeroOpenAmount(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Verify that invoice has invoice reminders assigned</description>
+        <name>existsInvoiceReminders</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>boolean existsInvoiceReminders(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get reminderLevel name for update and edit invoices</description>
+        <name>getReminderLevelName</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.lang.String getReminderLevelName(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check if there are sales at the salesprocess partner</description>
+        <name>hasAssociatedSale</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>boolean hasAssociatedSale(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>returns paymethod list</description>
+        <name>getPayMethods</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getPayMethods(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>returns paymethod list for salepositions</description>
+        <name>getSalePositionPayMethods</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSalePositionPayMethods(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>returns matchcalendarperiod constant list</description>
+        <name>getMatchCalendarPeriodOptions</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getMatchCalendarPeriodOptions(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>returns amountTypes constant list</description>
+        <name>getAmounTypes</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getAmountTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>From the data form, builds a set of parameters that are used to ajax requests</description>
+        <name>buildParametersForAjaxRequest</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String buildParametersForAjaxRequest(net.java.dev.strutsejb.web.DefaultForm)
+        </function-signature>
+    </function>
+    <function>
+        <description>From the data form, builds a set of parameters that are used to ajax requests</description>
+        <name>setValuesFromAjaxRequest</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>void setValuesFromAjaxRequest(javax.servlet.jsp.PageContext,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Put in request required attributes to build Text input in DataImport page</description>
+        <name>setDataImportValuesFromAjaxRequest</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>void
+            setDataImportValuesFromAjaxRequest(javax.servlet.jsp.PageContext,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>check param contains integer value</description>
+        <name>isInteger</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>boolean isInteger(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Verifies if the invoiceId belongs to a type of bill creditNote, if true put in request 'invoiceDTO'
+            attribute; than contain InvoiceDTO Object
+        </description>
+        <name>invoiceIsCreditNote</name>
+        <function-class>com.piramide.elwis.web.financemanager.el.Functions</function-class>
+        <function-signature>boolean invoiceIsCreditNote(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check if the id belongs to a credit note and also whether it is related to an invoice</description>
+        <name>creditNoteIsRelatedWithInvoice</name>
+        <function-class>com.piramide.elwis.web.financemanager.el.Functions</function-class>
+        <function-signature>boolean creditNoteIsRelatedWithInvoice(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check if the invoice associated to id are related to one or more credit notes</description>
+        <name>isInvoiceRelatedToCreditNote</name>
+        <function-class>com.piramide.elwis.web.financemanager.el.Functions</function-class>
+        <function-signature>boolean isInvoiceRelatedToCreditNote(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Project to be invoiced types</description>
+        <name>getToBeInvoicedTypes</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.util.List getToBeInvoicedTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Project statuses types</description>
+        <name>getProjectStatuses</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.util.List getProjectStatuses(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Get a project status label</description>
+        <name>getProjectStatusLabel</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.lang.String getProjectStatusLabel(javax.servlet.ServletRequest, java.lang.Object)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return NetGross constants in list of LabelValueBean Objects</description>
+        <name>getNetGrossOptions</name>
+        <function-class>com.piramide.elwis.web.financemanager.el.Functions</function-class>
+        <function-signature>java.util.List getNetGrossOptions(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return NetGross constants in list of LabelValueBean Objects</description>
+        <name>getImportTypes</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List getImportTypes(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return NetGross of invoice</description>
+        <name>getInvoiceNetGross</name>
+        <function-class>com.piramide.elwis.web.financemanager.el.Functions</function-class>
+        <function-signature>java.lang.String getInvoiceNetGross(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return NetGross of Action</description>
+        <name>getNetGrossFieldFromAction</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.lang.String
+            getNetGrossFieldFromAction(java.lang.String,java.lang.String,javax.servlet.ServletRequest))
+        </function-signature>
+    </function>
+    <function>
+        <description>Return NetGross of Sale</description>
+        <name>getNetGrossFieldFromSale</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.lang.String getNetGrossFieldFromSale(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return list of project user permissions</description>
+        <name>getProjectUserPermissions</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.lang.String getProjectUserPermissions(javax.servlet.ServletRequest,java.lang.String)
+        </function-signature>
+    </function>
+    <function>
+        <description>Get a project time status label</description>
+        <name>getProjectTimeStatuses</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.util.List getProjectTimeStatuses(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Check projectUser permission</description>
+        <name>hasProjectUserPermission</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>boolean
+            hasProjectUserPermission(java.lang.String,java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Check if it's project user</description>
+        <name>isUserOfProject</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>boolean isUserOfProject(java.lang.String,javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return System folders</description>
+        <name>getSystemFolders</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.Map getSystemFolders(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return System folders</description>
+        <name>getWebmailFolders</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.Map getWebmailFolders(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return Custom folders</description>
+        <name>getCustomFolders</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getCustomFolders(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return Custom folders as JSON</description>
+        <name>getCustomFoldersAsJSONArray</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.String getCustomFoldersAsJSONArray(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return Custom folders</description>
+        <name>getEmailPriorities</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getEmailPriorities(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return list of folders for parent</description>
+        <name>getFoldersForParent</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getFoldersForParent(javax.servlet.http.HttpServletRequest, java.lang.Integer,
+            java.lang.Integer)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return tree of folders as ul</description>
+        <name>getFoldersAsXmlString</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.String getFoldersAsXmlString(java.lang.Integer, java.lang.Integer,
+            javax.servlet.jsp.PageContext, java.lang.Integer)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return projects assigned to some user</description>
+        <name>getProjectsByUser</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.util.List getProjectsByUser(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Return projects times invoice and no invoice sum</description>
+        <name>calculateProjectTimesByAssigneeSubProject</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.util.Map
+            calculateProjectTimesByAssigneeSubProject(java.lang.Object,java.lang.Object,java.lang.Object)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return projects times by subproject invoice and no invoice sum</description>
+        <name>calculateProjectTimesBySubProject</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.util.Map calculateProjectTimesBySubProject(java.lang.Object,java.lang.Object)
+        </function-signature>
+    </function>
+    <function>
+        <description>Evaluate if company has assigned finance module</description>
+        <name>hasAssignedFinanceModule</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>boolean hasAssignedFinanceModule(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>Evaluate if company has assigned lexware module</description>
+        <name>hasAssignedLexwareModule</name>
+        <function-class>com.piramide.elwis.web.admin.el.Functions</function-class>
+        <function-signature>boolean hasAssignedLexwareModule(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>
+            Check if the user has configurated automatic download in webmail settings.
+        </description>
+        <name>isAutomaticDownloadConfigurated</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.lang.Boolean isAutomaticDownloadConfigurated(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>
+            Returns the value for a given system configuration property.
+        </description>
+        <name>getConfigurationPropertyValue</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String getConfigurationPropertyValue(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>
+            Returns the url to context dependant help
+        </description>
+        <name>getContextDependantHelpUrl</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.lang.String getContextDependantHelpUrl(java.lang.String,javax.servlet.http.HttpServletRequest)</function-signature>
+    </function>
+
+    <function>
+        <description>Return collection of Mail's priority LabelValues</description>
+        <name>getPriorityValues</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getPriorityValues(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return collection of Mail's read states LabelValues</description>
+        <name>getMailStates</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getMailStates(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return collection of Mail's attach states LabelValues</description>
+        <name>getAttachStates</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getAttachStates(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return collection of Mail's communication states LabelValues</description>
+        <name>getCommunicationStates</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getCommunicationStates(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Return collection of Mail's Incomingi/Outgoing states LabelValues</description>
+        <name>getIncOutValues</name>
+        <function-class>com.piramide.elwis.web.webmail.el.Functions</function-class>
+        <function-signature>java.util.List getIncOutValues(javax.servlet.http.HttpServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>Verifies if the code is associate to customer</description>
+        <name>isCustomer</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>boolean isCustomer(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Verifies if the code is associate to supplier</description>
+        <name>isSupplier</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>boolean isSupplier(java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>return a List of uninvoiced payment steps</description>
+        <name>getUnInvoicedPayments</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getUnInvoicedPayments(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>return a String that is the payment step</description>
+        <name>getFormattedPaymentStepLabel</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.lang.String getFormattedPaymentStepLabel(java.lang.String,javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>
+            checks if the customer has relationship with other entities
+        </description>
+        <name>customerHasRelations</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>boolean customerHasRelations(java.lang.Integer)</function-signature>
+    </function>
+    <function>
+        <description>
+            check it the supplier has relations with other entities
+        </description>
+        <name>supplierHasRelations</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>boolean supplierHasRelations(java.lang.Integer)</function-signature>
+    </function>
+    <function>
+        <description>
+            return a list of maps with the system modules
+        </description>
+        <name>getSystemModules</name>
+        <function-class>com.piramide.elwis.web.contactmanager.el.Functions</function-class>
+        <function-signature>java.util.List getSystemModulesMap(javax.servlet.ServletRequest)</function-signature>
+    </function>
+    <function>
+        <description>
+            return a list that contains the forward options when sales process actions its edited
+        </description>
+        <name>getActionForwardSelectOptions</name>
+        <function-class>com.piramide.elwis.web.salesmanager.el.Functions</function-class>
+        <function-signature>java.util.List getActionForwardSelectOptions(javax.servlet.ServletRequest)
+        </function-signature>
+    </function>
+    <function>
+        <description>
+            return a list that contains the forward options when a task its edited
+        </description>
+        <name>getTaskNavigationOptions</name>
+        <function-class>com.piramide.elwis.web.schedulermanager.el.Functions</function-class>
+        <function-signature>java.util.List
+            getTaskNavigationOptions(javax.servlet.ServletRequest,net.java.dev.strutsejb.web.DefaultForm)
+        </function-signature>
+    </function>
+    <function>
+        <description>Returns the maps of system languages</description>
+        <name>getSystemLanguages</name>
+        <function-class>com.piramide.elwis.web.common.el.Functions</function-class>
+        <function-signature>java.util.Map getSystemLanguages()</function-signature>
+    </function>
+    <function>
+        <description>return a fmt localized message given a locale</description>
+        <name>getMessageByLocale</name>
+        <function-class>com.piramide.elwis.web.common.util.JSPHelper</function-class>
+        <function-signature>java.lang.String getMessage(java.util.Locale, java.lang.String)</function-signature>
+    </function>
+    <function>
+        <description>Mail account secure connection types</description>
+        <name>getMailAccountSecureConnectionTypes</name>
+        <function-class>com.piramide.elwis.web.projects.el.Functions</function-class>
+        <function-signature>java.util.List getMailAccountSecureConnectionTypes()</function-signature>
+    </function>
+
+    <!--style class functions-->
+    <function>
+        <description>Main form panel classes</description>
+        <name>getFormPanelClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormPanelClasses()</function-signature>
+    </function>
+    <function>
+        <description>Form label classes</description>
+        <name>getFormLabelClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormLabelClasses()</function-signature>
+    </function>
+    <function>
+        <description>Form contain classes</description>
+        <name>getFormContainClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormContainClasses(java.lang.Boolean)</function-signature>
+    </function>
+    <function>
+        <description>Form contain view classes</description>
+        <name>getFormContainViewClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormContainViewClasses()</function-signature>
+    </function>
+    <!-- class for button SAVE CANCEL SAVEANDNEW -->
+    <function>
+        <description>Form button group classes</description>
+        <name>getFormButtonWrapperClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormButtonWrapperClasses()</function-signature>
+    </function>
+    <!-- class for button type -->
+    <function>
+        <description>Form button classes</description>
+        <name>getFormButtonClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormButtonClasses()</function-signature>
+    </function>
+    <!-- class for select -->
+    <function>
+        <description>Form select classes</description>
+        <name>getFormSelectClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormSelectClasses()</function-signature>
+    </function>
+    <!-- class for select -->
+    <function>
+        <description>Form select classes</description>
+        <name>getFormContainForPopUpClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormContainForPopUpClasses(java.lang.Boolean)</function-signature>
+    </function>
+    <!--class for table-->
+    <function>
+        <description>For bootstrap table classes</description>
+        <name>getGeneralFantabulousTableClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getGeneralFantabulousTableClasses()</function-signature>
+    </function>
+    <function>
+        <description>For table classes</description>
+        <name>getFantabulousTableClases</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFantabulousTableClases()</function-signature>
+    </function>
+    <function>
+        <description>For table classes, mobile large</description>
+        <name>getFantabulousTableLargeClases</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFantabulousTableLargeClases()</function-signature>
+    </function>
+
+    <function>
+        <description>For form group search with two inputs text field</description>
+        <name>getFormGroupTwoSearchInput</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormGroupTwoSearchInput()</function-signature>
+    </function>
+
+    <function>
+        <description>For form group search with two inputs button submit</description>
+        <name>getFormGroupTwoSearchButton</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormGroupTwoSearchButton()</function-signature>
+    </function>
+
+    <function>
+        <name>getFormLabelOneSearchInput</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormLabelOneSearchInput()</function-signature>
+    </function>
+
+    <function>
+        <name>getFormOneSearchInput</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormOneSearchInput()</function-signature>
+    </function>
+
+    <function>
+        <name>getFormSmallLabelClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormSmallLabelClasses()</function-signature>
+    </function>
+
+    <function>
+        <name>getFormBigContainClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormBigContainClasses(java.lang.Boolean)</function-signature>
+    </function>
+
+    <function>
+        <name>getFormBigContainViewClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormBigContainViewClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>return form group classes</description>
+        <name>getFormGroupClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormGroupClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>return button cancel classes</description>
+        <name>getFormButtonCancelClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormButtonCancelClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>return input classes</description>
+        <name>getFormInputClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormInputClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>primary container classes</description>
+        <name>getFormClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>classes for color picker</description>
+        <name>getFormColorPickerClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormColorPickerClasses(java.lang.Boolean)</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for alphabet wrapper</description>
+        <name>getAlphabetWrapperClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getAlphabetWrapperClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for search wrapper</description>
+        <name>getSearchWrapperClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getSearchWrapperClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for list wrapper</description>
+        <name>getListWrapperClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getListWrapperClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for label in popup</description>
+        <name>getFormLabelSearchPopUp</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormLabelSearchPopUp()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for input int popup</description>
+        <name>getFormInputSearchPopUP</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormInputSearchPopUP()</function-signature>
+    </function>
+
+    <function>
+        <description>return label classes for forms with two columns</description>
+        <name>getFormLabelClassesTwoColumns</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormLabelClassesTwoColumns()</function-signature>
+    </function>
+
+    <function>
+        <description>return input classes for forms with two columns</description>
+        <name>getFormContainClassesTwoColumns</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormContainClassesTwoColumns(java.lang.Boolean)</function-signature>
+    </function>
+
+    <function>
+        <description>return input classes only view in forms with two columns</description>
+        <name>getFormContainViewClassesTwoColumns</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormContainViewClassesTwoColumns()</function-signature>
+    </function>
+
+    <function>
+        <description>return input classes for forms with two columns (large)</description>
+        <name>getFormContainClassesTwoColumnsLarge</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormContainClassesTwoColumnsLarge(java.lang.Boolean)</function-signature>
+    </function>
+
+    <function>
+        <description>return input classes only view in forms with two columns (large)</description>
+        <name>getFormContainViewClassesTwoColumnsLarge</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormContainViewClassesTwoColumnsLarge()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for forms with two columns</description>
+        <name>getFormWrapperTwoColumns</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormWrapperTwoColumns()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for FormGroup in forms with two columns</description>
+        <name>getFormGroupClassesTwoColumns</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormGroupClassesTwoColumns()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for label in render category form</description>
+        <name>getFormLabelRenderCategory</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormLabelRenderCategory()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes for contain in render category form</description>
+        <name>getFormContainRenderCategory</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormContainRenderCategory(java.lang.Boolean)</function-signature>
+    </function>
+
+    <function>
+        <description>return classes in forms with one column (but it is large)</description>
+        <name>getFormClassesLarge</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormClassesLarge()</function-signature>
+    </function>
+
+    <function>
+        <description>forms with buttons inline</description>
+        <name>getFormButtonInlineClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormButtonInlineClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>forms with cancel button inline</description>
+        <name>getFormButtonCancelInlineClasses</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getFormButtonCancelInlineClasses()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes row in forms with two columns</description>
+        <name>getRowClassesTwoColumns</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getRowClassesTwoColumns()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Trash</description>
+        <name>getClassGlyphTrash</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphTrash()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Edit</description>
+        <name>getClassGlyphEdit</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphEdit()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Person</description>
+        <name>getClassGlyphPerson</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphPerson()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph private Person</description>
+        <name>getClassGlyphPrivatePerson</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphPrivatePerson()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Organization</description>
+        <name>getClassGlyphOrganization</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphOrganization()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Download</description>
+        <name>getClassGlyphDownload</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphDownload()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Generate</description>
+        <name>getClassGlyphGenerate</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphGenerate()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Ok</description>
+        <name>getClassGlyphOk</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphOk()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph List Alt</description>
+        <name>getClassGlyphListAlt</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphListAlt()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Open</description>
+        <name>getClassGlyphOpen</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphOpen()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Import</description>
+        <name>getClassGlyphImport</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphImport()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph refresh</description>
+        <name>getClassGlyphRefresh</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphRefresh()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Save</description>
+        <name>getClassGlyphSave</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphSave()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph key</description>
+        <name>getClassGlyphKey</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphKey()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph RemoveSign</description>
+        <name>getClassGlyphRemoveSign</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphRemoveSign()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph merge</description>
+        <name>getClassGlyphMerge</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphMerge()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph globe</description>
+        <name>getClassGlyphOpenLink</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphOpenLink()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph eye</description>
+        <name>getClassGlyphViewArticleAnswer</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphViewArticleAnswer()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Contact Group Edit</description>
+        <name>getClassGlyphContactGroupEdit</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphContactGroupEdit()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph sales process</description>
+        <name>getClassGlyphSalesProcess</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphSalesProcess()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph sales process two</description>
+        <name>getClassGlyphSalesProcessTwo</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphSalesProcessTwo()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Phone two</description>
+        <name>getClassGlyphPhoneTwo</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphPhoneTwo()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Reply</description>
+        <name>getClassGlyphReply</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphReply()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Reply</description>
+        <name>getClassGlyphForward</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphForward()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Paper clip</description>
+        <name>getClassGlyphPaperClip</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphPaperClip()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Paper clip</description>
+        <name>getClassGlyphPrioHigh</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphPrioHigh()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Open folder</description>
+        <name>getClassGlyphOpenFolder</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphOpenFolder()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes Glyph Key lock</description>
+        <name>getClassGlyphKeyLock</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getClassGlyphKeyLock()</function-signature>
+    </function>
+
+    <function>
+        <description>return classes table into a form</description>
+        <name>getTableClasesIntoForm</name>
+        <function-class>com.piramide.elwis.web.common.el.StyleClassFunctions</function-class>
+        <function-signature>java.lang.String getTableClasesIntoForm()</function-signature>
+    </function>
+</taglib>
+

@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+    <formset>
+
+        <!--
+             <form name="styleSheetForm">
+                <field property="companyId" depends="checkEntry">
+                    <var>
+                        <var-name>tableDB</var-name>
+                        <var-value>stylesheet</var-value>
+                    </var>
+                    <var>
+                       <var-name>moduleId</var-name>
+                        <var-value>7</var-value>
+                    </var>
+                </field>
+            </form>
+        -->
+
+        <form name="userForm">
+            <field property="maxRecentList" depends="required,integer,unsignedInteger">
+                <arg0 key="User.maxRecentes" resource="true"/>
+            </field>
+            <field property="rowsPerPage" depends="required,integer,unsignedInteger">
+                <arg0 key="User.rows" resource="true"/>
+            </field>
+            <field property="favoriteLanguage" depends="required">
+                <arg0 key="User.language" resource="true"/>
+            </field>
+            <field property="timeout" depends="required,integer,unsignedInteger">
+                <arg0 key="User.timeout" resource="true"/>
+            </field>
+            <field property="timeZone" depends="required">
+                <arg0 key="User.timeZone" resource="true"/>
+            </field>
+        </form>
+
+        <form name="passForm">
+            <field property="userPassword" depends="required">
+                <arg0 key="User.pass" resource="true"/>
+            </field>
+            <field property="password1" depends="required, minlength, twofields">
+                <arg0 key="User.passNew"/>
+                <arg1 key="${var:minlength}" resource="false"/>
+                <var>
+                    <var-name>secondProperty</var-name>
+                    <var-value>password2</var-value>
+                </var>
+                <var>
+                    <var-name>minlength</var-name>
+                    <var-value>6</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="plannedPassForm">
+            <field property="previousPassword" depends="required">
+                <arg0 key="User.pass" resource="true"/>
+            </field>
+            <field property="password1" depends="required, minlength, twofields">
+                <arg0 key="User.passNew"/>
+                <arg1 key="${var:minlength}" resource="false"/>
+                <var>
+                    <var-name>secondProperty</var-name>
+                    <var-value>password2</var-value>
+                </var>
+                <var>
+                    <var-name>minlength</var-name>
+                    <var-value>6</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="companyForm">
+            <field property="rowsPerPage" depends="required,unsignedInteger">
+                <arg0 key="Company.row" resource="true"/>
+            </field>
+            <field property="timeout" depends="required,unsignedInteger">
+                <arg0 key="Company.timeOut" resource="true"/>
+            </field>
+            <field property="maxAttachSize" depends="required,unsignedInteger">
+                <arg0 key="Company.attach" resource="true"/>
+            </field>
+            <field property="invoiceDaysSend" depends="requiredif,unsignedInteger">
+                <arg0 key="Company.dayToSendInvoice" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>hasAssignedFinanceModule</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>
+            <field property="sequenceRuleIdForInvoice" depends="foreignKey">
+                <arg0 key="Company.sequenceRuleForInvoice" resource="true"/>
+                <arg1 key="table=sequencerule"/>
+                <arg2 key="column=numberid"/>
+            </field>
+            <field property="sequenceRuleIdForCreditNote" depends="foreignKey">
+                <arg0 key="Company.sequenceRuleForCreditNote" resource="true"/>
+                <arg1 key="table=sequencerule"/>
+                <arg2 key="column=numberid"/>
+            </field>
+            <field property="salutationId" depends="foreignKey">
+                <arg0 key="Company.defaultSalutation" resource="true"/>
+                <arg1 key="table=salutation"/>
+                <arg2 key="column=salutationid"/>
+            </field>
+            <field property="emailContract" depends="email">
+                <arg0 key="Company.contractEndReminderEmail" resource="true"/>
+            </field>
+            <field property="invoiceMailTemplateId" depends="foreignKey">
+                <arg0 key="Company.invoiceMailTemplate" resource="true"/>
+                <arg1 key="table=template"/>
+                <arg2 key="column=templateid"/>
+            </field>
+        </form>
+
+        <form name="logonForm">
+            <field property="companyLogin" depends="required">
+                <arg0 key="Logon.passwordCia" resource="true"/>
+            </field>
+            <field property="login" depends="required">
+                <arg0 key="Logon.username" resource="true"/>
+            </field>
+            <field property="password" depends="required">
+                <arg0 key="Logon.password" resource="true"/>
+            </field>
+        </form>
+        <form name="configurationForm">
+            <field property="calendarDefaultView" depends="required">
+                <arg0 key="Scheduler.calendarDefaultView" resource="true"/>
+            </field>
+            <field property="dayFragmentation" depends="required">
+                <arg0 key="Scheduler.dayFragmentation" resource="true"/>
+            </field>
+            <field property="initialDayOfWork" depends="required">
+                <arg0 key="Scheduler.initDayOfWork" resource="true"/>
+            </field>
+            <field property="finalDayOfWork" depends="required">
+                <arg0 key="Scheduler.finalDayOfWork" resource="true"/>
+            </field>
+        </form>
+
+        <form name="trialCompanyForm">
+            <field property="name1" depends="required">
+                <arg0 key="Company.name"/>
+            </field>
+
+            <field property="rootName1" depends="required">
+                <arg0 key="Company.rootName1" resource="true"/>
+            </field>
+            <field property="userName" depends="required">
+                <arg0 key="Company.userName" resource="true"/>
+            </field>
+            <field property="email" depends="required, emailValidator">
+                <arg0 key="Company.email" resource="true"/>
+            </field>
+            <field property="userPassword" depends="required, minlength, twofields">
+                <arg0 key="Company.password"/>
+                <arg1 key="${var:minlength}" resource="false"/>
+                <var>
+                    <var-name>secondProperty</var-name>
+                    <var-value>rePassword</var-value>
+                </var>
+                <var>
+                    <var-name>minlength</var-name>
+                    <var-value>6</var-value>
+                </var>
+            </field>
+            <field property="companyCreateLogin" depends="requiredif, unique">
+                <arg0 key="Company.login"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>company</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>login</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>companyId=companyid</var-value>
+                </var>
+            </field>
+            <field property="favoriteLanguage" depends="required">
+                <arg0 key="Company.defaultUILanguage"/>
+            </field>
+            <field property="registrationCode" depends="required">
+                <arg0 key="Company.registrationCode"/>
+            </field>
+        </form>
+
+        <form name="demoAccountForm">
+            <field property="lastName" depends="required">
+                <arg0 key="DemoAccount.lastName" resource="true"/>
+            </field>
+            <field property="firstName" depends="required">
+                <arg0 key="DemoAccount.firstName" resource="true"/>
+            </field>
+            <field property="phoneNumber" depends="required">
+                <arg0 key="DemoAccount.phoneNumber" resource="true"/>
+            </field>
+            <field property="email" depends="required">
+                <arg0 key="DemoAccount.email" resource="true"/>
+            </field>
+            <field property="companyName" depends="required">
+                <arg0 key="DemoAccount.companyName" resource="true"/>
+            </field>
+        </form>
+
+    </formset>
+
+</form-validation>

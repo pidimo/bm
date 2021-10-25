@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE form-validation PUBLIC
+          "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+          "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+    <formset>
+        <form name="reportForm">
+            <field property="companyId" depends="checkEntry">
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>report</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>9</var-value>
+                </var>
+            </field>
+            <field property="name" depends="required, unique">
+                <arg0 key="Reports.report.reportName" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>report</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>name</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>reportId=reportid</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+            </field>
+            <field property="reportType" depends="required">
+                <arg0 key="Reports.report.reportType" resource="true"/>
+            </field>
+            <field property="employeeId" depends="required">
+                <arg0 key="Document.employee" resource="true"/>
+            </field>
+            <field property="module" depends="required">
+                <arg0 key="Reports.report.reportModule" resource="true"/>
+            </field>
+            <field property="initialTableReference" depends="required">
+                <arg0 key="Reports.report.reportFunctionality" resource="true"/>
+            </field>
+            <field property="state" depends="required">
+                <arg0 key="Reports.report.reportStatus" resource="true"/>
+            </field>
+            <field property="pageSize" depends="required">
+                <arg0 key="ReportGenerator.reportPageSize" resource="true"/>
+            </field>
+            <field property="pageOrientation" depends="required">
+                <arg0 key="ReportGenerator.reportPageOrientation" resource="true"/>
+            </field>
+            <field property="reportFormat" depends="required">
+                <arg0 key="ReportGenerator.reportFormat" resource="true"/>
+            </field>
+        </form>
+        <form name="reportJrxmlForm">
+            <field property="companyId" depends="required, checkEntry">
+                <arg0 key="Report.jrxml.company" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>report</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>9</var-value>
+                </var>
+            </field>
+            <field property="name" depends="required, unique">
+                <arg0 key="Reports.report.reportName" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>report</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>name</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>reportId=reportid</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+            </field>
+            <field property="reportType" depends="required">
+                <arg0 key="Reports.report.reportType" resource="true"/>
+            </field>
+            <field property="employeeId" depends="required">
+                <arg0 key="Document.employee" resource="true"/>
+            </field>
+            <field property="module" depends="required">
+                <arg0 key="Reports.report.reportModule" resource="true"/>
+            </field>
+            <field property="initialTableReference" depends="required">
+                <arg0 key="Reports.report.reportFunctionality" resource="true"/>
+            </field>
+            <field property="state" depends="required">
+                <arg0 key="Reports.report.reportStatus" resource="true"/>
+            </field>
+            <field property="pageSize" depends="required">
+                <arg0 key="ReportGenerator.reportPageSize" resource="true"/>
+            </field>
+            <field property="pageOrientation" depends="required">
+                <arg0 key="ReportGenerator.reportPageOrientation" resource="true"/>
+            </field>
+            <field property="reportFormat" depends="required">
+                <arg0 key="ReportGenerator.reportFormat" resource="true"/>
+            </field>
+        </form>
+
+        <form name="chartForm">
+            <field property="chartType" depends="required">
+                <arg0 key="Report.Chart.type" resource="true"/>
+            </field>
+            <field property="position" depends="required">
+                <arg0 key="Report.chart.position"  resource="true"/>
+            </field>
+        </form>
+        <form name="filterCreateForm">
+            <field property="label" depends="required">
+                <arg0 key="Report.filter.label" resource="true"/>
+            </field>
+        </form>
+
+        <form name="queryParamForm">
+            <field property="label" depends="required">
+                <arg0 key="Report.filter.label" resource="true"/>
+            </field>
+        </form>
+
+    </formset>
+</form-validation>

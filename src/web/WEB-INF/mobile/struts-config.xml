@@ -1,0 +1,96 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+
+    <form-beans>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="addressForm" type="com.piramide.elwis.web.contactmanager.form.AddressForm"/>
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="ContactsMainSearch" path="/contacts/Search.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/mobile/ErrorPage.jsp"/>
+
+        <action path="/Logon" type="com.piramide.elwis.web.admin.action.LogonAction" name="form" scope="request"
+                input="/index.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.admin.LogonCmd">
+            <forward name="Success" path="/contacts/Search.do"/>
+            <forward name="Fail" path="/index.jsp?validate=1"/>
+        </action>
+
+        <action path="/Logoff" type="com.piramide.elwis.web.admin.action.LogoffAction" name="form" scope="request"
+                validate="false">
+            <forward name="Logoff" path="/index.jsp"/>
+        </action>
+
+
+        <action path="/Home" type="org.apache.struts.actions.ForwardAction"
+                name="form" parameter="/mobile/home.jsp" scope="request"/>
+
+
+        <action path="/contacts/Search" type="com.piramide.elwis.web.mobile.action.ListAction" name="listForm"
+                scope="request" parameter="contacts@mobile/allAddressList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping"
+                roles="CONTACT.VIEW">
+            <set-property property="parameterName" value="contactSearchName"/>
+            <forward name="Success" path="/contacts/Search.jsp"/>
+        </action>
+
+
+        <action path="/contacts/Organization/Forward/View"
+                type="com.piramide.elwis.web.contactmanager.action.AddressForwardAction"
+                name="addressForm" scope="request" input="/contacts/Search.do" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.AddressCmd" roles="CONTACT.VIEW">
+            <forward name="Success" path="/contacts/OrganizationDetailForView.jsp"/>
+        </action>
+
+        <action path="/contacts/Person/Forward/View"
+                type="com.piramide.elwis.web.contactmanager.action.AddressForwardAction"
+                name="addressForm" scope="request" input="/contacts/Search.do" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.AddressCmd" roles="CONTACT.VIEW">
+            <forward name="Success" path="/contacts/PersonDetailForView.jsp"/>
+        </action>
+
+
+        <action path="/contacts/ContactPerson/List"
+                type="com.piramide.elwis.web.mobile.action.contacts.ContactListAction"
+                name="listForm" scope="request" parameter="contacts@mobile/contactPersonList"
+                roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/contacts/ContactPersonList.jsp"/>
+        </action>
+
+
+        <action path="/contacts/ContactPerson/Forward/View"
+                type="com.piramide.elwis.web.mobile.action.contacts.ContactManagerAction" name="form"
+                scope="request" input="/contacts/ContactPerson/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactPersonCmd" roles="CONTACTPERSON.VIEW">
+            <forward name="Success" path="/contacts/ContactPersonDetailForView.jsp"/>
+        </action>
+
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="contactId"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="moduleParams" value="contactId"/>
+    </plug-in>
+
+</struts-config>

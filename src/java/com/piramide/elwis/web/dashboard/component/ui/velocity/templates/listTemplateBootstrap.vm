@@ -1,0 +1,77 @@
+#set($screenSize = 940)
+#set($tableSize= ($screenSize / 2))
+
+<div>
+    <div class="well well-sm well-sm-custom">
+        $messages.getMessage($componentName) $resumeMsg
+        <div class="pull-right">
+            #foreach($wAction in $windowActions)
+                <a href="$wAction.action">
+
+                    #set($image="")
+                    #foreach( $stringList in $wAction.iconUrl.split("/"))
+                        #set($image=$stringList)
+                    #end
+
+                    #if( $image == "close.gif" )
+                        <span class="glyphicon glyphicon-remove dashboardClose" title="$messages.getMessage($wAction.resourceKey)"></span>
+                    #elseif( $image == "configuration.gif" )
+                        <span class="glyphicon glyphicon-wrench dashboardConfiguration" title="$messages.getMessage($wAction.resourceKey)"></span>
+                    #elseif( $image == "minisearch.gif" )
+                        <span class="glyphicon glyphicon-search dashboardSearch" title="$messages.getMessage($wAction.resourceKey)"></span>
+                    #else
+                        <img height="12" width="14" border="0"
+                             src="$wAction.iconUrl"
+                             title="$messages.getMessage($wAction.resourceKey)">
+                    #end
+                </a>
+            #end
+        </div>
+    </div>
+    <!-- Table -->
+   <div class="table-responsive">
+       <table width="100%" class="table table-striped table-hover table-bordered">
+
+           <tr>
+
+               #foreach($column in $selectedColumns)
+                   #set($width= $messages.calculateSizeColum($column.size))
+                   <th width="$width px" class="listHeaderDashBoard listHeader">
+                       $messages.getMessage($column.resourceKey)
+                   </th>
+               #end
+           </tr>
+
+
+           #foreach($element in $elements)
+               #set($obj = $element.remove("dbstyle#3175"))
+               <tr class="listRow">
+
+                   #set($i = 0)
+                   #set($actual = $element.size())
+                   #foreach($val in $element)
+                       #set($i = $i+1)
+                       #set($style = "listItem")
+
+                       #if($i == $actual)
+                           #set($style = "listItem2")
+                       #end
+                       <td class="dashboard_td $style $obj" nowrap>
+                           $val
+                       </td>
+                   #end
+               </tr>
+           #end
+
+           #if($elements.size() == 0)
+               <tr>
+                   <td colspan="$sizeOfSelectedColumns">
+                       <div class="panel-body">
+                           $messages.getMessage("Common.list.empty")
+                       </div>
+                   </td>
+               </tr>
+           #end
+       </table>
+   </div>
+</div>

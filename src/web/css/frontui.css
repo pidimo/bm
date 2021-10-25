@@ -1,0 +1,109 @@
+
+BODY {
+    padding-top:0px;
+    background-color: #FFFFFF;
+}
+
+.center {
+    text-align: center;
+    padding: 2px;
+    margin: 0;
+}
+
+.loginLabel {
+    color: #777777;
+    font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 18px;
+}
+
+.loginInput {
+    background-color: #FFFFFF;
+    /*color: #777777;*/
+    color: #555;
+    border: 1px solid #ccc;
+    font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+}
+
+.loginInput:focus {
+    border-color: #66afe9;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);
+}
+
+.loginButton {
+    /*background-color: #d9230f;*/
+    background-color: #ba0808;
+    color: #FFFFFF;
+    font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    border-color: #a01a0b;
+}
+
+.loginButton,
+.loginButton:hover {
+    background-color: #ba0808;
+    background-image: -webkit-linear-gradient(top, #ba0808, #cb210e); /*COLOR 1  COLOR 2*/
+    background-image: linear-gradient(to bottom, #ba0808, #cb210e); /*COLOR 1  COLOR 2*/
+    border: 1px solid #a01a0b;
+}
+
+.loginButton:focus,
+.loginButton.focus {
+    color: #ffffff;
+    background-color: #cb210e;
+    border-color: #a01a0b;
+}
+
+.loginButton:hover {
+    color: #ffffff;
+    background-color: #cb210e;
+    border-color: #a01a0b;
+}
+
+.loginButton:active:hover,.loginButton.active:hover,.loginButton:active:focus,.loginButton.active:focus{
+    color: #ffffff;
+    background-color: #cb210e;
+    border-color: #a01a0b;
+}
+
+.loginCheckbox label {
+    font-weight: 300;
+}
+
+.downloadLink {
+    font-size: smaller !important;
+    font-weight: 300 !important;
+    margin: 0;
+    padding: 0;
+}
+
+.downloadLink A {
+    color: #ba0808;
+}
+
+.downloadLink A:hover, A:focus {
+    color: #ba0808;
+}
+
+.copyrightLogin {
+    color: #777777;
+    font-family: Roboto, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 300;
+}
+
+.copyrightLogin A {
+    color: #ba0808;
+}
+
+.copyrightLogin A:hover, A:focus {
+    color: #ba0808;
+}
+
+.copyrightText {
+    text-align: center;
+    font-size: smaller;
+}
+

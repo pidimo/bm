@@ -1,0 +1,3783 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE fantabulous-config PUBLIC
+  "-//Alfacentauro//Fantabulous//Fantabulous DTD 1.0//EN"
+  "fantabulous-config.dtd">-->
+
+<lists>
+    <list listName="taskList" persistence="true" distinct="true">
+        <tables>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="expiredatetime" fieldAlias="expireDate" type="integer"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="priorityid" fieldAlias="taskPriorityId" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="ownerId" type="integer"/>
+                    <field fieldName="processid" fieldAlias="processId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="contactName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="contactName1"/>
+                    <field fieldName="name2" fieldAlias="contactName2"/>
+                    <field fieldName="name3" fieldAlias="contactName3"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="userTaskId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId_" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="participantStatus" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="priority" alias="priority">
+                <fields>
+                    <field fieldName="priorityid" fieldAlias="priorityId" key="true" type="integer"/>
+                    <field fieldName="priorityname" fieldAlias="priorityName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                </fields>
+            </table>
+
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>priorityId</pK>
+                <fK>taskPriorityId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId</pK>
+                <fK>taskId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>scheduledUserId_</pK>
+                <fK>scheduledUserId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>ownerId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactNameId</pK>
+                <fK>contactId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="processId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contactId" operator="EQUAL" type="parameter" parameterName="addressId"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="participantStatus" operator="DISTINCT" type="constant" value="3"/>
+                <conector>And</conector>
+                <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+                <conector>And</conector>
+                <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>And</conector>
+                <condition fieldReference="ownerId" operator="DISTINCT" type="parameter" parameterName="userId"/>
+            </conditions>
+            <conector>Or</conector>
+            <conditions>
+                <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>And</conector>
+                <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+                <conector>And</conector>
+                <condition fieldReference="userId" operator="DISTINCT" type="parameter" parameterName="userId"/>
+                <conector>And</conector>
+                <condition fieldReference="status" operator="DISTINCT" type="constant" value="3"/>
+            </conditions>
+            <conector>Or</conector>
+            <conditions>
+                <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>And</conector>
+                <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>And</conector>
+                <condition fieldReference="status" operator="DISTINCT" type="constant" value="3"/>
+                <conector>And</conector>
+                <condition fieldReference="title" operator="LIKE" type="parameter"/>
+                <conector>And</conector>
+                <condition fieldReference="title" operator="LIKE2" type="parameter" parameterName="titleAlphabet"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="priorityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>contactName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>contactName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>contactName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>contactName2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>contactName3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>contactName1</referenceField>
+                            <referenceField>contactName2</referenceField>
+                            <referenceField>contactName3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="taskSimpleList" persistence="true" extends="taskList" executeFirstTime="true" distinct="true">
+        <tables/>
+        <relationShips/>
+        <conditions/>
+        <configuration>
+            <columns/>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="title"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="scheduledUserList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="createUserId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="createUserId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="createUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>createUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="ownerTaskList" persistence="true" distinct="true">
+        <tables>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="expiredatetime" fieldAlias="expireDate" type="integer"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="priorityid" fieldAlias="taskPriorityId" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="ownerId" type="integer"/>
+                    <field fieldName="processid" fieldAlias="processId" type="integer"/>
+                    <field fieldName="tasktypeid" fieldAlias="taskTypeId" type="integer"/>
+                    <field fieldName="activityid" fieldAlias="activityId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="userTaskId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="userTaskId_" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="participantStatus" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1_"/>
+                    <field fieldName="name2" fieldAlias="addressName2_"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName_">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                    <field fieldName="name3" fieldAlias="addressName3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="priority" alias="priority">
+                <fields>
+                    <field fieldName="priorityid" fieldAlias="priorityId" key="true" type="integer"/>
+                    <field fieldName="priorityname" fieldAlias="priorityName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="campactivity" alias="campActivity">
+                <fields>
+                    <field fieldName="activityid" fieldAlias="campActivityId" key="true" type="integer"/>
+                    <field fieldName="campaignid" fieldAlias="campaignId_" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="campaign" alias="campaign">
+                <fields>
+                    <field fieldName="campaignid" fieldAlias="campaignId" key="true" type="integer"/>
+                    <field fieldName="campaignname" fieldAlias="campaignName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>priorityId</pK>
+                <fK>taskPriorityId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId</pK>
+                <fK>taskId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId_</pK>
+                <fK>scheduledUserId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>ownerId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactNameId</pK>
+                <fK>contactId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>campActivityId</pK>
+                <fK>activityId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>campaignId</pK>
+                <fK>campaignId_</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="userId"/>
+            <conector>And</conector>
+            <condition fieldReference="status" operator="DISTINCT" type="parameter" parameterName="concluded_status"/>
+            <conector>And</conector>
+            <condition fieldReference="status" operator="EQUAL" type="parameter" parameterName="userStatus"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="DISTINCT" type="parameter" parameterName="userId"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+            <conector>And</conector>
+            <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="createdUserId"/>
+            <conector>And</conector>
+            <condition fieldReference="addressNameId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressName1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="addressName2" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchName" operator="LIKE" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="processId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE2" type="parameter" parameterName="titleAlphabet"/>
+            <conector>And</conector>
+            <condition fieldReference="priorityId" operator="EQUAL" type="parameter" parameterName="priorityId"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startDateFrom"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="startDateTo"/>
+            <conector>And</conector>
+            <condition fieldReference="expireDate" operator="GREATER_EQUAL" type="parameter" parameterName="expireDateFrom"/>
+            <conector>And</conector>
+            <condition fieldReference="expireDate" operator="LESS_EQUAL" type="parameter" parameterName="expireDateTo"/>
+            <conector>And</conector>
+            <condition fieldReference="taskTypeId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="campaignName" operator="LIKE" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="priorityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName1_">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName1_</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName2_">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName2_</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName3">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName3</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="participantTaskToAdvancedList" persistence="true" distinct="true">
+        <tables>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="expiredatetime" fieldAlias="expireDate" type="integer"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="priorityid" fieldAlias="taskPriorityId" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="ownerId" type="integer"/>
+                    <field fieldName="processid" fieldAlias="processId" type="integer"/>
+                    <field fieldName="tasktypeid" fieldAlias="taskTypeId" type="integer"/>
+                    <field fieldName="activityid" fieldAlias="activityId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="userTaskId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUserOwner">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserOwnerId" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="userTaskOwnerId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userOwnerId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="userTaskId_" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="participantStatus" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1_"/>
+                    <field fieldName="name2" fieldAlias="addressName2_"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName_">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                    <field fieldName="name3" fieldAlias="addressName3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="priority" alias="priority">
+                <fields>
+                    <field fieldName="priorityid" fieldAlias="priorityId" key="true" type="integer"/>
+                    <field fieldName="priorityname" fieldAlias="priorityName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="campactivity" alias="campActivity">
+                <fields>
+                    <field fieldName="activityid" fieldAlias="campActivityId" key="true" type="integer"/>
+                    <field fieldName="campaignid" fieldAlias="campaignId_" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="campaign" alias="campaign">
+                <fields>
+                    <field fieldName="campaignid" fieldAlias="campaignId" key="true" type="integer"/>
+                    <field fieldName="campaignname" fieldAlias="campaignName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>priorityId</pK>
+                <fK>taskPriorityId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId</pK>
+                <fK>taskId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskOwnerId</pK>
+                <fK>taskId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId_</pK>
+                <fK>scheduledUserId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>ownerId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactNameId</pK>
+                <fK>contactId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>campActivityId</pK>
+                <fK>activityId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>campaignId</pK>
+                <fK>campaignId_</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userOwnerId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="userId"/>
+            <conector>And</conector>
+            <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="createdUserId"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="sequence" operator="EQUAL" type="parameter"/>
+                <conector>And</conector>
+                <conditions>
+                    <condition fieldReference="participantStatus" operator="DISTINCT" type="parameter" parameterName="concluded_status"/>
+                    <conector>And</conector>
+                    <condition fieldReference="participantStatus" operator="EQUAL" type="parameter" parameterName="userStatus"/>
+                    <conector>And</conector>
+                    <condition fieldReference="ownerId" operator="DISTINCT" type="parameter" parameterName="userId"/>
+                </conditions>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="status" operator="DISTINCT" type="parameter" parameterName="concluded_status"/>
+                    <conector>And</conector>
+                    <condition fieldReference="status" operator="EQUAL" type="parameter" parameterName="userStatus"/>
+                    <conector>And</conector>
+                    <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                </conditions>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="addressNameId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressName1" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="addressName2" operator="LIKE" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchName" operator="LIKE" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="processId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE2" type="parameter" parameterName="titleAlphabet"/>
+            <conector>And</conector>
+            <condition fieldReference="priorityId" operator="EQUAL" type="parameter" parameterName="priorityId"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startDateFrom"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="startDateTo"/>
+            <conector>And</conector>
+            <condition fieldReference="expireDate" operator="GREATER_EQUAL" type="parameter" parameterName="expireDateFrom"/>
+            <conector>And</conector>
+            <condition fieldReference="expireDate" operator="LESS_EQUAL" type="parameter" parameterName="expireDateTo"/>
+            <conector>And</conector>
+            <condition fieldReference="taskTypeId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="campaignName" operator="LIKE" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="priorityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName1_">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName1_</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName2_">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName2_</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName1</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName3">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName3</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="allTaskAdvancedSearchList" union="true" persistence="true"> <!-- owner and participant -->
+        <union alias="taskUnion">
+            <unionList list="ownerTaskList"/>
+            <unionList list="participantTaskToAdvancedList"/>
+        </union>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="priorityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName1">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName1_</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressName2">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressName2_</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1_</referenceField>
+                            <referenceField>addressName2_</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>addressName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>addressName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>addressName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>addressName2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>addressName3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                            <referenceField>addressName3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="taskSingleList" persistence="true" distinct="true">
+        <tables>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="expiredatetime" fieldAlias="expireDate" type="integer"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="priorityid" fieldAlias="taskPriorityId" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="ownerId" type="integer"/>
+                    <field fieldName="processid" fieldAlias="processId" type="integer"/>
+                    <field fieldName="tasktypeid" fieldAlias="taskTypeId" type="integer"/>
+                    <field fieldName="activityid" fieldAlias="activityId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="userTaskId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="userTaskId_" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="participantStatus" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1_"/>
+                    <field fieldName="name2" fieldAlias="addressName2_"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName_">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                    <field fieldName="name3" fieldAlias="addressName3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="priority" alias="priority">
+                <fields>
+                    <field fieldName="priorityid" fieldAlias="priorityId" key="true" type="integer"/>
+                    <field fieldName="priorityname" fieldAlias="priorityName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="campactivity" alias="campActivity">
+                <fields>
+                    <field fieldName="activityid" fieldAlias="campActivityId" key="true" type="integer"/>
+                    <field fieldName="campaignid" fieldAlias="campaignId_" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="campaign" alias="campaign">
+                <fields>
+                    <field fieldName="campaignid" fieldAlias="campaignId" key="true" type="integer"/>
+                    <field fieldName="campaignname" fieldAlias="campaignName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>priorityId</pK>
+                <fK>taskPriorityId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId</pK>
+                <fK>taskId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId_</pK>
+                <fK>scheduledUserId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>ownerId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactNameId</pK>
+                <fK>contactId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>campActivityId</pK>
+                <fK>activityId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>campaignId</pK>
+                <fK>campaignId_</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressNameId" operator="EQUAL" type="parameter"/>
+                <conector>And</conector>
+                <conditions>
+                    <condition fieldReference="participantStatus" operator="EQUAL" type="parameter" parameterName="userStatus"/>
+                    <conector>And</conector>
+                    <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="ownerId" operator="DISTINCT" type="parameter" parameterName="userId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="participantStatus" operator="DISTINCT" type="parameter" parameterName="concluded_status"/>
+                </conditions>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="userId" operator="DISTINCT" type="parameter" parameterName="userId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="status" operator="EQUAL" type="parameter" parameterName="userStatus"/>
+                    <conector>And</conector>
+                    <condition fieldReference="status" operator="DISTINCT" type="parameter" parameterName="concluded_status"/>
+                </conditions>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="status" operator="EQUAL" type="parameter" parameterName="userStatus"/>
+                    <conector>And</conector>
+                    <condition fieldReference="status" operator="DISTINCT" type="parameter" parameterName="concluded_status"/>
+                </conditions>
+            </conditions>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressName1" operator="LIKE2" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="addressName2" operator="LIKE2" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="addressName3" operator="LIKE2" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchName" operator="LIKE2" type="parameter"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="processId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="createdUserId"/>
+            <!--creador-->
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE2" type="parameter" parameterName="titleAlphabet"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="priorityId" operator="EQUAL" type="parameter" parameterName="priorityId"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startDateFrom"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="startDateTo"/>
+            <conector>And</conector>
+            <condition fieldReference="expireDate" operator="GREATER_EQUAL" type="parameter" parameterName="expireDateFrom"/>
+            <conector>And</conector>
+            <condition fieldReference="expireDate" operator="LESS_EQUAL" type="parameter" parameterName="expireDateTo"/>
+            <conector>And</conector>
+            <condition fieldReference="taskTypeId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="campaignName" operator="LIKE2" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="priorityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1_</referenceField>
+                            <referenceField>addressName2_</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>addressName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>addressName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>addressName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>addressName2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>addressName3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                            <referenceField>addressName3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+
+    <list listName="participantStatusList" specialList="true" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" listKey="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="taskId" listKey="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="userTaskId" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="statusId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userTaskId</pK>
+                <fK>scheduledUserId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="taskId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>statusId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+
+    <list listName="taskStatusParticipantList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="schTaskId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserTaskId" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="taskStatusId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>scheduledUserTaskId</pK>
+                <fK>scheduledUserId</fK>
+                <conditions>
+                    <condition fieldReference="scheduledUserTaskId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+            <relationShip>
+                <pK>taskId</pK>
+                <fK>schTaskId</fK>
+                <conditions>
+                    <condition fieldReference="taskId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskStatusId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskStatusId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="lightAppointmentList" persistence="true">
+        <tables>
+            <table tableName="appointment" alias="appointment">
+                <fields>
+                    <field fieldName="appointmentid" fieldAlias="appointmentId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="enddatetime" fieldAlias="endDate" type="integer"/>
+                    <field fieldName="apptypeid" fieldAlias="appTypeId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="appUserId" type="integer"/>
+                    <field fieldName="private" fieldAlias="isPrivate" type="integer"/>
+                    <field fieldName="isallday" fieldAlias="isAllDay" type="integer"/>
+                    <field fieldName="isrecurrence" fieldAlias="isRecurrence" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="appointmentId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="appointmentId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="private">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isPrivate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="appointmentList" persistence="true" specialList="true" executeFirstTime="true">
+        <tables>
+            <table tableName="appointment" alias="appointment">
+                <fields>
+                    <field fieldName="appointmentid" fieldAlias="appointmentId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="enddatetime" fieldAlias="endDate" type="integer"/>
+                    <field fieldName="apptypeid" fieldAlias="appTypeId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="appUserId" type="integer"/>
+                    <field fieldName="private" fieldAlias="isPrivate" type="integer"/>
+                    <field fieldName="isallday" fieldAlias="isAllDay" type="integer"/>
+                    <field fieldName="isrecurrence" fieldAlias="isRecurrence" type="integer"/>
+                    <field fieldName="addressId" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId" type="integer"/>
+                    <field fieldName="createdbyid" fieldAlias="createdById" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="appointmentid" fieldAlias="schAppId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="viewerUserId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="appointmenttype" alias="appointmentType">
+                <fields>
+                    <field fieldName="apptypeid" fieldAlias="appointmentTypeId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="appTypeName"/>
+                </fields>
+            </table>
+            <table tableName="recurrence" alias="recurrence">
+                <fields>
+                    <field fieldName="appointmentid" fieldAlias="recurrenceId" key="true" type="integer"/>
+                    <field fieldName="ruletype" fieldAlias="ruleType" type="integer"/>
+                    <field fieldName="rangetype" fieldAlias="rangeType" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>appointmentTypeId</pK>
+                <fK>appTypeId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>schAppId</pK>
+                <fK>appointmentId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>recurrenceId</pK>
+                <fK>appointmentId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE2" type="parameter" parameterName="titleAlphabet"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="isRecurrence" operator="EQUAL" type="parameter" parameterName="is_recurrence"/>
+            <conector>And</conector>
+            <condition fieldReference="isPrivate" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="viewerUserId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="appTypeId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="addressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contactPersonId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions evaluateIf="StartDate">
+                <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startDateMillis"/>
+                <conector>Or</conector>
+                <condition fieldReference="endDate" operator="GREATER_EQUAL" type="parameter" parameterName="startDateMillis"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="EndDate">
+                <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="endDateMillis"/>
+                <conector>Or</conector>
+                <condition fieldReference="endDate" operator="LESS_EQUAL" type="parameter" parameterName="endDateMillis"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="RangeDate">
+                <condition fieldReference="appointmentTypeId" operator="GREATER_EQUAL" type="parameter"/>
+                <conector>And</conector>
+                <conditions>
+                    <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startDateMillis"/>
+                    <conector>And</conector>
+                    <condition fieldReference="endDate" operator="LESS_EQUAL" type="parameter" parameterName="endDateMillis"/>
+                </conditions>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="startDateMillis"/>
+                    <conector>And</conector>
+                    <condition fieldReference="endDate" operator="GREATER_EQUAL" type="parameter" parameterName="endDateMillis"/>
+                </conditions>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startDateMillis"/>
+                    <conector>And</conector>
+                    <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="endDateMillis"/>
+                    <conector>And</conector>
+                    <condition fieldReference="endDate" operator="GREATER_EQUAL" type="parameter" parameterName="endDateMillis"/>
+                </conditions>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="startDateMillis"/>
+                    <conector>And</conector>
+                    <condition fieldReference="endDate" operator="GREATER_EQUAL" type="parameter" parameterName="startDateMillis"/>
+                    <conector>And</conector>
+                    <condition fieldReference="endDate" operator="LESS_EQUAL" type="parameter" parameterName="endDateMillis"/>
+                </conditions>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="appointmentId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appTypeName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="endDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>endDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isAllDay">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isAllDay</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isRecurrence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isRecurrence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="rangeType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>rangeType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ruleType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ruleType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="private">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isPrivate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="appointmentAdvancedList" persistence="true" specialList="true" executeFirstTime="true" extends="appointmentList">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="createdById" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns/>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="appointmentAdvancedListByContact" persistence="true" specialList="true" executeFirstTime="true" extends="appointmentList" distinct="true">
+        <tables>
+            <table tableName="address" alias="contactPersonName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactPersonNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="contactPersonName1"/>
+                    <field fieldName="name2" fieldAlias="contactPersonName2"/>
+                    <field fieldName="name3" fieldAlias="contactPersonName3"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="userAddressId_FK" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="userAddress">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="userAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="userLastName"/>
+                    <field fieldName="name2" fieldAlias="userFirstName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactPersonNameId</pK>
+                <fK>contactPersonId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>userId</pK>
+                <fK>appUserId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>userAddressId</pK>
+                <fK>userAddressId_FK</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="createdById" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="contactPersonName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>contactPersonName1</referenceField>
+                            <referenceField>contactPersonName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>userLastName</referenceField>
+                            <referenceField>userFirstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="appointmentSimpleList" extends="appointmentList" specialList="true" persistence="true" executeFirstTime="true">
+        <tables/>
+        <relationShips/>
+        <conditions/>
+        <configuration>
+            <columns/>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="appointmentTypeList" persistence="true">
+        <tables>
+            <table tableName="appointmenttype" alias="appointmentType">
+                <fields>
+                    <field fieldName="apptypeid" fieldAlias="appointmentTypeId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="appointmentTypeId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="appointmentTypeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentTypeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--appointment participant-->
+    <list listName="participantList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="schUserId" type="integer"/>
+                    <field fieldName="appointmentid" fieldAlias="appointmentUserId" type="integer"/>
+                    <field fieldName="usergroupid" fieldAlias="schedulerUserGroupId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="userName">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="appointment" alias="appointment">
+                <fields>
+                    <field fieldName="appointmentid" fieldAlias="appointmentId" key="true" type="integer"/>
+                    <field fieldName="apptypeid" fieldAlias="appointmentTypeId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="appUserId" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                </fields>
+            </table>
+            <table tableName="appointmenttype" alias="appointmentType">
+                <fields>
+                    <field fieldName="apptypeid" fieldAlias="appTypeId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="appTypeName"/>
+                </fields>
+            </table>
+            <table tableName="usergroup" alias="userGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="userGroupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                    <field fieldName="imageid" fieldAlias="imageId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>appointmentId</pK>
+                <fK>appointmentUserId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>appTypeId</pK>
+                <fK>appointmentTypeId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>userId</pK>
+                <fK>schUserId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userGroupId</pK>
+                <fK>schedulerUserGroupId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="appointmentId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="scheduledUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>scheduledUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>schUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="imageId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>imageId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="grantAccessList" persistence="true">
+        <tables>
+            <table tableName="scheduleraccess" alias="accessTable">
+                <fields>
+                    <field fieldName="owneruserid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="myViewerUserId" key="true" type="integer"/>
+                    <field fieldName="permission" fieldAlias="permission" type="integer"/>
+                    <field fieldName="privpermission" fieldAlias="privatePermission" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                    <field fieldName="searchname" fieldAlias="searchAddressName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>myViewerUserId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="addressName1" operator="LIKE2" type="parameter" parameterName="lastNameAlpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressName1" operator="LIKE" type="parameter" parameterName="lastName"/>
+                <conector>Or</conector>
+                <condition fieldReference="addressName2" operator="LIKE" type="parameter" parameterName="firstName"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchAddressName" operator="LIKE" type="parameter" parameterName="searchName"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="myViewerUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>myViewerUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="permission">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>permission</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="privatePermission">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>privatePermission</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="elwisUserList" persistence="true">
+        <tables>
+            <table tableName="elwisuser" alias="elwisUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                    <field fieldName="searchname" fieldAlias="searchAddressName"/>
+                </fields>
+            </table>
+            <table tableName="scheduleraccess" alias="accessTable">
+                <fields>
+                    <field fieldName="owneruserid" fieldAlias="ownUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="myViewerUserId" key="true" type="integer"/>
+                    <field fieldName="permission" fieldAlias="permission" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>myViewerUserId</pK>
+                <fK>userId</fK>
+                <leftJoin/>
+                <conditions>
+                    <condition fieldReference="ownUserId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="DISTINCT" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <condition fieldReference="myViewerUserId" operator="IS" type="constant" value="null"/>
+            <conector>And</conector>
+            <condition fieldReference="addressName1" operator="LIKE2" type="parameter" parameterName="lastNameAlpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressName1" operator="LIKE" type="parameter" parameterName="lastName"/>
+                <conector>Or</conector>
+                <condition fieldReference="addressName2" operator="LIKE" type="parameter" parameterName="firstName"/>
+                <conector>Or</conector>
+                <condition fieldReference="searchAddressName" operator="LIKE" type="parameter" parameterName="searchName"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="companyId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>companyId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="participantTaskList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                    <field fieldName="appointmentid" fieldAlias="appointmentUserId" type="integer"/>
+                    <field fieldName="usergroupid" fieldAlias="schedulerUserGroupId" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="taskId_fk" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="taskUserId" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="userTaskStatusId" type="integer"/>
+                    <field fieldName="freetextid" fieldAlias="noteId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="freetext" alias="freeText">
+                <fields>
+                    <field fieldName="freetextid" fieldAlias="freeTextId" key="true" type="integer"/>
+                    <field fieldName="freetextvalue" fieldAlias="value"/>
+                </fields>
+            </table>
+            <table tableName="usergroup" alias="userGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="userGroupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>taskId</pK>
+                <fK>taskId_fk</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>userId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userGroupId</pK>
+                <fK>schedulerUserGroupId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>taskUserId</pK>
+                <fK>scheduledUserId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>freeTextId</pK>
+                <fK>noteId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="taskId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="scheduledUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>scheduledUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userTaskStatusId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="scheduledUserTaskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--begin ivan-->
+    <list listName="dashboardTaskList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="schedulerUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="schedulerUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="taskIdByUser" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="expiredate" fieldAlias="expireDate" type="integer"/>
+                    <field fieldName="expiredatetime" fieldAlias="expireDateTime" type="integer"/>
+                    <field fieldName="startdate" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="startdatetime" fieldAlias="startDateTime" type="integer"/>
+                    <field fieldName="priorityid" fieldAlias="priorityOfTask" type="integer"/>
+                    <field fieldName="createdatetime" fieldAlias="createDateTime" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="priority" alias="priority">
+                <fields>
+                    <field fieldName="priorityid" fieldAlias="priorityId" key="true" type="integer"/>
+                    <field fieldName="priorityname" fieldAlias="priorityName"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="userTaskId_" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="participantStatus" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="statusBk" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>taskId</pK>
+                <fK>taskIdByUser</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>priorityId</pK>
+                <fK>priorityOfTask</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId_</pK>
+                <fK>schedulerUserId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="priorityOfTask" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="participantStatus" operator="DISTINCT" type="constant" value="3"/>
+                <conector>And</conector>
+                <condition fieldReference="statusBk" operator="EQUAL" type="parameter"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="priority">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="createDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>createDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="createDateTime" orderBy="DESC"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userList" persistence="true">
+        <tables>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="login" fieldAlias="login"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="type" fieldAlias="userType" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="address">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="imageid" fieldAlias="imageId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>addId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+            <conditions evaluateIf="externalUserAlso">
+                <condition fieldReference="userType" operator="EQUAL" type="constant" value="1"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="lastName" operator="LIKE2" type="parameter" parameterName="lastNameAlpha"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="lastName" operator="LIKE" type="parameter" parameterName="lastName"/>
+                <conector>Or</conector>
+                <condition fieldReference="firstName" operator="LIKE" type="parameter" parameterName="firstName"/>
+                <conector>Or</conector>
+                <condition fieldReference="login" operator="LIKE" type="parameter" parameterName="login"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="login">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>login</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="default">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isDefault</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="imageId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>imageId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userTaskImportList" extends="userList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userTaskId" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="taskId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userTaskId</pK>
+                <fK>userId</fK>
+                <outerJoin/>
+                <conditions>
+                    <condition fieldReference="taskId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="scheduledUserId" operator="IS" type="constant" value="null"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="scheduledUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>scheduledUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="userAppointmentImportList" extends="userList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userApppointmentId" type="integer"/>
+                    <field fieldName="appointmentid" fieldAlias="appointmentId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>userApppointmentId</pK>
+                <fK>userId</fK>
+                <outerJoin/>
+                <conditions>
+                    <condition fieldReference="appointmentId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="scheduledUserId" operator="IS" type="constant" value="null"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="scheduledUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>scheduledUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="appointmentReportList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="appointment" alias="appointment">
+                <fields>
+                    <field fieldName="appointmentid" fieldAlias="appointmentId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="enddatetime" fieldAlias="endDate" type="integer"/>
+                    <field fieldName="apptypeid" fieldAlias="appTypeId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="appUserId" type="integer"/>
+                    <field fieldName="isallday" fieldAlias="isAllDay" type="integer"/>
+                    <field fieldName="private" fieldAlias="isPrivate" type="integer"/>
+                    <field fieldName="isrecurrence" fieldAlias="isRecurrence" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId" type="integer"/>
+                    <field fieldName="priorityid" fieldAlias="priorityId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="appointmentid" fieldAlias="schAppId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="viewerUserId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="appointmenttype" alias="appointmentType">
+                <fields>
+                    <field fieldName="apptypeid" fieldAlias="appointmentTypeId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="appTypeName"/>
+                </fields>
+            </table>
+            <table tableName="recurrence" alias="recurrence">
+                <fields>
+                    <field fieldName="appointmentid" fieldAlias="recurrenceId" key="true" type="integer"/>
+                    <field fieldName="ruletype" fieldAlias="ruleType" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="reminder" alias="reminder">
+                <fields>
+                    <field fieldName="appointmentid" fieldAlias="reminderId" key="true" type="integer"/>
+                    <field fieldName="remindertype" fieldAlias="reminderType" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>appointmentTypeId</pK>
+                <fK>appTypeId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>schAppId</pK>
+                <fK>appointmentId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>recurrenceId</pK>
+                <fK>appointmentId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>reminderId</pK>
+                <fK>appointmentId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="appUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>Or</conector>
+                <condition fieldReference="viewerUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="ruleType" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="isPrivate" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="priorityId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="appTypeId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="isAllDay" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="addressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contactPersonId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions evaluateIf="withRecur">
+                <condition fieldReference="isRecurrence" operator="EQUAL" type="constant" value="1"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="withoutRecur">
+                <condition fieldReference="isRecurrence" operator="EQUAL" type="constant" value="0"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="withReminder">
+                <condition fieldReference="reminderId" operator="IS" type="constant" value="not null"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="withoutReminder">
+                <condition fieldReference="reminderId" operator="IS" type="constant" value="null"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startRangeMillis"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="endRangeMillis"/>
+            <conector>And</conector>
+            <condition fieldReference="endDate" operator="GREATER_EQUAL" type="parameter" parameterName="startFinishRangeMillis"/>
+            <conector>And</conector>
+            <condition fieldReference="endDate" operator="LESS_EQUAL" type="parameter" parameterName="endFinishRangeMillis"/>
+
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="appointmentId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <!--<column columnName="appUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>-->
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appTypeName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="endDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>endDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="isAllDay">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>isAllDay</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ruleType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ruleType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="title"/>
+                <columnOrder columnName="startDate" orderBy="DESC"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="taskReportList" distinct="true" persistence="true">
+        <tables>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" listKey="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="expiredatetime" fieldAlias="expireDate" type="integer"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="priorityid" fieldAlias="taskPriorityId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="ownerId" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="processid" fieldAlias="processId" type="integer"/>
+                    <field fieldName="tasktypeid" fieldAlias="taskTypeId" type="integer"/>
+                    <field fieldName="percent" fieldAlias="percent" type="integer"/>
+                    <field fieldName="notification" fieldAlias="notification" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="address_Id" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="userTaskId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser1">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId1" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="userTaskId1" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId1" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="priority" alias="priority">
+                <fields>
+                    <field fieldName="priorityid" fieldAlias="priorityId" key="true" type="integer"/>
+                    <field fieldName="priorityname" fieldAlias="priorityName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                </fields>
+            </table>
+            <!--para el nombre de participant-->
+            <table tableName="elwisuser" alias="userParticipant">
+                <fields>
+                    <field fieldName="userid" fieldAlias="participantUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="participantAddress_Id" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="participantName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="participantNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="participantName1"/>
+                    <field fieldName="name2" fieldAlias="participantName2"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="userTask_UserId" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="participantStatus" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>priorityId</pK>
+                <fK>taskPriorityId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId</pK>
+                <fK>taskId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId1</pK>
+                <fK>taskId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>ownerId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>address_Id</fK>
+            </relationShip>
+            <!--for participantName-->
+            <relationShip>
+                <pK>participantUserId</pK>
+                <fK>userId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>participantNameId</pK>
+                <fK>participantAddress_Id</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTask_UserId</pK>
+                <fK>scheduledUserId</fK>
+            </relationShip>
+        </relationShips>
+        <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+        <conector>And</conector>
+        <conditions>
+            <condition fieldReference="percent" operator="GREATER_EQUAL" type="parameter" parameterName="percent1"/>
+            <conector>And</conector>
+            <condition fieldReference="percent" operator="LESS_EQUAL" type="parameter" parameterName="percent2"/>
+            <conector>And</conector>
+            <condition fieldReference="participantStatus" operator="EQUAL" type="parameter" parameterName="status"/>
+            <conector>And</conector>
+            <condition fieldReference="participantStatus" operator="DISTINCT" type="parameter" parameterName="concluded_status"/>
+            <!--<conditions evaluateIf="concluded">
+                <condition fieldReference="status" operator="EQUAL" type="constant" value="3"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="notConcluded">
+                <condition fieldReference="status" operator="DISTINCT" type="constant" value="3"/>
+            </conditions>-->
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="addressId" operator="EQUAL" type="parameter"/>
+                <conector>And</conector>
+                <conditions>
+                    <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="userId1" operator="EQUAL" type="parameter" parameterName="userId"/>
+                </conditions>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                    <conector>And</conector>
+                    <condition fieldReference="userId" operator="EQUAL" type="parameter" parameterName="scheduledUserId"/>
+                </conditions>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="taskPriorityId" operator="EQUAL" type="parameter" parameterName="priorityId"/>
+            <conector>And</conector>
+            <condition fieldReference="processId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="ownerId" operator="EQUAL" type="parameter" parameterName="createdUserId"/>
+            <!--creador-->
+            <conector>And</conector>
+            <condition fieldReference="addressId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions evaluateIf="withNotification">
+                <condition fieldReference="notification" operator="EQUAL" type="constant" value="1"/>
+            </conditions>
+            <conector>And</conector>
+            <conditions evaluateIf="withoutNotification">
+                <condition fieldReference="notification" operator="EQUAL" type="constant" value="0"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="taskTypeId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="GREATER_EQUAL" type="parameter" parameterName="startRangeMillis"/>
+            <conector>And</conector>
+            <condition fieldReference="startDate" operator="LESS_EQUAL" type="parameter" parameterName="endRangeMillis"/>
+            <conector>And</conector>
+            <condition fieldReference="expireDate" operator="GREATER_EQUAL" type="parameter" parameterName="startFinishRangeMillis"/>
+            <conector>And</conector>
+            <condition fieldReference="expireDate" operator="LESS_EQUAL" type="parameter" parameterName="endFinishRangeMillis"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="scheduledUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>scheduledUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="priorityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="participantStatus">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>participantStatus</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="participantName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>participantName1</referenceField>
+                            <referenceField>participantName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder>
+                <columnOrder columnName="title" orderBy="ASC"/>
+                <columnOrder columnName="ownerName" orderBy="ASC"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="schedulerListAppointment" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="createUserId" type="integer"/>
+                    <field fieldName="appointmentid" fieldAlias="appId_fk" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="createUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="appointmentId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appId_fk</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="participantReportList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduled_User">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="schUserId" type="integer"/>
+                    <field fieldName="appointmentid" fieldAlias="appointmentUserId" type="integer"/>
+                    <field fieldName="usergroupid" fieldAlias="schedulerUserGroupId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="userName">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="appointment" alias="appointment">
+                <fields>
+                    <field fieldName="appointmentid" fieldAlias="appointmentId" key="true" type="integer"/>
+                    <field fieldName="apptypeid" fieldAlias="appointmentTypeId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="appUserId" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                </fields>
+            </table>
+            <table tableName="appointmenttype" alias="appointmentType">
+                <fields>
+                    <field fieldName="apptypeid" fieldAlias="appTypeId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="appTypeName"/>
+                </fields>
+            </table>
+            <table tableName="usergroup" alias="userGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="userGroupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>appointmentId</pK>
+                <fK>appointmentUserId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>appTypeId</pK>
+                <fK>appointmentTypeId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>userId</pK>
+                <fK>schUserId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userGroupId</pK>
+                <fK>schedulerUserGroupId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="appointmentUserId" operator="EQUAL" type="parameter" parameterName="appointmentId"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="appUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>Or</conector>
+                <condition fieldReference="appointmentUserId" operator="IN" type="list" value="schedulerListAppointment"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userGroupId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="scheduledUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>scheduledUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appUserId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>schUserId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="appId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>appointmentId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userGroupId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="title"/>
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="schedulerList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="createUserId" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="taskId_fk" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="createUserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId_fk</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="userAssignedTaskReportList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduled_User">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="createUserId" type="integer"/>
+                    <field fieldName="appointmentid" fieldAlias="appointmentUserId" type="integer"/>
+                    <field fieldName="usergroupid" fieldAlias="schedulerUserGroupId" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="taskId_fk" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="type" fieldAlias="type" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="userid" fieldAlias="task_UserId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usertask" alias="userTask">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="taskUserId" key="true" type="integer"/>
+                    <field fieldName="statusid" fieldAlias="userTaskStatusId" type="integer"/>
+                    <field fieldName="freetextid" fieldAlias="noteId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="usergroup" alias="userGroup">
+                <fields>
+                    <field fieldName="usergroupid" fieldAlias="userGroupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>taskId</pK>
+                <fK>taskId_fk</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>createUserId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userGroupId</pK>
+                <fK>schedulerUserGroupId</fK>
+                <leftJoin/>
+            </relationShip>
+            <relationShip>
+                <pK>taskUserId</pK>
+                <fK>scheduledUserId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="taskId_fk" operator="EQUAL" type="parameter" parameterName="taskId"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="task_UserId" operator="EQUAL" type="parameter" parameterName="userId"/>
+                <conector>Or</conector>
+                <condition fieldReference="taskId_fk" operator="IN" type="list" value="schedulerList"/>
+            </conditions>
+            <conector>And</conector>
+            <condition fieldReference="userGroupId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="type" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="userTaskStatusId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="userName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="groupName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userTaskStatusId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="title"/>
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="taskSchedulerList" persistence="true" distinct="true">
+        <tables>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="taskid" fieldAlias="taskId" key="true" type="integer"/>
+                    <field fieldName="title" fieldAlias="title"/>
+                    <field fieldName="expiredatetime" fieldAlias="expireDate" type="integer"/>
+                    <field fieldName="startdatetime" fieldAlias="startDate" type="integer"/>
+                    <field fieldName="status" fieldAlias="status" type="integer"/>
+                    <field fieldName="priorityid" fieldAlias="taskPriorityId" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="contactId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="ownerId" type="integer"/>
+                    <field fieldName="processid" fieldAlias="processId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="elwisuser" alias="user">
+                <fields>
+                    <field fieldName="userid" fieldAlias="elwisUserId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressName1"/>
+                    <field fieldName="name2" fieldAlias="addressName2"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="contactName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="contactName1"/>
+                    <field fieldName="name2" fieldAlias="contactName2"/>
+                    <field fieldName="name3" fieldAlias="contactName3"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="userTaskId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="priority" alias="priority">
+                <fields>
+                    <field fieldName="priorityid" fieldAlias="priorityId" key="true" type="integer"/>
+                    <field fieldName="priorityname" fieldAlias="priorityName"/>
+                    <field fieldName="sequence" fieldAlias="sequence" type="integer"/>
+                </fields>
+            </table>
+
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>priorityId</pK>
+                <fK>taskPriorityId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>userTaskId</pK>
+                <fK>taskId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>elwisUserId</pK>
+                <fK>ownerId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>addressNameId</pK>
+                <fK>addressId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>contactNameId</pK>
+                <fK>contactId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="processId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contactId" operator="EQUAL" type="parameter" parameterName="addressId"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="title" operator="LIKE2" type="parameter" parameterName="titleAlphabet"/>
+            <conector>And</conector>
+            <condition fieldReference="status" operator="DISTINCT" type="parameter" parameterName="concluded_status"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="title">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>title</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="startDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>startDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="expireDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>expireDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="priorityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priorityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>contactName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>contactName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>contactName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>contactName2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>contactName3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>contactName1</referenceField>
+                            <referenceField>contactName2</referenceField>
+                            <referenceField>contactName3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="status">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>status</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>ownerId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="ownerName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>addressName1</referenceField>
+                            <referenceField>addressName2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="DESC">
+                <columnOrder columnName="startDate"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="testNestedList_" persistence="true">
+        <tables>
+            <table tableName="elwisuser" alias="elwisUser">
+                <fields>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="userId" operator="EQUAL" type="constant" value="8864"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="userNestedId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>userId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="testNestedList" persistence="true">
+        <tables>
+            <table tableName="scheduleduser" alias="scheduledUser">
+                <fields>
+                    <field fieldName="scheduleduserid" fieldAlias="scheduledUserId" key="true" type="integer"/>
+                    <field fieldName="userid" fieldAlias="createUserId" type="integer"/>
+                    <field fieldName="taskid" fieldAlias="taskId_fk" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="createUserId" operator="IN" type="list" value="testNestedList_"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="taskId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskId_fk</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="taskSinglePopUpList" persistence="true" distinct="true" extends="taskSingleList">
+        <tables/>
+        <relationShips/>
+        <conditions/>
+        <configuration/>
+    </list>
+
+    <list listName="taskSingleReportList" persistence="true" distinct="true" executeFirstTime="true" extends="taskSingleList">
+        <tables>
+            <table tableName="task" alias="task">
+                <fields>
+                    <field fieldName="percent" fieldAlias="percent" type="integer"/>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId_fk" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="addressName_CP">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactPersonId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="addressNameCP1"/>
+                    <field fieldName="name2" fieldAlias="addressNameCP2"/>
+                    <field fieldName="name3" fieldAlias="addressNameCP3"/>
+                    <field fieldName="addresstype" fieldAlias="addressTypeCP"/>
+                </fields>
+            </table>
+            <table tableName="salesprocess" alias="salesprocess">
+                <fields>
+                    <field fieldName="processid" fieldAlias="salesProcessId" type="integer" key="true"/>
+                    <field fieldName="processName" fieldAlias="salesProcessName"/>
+                </fields>
+            </table>
+            <table tableName="tasktype" alias="taskType">
+                <fields>
+                    <field fieldName="tasktypeid" fieldAlias="taskTypeIdPK" type="integer" key="true"/>
+                    <field fieldName="name" fieldAlias="taskTypeName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <outerJoin/>
+                <pK>contactPersonId</pK>
+                <fK>contactPersonId_fk</fK>
+            </relationShip>
+            <relationShip>
+                <outerJoin/>
+                <pK>salesProcessId</pK>
+                <fK>processId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>taskTypeIdPK</pK>
+                <fK>taskTypeId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="taskId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="contactPersonName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeCP" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>addressNameCP1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>addressNameCP2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressTypeCP" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>addressNameCP1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>addressNameCP2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>addressNameCP3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>addressNameCP1</referenceField>
+                            <referenceField>addressNameCP2</referenceField>
+                            <referenceField>addressNameCP3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="campaignName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>campaignName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="salesProcessName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>salesProcessName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="taskTypeName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>taskTypeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="percent">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>percent</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <!--begin alvaro-->
+    <list listName="participantTaskListForTaskView" extends="participantTaskList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="elwisUserId" operator="DISTINCT" type="parameter" parameterName="ownerUserId"/>
+            <conector>And</conector>
+            <condition fieldReference="value" operator="IS" type="constant" value="NOT NULL"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="freeTextValue">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>value</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="userName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--end alvaro-->
+</lists>

@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN"
+        "http://www.jatun.com/titus-config-1.0.dtd">
+
+
+<databasestructure>
+    <database>
+        <table tablename="action" resource="Report.functionality.action">
+            <fields>
+                <field fieldname="actiontypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="active" dbtype="integer" columntype="boolean" converter="activeConverter"
+                       resource="Common.active"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="followupdate" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="number" dbtype="string" resource="SalesProcessAction.number"/>
+                <field fieldname="processid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="value" dbtype="decimal" columntype="decimal" resource="SalesProcess.value"
+                       converter="decimalConverter" istotalize="true"/>
+            </fields>
+            <primarykey fields="contactid, processid">
+                <inverserelation relationtype="left-join" tablename="actionposition" keys="contactid, processid"
+                                 resource="Report.foreignRelation.actionPosition"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="contact" relationtype="left-join"
+                            resource="Report.foreignRelation.communication">
+                    <keyref fieldref="contactid" foreignfieldref="contactid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="salesprocess" relationtype="left-join"
+                            resource="Report.foreignRelation.salesProcess">
+                    <keyref fieldref="processid" foreignfieldref="processid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="actiontype" relationtype="left-join"
+                            resource="Report.foreignRelation.actionType">
+                    <keyref fieldref="actiontypeid" foreignfieldref="actiontypeid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <constantfilter fieldref="active" resource="Common.active">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Common.inactive"/>
+                        <value key="1" showvalue="Common.active"/>
+                    </values>
+                </constantfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="actionposition" resource="Report.functionality.actionPosition">
+            <fields>
+                <field fieldname="amount" dbtype="integer" columntype="integer" resource="ActionPosition.quantity"
+                       istotalize="true"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="descriptionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="positionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="price" dbtype="decimal" columntype="decimal" resource="ActionPosition.price"
+                       istotalize="true" converter="decimalFourDigitsConverter"/>
+                <field fieldname="unitpricegross" dbtype="decimal" columntype="decimal" resource="ActionPosition.unitPriceGross"
+                       istotalize="true" converter="decimalFourDigitsConverter"/>
+                <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="processid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="totalprice" dbtype="decimal" columntype="decimal" resource="ActionPosition.totalPrice"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="totalpricegross" dbtype="decimal" columntype="decimal" resource="ActionPosition.totalPriceGross"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="unitid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="positionid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="productunit" relationtype="left-join"
+                            resource="Report.foreignRelation.productUnit">
+                    <keyref fieldref="unitid" foreignfieldref="unitid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="product" relationtype="left-join"
+                            resource="Report.foreignRelation.product">
+                    <keyref fieldref="productid" foreignfieldref="productid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.actionPosition.description" strongrelation="true">
+                    <keyref fieldref="descriptionid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="ActionPosition.description"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="action" relationtype="left-join" resource="Report.foreignRelation.action">
+                    <keyref fieldref="contactid" foreignfieldref="contactid"/>
+                    <keyref fieldref="processid" foreignfieldref="processid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="salesprocess" resource="Report.functionality.salesProcess">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="descriptionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="employeeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="enddate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="SalesProcess.endDate"/>
+                <field fieldname="priorityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="processid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="processname" dbtype="string" resource="SalesProcess.name"/>
+                <field fieldname="probability" dbtype="integer" columntype="integer" resource="SalesProcess.probability"
+                       converter="probabilityConverter" istotalize="true"/>
+                <field fieldname="statusid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="campactivityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="startdate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="SalesProcess.startDate"/>
+                <field fieldname="value" dbtype="decimal" columntype="decimal" converter="decimalConverter"
+                       resource="SalesProcess.value" istotalize="true"/>
+            </fields>
+            <primarykey fields="processid">
+                <inverserelation relationtype="left-join" tablename="action" keys="processid"
+                                 resource="Report.inverseRelation.action"/>
+                <inverserelation relationtype="left-join" tablename="sale" keys="processid"
+                                 resource="Report.inverseRelation.sale"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="campactivity" relationtype="left-join"
+                            resource="Report.foreignRelation.campaignActivity">
+                    <keyref fieldref="campactivityid" foreignfieldref="activityid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="employee" relationtype="left-join"
+                            resource="Report.foreignRelation.employee">
+                    <keyref fieldref="employeeid" foreignfieldref="employeeid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="processstatus" relationtype="left-join"
+                            resource="Report.foreignRelation.processStatus">
+                    <keyref fieldref="statusid" foreignfieldref="statusid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="customer" relationtype="left-join"
+                            resource="Report.foreignRelation.customer">
+                    <keyref fieldref="addressid" foreignfieldref="customerid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="processpriority" relationtype="left-join"
+                            resource="Report.foreignRelation.processPriority">
+                    <keyref fieldref="priorityid" foreignfieldref="priorityid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="campactivity" relationtype="left-join"
+                            resource="Report.foreignRelation.campaignActivity">
+                    <keyref fieldref="campactivityid" foreignfieldref="activityid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.salesProcess.description" strongrelation="true">
+                    <keyref fieldref="descriptionid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="ActionPosition.description"/>
+                    </overwriteresources>
+                </foreignkey>
+            </foreignkeys>
+            <dynamiccolumns>
+                <dynamiccolumn
+                        loadcolumnclass="com.piramide.elwis.web.reports.dynamiccolumns.SalesProcessCategoryColumnLoader">
+                    <dynamicforeignkey foreigntableref="categfieldvalue" relationtype="left-join"
+                                       columnkeyfield="categoryid" columnkeyparam="CATEGORY_ID">
+                        <keyref fieldref="processid" foreignfieldref="processid"/>
+                    </dynamicforeignkey>
+                </dynamiccolumn>
+            </dynamiccolumns>
+            <filters>
+                <foreignfilter resource="SalesProcess" filterfieldref="processname">
+                    <columns>
+                        <column fieldpath="processname" order="asc" resource="SalesProcess.processName"/>
+                        <column fieldpath="salesprocess>>address:addressid.addressName" order="asc"/>
+                        <column fieldpath="salesprocess>>employee:employeeid->address:employeeid.addressName"
+                                resource="SalesProcess.employee" order="asc"/>
+                        <column fieldpath="salesprocess>>processstatus:statusid.statusname"
+                                resource="SalesProcess.status"/>
+                        <column fieldpath="salesprocess>>processpriority:priorityid.priorityname"
+                                resource="SalesProcess.priority"/>
+                        <column fieldpath="startdate"/>
+                        <column fieldpath="enddate"/>
+                        <column fieldpath="probability"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="processname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+
+        <table tablename="sale" resource="Report.functionality.sales">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="customerid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="processid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="saledate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="Sale.saleDate"/>
+                <field fieldname="saleid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="sellerid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="title" dbtype="string" resource="Sale.title"/>
+            </fields>
+            <primarykey fields="saleid">
+                <inverserelation relationtype="left-join" tablename="saleposition" keys="saleid"
+                                 resource="Report.inverseRelation.salePosition"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="contactperson" relationtype="left-join"
+                            resource="Report.foreignRelation.contactPerson">
+                    <keyref fieldref="customerid" foreignfieldref="addressid"/>
+                    <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="customer" relationtype="left-join"
+                            resource="Report.foreignRelation.customer">
+                    <keyref fieldref="customerid" foreignfieldref="customerid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.text" strongrelation="true">
+                    <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="Sale.text"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="salesprocess" relationtype="left-join"
+                            resource="Report.foreignRelation.salesProcess">
+                    <keyref fieldref="processid" foreignfieldref="processid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="employee" relationtype="left-join"
+                            resource="Report.foreignRelation.employee.seller">
+                    <keyref fieldref="sellerid" foreignfieldref="employeeid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="saleposition" resource="Report.functionality.salePositions">
+            <fields>
+                <field fieldname="active" dbtype="integer" columntype="boolean" converter="activeConverter"
+                       resource="SalePosition.active"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="customerid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="deliverydate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="SalePosition.deliveryDate"/>
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="quantity" dbtype="integer" columntype="integer" resource="SalePosition.quantity"
+                       istotalize="true"/>
+                <field fieldname="salepositionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="saleid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="serial" dbtype="string" resource="SalePosition.serial"/>
+                <field fieldname="totalprice" dbtype="decimal" columntype="decimal" resource="SalePosition.totalPrice"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="totalpricegross" dbtype="decimal" columntype="decimal" resource="SalePosition.totalPriceGross"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="unitid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="unitprice" dbtype="decimal" columntype="decimal" resource="SalePosition.unitPrice"
+                       istotalize="true" converter="decimalFourDigitsConverter"/>
+                <field fieldname="unitpricegross" dbtype="decimal" columntype="decimal" resource="SalePosition.unitPriceGross"
+                       istotalize="true" converter="decimalFourDigitsConverter"/>
+                <field fieldname="versionnumber" dbtype="string" resource="SalePosition.versionNumber"/>
+            </fields>
+            <primarykey fields="salepositionid">
+                <inverserelation relationtype="left-join" tablename="productcontract" keys="salepositionid"
+                                 resource="Report.inverseRelation.productContract"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="freetext" relationtype="left-join"
+                            resource="Report.foreignRelation.freetext.text" strongrelation="true">
+                    <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="SalePosition.text"/>
+                    </overwriteresources>
+                </foreignkey>
+                <foreignkey foreigntableref="product" relationtype="left-join"
+                            resource="Report.foreignRelation.product">
+                    <keyref fieldref="productid" foreignfieldref="productid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="sale" relationtype="left-join" resource="Report.foreignRelation.sale">
+                    <keyref fieldref="saleid" foreignfieldref="saleid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="productunit" relationtype="left-join"
+                            resource="Report.foreignRelation.productUnit">
+                    <keyref fieldref="unitid" foreignfieldref="unitid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="customer" relationtype="left-join"
+                            resource="Report.foreignRelation.customer">
+                    <keyref fieldref="customerid" foreignfieldref="customerid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="contactperson" relationtype="left-join"
+                            resource="Report.foreignRelation.contactPerson">
+                    <keyref fieldref="customerid" foreignfieldref="addressid"/>
+                    <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+                </foreignkey>
+            </foreignkeys>
+            <dynamiccolumns>
+                <dynamiccolumn loadcolumnclass="com.piramide.elwis.web.reports.dynamiccolumns.SalePositionCategoryColumnLoader">
+                    <dynamicforeignkey foreigntableref="categfieldvalue" relationtype="left-join" columnkeyfield="categoryid" columnkeyparam="CATEGORY_ID">
+                        <keyref fieldref="salepositionid" foreignfieldref="salepositionid"/>
+                    </dynamicforeignkey>
+                </dynamiccolumn>
+            </dynamiccolumns>
+
+            <filters>
+                <constantfilter fieldref="active" resource="SalePosition.active">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Common.inactive"/>
+                        <value key="1" showvalue="Common.active"/>
+                    </values>
+                </constantfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="productcontract" resource="Report.functionality.productcontracts">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="amountype" dbtype="short" columntype="string" converter="contractAmountTypeConverter"
+                       resource="ProductContract.amountType"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contractenddate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="ProductContract.contractEndDate"/>
+                <field fieldname="contractid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contractnumber" dbtype="string" resource="ProductContract.contractNumber"/>
+                <field fieldname="contracttypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="currencyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="discount" dbtype="decimal" columntype="decimal" resource="Contract.discount"
+                       converter="decimalConverter"/>
+                <field fieldname="installment" dbtype="integer" columntype="integer"
+                       resource="ProductContract.installment" istotalize="true"/>
+                <field fieldname="invoiceduntil" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="ProductContract.invoiceUntil"/>
+                <field fieldname="matchcalperiod" dbtype="short" columntype="string"
+                       converter="contractMatchCalPeriodConverter" resource="ProductContract.mathCalendarPeriod"/>
+                <field fieldname="openamount" dbtype="decimal" columntype="decimal" resource="Contract.openAmount"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="orderdate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="Contract.orderDate"/>
+                <field fieldname="payconditionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="paymethod" dbtype="short" columntype="string" converter="contractPayMethodConverter"
+                       resource="Contract.payMethod"/>
+                <field fieldname="payperiod" dbtype="short" columntype="string" converter="contractPayPeriodConverter"
+                       resource="ProductContract.payPeriod"/>
+                <field fieldname="paystartdate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="ProductContract.payStartDate"/>
+                <field fieldname="price" dbtype="decimal" columntype="decimal" resource="Contract.price"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="priceperiod" dbtype="integer" columntype="integer" resource="ProductContract.pricePeriod"
+                       istotalize="true"/>
+                <field fieldname="pricepermonth" dbtype="decimal" columntype="decimal" resource="ProductContract.pricePerMonth"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="salepositionid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="sellerid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="vatid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="contractid">
+                <inverserelation relationtype="left-join" tablename="paymentstep" keys="contractid"
+                                 resource="Report.inverseRelation.paymentStep"/>
+                <inverserelation relationtype="left-join" tablename="invoiceposition" keys="contractid"
+                                 resource="Report.inverseRelation.invoicePosition"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="address" relationtype="left-join"
+                            resource="Report.foreignRelation.address.contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="contactperson" relationtype="left-join"
+                            resource="Report.foreignRelation.contactPerson">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                    <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="contracttype" relationtype="left-join"
+                            resource="Report.foreignRelation.contractType">
+                    <keyref fieldref="contracttypeid" foreignfieldref="contracttypeid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="currency" relationtype="left-join"
+                            resource="Report.foreignRelation.currency">
+                    <keyref fieldref="currencyid" foreignfieldref="currencyid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="paycondition" relationtype="left-join"
+                            resource="Report.foreignRelation.payCondition">
+                    <keyref fieldref="payconditionid" foreignfieldref="payconditionid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="saleposition" relationtype="left-join"
+                            resource="Report.foreignRelation.salePosition">
+                    <keyref fieldref="salepositionid" foreignfieldref="salepositionid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="employee" relationtype="left-join"
+                            resource="Report.foreignRelation.employee.seller">
+                    <keyref fieldref="sellerid" foreignfieldref="employeeid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="vat" relationtype="left-join" resource="Report.foreignRelation.vat">
+                    <keyref fieldref="vatid" foreignfieldref="vatid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <constantfilter fieldref="amountype" resource="ProductContract.amountType">
+                    <values typevalue="resource">
+                        <value key="1" showvalue="ProductContract.amountType.percentage"/>
+                        <value key="2" showvalue="ProductContract.amountType.amount"/>
+                    </values>
+                </constantfilter>
+                <constantfilter fieldref="matchcalperiod" resource="ProductContract.mathCalendarPeriod">
+                    <values typevalue="resource">
+                        <value key="1" showvalue="ProductContract.matchCalendarPeriod.yes"/>
+                        <value key="0" showvalue="ProductContract.matchCalendarPeriod.no"/>
+                    </values>
+                </constantfilter>
+                <constantfilter fieldref="paymethod" resource="Contract.payMethod">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Contract.payMethod.single"/>
+                        <value key="2" showvalue="Contract.payMethod.periodic"/>
+                        <value key="1" showvalue="Contract.payMethod.partialPeriodic"/>
+                        <value key="3" showvalue="Contract.payMethod.partialFixed"/>
+                    </values>
+                </constantfilter>
+                <constantfilter fieldref="payperiod" resource="ProductContract.payPeriod">
+                    <values typevalue="resource">
+                        <value key="1" showvalue="ProductContract.payPeriod.Monthly"/>
+                        <value key="3" showvalue="ProductContract.payPeriod.quaterly"/>
+                        <value key="6" showvalue="ProductContract.payPeriod.halfYearly"/>
+                        <value key="12" showvalue="ProductContract.payPeriod.yearly"/>
+                    </values>
+                </constantfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="paymentstep" resource="Report.functionality.paymentStep">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contractid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="payamount" dbtype="decimal" columntype="decimal"
+                       resource="ProductContract.paymentStep.amount" istotalize="true" converter="decimalConverter"/>
+                <field fieldname="paydate" dbtype="integer" columntype="date" converter="integerToDateValue"
+                       filterer="dateFilter" resource="ProductContract.paymentStep.payDate"/>
+                <field fieldname="paystepid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="paystepid">
+                <inverserelation relationtype="left-join" tablename="invoiceposition" keys="paystepid"
+                                 resource="Report.inverseRelation.invoicePosition"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="productcontract" relationtype="left-join"
+                            resource="Report.foreignRelation.productContract">
+                    <keyref fieldref="contractid" foreignfieldref="contractid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="sales"/>
+            </modulefunctionality>
+        </table>
+    </database>
+</databasestructure>

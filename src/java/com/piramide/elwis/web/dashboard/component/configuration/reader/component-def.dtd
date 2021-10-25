@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ENTITY % Boolean "(TRUE|FALSE)">
+<!ENTITY % Action "(CLOSE|CONFIGURATION)">
+<!ENTITY % Order "(ASC|DESC|NONE)">
+<!ENTITY % DataType "(INTEGER|STRING|DATE|BOOLEAN)">
+<!ENTITY % View "(TEXT|SELECT|CHECK|RANGE)">
+<!ENTITY % defaultUiProcessors "(LIST|CUSTOM)">
+
+<!ELEMENT components (dataProcessor,persistenceProcessor,conditionEvaluator?,converters?,component+)>
+
+<!ELEMENT converters (converter+)>
+<!ELEMENT converter (#PCDATA)>
+<!ATTLIST converter
+        name CDATA #REQUIRED
+        class CDATA #REQUIRED>
+
+<!ELEMENT dataProcessor (#PCDATA)>
+<!ELEMENT persistenceProcessor (#PCDATA)>
+<!ELEMENT filterPreProcessor (#PCDATA)>
+<!ELEMENT conditionEvaluator (#PCDATA)>
+
+<!ELEMENT uiProcessor (#PCDATA)>
+<!ATTLIST uiProcessor
+        type %defaultUiProcessors; #REQUIRED
+        class CDATA #IMPLIED>
+
+<!ELEMENT accessUrl (params)>
+ <!ATTLIST accessUrl
+        url CDATA #REQUIRED>
+
+<!ELEMENT componentUrl (params)>
+<!ATTLIST componentUrl
+         url CDATA #REQUIRED>
+
+
+<!ELEMENT params (param+)>
+<!ELEMENT param (#PCDATA)>
+<!ATTLIST param
+        name CDATA #REQUIRED
+        value CDATA #IMPLIED
+        columnId CDATA #IMPLIED>
+
+<!ELEMENT component (columns?, filters?, windowOptions, configurations, params?)>
+<!ATTLIST component
+        id CDATA #REQUIRED
+        name CDATA #REQUIRED
+        nameResource CDATA #REQUIRED
+        functionality CDATA #IMPLIED
+        permission CDATA #IMPLIED> 
+
+<!ELEMENT columns (column)+>
+<!ELEMENT column ((constant)*, (condition)*)>
+<!ATTLIST column
+        id CDATA #REQUIRED
+        name CDATA #REQUIRED
+        resourceKey CDATA #IMPLIED
+        order %Order; #IMPLIED
+        default %Boolean; #IMPLIED
+        accessColumn %Boolean; #IMPLIED
+        patternKey CDATA #IMPLIED
+        propertyName CDATA #IMPLIED
+        converter CDATA #IMPLIED
+        size CDATA #IMPLIED
+        inverseOrder %Boolean; #IMPLIED>
+
+<!ELEMENT constant (#PCDATA)>
+<!ATTLIST constant
+        value CDATA #REQUIRED
+        resourceKey CDATA #REQUIRED>
+<!ELEMENT condition (#PCDATA)>
+<!ATTLIST condition
+         type CDATA #REQUIRED
+         operator CDATA #REQUIRED
+         value CDATA #REQUIRED
+         style CDATA #REQUIRED>
+
+<!ELEMENT windowOptions (windowOption)+>
+<!ELEMENT windowOption (#PCDATA)>
+<!ATTLIST windowOption
+        action CDATA #REQUIRED
+        iconUrl CDATA #REQUIRED
+        resourceKey CDATA #REQUIRED>
+
+<!ELEMENT configurations ((uiProcessor,filterPreProcessor?,accessUrl?) | componentUrl)>
+
+
+<!ELEMENT filters (filter*, staticFilter*, rowCounterFilter)>
+
+<!ELEMENT filter (values)>
+<!ATTLIST filter
+        name CDATA #REQUIRED
+        resourceKey CDATA #REQUIRED
+        secondResourceKey CDATA #IMPLIED
+        type %DataType; #IMPLIED
+        view %View; #REQUIRED
+        selectValue CDATA #IMPLIED
+        selectId CDATA #IMPLIED>
+
+<!ELEMENT staticFilter (#PCDATA)>
+<!ATTLIST staticFilter
+        name CDATA #REQUIRED
+        multipleValue %Boolean; #IMPLIED>
+<!ELEMENT rowCounterFilter (#PCDATA)>
+<!ATTLIST rowCounterFilter
+       name CDATA #REQUIRED
+       resourceKey CDATA #REQUIRED
+       value CDATA #REQUIRED>
+
+<!ELEMENT values (query?,constantClass?,default?)>
+
+<!ELEMENT query (params)>
+
+<!ELEMENT constantClass (#PCDATA)>
+<!ATTLIST constantClass
+        className CDATA #REQUIRED
+        methodName CDATA #REQUIRED>
+
+<!ELEMENT default (#PCDATA)>
+<!ATTLIST default
+    value CDATA #REQUIRED>

@@ -1,0 +1,79 @@
+<elwis-salesprocess>
+<tablefields name="actionpositions">
+<column  key="titaction_position_number" align="left">
+	<field>action_position_number</field>
+</column>
+<column  key="titaction_position_name" align="left">
+	<field>action_position_name</field>
+</column>
+<column  key="titaction_position_text" align="left">
+	<field>action_position_text</field>
+</column>
+<column  key="titaction_position_productnumber" align="left">
+	<field>action_position_productnumber</field>
+</column>
+<column  key="titaction_position_unit" align="left">
+	<field>action_position_unit</field>
+</column>
+<column  key="titaction_position_price" align="right">
+	<field>action_position_price</field>
+</column>
+<column  key="titaction_position_quantity" align="right">
+	<field>action_position_quantity</field>
+</column>
+<column  key="titaction_position_total" align="right">
+	<field>action_position_total</field>
+</column>
+</tablefields>
+
+<tablefields name="invoicepositions">
+<column  key="titposition_number" align="left">
+	<field>invoice_position_number</field>
+</column>
+<column  key="titposition_name" align="left">
+	<field>invoice_position_name</field>
+</column>
+<column  key="titposition_text" align="left">
+	<field>invoice_position_text</field>
+</column>
+<column  key="titposition_productnumber" align="left">
+	<field>invoice_position_productnumber</field>
+</column>
+<column  key="titposition_unit" align="left">
+	<field>invoice_position_unit</field>
+</column>
+<column  key="titposition_price" align="right">
+	<field>invoice_position_price</field>
+</column>
+<column  key="titposition_quantity" align="right">
+	<field>invoice_position_quantity</field>
+</column>
+<column  key="titposition_vat_name" align="left">
+	<field>invoice_position_vat_name</field>
+</column>
+<column  key="titposition_vatrate" align="right">
+	<field>invoice_position_vat_rate</field>
+</column>
+<column  key="titposition_total" align="right">
+	<field>invoice_position_total</field>
+</column>
+</tablefields>
+
+
+<tablefields name="invoicevats">
+<column  key="titvat_name" align="left">
+	<field>invoice_vat_name</field>
+</column>
+<column  key="titvat_rate" align="right">
+	<field>invoice_vat_rate</field>
+</column>
+<column  key="titvat_amount" align="right">
+	<field>invoice_vat_amount</field>
+</column>
+<column  key="titvat_amount_to" align="right">
+	<field>invoice_vat_amount_to</field>
+</column>
+</tablefields>
+
+
+</elwis-salesprocess>

@@ -1,0 +1,18 @@
+
+<% _mapFields = listFields[english] 
+ _fields = _mapFields["variable"]
+ sortKeys = _fields.keys.sort
+i=0
+ sortKeys.each{ |fkey| 
+_field=_fields[fkey]%>
+    public static final int FIELD_<%=_field.idName%> = <%=i%>;<% i=i+1 } %>
+
+    public static final String[] FIELDS = {
+<% _mapFields = listFields[english] 
+ _fields = _mapFields["variable"]
+_fields.delete("MAILING")
+ sortKeys = _fields.keys.sort
+ sortKeys.each{ |fkey| 
+_field=_fields[fkey]%>
+					   "<%=_field.resource.downcase%>",<%}%>
+                                           };

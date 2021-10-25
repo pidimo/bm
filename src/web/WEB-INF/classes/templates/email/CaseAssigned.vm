@@ -1,0 +1,55 @@
+#parse("templates/email/includes/header.vm")
+
+#if ($specialMessage != '')
+<table width="400" align="center" cellpadding="0" cellspacing="0">
+<tr>
+    <td colspan="2" class="expiredMessage">
+    <div>$specialMessage</div>
+    </td>
+</tr>
+</table>
+#end
+
+<table>
+    <tr>
+        <td><strong>$messages.getMessage("Common.number"):</strong></td><td>$case.number</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("Common.title"):</strong></td><td>$case.title</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("Common.openBy"):</strong></td><td>$case.openBy</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("Common.assignedFrom"):</strong></td><td>$case.from</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("Common.assignedTo"):</strong></td><td>$case.to</td>
+    </tr>
+    <tr>
+        <td><strong>$messages.getMessage("State.title"):</strong></td><td>$case.state</td>
+    </tr>
+    #if ($case.priority != "")
+    <tr>
+        <td><strong>$messages.getMessage("Priority.title"):</strong></td><td>$case.priority</td>
+    </tr>
+    #end
+    <tr>
+        <td><strong>$messages.getMessage("SupportCaseActivity.assignedAt"):</strong></td>
+        <td>$messages.getDateFormatted($case.assignedAt,"datePattern")</td>
+    </tr>
+    #if ($case.activityDetail != "")
+    <tr>
+        <td colspan="2"><strong>$messages.getMessage("SupportCaseActivity.previousDetail"):</strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">$case.activityDetail</td>
+    </tr>
+    #end
+    <tr>
+        <td colspan="2"><strong>$messages.getMessage("SupportCase.detail"):</strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">$case.detail</td>
+    </tr>
+</table>

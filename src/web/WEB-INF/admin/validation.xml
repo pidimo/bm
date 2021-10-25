@@ -1,0 +1,517 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE form-validation PUBLIC
+        "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.0//EN"
+        "http://jakarta.apache.org/commons/dtds/validator_1_0.dtd">
+
+<form-validation>
+    <formset>
+        <form name="userInfoUpdateForm">
+
+            <field property="userLogin" depends="unique">
+                <arg0 key="User.login"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>elwisuser</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>login</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>userId=userid</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <!--<var>
+                    <var-name>operation</var-name>
+                    <var-value>op</var-value>
+                </var>-->
+            </field>
+            <field property="timeZone" depends="required">
+                <arg0 key="User.timeZone" resource="true"/>
+            </field>
+        </form>
+        <form name="userInfoForm">
+            <field property="companyId" depends="checkEntry">
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>elwisuser</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>-308758540</var-value>
+                </var>
+            </field>
+            <field property="timeZone" depends="required">
+                <arg0 key="User.timeZone" resource="true"/>
+            </field>
+            <field property="type" depends="required">
+                <arg0 key="User.typeUser" resource="true"/>
+            </field>
+            <field property="employeeId" depends="requiredif">
+                <arg0 key="Contact.employee" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>type</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>1</var-value>
+                </var>
+            </field>
+            <field property="addressId" depends="requiredif">
+                <arg0 key="Contact" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>type</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>0</var-value>
+                </var>
+            </field>
+            <field property="userPassword" depends="required, minlength, twofields">
+                <arg0 key="User.password"/>
+                <arg1 key="${var:minlength}" resource="false"/>
+                <var>
+                    <var-name>secondProperty</var-name>
+                    <var-value>passwordConfir</var-value>
+                </var>
+                <var>
+                    <var-name>minlength</var-name>
+                    <var-value>6</var-value>
+                </var>
+            </field>
+
+            <field property="userLogin" depends="unique">
+                <arg0 key="User.login"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>elwisuser</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>login</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>userId=userid</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="passForm">
+            <field property="userPassword" depends="required, minlength, twofields">
+                <arg0 key="User.password"/>
+                <arg1 key="${var:minlength}" resource="false"/>
+                <var>
+                    <var-name>secondProperty</var-name>
+                    <var-value>passwordConfir</var-value>
+                </var>
+                <var>
+                    <var-name>minlength</var-name>
+                    <var-value>6</var-value>
+                </var>
+            </field>
+        </form>
+
+        <form name="roleForm">
+            <field property="companyId" depends="checkEntry">
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>role</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>-308758540</var-value>
+                </var>
+            </field>
+            <field property="roleName" depends="unique">
+                <arg0 key="Role.name"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>role</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>rolename</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>roleId=roleid</var-value>
+                </var>
+            </field>
+        </form>
+        <form name="companyForm">
+            <field property="name1" depends="required">
+                <arg0 key="Company.name"/>
+            </field>
+            <field property="companyType" depends="required">
+                <arg0 key="Company.companyType" resource="true"/>
+            </field>
+            <field property="startLicenseDate" depends="validDate">
+                <arg0 key="Company.startLicenseDate" resource="true"/>
+                <!--<var>
+                    <var-name>strict</var-name>
+                    <var-value>true</var-value>
+                </var>-->
+            </field>
+            <field property="finishLicenseDate" depends="validDate">
+                <arg0 key="Company.finishLicenseDate" resource="true"/>
+            </field>
+            <field property="usersAllowed" depends="integer">
+                <arg0 key="Company.usersAllowed" resource="true"/>
+            </field>
+            <field property="maxMaxAttachSize" depends="required,unsignedInteger">
+                <arg0 key="Company.maxMaxAttachSize" resource="true"/>
+            </field>
+            <field property="rootName1" depends="required">
+                <arg0 key="Company.rootName1" resource="true"/>
+            </field>
+            <field property="userName" depends="required">
+                <arg0 key="Company.userName" resource="true"/>
+            </field>
+            <field property="email" depends="requiredif, emailValidator">
+                <arg0 key="Company.email" resource="true"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>op</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>create</var-value>
+                </var>
+            </field>
+            <field property="userPassword" depends="requiredif, minlength, twofields">
+                <arg0 key="Company.password"/>
+                <arg1 key="${var:minlength}" resource="false"/>
+                <var>
+                    <var-name>secondProperty</var-name>
+                    <var-value>rePassword</var-value>
+                </var>
+
+                <var>
+                    <var-name>minlength</var-name>
+                    <var-value>6</var-value>
+                </var>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>op</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>create</var-value>
+                </var>
+            </field>
+            <field property="companyCreateLogin" depends="requiredif, unique">
+                <arg0 key="Company.login"/>
+
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>company</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>login</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>companyId=companyid</var-value>
+                </var>
+            </field>
+            <!--<field property="favoriteLanguage" depends="requiredif">
+                <arg0 key="Company.defaultUILanguage"/>
+                <var>
+                    <var-name>field[0]</var-name>
+                    <var-value>op</var-value>
+                </var>
+                <var>
+                    <var-name>fieldTest[0]</var-name>
+                    <var-value>EQUAL</var-value>
+                </var>
+                <var>
+                    <var-name>fieldValue[0]</var-name>
+                    <var-value>create</var-value>
+                </var>
+            </field>-->
+            <field property="mobileUserAllowed" depends="integer">
+                <arg0 key="Company.mobile.usersAllowed" resource="true"/>
+            </field>
+            <field property="mobileStartLicense" depends="validDate">
+                <arg0 key="Company.mobile.startLicense" resource="true"/>
+            </field>
+            <field property="mobileEndLicense" depends="validDate">
+                <arg0 key="Company.mobile.finishLicense" resource="true"/>
+            </field>
+        </form>
+        <form name="applicationSignatureForm">
+            <field property="enabled" depends="booleanCheckBox"/>
+        </form>
+        <form name="userGroupForm">
+            <field property="companyId" depends="checkEntry">
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>usergroup</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>-308758540</var-value>
+                </var>
+            </field>
+            <field property="groupName" depends="required">
+                <arg0 key="UserGroup.name" resource="true"/>
+            </field>
+            <field property="groupType" depends="required">
+                <arg0 key="UserGroup.groupType" resource="true"/>
+            </field>
+        </form>
+        <form name="passwordChangeForm">
+            <field property="description" depends="required">
+                <arg0 key="PasswordChange.description"/>
+            </field>
+            <field property="changeDate" depends="validDate">
+                <arg0 key="PasswordChange.changeTime" resource="true"/>
+            </field>
+        </form>
+        <form name="reportJrxmlForm">
+            <field property="companyId" depends="required, checkEntry">
+                <arg0 key="Report.jrxml.company" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>report</var-value>
+                </var>
+                <var>
+                    <var-name>moduleId</var-name>
+                    <var-value>9</var-value>
+                </var>
+            </field>
+            <field property="name" depends="required, unique">
+                <arg0 key="Reports.report.reportName" resource="true"/>
+                <var>
+                    <var-name>tableDB</var-name>
+                    <var-value>report</var-value>
+                </var>
+                <var>
+                    <var-name>fieldDB</var-name>
+                    <var-value>name</var-value>
+                </var>
+                <var>
+                    <var-name>fieldIdDB</var-name>
+                    <var-value>reportId=reportid</var-value>
+                </var>
+                <var>
+                    <var-name>conditionsDB</var-name>
+                    <var-value>companyid=companyId</var-value>
+                </var>
+            </field>
+            <field property="reportType" depends="required">
+                <arg0 key="Reports.report.reportType" resource="true"/>
+            </field>
+            <field property="employeeId" depends="required">
+                <arg0 key="Document.employee" resource="true"/>
+            </field>
+            <field property="module" depends="required">
+                <arg0 key="Reports.report.reportModule" resource="true"/>
+            </field>
+            <field property="initialTableReference" depends="required">
+                <arg0 key="Reports.report.reportFunctionality" resource="true"/>
+            </field>
+            <field property="state" depends="required">
+                <arg0 key="Reports.report.reportStatus" resource="true"/>
+            </field>
+            <field property="pageSize" depends="required">
+                <arg0 key="ReportGenerator.reportPageSize" resource="true"/>
+            </field>
+            <field property="pageOrientation" depends="required">
+                <arg0 key="ReportGenerator.reportPageOrientation" resource="true"/>
+            </field>
+            <field property="reportFormat" depends="required">
+                <arg0 key="ReportGenerator.reportFormat" resource="true"/>
+            </field>
+        </form>
+
+        <form name="queryParamForm">
+            <field property="label" depends="required">
+                <arg0 key="Report.filter.label" resource="true"/>
+            </field>
+        </form>
+
+        <!--            for reports-->
+        <form name="companyReportForm">
+            <field property="initStartLicenseDate_1" depends="validDates">
+                <arg0 key="Company.startLicenseDate" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endStartLicenseDate_1</var-value>
+                </var>
+            </field>
+            <field property="startCreationDate" depends="validDates">
+                <arg0 key="Common.creationDate" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endCreationDate</var-value>
+                </var>
+            </field>
+            <field property="initFinishLicenseDate_2" depends="validDates">
+                <arg0 key="Company.finishLicenseDate" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endFinishLicenseDate_2</var-value>
+                </var>
+            </field>
+            <!--<field property="endFinishLicenseDate_2" depends="validDate">
+                <arg0 key="Company.finishLicenseDate" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>-->
+            <field property="initNumberOfUsers_3" depends="unsignedIntegers">
+                <arg0 key="Company.usersAllowed" resource="true"/>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>endNumberOfUsers_3</var-value>
+                </var>
+            </field>
+            <!--<field property="endNumberOfUsers_3" depends="integer, unsignedInteger">
+                <arg0 key="Company.usersAllowed" resource="true"/>
+            </field>-->
+        </form>
+        <form name="userSessionReportForm">
+            <field property="long@initLastLoginDate_1" depends="validDates">
+                <arg0 key="User.startConection" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>long@endLastLoginDate_1</var-value>
+                </var>
+            </field>
+            <!--<field property="long@endLastLoginDate_1" depends="validDate">
+                <arg0 key="User.startConection" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>-->
+            <field property="long@initLastActionDate_2" depends="validDates">
+                <arg0 key="User.lastConection" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>long@endLastActionDate_2</var-value>
+                </var>
+            </field>
+            <!--<field property="long@endLastActionDate_2" depends="validDate">
+                <arg0 key="User.lastConection" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>-->
+            <field property="long@initLogOffDate_3" depends="validDates">
+                <arg0 key="User.endConection" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>endRangeValue</var-name>
+                    <var-value>long@endLogOffDate_3</var-value>
+                </var>
+            </field>
+            <!--<field property="long@endLogOffDate_3" depends="validDate">
+                <arg0 key="User.endConection" resource="true"/>
+                <var>
+                    <var-name>toString</var-name>
+                    <var-value>true</var-value>
+                </var>
+                <var>
+                    <var-name>cloneFormat</var-name>
+                    <var-value>true</var-value>
+                </var>
+            </field>-->
+        </form>
+    </formset>
+</form-validation>

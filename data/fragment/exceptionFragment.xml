@@ -1,0 +1,4 @@
+<global-exceptions>
+    <exception key="msg.ServerError" path="/ErrorPage.do" scope="request" type="net.java.dev.strutsejb.SysLevelException"/>
+    <exception key="msg.ServerError" path="/ErrorPage.do" scope="request" type="java.lang.Exception"/>
+</global-exceptions>

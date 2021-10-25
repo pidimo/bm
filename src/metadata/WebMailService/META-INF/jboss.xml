@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 4.0//EN" "http://www.jboss.org/j2ee/dtd/jboss_4_0.dtd">
+<jboss>
+    <enterprise-beans>
+        <session>
+            <ejb-name>EmailService</ejb-name>
+            <local-jndi-name>Elwis.EmailService</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>UtilService</ejb-name>
+            <local-jndi-name>Elwis.UtilService</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>SaveEmailService</ejb-name>
+            <local-jndi-name>Elwis.SaveEmailService</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>EmailSourceService</ejb-name>
+            <local-jndi-name>Elwis.EmailSourceService</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>DownloadEmailService</ejb-name>
+            <local-jndi-name>Elwis.DownloadEmailService</local-jndi-name>
+        </session>
+        <session>
+            <ejb-name>SentEmailService</ejb-name>
+            <local-jndi-name>Elwis.SentEmailService</local-jndi-name>
+        </session>
+
+        <message-driven>
+            <ejb-name>SearchEmailInBackgroundMDB</ejb-name>
+            <destination-jndi-name>queue/Elwis.SentEmailsInBackground</destination-jndi-name>
+        </message-driven>
+        <message-driven>
+            <ejb-name>SentEmailMDB</ejb-name>
+            <destination-jndi-name>queue/Elwis.SentEmail</destination-jndi-name>
+        </message-driven>
+        <message-driven>
+            <ejb-name>DownloadEmailInBackgroupdMDB</ejb-name>
+            <destination-jndi-name>queue/Elwis.DownloadEmailsInBackground</destination-jndi-name>
+        </message-driven>
+        <message-driven>
+            <ejb-name>DownloadEmailMDB</ejb-name>
+            <destination-jndi-name>queue/Elwis.DownloadEmail</destination-jndi-name>
+        </message-driven>
+        <message-driven>
+            <ejb-name>DeleteEmailMDB</ejb-name>
+            <destination-jndi-name>queue/Elwis.DeleteEmail</destination-jndi-name>
+        </message-driven>
+    </enterprise-beans>
+</jboss>

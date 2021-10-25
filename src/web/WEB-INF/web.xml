@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+    <display-name>Elwis</display-name>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>com.piramide.elwis.web.resources.ApplicationResources</param-value>
+    </context-param>
+    <context-param>
+        <param-name>fantabulous-config</param-name>
+        <param-value>/WEB-INF/fantabulous-config.properties</param-value>
+    </context-param>
+
+
+    <filter>
+        <filter-name>LogFilter</filter-name>
+        <filter-class>com.piramide.elwis.web.common.filter.LogFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>UserSessionLogFilter</filter-name>
+        <filter-class>com.piramide.elwis.web.common.filter.UserSessionLogFilter</filter-class>
+        <init-param>
+            <param-name>timeInterval</param-name>
+            <param-value>5</param-value>
+            <!--minutes - must be positive number-->
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>URLEncrypt</filter-name>
+        <filter-class>com.piramide.elwis.web.common.urlencrypt.filter.UrlEncryptFilter</filter-class>
+        <init-param>
+            <param-name>excludeExtensions</param-name>
+            <param-value>.gif, .jpg, .js, .png, .css, .jpeg, .ico</param-value>
+        </init-param>
+        <init-param>
+            <param-name>enableEncryption</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>enableLogForExtension</param-name>
+            <param-value>.do</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>FiveYearsExpiresFilter</filter-name>
+        <filter-class>com.piramide.elwis.web.common.filter.PublicExpiresFilter</filter-class>
+        <init-param>
+            <param-name>expires</param-name>
+            <param-value>155520000</param-value>
+            <!--5years-->
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.piramide.elwis.web.common.filter.CharsetFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <!--following key is for delivery jsp purposes, please do not rename or remove.-->
+    <!--@@compressionFilterXmlFragment@@-->
+
+
+    <filter-mapping>
+        <filter-name>FiveYearsExpiresFilter</filter-name>
+        <url-pattern>/layout/ui/img/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>FiveYearsExpiresFilter</filter-name>
+        <url-pattern>/js/htmleditor/tinymce/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>FiveYearsExpiresFilter</filter-name>
+        <url-pattern>/js/cacheable/*</url-pattern>
+    </filter-mapping>
+
+
+    <!--the order descending of the below filter mapping is so important, please do not disarray-->
+    <filter-mapping>
+        <filter-name>UserSessionLogFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>URLEncrypt</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>LogFilter</filter-name>
+        <servlet-name>action</servlet-name>
+    </filter-mapping>
+
+
+    <listener>
+        <listener-class>net.java.dev.strutsejb.web.SessionRemover</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.piramide.elwis.web.common.listener.InitializeApplicationListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.jatun.commons.fonts.FontRegisterListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.alfacentauro.fantabulous.web.InitializeFantabulousListener</listener-class>
+    </listener>
+
+
+    <!--following key is for delivery purposes, please do not rename or remove. It adds listeners to be used on production only-->
+    <!--@@listenerXmlFragment@@-->
+
+
+    <!-- Action Servlet Configuration -->
+    <servlet>
+        <servlet-name>action</servlet-name>
+        <servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+        <init-param>
+            <param-name>development</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>/WEB-INF/common/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/catalogs</param-name>
+            <param-value>/WEB-INF/catalogs/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/contacts</param-name>
+            <param-value>/WEB-INF/contacts/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/admin</param-name>
+            <param-value>/WEB-INF/admin/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/campaign</param-name>
+            <param-value>/WEB-INF/campaign/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/webmail</param-name>
+            <param-value>/WEB-INF/webmail/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/products</param-name>
+            <param-value>/WEB-INF/products/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/finance</param-name>
+            <param-value>/WEB-INF/finance/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/sales</param-name>
+            <param-value>/WEB-INF/sales/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/scheduler</param-name>
+            <param-value>/WEB-INF/scheduler/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/support</param-name>
+            <param-value>/WEB-INF/support/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/reports</param-name>
+            <param-value>/WEB-INF/reports/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/mobile</param-name>
+            <param-value>/WEB-INF/mobile/struts-config.xml</param-value>
+        </init-param>
+        <init-param>
+            <param-name>config/projects</param-name>
+            <param-value>/WEB-INF/projects/struts-config.xml</param-value>
+        </init-param>
+        <!-- Julien Ortega for BMApp -->
+        <init-param>
+            <param-name>config/bmapp</param-name>
+            <param-value>/WEB-INF/bmapp/struts-config.xml</param-value>
+        </init-param>
+        <!-- End Julien Ortega-->
+        <init-param>
+            <param-name>validate</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>2</param-value>
+        </init-param>
+        <init-param>
+            <param-name>nocache</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayChart</servlet-name>
+        <servlet-class>org.jfree.chart.servlet.DisplayChart</servlet-class>
+    </servlet>
+    <servlet>
+        <description>Generate the mini calendar for select date</description>
+        <display-name>WebCalendar</display-name>
+        <servlet-name>WebCalendarServlet</servlet-name>
+        <servlet-class>com.piramide.elwis.web.common.WebCalendarServlet</servlet-class>
+        <init-param>
+            <param-name>image_path</param-name>
+            <param-value>baselayout</param-value>
+        </init-param>
+        <init-param>
+            <param-name>image_path_attribute_type</param-name>
+            <param-value>2</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+
+    <servlet>
+        <servlet-name>titus</servlet-name>
+        <servlet-class>com.jatun.titus.web.TitusServlet</servlet-class>
+        <init-param>
+            <param-name>config</param-name>
+            <param-value>/WEB-INF/titus.conf.properties</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
+    <!-- Captcha configuration-->
+    <servlet>
+        <servlet-name>jcaptcha</servlet-name>
+        <servlet-class>com.piramide.elwis.web.admin.captcha.ImageCaptchaServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <!--Servlet for Batch processes-->
+    <servlet>
+        <servlet-name>batchProcessServlet</servlet-name>
+        <servlet-class>com.piramide.elwis.web.common.BatchProcessServlet</servlet-class>
+        <load-on-startup>10</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>jcaptcha</servlet-name>
+        <url-pattern>/jcaptcha</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>titus</servlet-name>
+        <url-pattern>/titus.html</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>batchProcessServlet</servlet-name>
+        <url-pattern>/batchProcessServlet</url-pattern>
+    </servlet-mapping>
+
+    <!--following key is for delivery jsp purposes, please do not rename or remove.-->
+    <!--@@webXmlFragment@@-->
+
+    <!-- Action Servlet Mapping -->
+    <servlet-mapping>
+        <servlet-name>action</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>DisplayChart</servlet-name>
+        <url-pattern>/servlet/DisplayChart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WebCalendarServlet</servlet-name>
+        <url-pattern>/calendar.html</url-pattern>
+    </servlet-mapping>
+
+    <!-- RESTEasy configuration -->
+    <context-param>
+        <param-name>resteasy.scan</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/rest</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>resteasy-servlet</servlet-name>
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>resteasy-servlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+    <!-- End RESTEasy configuration -->
+
+
+    <!-- Session timeout -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!-- The Welcome File List -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Tag libraries configuration -->
+    <jsp-config>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-tiles.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-tiles.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-bean.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-template.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-template.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-logic.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-nested.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-nested.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/sslext.tld</taglib-uri>
+            <taglib-location>/WEB-INF/sslext.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-layout.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-layout.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/c.tld</taglib-uri>
+            <taglib-location>/WEB-INF/c.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/x.tld</taglib-uri>
+            <taglib-location>/WEB-INF/x.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/fmt.tld</taglib-uri>
+            <taglib-location>/WEB-INF/fmt.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-html.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/app.tld</taglib-uri>
+            <taglib-location>/WEB-INF/app.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/fantabulous.tld</taglib-uri>
+            <taglib-location>/WEB-INF/fantabulous.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>/WEB-INF/struts-wml.tld</taglib-uri>
+            <taglib-location>/WEB-INF/struts-wml.tld</taglib-location>
+        </taglib>
+
+    </jsp-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/PageNotFoundError.jsp</location>
+    </error-page>
+    <ejb-local-ref>
+        <ejb-ref-name>ejb/StatelessFacadeHome</ejb-ref-name>
+        <ejb-ref-type>Session</ejb-ref-type>
+        <local-home>net.java.dev.strutsejb.ejb.StatelessFacadeHome</local-home>
+        <local>net.java.dev.strutsejb.ejb.StatelessFacade</local>
+    </ejb-local-ref>
+</web-app>

@@ -1,0 +1,1981 @@
+<?xml version="1.0"?>
+<!DOCTYPE CSS SYSTEM "uimanager.dtd">
+
+<CSS>
+    <file name="src/web/elwis_style.css"/>
+    <elements name="general" resource="UIManager.Section.general" configurable="true">
+        <element name="everything_BODY" styleClass="BODY" configurable="true" resource="UIManager.Section.BODY">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="a" styleClass="A" configurable="true" resource="UIManager.Section.Links">
+            <attributes>
+                <attribute name="text-decoration" value="none"/>
+                <attribute name="color" value="#000099" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="INPUT" styleClass="INPUT" resource="UIManager.Section.INPUT_TEXT" configurable="true">
+            <attributes>
+                <!--text-->
+                <attribute name="background" value="#ffffff" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="text-align" value="left"/>
+                <!--end text-->
+                <!--select-->
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+                <!--                <attribute name="border" value="#6d92b6" arguments="1px solid" configurable="true" resource="UIManager.Attribute.BorderColor"/>-->
+                <!--end select-->
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="height" value="19px"/>
+            </attributes>
+        </element>
+        <element name="general_button" styleClass="INPUT.button" resource="UIManager.Element.INPUT_button"
+                 configurable="true">
+            <attributes>
+                <attribute name="height" value="18px"/>
+                <attribute name="margin" value="3px 0px 3px 0px"/>
+                <attribute name="padding" value="0px 10px 0px 10px"/>
+                <attribute name="background" value="" url="layout/ui/img/buttons/button_bg.gif" arguments="repeat-x"
+                           type="URL_TITLEIMG" resource="UIManager.Attribute.Background" configurable="true"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="text-align" value="center"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="border-top" value="#898988" arguments="1px solid"
+                           resource="UIManeger.Attribute.BorderTopColor" configurable="true"/>
+                <attribute name="border-right" value="#898988" arguments="1px solid"
+                           resource="UIManager.Attribute.BorderRightColor" configurable="true"/>
+                <attribute name="border-bottom" value="#898988" arguments="1px solid"
+                           resource="UIManeger.Attribute.BorderBottomColor" configurable="true"/>
+                <attribute name="border-left" value="#898988" arguments="1px solid"
+                           resource="UIManeger.Attribute.BorderLeftColor" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="general_plusButton" styleClass="INPUT.plusButton">
+            <attributes>
+                <attribute name="width" value="13px"/>
+                <attribute name="height" value="16px"/>
+                <attribute name="border" value="0px"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="text-decoration" value="underline"/>
+                <attribute name="color" value="#0000FF"/>
+                <attribute name="font-family" value="Arial"/>
+                <attribute name="background" value="" url="layout/ui/img/add.gif" type="URL_TITLEIMG"/>
+                <attribute name="azimuth" value="center"/>
+                <attribute name="word-spacing" value="1px"/>
+                <attribute name="cursor" value="pointer"/>
+            </attributes>
+        </element>
+        <element name="general_imageButton" styleClass="INPUT.imageButton">
+            <attributes>
+                <attribute name="background-color" value="#F5F5F5"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="border-color" value="#F5F5FF"/>
+            </attributes>
+        </element>
+        <element name="general_buttonLink" styleClass="INPUT.buttonLink" extends="general_plusButton">
+            <attributes>
+                <attribute name="height" value="20px"/>
+                <attribute name="color" value="#000099"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif"/>
+                <attribute name="background" value="" url="layout/ui/img/buttonTransparent.gif" type="URL_TITLEIMG"/>
+                <attribute name="margin" value="0px"/>
+                <attribute name="padding" value="0px"/>
+                <attribute name="width" value="13px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="general_calculatorButton" styleClass="INPUT.calculatorButton" extends="general_plusButton">
+            <attributes>
+                <attribute name="background" value="" url="layout/ui/img/calculator.gif" type="URL_TITLEIMG"/>
+                <attribute name="width" value="16px"/>
+                <attribute name="height" value="12px"/>
+            </attributes>
+        </element>
+        <element name="general_minusButton" styleClass="INPUT.minusButton" extends="general_plusButton">
+            <attributes>
+                <attribute name="background" value="" url="layout/ui/img/smalldelete.gif" type="URL_TITLEIMG"/>
+                <attribute name="width" value="12px"/>
+            </attributes>
+        </element>
+        <element name="general_editButton" styleClass="INPUT.editButton" extends="general_plusButton">
+            <attributes>
+                <attribute name="background" value="" url="layout/ui/img/edit.gif" type="URL_TITLEIMG"/>
+                <attribute name="height" value="18px"/>
+                <attribute name="text-decoration" value="none"/>
+                <attribute name="width" value="21px"/>
+            </attributes>
+        </element>
+        <element name="div_messageToolTip" styleClass="div.messageToolTip" configurable="false">
+            <attributes>
+                <attribute name="background" value="#FFFFBB"/>
+                <attribute name="padding" value="5px"/>
+                <attribute name="border-style" value="solid"/>
+                <attribute name="border-width" value="1"/>
+                <attribute name="border-color" value="#003399"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="color" value="#000066"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="font-weight" value="lighter"/>
+            </attributes>
+        </element>
+        <!--end Ivan-->
+        <!--begin mauren-->
+        <element name="general_select" styleClass="SELECT" resource="UIManager.Section.ComboBox" configurable="true">
+            <attributes>
+                <attribute name="background" value="#ffffff" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+                <!--                <attribute name="border" value="#6d92b6" arguments="1px solid" configurable="true" resource="UIManager.Attribute.BorderColor"/>-->
+                <!--                <attribute name="border-color" value="#6d92b6" resource="UIManager.Attribute.BorderColor" configurable="true"/>-->
+                <attribute name="font-weight" value="normal"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="height" value="18px"/>
+            </attributes>
+        </element>
+        <element name="select" styleClass="SELECT.select">
+            <attributes>
+                <attribute name="width" value="150px"/>
+            </attributes>
+        </element>
+        <element name="adminSelect" styleClass="SELECT.adminSelect">
+            <attributes>
+                <attribute name="width" value="150px"/>
+            </attributes>
+        </element>
+        <element name="numberSelect" styleClass="SELECT.numberSelect">
+            <attributes>
+                <attribute name="width" value="110px"/>
+            </attributes>
+        </element>
+        <element name="schedulerSelect" styleClass="SELECT.schedulerSelect">
+            <attributes>
+                <attribute name="width" value="180px"/>
+                <attribute name="height" value="62px"/>
+            </attributes>
+        </element>
+        <element name="largeSelect" styleClass="SELECT.largeSelect">
+            <attributes>
+                <attribute name="width" value="300px"/>
+            </attributes>
+        </element>
+        <element name="middleSelect" styleClass="SELECT.middleSelect">
+            <attributes>
+                <attribute name="width" value="250px"/>
+            </attributes>
+        </element>
+        <element name="mediumSelect" styleClass="SELECT.mediumSelect">
+            <attributes>
+                <attribute name="width" value="205px"/>
+            </attributes>
+        </element>
+        <element name="tinySelect" styleClass="SELECT.tinySelect">
+            <attributes>
+                <attribute name="width" value="50px"/>
+            </attributes>
+        </element>
+        <element name="shortSelect" styleClass="SELECT.shortSelect">
+            <attributes>
+                <attribute name="width" value="100px"/>
+            </attributes>
+        </element>
+        <element name="multipleSelect" styleClass="SELECT.multipleSelect">
+            <attributes>
+                <attribute name="width" value="200px"/>
+                <attribute name="height" value="200px"/>
+            </attributes>
+        </element>
+        <element name="middleMultipleSelect" styleClass="SELECT.middleMultipleSelect">
+            <attributes>
+                <attribute name="width" value="250px"/>
+                <attribute name="height" value="100px"/>
+            </attributes>
+        </element>
+        <element name="multipleColumnSelect" styleClass="SELECT.multipleColumnSelect">
+            <attributes>
+                <attribute name="width" value="370px"/>
+                <attribute name="height" value="250px"/>
+            </attributes>
+        </element>
+        <element name="multipleSelectFilter" styleClass="SELECT.multipleSelectFilter">
+            <attributes>
+                <attribute name="width" value="150px"/>
+                <attribute name="height" value="69px"/>
+            </attributes>
+        </element>
+        <element name="halfMiddleTextSelect" styleClass="SELECT.halfMiddleTextSelect">
+            <attributes>
+                <attribute name="width" value="123px"/>
+            </attributes>
+        </element>
+        <element name="webmailSelect" styleClass="SELECT.webmailSelect">
+            <attributes>
+                <attribute name="width" value="150px"/>
+            </attributes>
+        </element>
+        <!--TEXT-->
+        <element name="input_text" styleClass="INPUT.text">
+            <attributes>
+                <attribute name="width" value="150px"/>
+            </attributes>
+        </element>
+        <element name="general_dateText" styleClass="INPUT.dateText">
+            <attributes>
+                <attribute name="width" value="100px"/>
+            </attributes>
+        </element>
+        <element name="numberText" styleClass="INPUT.numberText">
+            <attributes>
+                <attribute name="width" value="100px"/>
+                <attribute name="text-align" value="right"/>
+            </attributes>
+        </element>
+        <element name="numberTextMedium" styleClass="INPUT.numberTextMedium">
+            <attributes>
+                <attribute name="width" value="205px"/>
+                <attribute name="text-align" value="right"/>
+            </attributes>
+        </element>
+        <element name="numberTextLarge" styleClass="INPUT.numberTextLarge">
+            <attributes>
+                <attribute name="width" value="300px"/>
+                <attribute name="text-align" value="right"/>
+            </attributes>
+        </element>
+        <element name="shortText" styleClass="INPUT.shortText" extends="general_dateText">
+            <attributes/>
+        </element>
+        <element name="zipText" styleClass="INPUT.zipText">
+            <attributes>
+                <attribute name="width" value="75px"/>
+            </attributes>
+        </element>
+        <element name="tinyText" styleClass="INPUT.tinyText">
+            <attributes>
+                <attribute name="width" value="30px"/>
+            </attributes>
+        </element>
+        <element name="yearText" styleClass="INPUT.yearText" extends="general_dateText">
+            <attributes/>
+        </element>
+        <element name="mediumText" styleClass="INPUT.mediumText">
+            <attributes>
+                <attribute name="width" value="205px"/>
+            </attributes>
+        </element>
+        <element name="middleText" styleClass="INPUT.middleText">
+            <attributes>
+                <attribute name="width" value="250px"/>
+            </attributes>
+        </element>
+        <element name="mediumTextLink" styleClass="INPUT.mediumTextLink">
+            <attributes>
+                <attribute name="width" value="205px"/>
+                <attribute name="color" value="blue"/>
+                <attribute name="text-decoration" value="underline"/>
+            </attributes>
+        </element>
+        <element name="middleTextLink" styleClass="INPUT.middleTextLink">
+            <attributes>
+                <attribute name="width" value="205px"/>
+                <attribute name="color" value="blue"/>
+                <attribute name="text-decoration" value="underline"/>
+            </attributes>
+        </element>
+        <element name="largeText" styleClass="INPUT.largeText">
+            <attributes>
+                <attribute name="width" value="300px"/>
+            </attributes>
+        </element>
+        <element name="largeTextLink" styleClass="INPUT.largeTextLink">
+            <attributes>
+                <attribute name="width" value="300px"/>
+                <attribute name="color" value="blue"/>
+                <attribute name="text-decoration" value="underline"/>
+            </attributes>
+        </element>
+        <element name="cityNameText" styleClass="INPUT.cityNameText">
+            <attributes>
+                <attribute name="width" value="168px"/>
+            </attributes>
+        </element>
+        <element name="texarea" styleClass="INPUT.textarea">
+            <attributes>
+                <attribute name="height" value="18px"/>
+                <attribute name="background" value="#ffffff"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="border-bottom" value="#F4F4F4" arguments="1px solid"/>
+                <attribute name="border-left" value="#6A6A6A" arguments="1px solid"/>
+                <attribute name="border-right" value="#F4F4F4" arguments="1px solid"/>
+                <attribute name="border-top" value="#6A6A6A" arguments="1px solid"/>
+                <attribute name="color" value="#000000"/>
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <!--TEXAREAS-->
+        <element name="TEXTAREA" styleClass="TEXTAREA" resource="UIManager.Section.INPUT_TEXTAREA" configurable="true">
+            <attributes>
+                <attribute name="background" value="#ffffff" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="font-weight" value="lighter"/>
+            </attributes>
+        </element>
+
+        <element name="general_textarea" styleClass="TEXTAREA.tinyDetail">
+            <attributes>
+                <attribute name="width" value="200px"/>
+                <attribute name="height" value="45px"/>
+            </attributes>
+        </element>
+
+        <element name="minimumDetail" styleClass="TEXTAREA.minimumDetail">
+            <attributes>
+                <attribute name="width" value="205px"/>
+                <!--preguntar miky-->
+                <!--                <attribute name="height" value="45px" obviate="true"/>-->
+            </attributes>
+        </element>
+        <element name="shortDetail" styleClass="TEXTAREA.shortDetail">
+            <attributes>
+                <attribute name="width" value="300px"/>
+                <attribute name="height" value="78px"/>
+            </attributes>
+        </element>
+        <element name="mediumDetail" styleClass="TEXTAREA.mediumDetail">
+            <attributes>
+                <attribute name="width" value="205px"/>
+                <attribute name="height" value="70px"/>
+            </attributes>
+        </element>
+        <element name="mediumDetailHigh" styleClass="TEXTAREA.mediumDetailHigh">
+            <attributes>
+                <attribute name="width" value="205px"/>
+                <attribute name="height" value="90px"/>
+            </attributes>
+        </element>
+        <element name="middleDetail" styleClass="TEXTAREA.middleDetail">
+            <attributes>
+                <attribute name="width" value="250px"/>
+                <attribute name="height" value="70px"/>
+            </attributes>
+        </element>
+        <element name="detail" styleClass="TEXTAREA.detail">
+            <attributes>
+                <attribute name="width" value="150px"/>
+                <attribute name="height" value="100px"/>
+            </attributes>
+        </element>
+        <element name="largeDetail" styleClass="TEXTAREA.largeDetail">
+            <attributes>
+                <attribute name="width" value="300px"/>
+                <attribute name="height" value="75px"/>
+            </attributes>
+        </element>
+        <element name="mailBody" styleClass="TEXTAREA.mailBody">
+            <attributes>
+                <attribute name="width" value="100%"/>
+                <attribute name="height" value="200px"/>
+            </attributes>
+        </element>
+        <element name="webmailBody" styleClass="TEXTAREA.webmailBody">
+            <attributes>
+                <attribute name="width" value="100%"/>
+                <attribute name="height" value="350px"/>
+                <attribute name="font-size" value="11px"/>
+            </attributes>
+        </element>
+        <element name="tinyScrollDetail" styleClass="TEXTAREA.tinyScrollDetail">
+            <attributes>
+                <attribute name="width" value="200px"/>
+                <attribute name="height" value="45px"/>
+            </attributes>
+        </element>
+        <element name="radio" styleClass="INPUT.radio">
+            <attributes>
+                <attribute name="width" value="12px"/>
+                <attribute name="height" value="12px"/>
+                <attribute name="border-bottom" value="0px"/>
+                <attribute name="border-left" value="0px"/>
+                <attribute name="border-right" value="0px"/>
+                <attribute name="border-top" value="0px"/>
+                <attribute name="margin" value="0px 5px 0px 0px"/>
+                <attribute name="padding" value="0px 0px 0px 0px"/>
+                <attribute name="background-color" value="transparent"/>
+            </attributes>
+        </element>
+        <element name="adminCheckBox" styleClass="INPUT.adminCheckBox">
+            <attributes>
+                <attribute name="border-bottom" value="0px"/>
+                <attribute name="border-left" value="0px"/>
+                <attribute name="border-right" value="0px"/>
+                <attribute name="border-top" value="0px"/>
+                <attribute name="background-color" value="transparent"/>
+            </attributes>
+        </element>
+        <element name="adminRow">
+            <attributes>
+                <attribute name="width" value="20px"/>
+                <attribute name="height" value="20px"/>
+                <attribute name="border" value="0px"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="text-decoration" value="none"/>
+                <attribute name="font-family" value="Arial"/>
+                <attribute name="background" value="" url="layout/ui/img/upArrow.jpg" type="URL_TITLEIMG"/>
+                <attribute name="azimuth" value="center"/>
+                <attribute name="word-spacing" value="1px"/>
+            </attributes>
+        </element>
+        <element name="adminUpArrow" styleClass="INPUT.adminUpArrow" extends="adminRow">
+            <attributes>
+                <attribute name="background" value="" url="layout/ui/img/upArrow.jpg" type="URL_TITLEIMG"/>
+            </attributes>
+        </element>
+        <element name="adminDownArrow" styleClass="INPUT.adminDownArrow" extends="adminRow">
+            <attributes>
+                <attribute name="background" value="" url="layout/ui/img/downArrow.jpg" type="URL_TITLEIMG"/>
+            </attributes>
+        </element>
+        <element name="adminLeftArrow" styleClass="INPUT.adminLeftArrow" extends="adminRow">
+            <attributes>
+                <attribute name="background" value="" url="layout/ui/img/arrowleft.jpg" type="URL_TITLEIMG"/>
+            </attributes>
+        </element>
+        <element name="adminRightArrow" styleClass="INPUT.adminRighttArrow" extends="adminRow">
+            <attributes>
+                <attribute name="background" value="" url="layout/ui/img/arrowright.jpg" type="URL_TITLEIMG"/>
+            </attributes>
+        </element>
+        <element name="removeButton" styleClass="INPUT.removeButton" extends="adminRow">
+            <attributes>
+                <attribute name="background" value="" url="layout/ui/img/close.gif"/>
+                <attribute name="width" value="12px"/>
+                <attribute name="height" value="13px"/>
+            </attributes>
+        </element>
+        <element name="list" styleClass="OPTION.list" extends="general_select">
+            <attributes>
+                <attribute name="height" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="option" styleClass="OPTION.option" extends="general_select">
+            <attributes>
+                <attribute name="height" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="a_calendar" styleClass="A.calendar">
+            <attributes>
+                <attribute name="color" value="#cc0000"/>
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="a_hover" styleClass="A:hover">
+            <attributes>
+                <attribute name="text-decoration" value="underline"/>
+            </attributes>
+        </element>
+        <element name="a_icon" styleClass="A.icon">
+            <attributes>
+                <attribute name="color" value="#000099"/>
+                <attribute name="font-size" value="10px"/>
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="a_icon_over" styleClass="A.icon:hover">
+            <attributes>
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <!--end mauren-->
+    </elements>
+    <!--Fer: Module menus section -->
+    <elements name="moduleMenus" resource="UIManager.Section.ModuleMenus" configurable="true">
+        <element name="moduleGeneralTab" resource="UIManager.Element.ModuleTab.general" configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="padding" value="3px 4px 3px 4px"/>
+                <attribute name="height" value="25px"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="border" value="#115E94" arguments="1px solid" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+            </attributes>
+        </element>
+        <element name="moduleTabInactive" styleClass="TD.moduleTab" resource="UIManager.Element.ModuleTab.inactive"
+                 configurable="true" extends="moduleGeneralTab">
+            <attributes>
+                <attribute name="background-color" value="#FCF8E8" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="color" value="#5099F1" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="moduleTabActiveBase" resource="UIManager.Element.ModuleTab.active" configurable="true"
+                 extends="moduleGeneralTab">
+            <attributes>
+                <attribute name="background-color" value="#5099F1" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="color" value="#FFFFFF" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="moduleTabActive" styleClass="TD.moduleTab#currentModule" extends="moduleTabActiveBase">
+            <attributes>
+                <attribute name="border-bottom" value="0px" overwrite="true"/>
+            </attributes>
+        </element>
+        <element name="moduleTabInactiveLink" styleClass="TD.moduleTab A" extends="moduleTabInactive">
+            <attributes>
+                <!--moduleTabInactive obviate attributes-->
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           obviate="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" obviate="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" obviate="true"/>
+                <attribute name="vertical-align" value="middle" obviate="true"/>
+                <attribute name="padding" value="3px 4px 3px 4px" obviate="true"/>
+                <attribute name="height" value="25px" obviate="true"/>
+                <attribute name="text-align" value="left" obviate="true"/>
+                <attribute name="border" value="#115E94" arguments="1px solid" obviate="true"/>
+                <attribute name="background-color" value="#FCF8E8" obviate="true"/>
+                <!--moduleTabInactive obviate attributes-->
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="moduleTabActiveLink" styleClass="TD.moduleTab#currentModule A" extends="moduleTabActiveBase">
+            <attributes>
+                <!--moduleTabActiveBase obviate attributes-->
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           obviate="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" obviate="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" obviate="true"/>
+                <attribute name="vertical-align" value="middle" obviate="true"/>
+                <attribute name="padding" value="3px 4px 3px 4px" obviate="true"/>
+                <attribute name="height" value="25px" obviate="true"/>
+                <attribute name="text-align" value="left" obviate="true"/>
+                <attribute name="border" value="#115E94" arguments="1px solid" obviate="true"/>
+                <attribute name="background-color" value="#FCF8E8" obviate="true"/>
+                <!--moduleTabActiveBase obviate attributes-->
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="moduleTabSpace" styleClass="TD.moduleTab#moduleSpace">
+            <attributes>
+                <attribute name="background-color" value="transparent"/>
+                <attribute name="width" value="1px"/>
+                <attribute name="padding" value="0px"/>
+                <attribute name="border-top" value="0px"/>
+                <attribute name="border-left" value="0px"/>
+                <attribute name="border-right" value="0px"/>
+            </attributes>
+        </element>
+        <element name="TdShadow" styleClass="TD.shadow">
+            <attributes>
+                <attribute name="background" value="transparent" url="layout/ui/img/bg/whiteshadow.gif"
+                           arguments="repeat-x"/>
+                <attribute name="height" value="5px"/>
+            </attributes>
+        </element>
+        <element name="moduleShorcut" styleClass="TD.moduleShortCut" resource="UIManager.Element.ModuleTab.shortCuts"
+                 configurable="true" extends="moduleTabActiveBase">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="10px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="color" value="#FFFFFF" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="padding" value="1px 1px 1px 1px"/>
+                <attribute name="height" value="20px"/>
+                <attribute name="text-align" obviate="true"/>
+                <attribute name="border-top" value="0px" overwrite="true"/>
+                <attribute name="border-left" value="0px" overwrite="true"/>
+                <attribute name="border-right" value="0px" overwrite="true"/>
+            </attributes>
+        </element>
+        <element name="moduleTabShortCutLink"
+                 styleClass="TD.moduleShortCut A:link, TD.moduleShortCut A:visited, TD.moduleShortCut A:active, TD.moduleShortCut A:hover"
+                 resource="UIManager.Element.ModuleTab.shortCutsLink" extends="moduleShorcut">
+            <attributes>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+                <attribute name="vertical-align" obviate="true"/>
+                <attribute name="padding" obviate="true"/>
+                <attribute name="height" obviate="true"/>
+                <attribute name="border-top" obviate="true"/>
+                <attribute name="border-left" obviate="true"/>
+                <attribute name="border-right" obviate="true"/>
+                <attribute name="border" obviate="true"/>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+    </elements>
+    <!--detail tabs-->
+    <elements name="tabs" resource="UIManager.Section.tabs" configurable="true">
+        <element name="tabs_pageHeader" styleClass="TD.pageHeader" resource="UIManager.Element.TD_pageHeader"
+                 configurable="true">
+            <attributes>
+                <attribute name="text-align" value="left"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="12px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#336699" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="font-weight" value="bold"/>
+            </attributes>
+        </element>
+        <element name="tabs_pageHeaderValue" styleClass="TD.pageHeaderValue"
+                 resource="UIManager.Element.TD_pageHeaderValue" configurable="true" extends="tabs_pageHeader">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="12px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#31499B" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="font-weight" value="bold" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="folderGeneralTab" resource="UIManager.Element.detailTab.general" configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="10px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="padding" value="2px 4px 2px 4px"/>
+                <attribute name="height" value="22px"/>
+                <attribute name="border" value="#84B0C7" arguments="1px solid"
+                           resource="UIManager.Attribute.BorderColor" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="folderTabInactive" styleClass="TD.folderTab" resource="UIManager.Element.detailTab.inactive"
+                 configurable="true" extends="folderGeneralTab">
+            <attributes>
+                <attribute name="background-color" value="#d5e1e8" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="color" value="#115E94" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="folderTabActive" resource="UIManager.Element.detailTab.active" styleClass="TD.folderTab#current"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#FCF8E8" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="color" value="#115E94" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="border-bottom" value="0px"/>
+            </attributes>
+        </element>
+        <element name="folderTabInactiveLink" styleClass="TD.folderTab A" extends="folderTabInactive">
+            <attributes>
+                <!--folderTabInactive obviate attributes-->
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           obviate="true"/>
+                <attribute name="font-size" value="10px" type="FONT_SIZE" obviate="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" obviate="true"/>
+                <attribute name="padding" value="2px 4px 2px 4px" obviate="true"/>
+                <attribute name="height" value="22px" obviate="true"/>
+                <attribute name="border" value="#84B0C7" arguments="1px solid" obviate="true"/>
+                <attribute name="background-color" value="#d5e1e8" obviate="true"/>
+                <!--folderTabInactive obviate attributes-->
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="folderTabActiveCurrentLink" styleClass="TD.folderTab#current A" extends="folderTabActive">
+            <attributes>
+                <!--folderTabActive obviate attributes-->
+                <attribute name="background-color" value="#FCF8E8" obviate="true"/>
+                <attribute name="border-bottom" value="0px" obviate="true"/>
+                <!--folderTabActive obviate attributes-->
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="folderTabMouseOver" styleClass="TD.folderTab#over" extends="folderTabActive">
+            <attributes>
+                <attribute name="border-bottom" value="0px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="folderTabSpace" styleClass="TD.folderTab#space">
+            <attributes>
+                <attribute name="background-color" value="transparent"/>
+                <attribute name="padding" value="0px"/>
+            </attributes>
+        </element>
+        <element name="folderTabBorder" styleClass="TD.folderTabBorder" extends="folderGeneralTab">
+            <attributes>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="padding" obviate="true"/>
+                <attribute name="height" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="folderTabFolder" styleClass="TD.folderTabContent" extends="folderTabActive">
+            <attributes>
+                <attribute name="border-bottom" obviate="true"/>
+                <attribute name="color" obviate="true"/>
+                <attribute name="vertical-align" value="top"/>
+                <attribute name="border-top" value="0px"/>
+            </attributes>
+        </element>
+        <element name="internalTabIframe" styleClass=".internalTabIframe" extends="folderTabFolder">
+            <attributes>
+                <attribute name="border-bottom" obviate="true"/>
+                <attribute name="color" obviate="true"/>
+                <attribute name="vertical-align" value="top"/>
+                <attribute name="border-top" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="folderTabActiveFont" styleClass="TD.folderTabContent TABLE" configurable="true"
+                 resource="UIManager.Element.activeTab.FreeFont">
+            <attributes>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="folderTabActiveLink" styleClass="A.folderTabLink" configurable="true"
+                 resource="UIManager.Element.activeTab.FreeLinks">
+            <attributes>
+                <attribute name="color" value="#000099" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="tabs_error" styleClass="TD.error" resource="UIManager.Element.TD_error" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#FFFFCC" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="border" value="#96965E" arguments="1px solid"
+                           resource="UIManager.Attribute.BorderColor" configurable="true"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           configurable="true" resource="UIManager.Attribute.FontFamily"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" configurable="true"
+                           resource="UIManager.Attribute.FontSize"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="vertical-align" value="top"/>
+                <attribute name="padding" value="5px"/>
+                <attribute name="margin-top" value="12px"/>
+                <attribute name="margin-bottom" value="12px"/>
+            </attributes>
+        </element>
+        <element name="tabs_error_td" styleClass="TD.error TD" extends="tabs_error">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="text-align" obviate="true"/>
+                <attribute name="vertical-align" obviate="true"/>
+                <attribute name="border" obviate="true"/>
+                <attribute name="padding" obviate="true"/>
+                <attribute name="margin-top" obviate="true"/>
+                <attribute name="margin-bottom" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="tabs_span_error" styleClass="SPAN.error">
+            <attributes>
+                <attribute name="color" value="#ff0000"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica" type="FONT"/>
+                <attribute name="font-size" value="13px" type="FONT_SIZE"/>
+                <attribute name="font-weight" value="bold"/>
+            </attributes>
+        </element>
+        <element name="tabs_container" styleClass="TABLE.container">
+            <attributes>
+                <attribute name="background-color" value="transparent"/>
+                <attribute name="text-align" value="center"/>
+            </attributes>
+        </element>
+        <element name="tabs_searchContainer" styleClass="TABLE.searchContainer">
+            <attributes>
+                <attribute name="background-color" value="transparent"/>
+            </attributes>
+        </element>
+    </elements>
+    <!--lists-->
+    <elements name="list_Elements" resource="UIManager.Section.ListElements" configurable="true">
+        <element styleClass="TH.listHeader" name="TH_listHeader" configurable="true"
+                 resource="UIManager.ListElements.ListHeader">
+            <attributes>
+                <attribute name="background" value="#bfcfdf" url="layout/ui/img/bg.gif" configurable="true"
+                           resource="UIManager.Attribute.Background" type="URL_LISTHEADERIMG"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="color" value="#000066" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="padding" value="5"/>
+            </attributes>
+        </element>
+        <element styleClass="TH.listHeader A" name="TH_listHeader_A" extends="TH_listHeader">
+            <attributes>
+                <attribute name="TEXT-DECORATION" value="none"/>
+                <attribute name="font-weight" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="padding" obviate="true"/>
+                <attribute name="background" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TH.listHeader A:hover" name="TH_listHeader_A_hover" extends="TH_listHeader_A">
+            <attributes>
+                <attribute name="TEXT-DECORATION" value="none"/>
+            </attributes>
+        </element>
+        <element styleClass="TH.listHeaderDashBoard" name="TH_listHeaderDashBoard" extends="TH_listHeader">
+            <attributes>
+                <attribute name="padding" value="1"/>
+            </attributes>
+        </element>
+        <element styleClass="TR.HeaderDashBoard" name="TR_HeaderDashBoard" extends="TH_listHeaderDashBoard">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listHeader" name="TD_listHeader" extends="TH_listHeader">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listHeader A" name="TD_listHeader_A" extends="TH_listHeader_A">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listHeader A:hover" name="TD_listHeader_A_hover" extends="TH_listHeader_A_hover">
+            <attributes/>
+        </element>
+        <element name="TR_listRow" styleClass="TR.listRow" configurable="true"
+                 resource="UIManager.ListElements.ListRow">
+            <attributes>
+                <attribute name="background-color" value="#F5F5F5" configurable="true"
+                           resource="UIManager.Attribute.BackgroundColor"/>
+                <attribute name="border" value="#DADEE2" arguments="1px solid" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="color" value="#000060" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="TR_listRowOver" styleClass="TR.listRowOver" configurable="true"
+                 resource="UIManager.ListElements.ListRowOver">
+            <attributes>
+                <attribute name="background-color" value="#F7EBC6" configurable="true"
+                           resource="UIManager.Attribute.BackgroundColor"/>
+            </attributes>
+        </element>
+        <element name="TD_contain#selectedContain" styleClass="TD.contain#selectedContain" extends="TR_listRowOver">
+            <attributes/>
+        </element>
+        <element name="TD_ListItemBase" extends="TR_listRow">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="text-align" value="left" overwrite="true"/>
+                <attribute name="vertical-align" value="middle" overwrite="true"/>
+                <attribute name="padding" value="0 5 0 5" overwrite="true"/>
+                <attribute name="empty-cells" value="show" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItem" name="TD_listItem" extends="TD_ListItemBase">
+            <attributes>
+                <attribute name="border-top" value="#FFFFFF" arguments="1px solid" overwrite="true"/>
+                <attribute name="border-right" value="#FFFFFF" arguments="1px solid" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItem2Center" name="TD_listItem2Center" extends="TD_ListItemBase">
+            <attributes>
+                <attribute name="text-align" value="center" overwrite="true"/>
+                <attribute name="border-top" value="#FFFFFF" arguments="1px solid" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItem2" name="TD_listItem2" extends="TD_ListItemBase">
+            <attributes>
+                <attribute name="border-top" value="#FFFFFF" arguments="1px solid" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItem2Right" name="TD_listItem2Right" extends="TD_ListItemBase">
+            <attributes>
+                <attribute name="text-align" value="right" overwrite="true"/>
+                <attribute name="padding" value="0 5 0 5" overwrite="true"/>
+                <attribute name="border-top" value="#FFFFFF" arguments="1px solid" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItemRight" name="TD_listItemRight" extends="TD_listItem">
+            <attributes>
+                <attribute name="text-align" value="right" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItemCenter" name="TD_listItemCenter" extends="TD_listItem">
+            <attributes>
+                <attribute name="text-align" value="center" overwrite="true"/>
+                <attribute name="padding" value="0 5 0 5" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItem A" name="TD_listItem_A" extends="TD_ListItemBase">
+            <attributes>
+                <attribute name="text-decoration" value="none"/>
+                <attribute name="text-align" obviate="true"/>
+                <attribute name="vertical-align" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+                <attribute name="padding" obviate="true"/>
+                <attribute name="border" obviate="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItem A:hover" name="TD.listItem_A_hover" extends="TD_listItem_A">
+            <attributes>
+                <attribute name="text-decoration" value="underline"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listItem2 A" name="TD_listItem2_A" extends="TD_listItem_A">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItem2 A:hover" name="TD.listItem2_A_hover" extends="TD.listItem_A_hover">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItem2Center A" name="TD_listItem2Center_A" extends="TD_listItem_A">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItem2Center A:hover" name="TD_listItem2Center_A_hover"
+                 extends="TD.listItem_A_hover">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItem2Right A" name="TD_listItem2Right_A" extends="TD_listItem_A">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItem2Right A:hover" name="TD_listItem2Right_A_hover" extends="TD.listItem_A_hover">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItemRight A" name="TD_listItemRight_A" extends="TD_listItem_A">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItemRight A:hover" name="TD_listItemRight_A_hover" extends="TD.listItem_A_hover">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItemCenter A" name="TD_listItemCenter_A" extends="TD_listItem_A">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listItemCenter A:hover" name="TD_listItemCenter_A_hover" extends="TD.listItem_A_hover">
+            <attributes/>
+        </element>
+        <element styleClass="TD.listButton" name="TD_listButton" extends="TD_listItem">
+            <attributes>
+                <attribute name="cursor" value="pointer" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.listButton2" name="TD_listButton2" extends="TD_listItem2">
+            <attributes>
+                <attribute name="cursor" value="pointer" overwrite="true"/>
+            </attributes>
+        </element>
+        <element styleClass="table.pagingBar" name="table_PagingBar" configurable="true"
+                 resource="UIManager.ListElements.PagingBar">
+            <attributes>
+                <attribute name="background-color" value="#EEEEEE" configurable="true"
+                           resource="UIManager.Attribute.BackgroundColor"/>
+                <attribute name="border" value="#DADEE2" arguments="1px solid" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="color" value="#000060" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="border-top" value="#FFFFFF" arguments="1px solid" overwrite="true"/>
+                <attribute name="width" value="100%"/>
+                <attribute name="margin" value="0"/>
+                <attribute name="padding" value="0px 5px 0px 5px"/>
+            </attributes>
+        </element>
+        <element styleClass="TD.pagingBar" name="TD_pagingBar" extends="table_PagingBar">
+            <attributes>
+                <attribute name="border" obviate="true"/>
+                <attribute name="width" obviate="true"/>
+                <attribute name="margin" obviate="true"/>
+                <attribute name="padding" obviate="true"/>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="border-top" obviate="true"/>
+                <attribute name="border" obviate="true"/>
+            </attributes>
+        </element>
+        <element styleClass="INPUT.pagingText" name="INPUT_pagingText">
+            <attributes>
+                <attribute name="width" value="33px"/>
+                <attribute name="height" value="17px"/>
+            </attributes>
+        </element>
+        <element name="forms_alpha" styleClass="TD.alpha" resource="UIManager.Element.TD_alpha" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="9px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="forms_TD_alpha_A" styleClass="TD.alpha A" extends="forms_alpha">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" obviate="true"/>
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="forms_TD_alpha_A_hover" styleClass="TD.alpha A:hover" extends="forms_alpha">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" obviate="true"/>
+                <attribute name="text-decoration" value="underline"/>
+            </attributes>
+        </element>
+        <element name="td.listItemHighlight" styleClass="td.listItemHighlight"
+                 resource="UIManager.ListElements.ListRowHighlight" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffcc99" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+    <!--forms-->
+    <elements name="forms" resource="UIManager.Section.Forms" configurable="true">
+        <element name="forms_title" styleClass="TD.title" resource="UIManager.Element.TD_title" configurable="true">
+            <attributes>
+                <attribute name="background" value="#bfcfdf" url="layout/ui/img/bg/title/contacts.gif"
+                           arguments="repeat-x bottom" type="URL_TITLEIMG" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#FFFFFF" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="font-weight" value="bold"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="padding" value="0px 0px 0px 5px"/>
+                <attribute name="height" value="17px"/>
+            </attributes>
+        </element>
+        <element name="forms_title_A" styleClass="TD.title A" extends="forms_title">
+            <attributes>
+                <attribute name="background" obviate="true"/>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+                <attribute name="text-align" obviate="true"/>
+                <attribute name="padding" obviate="true"/>
+                <attribute name="height" obviate="true"/>
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="forms_label" styleClass="TD.label" resource="UIManager.Element.TD_label" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffffff" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="padding" value="0px 5px 0px 7px"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="height" value="20px"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="border" value="#F5F5F5" arguments="1px solid" configurable="true"
+                           resource="UIManager.Attribute.BorderColor"/>
+                <attribute name="border-top" value="0px" overwrite="true"/>
+                <attribute name="border-right" value="0px" overwrite="true"/>
+            </attributes>
+        </element>
+        <element name="forms_label_A" styleClass="TD.label A" resource="UIManager.Element.TD_label_A"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="forms_legend" styleClass="LEGEND.legend" extends="forms_label">
+            <attributes>
+                <attribute name="padding" value="0px 5px 0px 5px"/>
+                <attribute name="height" value="20px" obviate="true"/>
+                <attribute name="border" value="#F5F5F5" arguments="1px solid" obviate="true"/>
+                <attribute name="border-top" value="0px" obviate="true"/>
+                <attribute name="border-right" value="0px" obviate="true"/>
+                <attribute name="background-color" value="#ffffff" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="forms_labelTab" styleClass="TD.labelTab" extends="forms_label">
+            <attributes>
+                <attribute name="padding" value="0px 5px 0px 18px"/>
+            </attributes>
+        </element>
+        <element name="forms_label2" styleClass="TD.label2" extends="forms_label">
+            <attributes>
+                <attribute name="border-right" value="1px"/>
+            </attributes>
+        </element>
+        <element name="forms_adminLabel" styleClass="TD.adminLabel" extends="forms_label">
+            <attributes>
+                <attribute name="padding" value="5px 5px 0px 7px"/>
+                <attribute name="height" value="20px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="forms_topLabel" styleClass="TD.topLabel" extends="forms_label">
+            <attributes>
+                <attribute name="padding" value="5px 5px 0px 7px"/>
+                <attribute name="vertical-align" value="top"/>
+                <attribute name="height" value="23px"/>
+            </attributes>
+        </element>
+        <element name="forms_TD_labelRight" styleClass="TD.labelRight" extends="forms_label">
+            <attributes>
+                <attribute name="padding" value="0px 0px 0px 7px"/>
+                <attribute name="text-align" value="right"/>
+            </attributes>
+        </element>
+        <element name="forms_labelWithoutBorder" styleClass="TD.labelWithoutBorder" extends="forms_label">
+            <attributes>
+                <attribute name="padding" value="0px 0px 0px 0px"/>
+                <attribute name="text-align" value="right"/>
+                <attribute name="border" value="#F5F5F5" arguments="1px solid" obviate="true"/>
+                <attribute name="border-top" value="0px" obviate="true"/>
+                <attribute name="border-right" value="0px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="forms_labelText" styleClass="TD.labelText" extends="forms_label">
+            <attributes>
+                <attribute name="border" value="#F5F5F5" arguments="1px solid" obviate="true"/>
+                <attribute name="border-top" value="0px" obviate="true"/>
+                <attribute name="border-right" value="0px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="forms_labelGreen" styleClass="TD.labelGreen" extends="forms_label">
+            <attributes>
+                <attribute name="color" value="#006666"/>
+                <attribute name="font-weight" value="bold"/>
+            </attributes>
+        </element>
+        <element name="forms_summaryTitle" styleClass="TD.summaryTitle" extends="forms_title">
+            <attributes>
+                <attribute name="border-width" value="1px 1px 1px 1px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="forms_newTitle" styleClass="TH.newTitle" extends="forms_title">
+            <attributes/>
+        </element>
+        <element name="forms_optionTitle" styleClass="DIV.optionTitle">
+            <attributes>
+                <attribute name="text-align" value="left"/>
+                <attribute name="color" value="#336699"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica"/>
+                <attribute name="font-size" value="13px"/>
+            </attributes>
+        </element>
+        <element name="forms_button" styleClass="TD.button">
+            <attributes>
+                <attribute name="text-align" value="left"/>
+                <attribute name="padding" value="2"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="font-weight" value="lighter"/>
+            </attributes>
+        </element>
+        <element name="forms_buttonLeft" styleClass="TD.buttonLeft" extends="forms_button">
+            <attributes>
+                <attribute name="text-align" value="left"/>
+            </attributes>
+        </element>
+        <element name="forms_logonButton" styleClass="TD.logonButton" extends="forms_button">
+            <attributes>
+                <attribute name="text-align" value="center"/>
+                <attribute name="padding" value="3"/>
+            </attributes>
+        </element>
+        <element name="forms_webmailHtmlBody" styleClass="TD.webmailHtmlBody">
+            <attributes>
+                <attribute name="vertical-align" value="top"/>
+                <attribute name="width" value="100%"/>
+                <attribute name="height" value="350px"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="background-color" value="#ffffff"/>
+                <attribute name="border-left" value="1px solid #000000"/>
+                <attribute name="border-top" value="1px solid #000000"/>
+                <attribute name="border-bottom" value="1px solid #DADEE2"/>
+                <attribute name="border-right" value="1px solid #DADEE2"/>
+            </attributes>
+        </element>
+        <element name="forms_TD_contain" styleClass="TD.contain" resource="UIManager.Element.TD_contain"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#F5F5F5" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="padding" value="4px"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="height" value="23px"/>
+                <attribute name="font-weight" value="lighter"/>
+            </attributes>
+        </element>
+        <element name="forms_TD_contain_A" styleClass="TD.contain A" resource="UIManager.Element.TD_contain_A"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif" type="FONT"
+                           resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#000099" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="text-decoration" value="none"/>
+            </attributes>
+        </element>
+        <element name="forms_TD_contain_A_hover" styleClass="TD.contain A:hover" extends="forms_TD_contain_A">
+            <attributes>
+                <attribute name="text-decoration" value="underline"/>
+            </attributes>
+        </element>
+        <element name="forms_adminContain" styleClass="TD.adminContain" extends="forms_TD_contain">
+            <attributes>
+                <attribute name="padding" value="4px" obviate="true"/>
+                <attribute name="height" value="23px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="forms_containTop" styleClass="TD.containTop" extends="forms_TD_contain">
+            <attributes>
+                <attribute name="vertical-align" value="top"/>
+            </attributes>
+        </element>
+        <element name="forms_nopaddingContainTop" styleClass="td.nopaddingContainTop" extends="forms_TD_contain">
+            <attributes>
+                <attribute name="padding" value="0px 0px 0px 0px"/>
+                <attribute name="vertical-align" value="top"/>
+            </attributes>
+        </element>
+    </elements>
+    <!--Web Calendar-->
+    <elements name="webcalendar" resource="UIManager.WebCalendar.title" configurable="true">
+        <element name="table.wc_table" styleClass="table.wc_table" resource="UIManager.WebCalendar.table.wc_table"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#BFCFDF" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="th.wc_header" styleClass="th.wc_header" resource="UIManager.WebCalendar.tr.wc_header"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Sans-serif" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="12px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bolder" type="FONT_WEIGHT"
+                           resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="text-align" value="center" resource="UIManager.textAlign"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="wc_day_cell_General" resource="UIManager.WebCalendar.td.wc_day_cell" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#F9F9F9" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter" type="FONT_WEIGHT"
+                           resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.wc_day_cell" styleClass="td.wc_day_cell" extends="wc_day_cell_General">
+            <attributes>
+                <attribute name="text-align" value="center" resource="UIManager.textAlign"/>
+                <attribute name="font-family" value="Verdana" type="FONT" obviate="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" obviate="true"/>
+                <attribute name="font-weight" value="lighter" type="FONT_WEIGHT" obviate="true"/>
+                <attribute name="color" value="#00008B" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="td.wc_day_cell a" styleClass="td.wc_day_cell a" extends="wc_day_cell_General">
+            <attributes>
+                <attribute name="background-color" value="#F9F9F9" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="td.wc_week_cell" styleClass="td.wc_week_cell" resource="UIManager.WebCalendar.td.wc_week_cell"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#E6F6EA" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter" type="FONT_WEIGHT"
+                           resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="text-align" value="center" resource="UIManager.textAlign"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.wc_outmonth_color" styleClass="td.wc_outmonth_color"
+                 resource="UIManager.WebCalendar.td.wc_outmonth_color" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#b5b5b5" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.wc_today_color" styleClass="td.wc_today_color"
+                 resource="UIManager.WebCalendar.td.wc_today_color" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#DECACA" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+
+    </elements>
+    <!--Scheduler Views Styles-->
+    <elements name="calendars" resource="UIManager.Scheduler.Calendars" configurable="true">
+        <element name="table.calendar_table" styleClass="table.calendar_table"
+                 resource="UIManager.Scheduler.table.calendar_table" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#1B1B87" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="tr.calendar_header" styleClass="tr.calendar_header"
+                 resource="UIManager.Scheduler.tr.calendar_header" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#DDEEFF" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="text-align" value="center" resource="UIManager.textAlign"/>
+                <attribute name="height" value="20px" type="SIZE" resource="UIManager.Attribute.Height"
+                           configurable="true"/>
+                <attribute name="color" value="#333333" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="padding" value="0px 0px 0px 5px"/>
+                <attribute name="border" value="1px solid #F1F8FE"/>
+                <attribute name="border-width" value="1px 1px 1px 1px"/>
+            </attributes>
+        </element>
+        <element name="td.calendar_cell" styleClass="td.calendar_cell" resource="UIManager.Scheduler.td.calendar_cell"
+                 configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#F9F9F9" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <!--<attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily" configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize" configurable="true"/>
+                <attribute name="font-weight" value="lighter" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="text-align" value="left" resource="UIManager.textAlign"/>
+                <attribute name="vertical-align" value="middle"/>-->
+                <!--<attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true" />-->
+            </attributes>
+        </element>
+        <element name="td.day_cell" styleClass="td.day_cell" resource="UIManager.Scheduler.td.day_cell"
+                 configurable="true">
+            <attributes>
+                <attribute name="padding-left" value="10px"/>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+
+
+            </attributes>
+        </element>
+        <element name="day_cellLink" styleClass="td.day_cell A" extends="td.day_cell">
+            <attributes>
+                <attribute name="padding-left" obviate="true"/>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="td.year_cell" styleClass="td.year_cell">
+            <attributes>
+                <attribute name="padding-left" value="3px"/>
+                <attribute name="height" value="20px"/>
+            </attributes>
+        </element>
+
+        <element name="td.calendar_week_cell" styleClass="td.calendar_week_cell"
+                 resource="UIManager.Scheduler.td.calendar_week_cell" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#E6F6EA" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter" type="FONT_WEIGHT"
+                           resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="vertical-align" value="middle"/>
+            </attributes>
+        </element>
+        <element name="calendarWeekCellLink" styleClass="td.calendar_week_cell A" extends="td.calendar_week_cell">
+            <attributes>
+                <attribute name="background-color" obviate="true"/>
+                <attribute name="font-family" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+                <attribute name="vertical-align" value="middle" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="td.month_week_cell" styleClass="td.month_week_cell">
+            <attributes>
+                <attribute name="padding" value="0px 0px 0px 0px"/>
+                <attribute name="font-size" value="14px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"/>
+                <attribute name="text-align" value="center" resource="UIManager.textAlign"/>
+                <attribute name="height" value="70px;"/>
+                <attribute name="vertical-align" value="top"/>
+            </attributes>
+        </element>
+        <element name="td.year_week_cell" styleClass="td.year_week_cell">
+            <attributes>
+                <attribute name="font-size" value="9px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"/>
+                <attribute name="text-align" value="left" resource="UIManager.textAlign"/>
+                <attribute name="padding-left" value="3px"/>
+            </attributes>
+        </element>
+
+        <element name="DIV.month_day_header" styleClass="DIV.month_day_header">
+            <attributes>
+                <attribute name="padding" value="5px 5px 5px 5px"/>
+                <attribute name="margin" value="0px 0px 0px 0px"/>
+                <attribute name="vertical-align" value="top"/>
+                <attribute name="border-style" value="solid"/>
+                <attribute name="border-width" value="0px"/>
+                <attribute name="text-align" value="left" resource="UIManager.textAlign"/>
+            </attributes>
+        </element>
+        <element name="DIV.month_day_header a" styleClass="DIV.month_day_header a"
+                 resource="UIManager.Scheduler.div.month_day_header" configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="12px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="bold" type="FONT_WEIGHT" resource="UIManager.Attribute.FontWeight"
+                           configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+
+        <element name="yearCellLink" styleClass="td.year_cell A" extends="DIV.month_day_header a">
+            <attributes>
+                <attribute name="font-size" obviate="true"/>
+                <attribute name="font-weight" obviate="true"/>
+            </attributes>
+        </element>
+
+        <element name="span.month_time" styleClass="span.month_time">
+            <attributes>
+                <attribute name="font-family" value="Verdana"/>
+                <attribute name="font-size" value="9px"/>
+                <attribute name="font-weight" value="bold"/>
+            </attributes>
+        </element>
+        <element name="span.type_appoiment" styleClass="span.type_appoiment">
+            <attributes>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="9px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="normal" resource="UIManager.Attribute.FontWeight"/>
+            </attributes>
+        </element>
+        <element name="span.datetime" styleClass="span.datetime" resource="UIManager.Scheduler.span.datetime"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="9px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="normal" type="FONT_WEIGHT"
+                           resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="span.scroll_text" styleClass="span.scroll_text">
+            <attributes>
+                <!--<attribute name="font-family" value="Arial" type="FONT" resource="UIManager.Attribute.FontFamily"-->
+                <!--configurable="true"/>-->
+                <attribute name="font-size" value="13px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="vertical-align" value="middle"/>
+            </attributes>
+        </element>
+        <element name="INPUT.scroll" styleClass="INPUT.scroll">
+            <attributes>
+                <attribute name="text-align" value="right"/>
+            </attributes>
+        </element>
+        <element name="SELECT.scroll" styleClass="SELECT.scroll">
+            <attributes>
+                <attribute name="width" value="90px"/>
+            </attributes>
+        </element>
+
+        <element name="DIV.scroll" styleClass="DIV.scroll">
+            <attributes>
+                <attribute name="text-align" value="left"/>
+            </attributes>
+        </element>
+
+        <element name="DIV.data" styleClass="DIV.data">
+            <attributes>
+                <attribute name="font-family" value="Arial" arguments="Helvetica, sans-serif"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="color" value="black"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="padding" value="3px 3px 3px 3px"/>
+                <attribute name="margin" value="0px 0px 0px 0px"/>
+            </attributes>
+        </element>
+
+        <element name="DIV.field" styleClass="DIV.field">
+            <attributes>
+                <attribute name="font-family" value="Arial" arguments="Helvetica, sans-serif"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="font-weight" value="bold"/>
+                <attribute name="text-decoration" value="underline"/>
+                <attribute name="padding" value="0px 0px 0px 3px"/>
+                <attribute name="margin" value="0px 0px 0px 0px"/>
+            </attributes>
+        </element>
+
+        <element name="DIV.holiday" styleClass="DIV.holiday div" resource="UIManager.Scheduler.DIV.holiday"
+                 configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Arial" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="font-weight" value="lighter" type="FONT_WEIGHT"
+                           resource="UIManager.Attribute.FontWeight" configurable="true"/>
+                <attribute name="color" value="#000000" resource="UIManager.Attribute.Color" configurable="true"/>
+                <attribute name="text-align" value="left" resource="UIManager.textAlign"/>
+                <attribute name="padding" value="0px 0px 0px 3px"/>
+            </attributes>
+        </element>
+        <element name="a.smallcalendar_appointment" styleClass=".smallcalendar_appointment"
+                 resource="UIManager.Scheduler.a.smallcalendar_appointment" configurable="true">
+            <attributes>
+                <attribute name="color" value="#ff0000" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name="div.appointment" styleClass="div.appointment">
+            <attributes>
+                <attribute name="margin" value="3px 5px 3px 5px"/>
+                <attribute name="padding" value="5px 3px 5px 3px"/>
+                <attribute name="vertical-align" value="top"/>
+                <attribute name="text-align" value="left" resource="UIManager.textAlign"/>
+                <attribute name="font-weight" value="lighter" resource="UIManager.Attribute.FontWeight"/>
+                <attribute name="border" value="1px solid #898988"/>
+            </attributes>
+        </element>
+        <element name="td.appointment_cell" styleClass="td.appointment_cell">
+            <attributes>
+                <attribute name="background" value="#D2DDF2" resource="UIManager.Attribute.BackgroundColor"/>
+                <attribute name="padding" value="5px 5px 5px 5px"/>
+                <attribute name="vertical-align" value="top"/>
+                <attribute name="font-weight" value="lighter" resource="UIManager.Attribute.FontWeight"/>
+                <attribute name="text-align" value="left" resource="UIManager.textAlign"/>
+            </attributes>
+        </element>
+        <element name=".appointment_font a" styleClass=".appointment_font a"
+                 resource="UIManager.Scheduler.appointment_font_a" configurable="true">
+            <attributes>
+                <attribute name="font-family" value="Verdana" type="FONT" resource="UIManager.Attribute.FontFamily"
+                           configurable="true"/>
+                <attribute name="font-size" value="11px" type="FONT_SIZE" resource="UIManager.Attribute.FontSize"
+                           configurable="true"/>
+                <attribute name="color" value="#00008B" resource="UIManager.Attribute.Color" configurable="true"/>
+            </attributes>
+        </element>
+        <element name=".appointment_font" styleClass=".appointment_font" extends=".appointment_font a">
+            <attributes/>
+        </element>
+        <element name="td.smallcalendar_month_cell" styleClass="td.smallcalendar_month_cell">
+            <attributes>
+                <attribute name="vertical-align" value="top"/>
+            </attributes>
+        </element>
+        <element name="td.nopadding" styleClass="td.nopadding">
+            <attributes>
+                <attribute name="padding" value="0px 0px 0px 0px"/>
+            </attributes>
+        </element>
+        <element name="td.calendar_cell#outmonthColor" styleClass="td.calendar_cell#outmonthColor"
+                 resource="UIManager.Scheduler.td.calendarCell_outmonthColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#b5b5b5" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.calendar_cell#todayColor" styleClass="td.calendar_cell#todayColor"
+                 resource="UIManager.Scheduler.td.calendarCell_todayColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#DECACA" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.calendar_cell#holidayColor" styleClass="td.calendar_cell#holidayColor"
+                 resource="UIManager.Scheduler.td.calendarCell_holidayColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffcc99" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="div.appointmentAnonymous" styleClass="div.appointmentAnonymous"
+                 resource="UIManager.Scheduler.appointmentAsAnonymous" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#F0F0D3" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.appointmentAnonymous" styleClass="td.appointmentAnonymous" extends="div.appointmentAnonymous">
+            <attributes/>
+        </element>
+    </elements>
+    <elements name="task" resource="UIManager.Scheduler.Task" configurable="true">
+        <element name="td.task_expireColor" styleClass="td.task_expireColor"
+                 resource="UIManager.Scheduler.td.task_expireColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#ffcc99" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+    <elements name="everything" configurable="false">
+        <element name="everything_Iframe " styleClass="iframe.Iframe ">
+            <attributes>
+                <attribute name="font-family" value="Verdana"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="background-color" value="#FCF8E8"/>
+                <attribute name="width" value="100%"/>
+                <attribute name="height" value="300px"/>
+                <attribute name="position" value="relative"/>
+                <attribute name="top" value="0px"/>
+                <attribute name="left" value="0px"/>
+            </attributes>
+        </element>
+        <element name="everything_H1" styleClass="H1">
+            <attributes>
+                <attribute name="font-weight" value="bold"/>
+                <attribute name="font-size" value="15px"/>
+                <attribute name="color" value="#336699"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif"/>
+                <attribute name="height" value="25px"/>
+            </attributes>
+        </element>
+        <element name="everithing_H2" styleClass="H2" extends="everything_H1">
+            <attributes>
+                <attribute name="font-size" value="13px"/>
+                <attribute name="color" value="#000000"/>
+            </attributes>
+        </element>
+        <element name="everithing_H3" styleClass="H3" extends="everything_H1">
+            <attributes>
+                <attribute name="font-size" value="16px"/>
+                <attribute name="font-family" value="Arial" arguments="Helvetica, sans-serif"/>
+                <attribute name="color" value="#969676"/>
+                <attribute name="height" value="25px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="everything_TABLE" styleClass="TABLE">
+            <attributes>
+                <attribute name="font-family" value="Tahoma" arguments="sans-serif"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="border" value="0px"/>
+            </attributes>
+        </element>
+        <element name="everything_TD" styleClass="TD">
+            <attributes>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif"/>
+            </attributes>
+        </element>
+        <element name="everything_SPAN.center" styleClass="SPAN.center">
+            <attributes>
+                <attribute name="text-align" value="center"/>
+            </attributes>
+        </element>
+        <element name="everything_fieldset" styleClass="FIELDSET.fieldset">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="color" value="#000000"/>
+                <attribute name="padding" value="5px 5px 5px 5px"/>
+                <attribute name="margin" value="2px 2px 2px 2px"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="vertical-align" value="middle"/>
+                <attribute name="font-weight" value="lighter"/>
+                <attribute name="background-color" value="#F5F5F5"/>
+                <attribute name="border" value="1px solid #898988"/>
+            </attributes>
+        </element>
+        <element name="everything_notFound" styleClass="TR.notFound">
+            <attributes>
+                <attribute name="font-family" value="Verdana" arguments="Helvetica, sans-serif"/>
+                <attribute name="color" value="#000060"/>
+                <attribute name="padding" value="1"/>
+                <attribute name="font-size" value="11px"/>
+                <attribute name="background" value="#EEEEEE"/>
+            </attributes>
+        </element>
+        <!--add miky-->
+        <element name="td_principal" styleClass="TD.principal">
+            <attributes>
+                <attribute name="background" value="#FFFFFF"/>
+                <attribute name="padding" value="10px 10px 10px 10px"/>
+            </attributes>
+        </element>
+    </elements>
+    <elements name="pullDownMenus" configurable="false">
+        <element name="pullDownMenu" styleClass=".pullDownMenu" extends="moduleShorcut">
+            <attributes>
+                <attribute name="border-top" obviate="true"/>
+                <attribute name="border-left" obviate="true"/>
+                <attribute name="border-right" obviate="true"/>
+                <attribute name="height" obviate="true"/>
+                <attribute name="padding" value="5px 7px 10px 7px"/>
+                <attribute name="text-align" value="left"/>
+                <attribute name="white-space" value="nowrap"/>
+                <attribute name="position" value="absolute"/>
+                <attribute name="display" value="none"/>
+                <attribute name="visibility" value="hidden"/>
+            </attributes>
+        </element>
+        <element name="pullDownMenuRoot" styleClass=".pullDownMenuRoot">
+            <attributes>
+                <attribute name="display" value="inline"/>
+                <attribute name="position" value="relative"/>
+                <attribute name="cursor" value="pointer"/>
+                <attribute name="padding" value="0"/>
+                <attribute name="margin" value="0"/>
+                <attribute name="vertical-align" value="middle"/>
+            </attributes>
+        </element>
+    </elements>
+    <elements name="dashboardStyles" resource="UIManager.Dashboard" configurable="true">
+        <element name="div_dashboardbirthday" styleClass=".nowDate" resource="UIManager.Dashboard.highlight"
+                 configurable="true">
+            <attributes>
+                <attribute name="background" value="#ffcc99" resource="UIManager.Attribute.Background"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+    <elements name="projectStyles" resource="UIManager.Project" configurable="true">
+        <element name="td.projectTime_enteredColor" styleClass="td.projectTime_enteredColor"
+                 resource="UIManager.ProjectTime.Status_enteredColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#BBEEFF" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.projectTime_releasedColor" styleClass="td.projectTime_releasedColor"
+                 resource="UIManager.ProjectTime.Status_releasedColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#FFE786" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.projectTime_confirmedColor" styleClass="td.projectTime_confirmedColor"
+                 resource="UIManager.ProjectTime.Status_confirmedColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#B1EC9E" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.projectTime_notConfirmedColor" styleClass="td.projectTime_notConfirmedColor"
+                 resource="UIManager.ProjectTime.Status_notConfirmedColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#FFAAAA" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+        <element name="td.projectTime_invoicedColor" styleClass="td.projectTime_invoicedColor"
+                 resource="UIManager.ProjectTime.Status_invoicedColor" configurable="true">
+            <attributes>
+                <attribute name="background-color" value="#D8D8FF" resource="UIManager.Attribute.BackgroundColor"
+                           configurable="true"/>
+            </attributes>
+        </element>
+    </elements>
+    <!--sexycombo styles-->
+    <elements name="sexyCombo_styles" configurable="false">
+        <!--general styles-->
+        <element name="div_combo" styleClass="div.combo" configurable="false">
+            <attributes>
+                <attribute name="position" value="relative"/>
+                <attribute name="left" value="0px"/>
+                <attribute name="top" value="0px"/>
+            </attributes>
+        </element>
+        <element name="combo_input" styleClass=".combo input.test" configurable="false">
+            <attributes>
+                <attribute name="position" value="absolute"/>
+            </attributes>
+        </element>
+        <element name="combo_div_input" styleClass=".combo div.icon" configurable="false">
+            <attributes>
+                <attribute name="position" value="absolute"/>
+            </attributes>
+        </element>
+        <element name="combo_div_list-wrapper" styleClass=".combo div.list-wrapper" configurable="false"
+                 extends="general_select">
+            <attributes>
+                <attribute name="position" value="absolute"/>
+                <attribute name="overflow" value="hidden"/>
+                <attribute name="height" value="200px"/>
+                <attribute name="max-height" value="200px"/>
+                <attribute name="z-index" value="99999"/>
+            </attributes>
+        </element>
+        <element name="combo_div_list-wrapper-up" styleClass=".combo div.list-wrapper-up" configurable="false">
+            <attributes>
+            </attributes>
+        </element>
+        <element name="combo_li" styleClass=".combo li" configurable="false">
+            <attributes>
+            </attributes>
+        </element>
+        <element name="combo_li_active" styleClass=".combo li.active" configurable="false">
+            <attributes>
+                <attribute name="background" value="#5099F1"/>
+                <attribute name="color" value="#FFFFFF"/>
+            </attributes>
+        </element>
+        <element name="combo_visible" styleClass=".combo .visible" configurable="false">
+            <attributes>
+                <attribute name="display" value="block"/>
+                <attribute name="height" value="16px"/>
+            </attributes>
+        </element>
+        <element name="combo_invisible" styleClass=".combo .invisible" configurable="false">
+            <attributes>
+                <attribute name="display" value="none"/>
+            </attributes>
+        </element>
+        <element name="combo_input_empty" styleClass=".combo input.empty" configurable="false">
+            <attributes>
+            </attributes>
+        </element>
+
+        <!--detail styles-->
+        <element name="div_sexy" styleClass="div.sexy" configurable="false">
+            <attributes>
+                <attribute name="white-space" value="nowrap"/>
+                <attribute name="height" value="21px"/>
+                <attribute name="border" value="0"/>
+                <attribute name="margin" value="0"/>
+                <attribute name="padding" value="0"/>
+            </attributes>
+        </element>
+        <element name="div_sexy_input" styleClass="div.sexy input" configurable="false" extends="general_select">
+            <attributes>
+                <attribute name="width" value="205px"/>
+                <attribute name="height" value="19px" overwrite="true"/>
+            </attributes>
+        </element>
+        <element name="div_sexy_div_list-wrapper" styleClass="div.sexy div.list-wrapper" configurable="false"
+                 extends="general_select">
+            <attributes>
+                <attribute name="bottom" value="auto"/>
+                <attribute name="left" value="0px"/>
+                <attribute name="top" value="21px"/>
+                <attribute name="padding" value="0"/>
+                <attribute name="margin" value="0"/>
+                <attribute name="width" value="205px"/>
+                <attribute name="border-left" value="2px solid #999999"/>
+                <attribute name="border-top" value="1px solid #999999"/>
+                <attribute name="border-bottom" value="1px solid #000000"/>
+                <attribute name="border-right" value="1px solid #000000"/>
+            </attributes>
+        </element>
+        <element name="div_sexy_div_list-wrapper-up" styleClass="div.sexy div.list-wrapper-up" configurable="false">
+            <attributes>
+                <attribute name="bottom" value="21px"/>
+                <attribute name="top" value="auto"/>
+            </attributes>
+        </element>
+        <element name="div_sexy_ul" styleClass="div.sexy ul" configurable="false">
+            <attributes>
+                <attribute name="list-style-type" value="none"/>
+                <attribute name="padding" value="0"/>
+                <attribute name="margin" value="0"/>
+                <attribute name="height" value="200px"/>
+            </attributes>
+        </element>
+        <element name="div_sexy_li" styleClass="div.sexy li" configurable="false">
+            <attributes>
+                <attribute name="padding" value="0"/>
+                <attribute name="padding-left" value="2px"/>
+                <attribute name="cursor" value="pointer"/>
+                <attribute name="margin" value="0"/>
+            </attributes>
+        </element>
+        <element name="div_sexy_li_active" styleClass="div.sexy li.active" configurable="false"
+                 extends="general_select">
+            <attributes>
+                <attribute name="background" value="#5099F1" overwrite="true"/>
+                <attribute name="color" value="#FFFFFF" overwrite="true"/>
+                <attribute name="font-weight" value="normal" obviate="true"/>
+                <attribute name="vertical-align" value="middle" obviate="true"/>
+                <attribute name="height" value="18px" obviate="true"/>
+            </attributes>
+        </element>
+        <element name="div_sexy_input_empty" styleClass="div.sexy input.empty" configurable="false"
+                 extends="general_select">
+            <attributes>
+            </attributes>
+        </element>
+        <element name="div_sexy_div_icon" styleClass="div.sexy div.icon" configurable="false">
+            <attributes>
+                <attribute name="width" value="16px"/>
+                <attribute name="height" value="18px"/>
+                <attribute name="border" value="0"/>
+                <attribute name="background" value="transparent url(layout/ui/img/sel.gif) no-repeat 0 0"/>
+                <attribute name="cursor" value="pointer"/>
+                <attribute name="top" value="0px"/>
+                <attribute name="left" value="187px"/>
+            </attributes>
+        </element>
+    </elements>
+</CSS>

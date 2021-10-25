@@ -1,0 +1,1532 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<!DOCTYPE fantabulous-config PUBLIC
+"-//Alfacentauro//Fantabulous//Fantabulous DTD 1.0//EN"
+"fantabulous-config.dtd">-->
+
+<lists>
+    <list listName="productBaseList" persistence="true">
+        <tables>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="productid" fieldAlias="productId" key="true" type="integer"/>
+                    <field fieldName="productname" fieldAlias="productName"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="unitid" fieldAlias="productUnitId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="productunit" alias="productUnit">
+                <fields>
+                    <field fieldName="unitid" fieldAlias="unitId" key="true" type="integer"/>
+                    <field fieldName="unitname" fieldAlias="unitName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>unitId</pK>
+                <fK>productUnitId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productName" operator="LIKE2" type="parameter" parameterName="productNameSingle"/>
+            <conector>And</conector>
+            <condition fieldReference="productId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="unit">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>unitName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="productList" persistence="true" extends="productBaseList">
+        <tables>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="producttypeid" fieldAlias="productTypeId" type="integer"/>
+                    <field fieldName="productgroupid" fieldAlias="productGroupId" type="integer"/>
+                    <field fieldName="price" fieldAlias="price" type="decimal"/>
+                </fields>
+            </table>
+            <table tableName="producttype" alias="productType">
+                <fields>
+                    <field fieldName="typeid" fieldAlias="typeId" key="true" type="integer"/>
+                    <field fieldName="typename" fieldAlias="typeName"/>
+                    <field fieldName="producttypetype" fieldAlias="productTypeType" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="productgroup" alias="productGroup">
+                <fields>
+                    <field fieldName="groupid" fieldAlias="groupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>typeId</pK>
+                <fK>productTypeId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>groupId</pK>
+                <fK>productGroupId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="productTypeType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productTypeType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>typeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="group">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="price">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>price</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="searchProductList" extends="productList" executeFirstTime="true" persistence="true">
+        <tables>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="currentversion" fieldAlias="currentVersion"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions/>
+        <configuration>
+            <columns>
+                <column columnName="unitId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>unitId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="versionNumber">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>currentVersion</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <!--search products by invoice -->
+    <list listName="searchProductByInvoice" extends="productList" executeFirstTime="true" persistence="true">
+        <tables>
+            <table tableName="invoiceposition" alias="invoicePosition">
+                <fields>
+                    <field fieldName="positionid" fieldAlias="positionId" key="true" type="integer"/>
+                    <field fieldName="productid" fieldAlias="productId_FK" type="integer"/>
+                    <field fieldName="invoiceid" fieldAlias="invoiceId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>productId_FK</pK>
+                <fK>productId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="invoiceId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration/>
+    </list>
+
+    <list listName="searchAdvancedProductList" extends="productList" distinct="true" persistence="true" executeFirstTime="true">
+        <tables>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="initdatetime" fieldAlias="initDateTime" type="integer"/>
+                    <field fieldName="enddatetime" fieldAlias="endDateTime" type="integer"/>
+                    <field fieldName="eventaddress" fieldAlias="eventAddress"/>
+                </fields>
+            </table>
+            <table tableName="prodsupplier" alias="prodSupplier">
+                <fields>
+                    <field fieldName="supplierid" fieldAlias="supplierId" key="true" type="integer"/>
+                    <field fieldName="productid" fieldAlias="supProductId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <fK>productId</fK>
+                <pK>supProductId</pK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="groupId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="typeId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="supplierId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="initDateTime" operator="LESS_EQUAL" type="parameter" parameterName="eventDateTimeTo"/>
+                <conector>And</conector>
+                <condition fieldReference="endDateTime" operator="GREATER_EQUAL" type="parameter" parameterName="eventDateTimeFrom"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns/>
+        </configuration>
+    </list>
+    <list listName="competitorProductList" persistence="true">
+        <tables>
+            <table tableName="competitorproduct" alias="competitorProduct">
+                <fields>
+                    <field fieldName="compproductid" fieldAlias="competitorProductId" key="true" type="integer"/>
+                    <field fieldName="productname" fieldAlias="productName"/>
+                    <field fieldName="entrydate" fieldAlias="entryDate" type="integer"/>
+                    <field fieldName="price" fieldAlias="price" type="decimal"/>
+                    <field fieldName="productid" fieldAlias="productId" type="integer"/>
+                    <field fieldName="competitorid" fieldAlias="competitorProId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="competitorName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="competitorId" key="true" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="name1" fieldAlias="competitorName1"/>
+                    <field fieldName="name2" fieldAlias="competitorName2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>competitorId</pK>
+                <fK>competitorProId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productName" operator="LIKE2" type="parameter" parameterName="productNameAlpha"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="competitorProductId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>competitorProductId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="productName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="competitorName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>competitorName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>competitorName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>competitorName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>competitorName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>competitorName1</referenceField>
+                            <referenceField>competitorName2</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="price">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>price</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="entryDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>entryDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="productName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="competitorImportList" executeFirstTime="true" persistence="true">
+        <tables>
+
+            <table tableName="address" alias="competitorContact">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="competitorContactId" key="true" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="name1" fieldAlias="contactName1"/>
+                    <field fieldName="name2" fieldAlias="contactName2"/>
+                    <field fieldName="name3" fieldAlias="contactName3"/>
+                    <field fieldName="recorduser" fieldAlias="recordUserId" type="integer"/>
+                    <field fieldName="personal" fieldAlias="personal" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="countryid" fieldAlias="countryContactId" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="cityContactId" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true" type="integer"/>
+                    <field fieldName="zip" fieldAlias="zip"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="areacode" fieldAlias="countryCode"/>
+                    <field fieldName="countryname" fieldAlias="countryName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>countryId</pK>
+                <fK>countryContactId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>cityId</pK>
+                <fK>cityContactId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="constant" value="1"/>
+            <conector>And</conector>
+
+            <conditions>
+                <condition fieldReference="contactName1" operator="LIKE2" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="contactName2" operator="LIKE2" type="parameter"/>
+                <conector>Or</conector>
+                <condition fieldReference="contactName3" operator="LIKE2" type="parameter"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="addressId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>competitorContactId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contactName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>contactName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>contactName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>contactName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>contactName2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>contactName3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>contactName1</referenceField>
+                            <referenceField>contactName2</referenceField>
+                            <referenceField>contactName3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="countryName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="cityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="contactName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="pricingList" persistence="true">
+        <tables>
+            <table tableName="pricing" alias="pricing">
+                <fields>
+                    <field fieldName="productid" fieldAlias="pricingProductId" key="true" type="integer"/>
+                    <field fieldName="quantity" fieldAlias="quantity" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="price" fieldAlias="price" type="decimal"/>
+                </fields>
+            </table>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="productid" fieldAlias="productId" key="true" type="integer"/>
+                    <field fieldName="unitid" fieldAlias="productUnitId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="productunit" alias="productUnit">
+                <fields>
+                    <field fieldName="unitid" fieldAlias="unitId" key="true" type="integer"/>
+                    <field fieldName="unitname" fieldAlias="unit"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>productId</pK>
+                <fK>pricingProductId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>unitId</pK>
+                <fK>productUnitId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="quantity">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>quantity</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="price">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>price</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="unit">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>unit</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="quantity"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="productSupplierBaseList" persistence="true">
+        <tables>
+            <table tableName="prodsupplier" alias="prodSupplier">
+                <fields>
+                    <field fieldName="productid" fieldAlias="productId" key="true" type="integer"/>
+                    <field fieldName="supplierid" fieldAlias="supplierId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="supplierName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <fK>supplierId</fK>
+                <pK>addressId</pK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="supplierId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="supplierId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>supplierId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="supplierName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="supplierName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="productSupplierList" extends="productSupplierBaseList" persistence="true">
+        <tables>
+            <table tableName="prodsupplier" alias="prodSupplier">
+                <fields>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="partnumber" fieldAlias="partNumber"/>
+                    <field fieldName="price" fieldAlias="price" type="decimal"/>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="productid" fieldAlias="productNameId" key="true" type="integer"/>
+                    <field fieldName="productname" fieldAlias="productName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="contactName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <fK>productId</fK>
+                <pK>productNameId</pK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <fK>contactPersonId</fK>
+                <pK>contactId</pK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="contactSearchName" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1"/>
+                <param type="field" field="name2"/>
+                <param type="field" field="name3"/>
+                <param type="field" field="searchName"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="name1" operator="LIKE2" type="parameter"/>
+            <conector>And</conector>
+            <condition functionReference="contactSearchName" operator="LIKE" type="parameter" parameterName="contactSearchNameFixed"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="contactPersonId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactPersonId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="price">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>price</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="partNumber">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>partNumber</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contact">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="supplierProductList" extends="productSupplierList" persistence="true">
+        <tables/>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="productName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productName" operator="LIKE2" type="parameter" parameterName="productNameAlpha"/>
+            <conector>And</conector>
+            <condition fieldReference="supplierId" operator="EQUAL" type="parameter" parameterName="addressId"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="productName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="productId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+    <list listName="supplierSearchList" distinct="true" executeFirstTime="true" persistence="true">
+        <tables>
+            <table tableName="supplier" alias="supplier">
+                <fields>
+                    <field fieldName="supplierid" fieldAlias="supplierId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="supplierName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="addressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                    <field fieldName="name3" fieldAlias="name3"/>
+                    <field fieldName="countryid" fieldAlias="addressCountryId" type="integer"/>
+                    <field fieldName="cityid" fieldAlias="addressCityId" type="integer"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="country" alias="country">
+                <fields>
+                    <field fieldName="countryid" fieldAlias="countryId" key="true" type="integer"/>
+                    <field fieldName="areacode" fieldAlias="countryCode"/>
+                    <field fieldName="countryName" fieldAlias="countryName"/>
+                </fields>
+            </table>
+            <table tableName="city" alias="city">
+                <fields>
+                    <field fieldName="cityid" fieldAlias="cityId" key="true" type="integer"/>
+                    <field fieldName="cityname" fieldAlias="cityName"/>
+                    <field fieldName="zip" fieldAlias="zip"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <fK>supplierId</fK>
+                <pK>addressId</pK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>cityId</pK>
+                <fK>addressCityId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>countryId</pK>
+                <fK>addressCountryId</fK>
+            </relationShip>
+        </relationShips>
+        <functions>
+            <function alias="contactSearchName" class="com.piramide.elwis.utils.dbfunction.ContactSearchName">
+                <param type="field" field="name1"/>
+                <param type="field" field="name2"/>
+                <param type="field" field="name3"/>
+                <param type="field" field="searchName"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition fieldReference="supplierId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="name1" operator="LIKE2" type="parameter"/>
+            <conector>And</conector>
+            <condition functionReference="contactSearchName" operator="LIKE" type="parameter" parameterName="contactSearchNameFixed"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="cityName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>cityName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="zip">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>zip</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="supplierId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>supplierId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="addressType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>addressType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="supplierName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>name1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>name2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>name3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                            <referenceField>name3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="countryCode">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>countryCode</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="supplierName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="productPictureList" persistence="true">
+        <tables>
+            <table tableName="productpicture" alias="productPicture">
+                <fields>
+                    <field fieldName="productid" fieldAlias="productId" key="true" type="integer"/>
+                    <field fieldName="freetextid" fieldAlias="freetextId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                    <field fieldName="size" fieldAlias="size" type="integer"/>
+                    <field fieldName="uploaddate" fieldAlias="uploadDate" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="graphicsId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>freetextId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="pictureName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="pictureSize">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>size</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="pictureUploadDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>uploadDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="pictureName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--        for reports-->
+    <list listName="productReportList" persistence="true">
+        <tables>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="productid" fieldAlias="productId" key="true" type="integer"/>
+                    <field fieldName="productname" fieldAlias="productName"/>
+                    <field fieldName="producttypeid" fieldAlias="productTypeId" type="integer"/>
+                    <field fieldName="productgroupid" fieldAlias="productGroupId" type="integer"/>
+                    <field fieldName="price" fieldAlias="price" type="decimal"/>
+                    <field fieldName="pricegross" fieldAlias="priceGross" type="decimal"/>
+                    <field fieldName="currentversion" fieldAlias="currentVersion"/>
+                    <field fieldName="unitid" fieldAlias="productUnitId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="producttype" alias="productType">
+                <fields>
+                    <field fieldName="typeid" fieldAlias="typeId" key="true" type="integer"/>
+                    <field fieldName="typename" fieldAlias="typeName"/>
+                    <field fieldName="producttypetype" fieldAlias="productTypeType" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="productgroup" alias="productGroup">
+                <fields>
+                    <field fieldName="groupid" fieldAlias="groupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+            <table tableName="productunit" alias="productUnit">
+                <fields>
+                    <field fieldName="unitid" fieldAlias="unitId" key="true" type="integer"/>
+                    <field fieldName="unitname" fieldAlias="unitName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>typeId</pK>
+                <fK>productTypeId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>groupId</pK>
+                <fK>productGroupId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>unitId</pK>
+                <fK>productUnitId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="unitId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productGroupId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productTypeId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="currentVersion" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="price" operator="GREATER_EQUAL" type="parameter" parameterName="price1"/>
+            <conector>And</conector>
+            <condition fieldReference="price" operator="LESS_EQUAL" type="parameter" parameterName="price2"/>
+            <conector>And</conector>
+            <condition fieldReference="priceGross" operator="GREATER_EQUAL" type="parameter" parameterName="priceGross1"/>
+            <conector>And</conector>
+            <condition fieldReference="priceGross" operator="LESS_EQUAL" type="parameter" parameterName="priceGross2"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="productName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="productTypeType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productTypeType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>typeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="group">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="unit">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>unitName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="price">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>price</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="priceGross">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>priceGross</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="productName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="supplierReportList" persistence="true">
+        <tables>
+            <table tableName="prodsupplier" alias="prodSupplier">
+                <fields>
+                    <field fieldName="supplierid" fieldAlias="supplierId" key="true" type="integer"/>
+                    <field fieldName="productid" fieldAlias="productSupplierId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="active" fieldAlias="active" type="integer"/>
+                    <field fieldName="partnumber" fieldAlias="partNumber"/>
+                    <field fieldName="discount" fieldAlias="discount" type="decimal"/>
+                    <field fieldName="price" fieldAlias="price" type="decimal"/>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId" type="integer"/>
+                    <field fieldName="unitid" fieldAlias="unitSupplierId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="productid" fieldAlias="productId" key="true" type="integer"/>
+                    <field fieldName="productname" fieldAlias="productName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="supplierName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="supplierNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="supplierName1"/>
+                    <field fieldName="name2" fieldAlias="supplierName2"/>
+                    <field fieldName="name3" fieldAlias="supplierName3"/>
+                    <field fieldName="searchname" fieldAlias="searchName"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                </fields>
+            </table>
+            <table tableName="productunit" alias="productUnit">
+                <fields>
+                    <field fieldName="unitid" fieldAlias="unitId" key="true" type="integer"/>
+                    <field fieldName="addressid" fieldAlias="addressId" type="integer"/>
+                    <field fieldName="unitname" fieldAlias="unitName"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="contactPersonName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="contactPersonNameId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="lastName"/>
+                    <field fieldName="name2" fieldAlias="firstName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>productId</pK>
+                <fK>productSupplierId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>contactPersonNameId</pK>
+                <fK>contactPersonId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>unitId</pK>
+                <fK>unitSupplierId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>supplierNameId</pK>
+                <fK>supplierId</fK>
+            </relationShip>
+        </relationShips>
+
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="supplierId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="contactPersonId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="active" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="unitSupplierId" operator="EQUAL" type="parameter" parameterName="unitId"/>
+            <conector>And</conector>
+            <condition fieldReference="productSupplierId" operator="EQUAL" type="parameter" parameterName="productId"/>
+            <conector>And</conector>
+            <condition fieldReference="discount" operator="GREATER_EQUAL" type="parameter" parameterName="discount1"/>
+            <conector>And</conector>
+            <condition fieldReference="discount" operator="LESS_EQUAL" type="parameter" parameterName="discount2"/>
+            <conector>And</conector>
+            <condition fieldReference="price" operator="GREATER_EQUAL" type="parameter" parameterName="price1"/>
+            <conector>And</conector>
+            <condition fieldReference="price" operator="LESS_EQUAL" type="parameter" parameterName="price2"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="contactPersonId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>contactPersonId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="active">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>active</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="price">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>price</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="partNumber">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>partNumber</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="productName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="contact">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>lastName</referenceField>
+                            <referenceField>firstName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="supplierName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>supplierName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>supplierName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>supplierName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>supplierName2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>supplierName3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>supplierName1</referenceField>
+                            <referenceField>supplierName2</referenceField>
+                            <referenceField>supplierName3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="productName"/>
+                <columnOrder columnName="supplierName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="competitorReportList" persistence="true">
+        <tables>
+            <table tableName="competitorproduct" alias="competitorProduct">
+                <fields>
+                    <field fieldName="compproductid" fieldAlias="competitorProductId" key="true" type="integer"/>
+                    <field fieldName="productname" fieldAlias="productName"/>
+                    <field fieldName="entrydate" fieldAlias="entryDate" type="integer"/>
+                    <field fieldName="price" fieldAlias="price" type="decimal"/>
+                    <field fieldName="productid" fieldAlias="productId" type="integer"/>
+                    <field fieldName="competitorid" fieldAlias="competitorProId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="competitorName">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="competitorId" key="true" type="integer"/>
+                    <field fieldName="addresstype" fieldAlias="addressType"/>
+                    <field fieldName="name1" fieldAlias="competitorName1"/>
+                    <field fieldName="name2" fieldAlias="competitorName2"/>
+                </fields>
+            </table>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="productid" fieldAlias="product_Id" key="true" type="integer"/>
+                    <field fieldName="productname" fieldAlias="product_Name"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>competitorId</pK>
+                <fK>competitorProId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>product_Id</pK>
+                <fK>productId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="productId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="price" operator="GREATER_EQUAL" type="parameter" parameterName="price1"/>
+            <conector>And</conector>
+            <condition fieldReference="price" operator="LESS_EQUAL" type="parameter" parameterName="price2"/>
+            <conector>And</conector>
+            <condition fieldReference="entryDate" operator="GREATER_EQUAL" type="parameter" parameterName="startRange"/>
+            <conector>And</conector>
+            <condition fieldReference="entryDate" operator="LESS_EQUAL" type="parameter" parameterName="endRange"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="competitorProductId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>competitorProductId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="productName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>productName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="product_Name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>product_Name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="competitorName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>competitorName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>competitorName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="addressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>competitorName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>competitorName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>competitorName1</referenceField>
+                            <referenceField>competitorName2</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+                <column columnName="price">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>price</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="entryDate">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>entryDate</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="product_Name"/>
+                <columnOrder columnName="productName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!-- WV app-->
+    <list listName="productEventList" persistence="true" extends="productBaseList">
+        <tables>
+            <table tableName="product" alias="product">
+                <fields>
+                    <field fieldName="producttypeid" fieldAlias="productTypeId" type="integer"/>
+                    <field fieldName="productgroupid" fieldAlias="productGroupId" type="integer"/>
+                    <field fieldName="price" fieldAlias="price" type="decimal"/>
+                    <field fieldName="initdatetime" fieldAlias="initDateTime" type="integer"/>
+                    <field fieldName="enddatetime" fieldAlias="endDateTime" type="integer"/>
+                    <field fieldName="eventaddress" fieldAlias="eventAddress"/>
+                </fields>
+            </table>
+            <table tableName="producttype" alias="productType">
+                <fields>
+                    <field fieldName="typeid" fieldAlias="typeId" key="true" type="integer"/>
+                    <field fieldName="typename" fieldAlias="typeName"/>
+                </fields>
+            </table>
+            <table tableName="productgroup" alias="productGroup">
+                <fields>
+                    <field fieldName="groupid" fieldAlias="groupId" key="true" type="integer"/>
+                    <field fieldName="groupname" fieldAlias="groupName"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>typeId</pK>
+                <fK>productTypeId</fK>
+            </relationShip>
+            <relationShip>
+                <leftJoin/>
+                <pK>groupId</pK>
+                <fK>productGroupId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="typeId" operator="EQUAL" type="parameter" parameterName="productTypeId"/>
+            <conector>And</conector>
+            <condition fieldReference="initDateTime" operator="GREATER_EQUAL" type="parameter" parameterName="currentEventMillis"/>
+            <conector>And</conector>
+            <condition fieldReference="initDateTime" operator="LESS" type="parameter" parameterName="archiveEventMillis"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>typeName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="group">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>groupName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="price">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>price</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="initDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>initDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="endDateTime">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>endDateTime</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="eventAddress">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>eventAddress</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="productEventMineList" extends="productEventList" persistence="true">
+        <tables>
+            <table tableName="saleposition" alias="salePosition">
+                <fields>
+                    <field fieldName="salepositionid" fieldAlias="salePositionId" type="integer" key="true"/>
+                    <field fieldName="contactpersonid" fieldAlias="contactPersonId_FK" type="integer"/>
+                    <field fieldName="customerid" fieldAlias="customerId_FK" type="integer"/>
+                    <field fieldName="productid" fieldAlias="productId_FK" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <join/>
+                <pK>productId_FK</pK>
+                <fK>productId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="contactPersonId_FK" operator="EQUAL" type="parameter" parameterName="userAddressId"/>
+        </conditions>
+        <configuration/>
+    </list>
+
+</lists>

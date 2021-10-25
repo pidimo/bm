@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lists>
+    <list listName="languageBaseList" persistence="true">
+        <tables>
+            <table tableName="language" alias="language">
+                <fields>
+                    <field fieldName="languageid" fieldAlias="languageId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="languagename" fieldAlias="languageName"/>
+                    <field fieldName="iso" fieldAlias="languageIso"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="languageId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>languageName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="reportBaseList" persistence="true">
+        <tables>
+            <table tableName="report" alias="report">
+                <fields>
+                    <field fieldName="reportid" fieldAlias="reportId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="reportName"/>
+                    <field fieldName="type" fieldAlias="reportType" type="integer"/>
+                    <field fieldName="module" fieldAlias="reportModule"/>
+                    <field fieldName="initialtableref" fieldAlias="reportFunctionality"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="employeeid" fieldAlias="reportEmployeeId" type="integer"/>
+                    <field fieldName="sourcetype" fieldAlias="sourceType" type="integer"/>
+                    <field fieldName="state" fieldAlias="state" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="employee" alias="employee">
+                <fields>
+                    <field fieldName="employeeid" fieldAlias="employeeId" key="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="address" alias="employeeAddress">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="employeeAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="name1"/>
+                    <field fieldName="name2" fieldAlias="name2"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>employeeId</pK>
+                <fK>reportEmployeeId</fK>
+            </relationShip>
+            <relationShip>
+                <pK>employeeAddressId</pK>
+                <fK>employeeId</fK>
+                <leftJoin/>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="reportName" operator="LIKE" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reportName" operator="LIKE2" type="parameter" parameterName="reportNameAlpha"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="reportId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="reportName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="reportType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="reportModule">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportModule</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="reportFunctionality">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportFunctionality</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="employeeName">
+                    <config>
+                        <fieldsConfig separator=", ">
+                            <referenceField>name1</referenceField>
+                            <referenceField>name2</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sourceType"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="reportName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="userReportList" extends="reportBaseList" persistence="true">
+        <tables/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="sourceType" operator="EQUAL" type="constant" value="1"/>
+                <conector>Or</conector>
+                <conditions>
+                    <condition fieldReference="sourceType" operator="EQUAL" type="constant" value="2"/>
+                    <conector>And</conector>
+                    <condition fieldReference="state" operator="EQUAL" type="constant" value="1"/>
+                </conditions>
+            </conditions>
+        </conditions>
+        <configuration/>
+    </list>
+
+    <list listName="reportJrxmlList" extends="reportBaseList" persistence="true">
+        <tables>
+            <table tableName="address" alias="companyAddress">
+                <fields>
+                    <field fieldName="addressid" fieldAlias="companyAddressId" key="true" type="integer"/>
+                    <field fieldName="name1" fieldAlias="companyName1"/>
+                    <field fieldName="name2" fieldAlias="companyName2"/>
+                    <field fieldName="name3" fieldAlias="companyName3"/>
+                    <field fieldName="addresstype" fieldAlias="companyAddressType"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>companyAddressId</pK>
+                <fK>companyId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="sourceType" operator="EQUAL" type="constant" value="2"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="companyName">
+                    <config>
+                        <formats>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="companyAddressType" operator="EQUAL" type="constant" value="1"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>companyName1</referenceField>
+                                    <separator value=", "/>
+                                    <fieldFormat>
+                                        <referenceField>companyName2</referenceField>
+                                        <separator value=" "/>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                            <format>
+                                <conditions>
+                                    <condition fieldReference="companyAddressType" operator="EQUAL" type="constant" value="0"/>
+                                </conditions>
+                                <fieldFormat>
+                                    <referenceField>companyName1</referenceField>
+                                    <separator value=" "/>
+                                    <fieldFormat>
+                                        <referenceField>companyName2</referenceField>
+                                        <separator value=" "/>
+                                        <fieldFormat>
+                                            <referenceField>companyName3</referenceField>
+                                            <separator value=" "/>
+                                        </fieldFormat>
+                                    </fieldFormat>
+                                </fieldFormat>
+                            </format>
+                        </formats>
+                        <fieldsOrder>
+                            <referenceField>companyName1</referenceField>
+                            <referenceField>companyName2</referenceField>
+                            <referenceField>companyName3</referenceField>
+                        </fieldsOrder>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="columnLightList" persistence="true">
+        <tables>
+            <table tableName="reportcolumn" alias="reportColumn">
+                <fields>
+                    <field fieldName="reportcolumnid" fieldAlias="reportColumnId" key="true" type="integer"/>
+                    <field fieldName="label" fieldAlias="label"/>
+                    <field fieldName="reportid" fieldAlias="reportId" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>label</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportColumnId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="label"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--<list listName="groupColumnLightList">
+        <tables>
+            <table tableName="groupcolumn" alias="groupColumn">
+                <fields>
+                    <field fieldName="reportcolumnid" fieldAlias="reportColumnId" key="true"/>
+                    <field fieldName="columngroupid" fieldAlias="columnGroupId"/>
+                    <field fieldName="reportid" fieldAlias="reportId"/>
+                    <field fieldName="companyid" fieldAlias="companyId"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>label</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportColumnId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="label"/>
+            </defaultOrder>
+        </configuration>
+    </list>-->
+    <!--<list listName="totalizeLightList">
+        <tables>
+            <table tableName="reporttotalize" alias="reportTotalize">
+                <fields>
+                    <field fieldName="reporttotalizeid" fieldAlias="totalizeId" key="true"/>
+                    <field fieldName="name" fieldAlias="name"/>
+                    <field fieldName="reportid" fieldAlias="reportId"/>
+                    <field fieldName="type" fieldAlias="type"/>
+                    <field fieldName="formula" fieldAlias="formula"/>
+                    <field fieldName="companyid" fieldAlias="companyId"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+                <conector>And</conector>
+            <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>name</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="labelValue">
+                    <config>
+                        <fieldsConfig separator="[ ">
+                            <referenceField>name</referenceField>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="type">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="totalizeId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>totalizeId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    -->
+
+    <!--begin ivan-->
+    <list listName="lightReportList" extends="reportBaseList" persistence="true">
+        <tables/>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="reportName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="reportName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="reportRoleList" persistence="true">
+        <tables>
+            <table tableName="reportrole" alias="reportRole">
+                <fields>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                    <field fieldName="reportid" fieldAlias="reportId" key="true" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="role" alias="elwisRole">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="fk_roleId" key="true" type="integer"/>
+                    <field fieldName="rolename" fieldAlias="roleName"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>fk_roleId</pK>
+                <fK>roleId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="reportId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="roleName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <list listName="roleList" persistence="true">
+        <tables>
+            <table tableName="role" alias="role">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                    <field fieldName="rolename" fieldAlias="roleName"/>
+                    <field fieldName="isdefault" fieldAlias="isDefault" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="reportrole" alias="reportRole">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="fk_roleId" key="true" type="integer"/>
+                    <field fieldName="reportid" fieldAlias="reportId" key="true" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <pK>fk_roleId</pK>
+                <fK>roleId</fK>
+                <outerJoin/>
+                <conditions>
+                    <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+                </conditions>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <conditions>
+                <condition fieldReference="reportId" operator="IS" type="constant" value="null"/>
+                <conector>And</conector>
+                <condition fieldReference="fk_roleId" operator="IS" type="constant" value="null"/>
+            </conditions>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleName">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="roleName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+    <!--end ivan-->
+    <!--begin miky-->
+    <list listName="reportFilterList" persistence="true">
+        <tables>
+            <table tableName="reportfilter" alias="filter">
+                <fields>
+                    <field fieldName="reportfilterid" fieldAlias="filter_id" key="true" type="integer"/>
+                    <field fieldName="aliascondition" fieldAlias="filter_alias"/>
+                    <field fieldName="columnref" fieldAlias="filter_columnref"/>
+                    <field fieldName="columntype" fieldAlias="filter_columntype" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="operator" fieldAlias="filter_operator" type="integer"/>
+                    <field fieldName="path" fieldAlias="filter_path"/>
+                    <field fieldName="reportid" fieldAlias="reportId" type="integer"/>
+                    <field fieldName="sequence" fieldAlias="filter_sequence" type="integer"/>
+                    <field fieldName="tableref" fieldAlias="filter_tableref"/>
+                    <field fieldName="filtertype" fieldAlias="filter_type" type="integer"/>
+                    <field fieldName="label" fieldAlias="filter_label"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <!-- the parameters be past from the session  -->
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id_filter">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_id</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="aliasCondition">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_alias</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="columnRef">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_columnref</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="columnType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_columntype</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="operator">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_operator</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="tableRef">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_tableref</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="filterType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_type</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="path">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_path</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="label">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>filter_label</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="label"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="reportQueryParamList" persistence="true">
+        <tables>
+            <table tableName="reportqueryparam" alias="queryparam">
+                <fields>
+                    <field fieldName="queryparamid" fieldAlias="reportQueryParamId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="parametername" fieldAlias="parameterName"/>
+                    <field fieldName="reportfilterid" fieldAlias="filterId_fk" type="integer"/>
+                    <field fieldName="reportid" fieldAlias="reportId" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="reportfilter" alias="filter">
+                <fields>
+                    <field fieldName="reportfilterid" fieldAlias="filterId" key="true" type="integer"/>
+                    <field fieldName="columnref" fieldAlias="columnRef"/>
+                    <field fieldName="columntype" fieldAlias="columnType" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="operator" fieldAlias="operator" type="integer"/>
+                    <field fieldName="path" fieldAlias="path"/>
+                    <field fieldName="tableref" fieldAlias="tableRef"/>
+                    <field fieldName="filtertype" fieldAlias="filterType" type="integer"/>
+                    <field fieldName="label" fieldAlias="label"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>filterId</pK>
+                <fK>filterId_fk</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="reportQueryParamId"/>
+                <column columnName="parameterName"/>
+                <column columnName="reportId"/>
+                <column columnName="filterId"/>
+                <column columnName="filterType"/>
+                <column columnName="operator"/>
+                <column columnName="tableRef"/>
+                <column columnName="columnRef"/>
+                <column columnName="path"/>
+                <column columnName="columnType"/>
+                <column columnName="label"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="parameterName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--list execute in Function of module reports-->
+    <list listName="especialFilterValueList" persistence="true">
+        <tables>
+            <table tableName="filtervalue" alias="filterValue">
+                <fields>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="filtervalueid" fieldAlias="value_id" key="true" type="integer"/>
+                    <field fieldName="pksequence" fieldAlias="value_pksequence" type="integer"/>
+                    <field fieldName="reportfilterid" fieldAlias="filterId" type="integer"/>
+                    <field fieldName="sequence" fieldAlias="value_sequence" type="integer"/>
+                    <field fieldName="value" fieldAlias="value_value"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <!-- the parameters be past from the session  -->
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="filterId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="sequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>value_sequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="pkSequence">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>value_pksequence</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="value">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>value_value</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="sequence"/>
+                <columnOrder columnName="pkSequence"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <list listName="folderMailsList" persistence="true">
+        <tables>
+            <table tableName="mail" alias="mail">
+                <fields>
+                    <field fieldName="mailid" fieldAlias="mailId" key="true" type="integer"/>
+                    <field fieldName="folderid" fieldAlias="folderId" type="integer"/>
+                    <field fieldName="hidden" fieldAlias="hidden"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function name="count" alias="countMails">
+                <param type="constant" value="*"/>
+            </function>
+        </functions>
+        <conditions>
+            <!-- the parameters be past from the session  -->
+            <condition fieldReference="folderId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="hidden" operator="EQUAL" type="constant" value="0"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="mailsCount">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField type="function">countMails</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="columnRemoveBatchList" persistence="true">
+        <tables>
+            <table tableName="reportcolumn" alias="reportColumn">
+                <fields>
+                    <field fieldName="reportcolumnid" fieldAlias="reportColumnId" key="true" type="integer"/>
+                    <field fieldName="path" fieldAlias="path"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function alias="blobfunction" class="com.piramide.elwis.utils.dbfunction.BlobReadFunction">
+                <param type="field" field="path"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition functionReference="blobfunction" operator="LIKE" type="parameter" parameterName="tablefield"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="reportColumnId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportColumnId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="filterRemoveBatchList" persistence="true">
+        <tables>
+            <table tableName="reportfilter" alias="filter">
+                <fields>
+                    <field fieldName="reportfilterid" fieldAlias="reportFilterId" key="true" type="integer"/>
+                    <field fieldName="path" fieldAlias="path"/>
+                </fields>
+            </table>
+        </tables>
+        <functions>
+            <function alias="blobfunction" class="com.piramide.elwis.utils.dbfunction.BlobReadFunction">
+                <param type="field" field="path"/>
+            </function>
+        </functions>
+        <conditions>
+            <condition functionReference="blobfunction" operator="LIKE" type="parameter" parameterName="tablefield"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="reportFilterId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportFilterId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="reportArtifactList" persistence="true">
+        <tables>
+            <table tableName="reportartifact" alias="reportArtifact">
+                <fields>
+                    <field fieldName="artifactid" fieldAlias="artifactId" key="true" type="integer"/>
+                    <field fieldName="companyid" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="filename" fieldAlias="fileName"/>
+                    <field fieldName="reportid" fieldAlias="reportId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips/>
+        <conditions>
+            <condition fieldReference="reportId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="artifactId"/>
+                <column columnName="fileName"/>
+                <column columnName="reportId"/>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="fileName"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+    <!--end miky-->
+
+    <list listName="rolesIdByUser" persistence="true">
+        <tables>
+            <table tableName="userrole" alias="userRole">
+                <fields>
+                    <field fieldName="roleid" fieldAlias="roleId" type="integer"/>
+                    <field fieldName="userid" fieldAlias="userId" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <conditions>
+            <condition fieldReference="userId" operator="EQUAL" type="parameter"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="roleId">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>roleId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+        </configuration>
+    </list>
+
+    <list listName="reportsByUserRoles" distinct="true" persistence="true">
+        <tables>
+            <table tableName="report" alias="report">
+                <fields>
+                    <field fieldName="reportid" fieldAlias="reportId" key="true" type="integer"/>
+                    <field fieldName="name" fieldAlias="reportName"/>
+                    <field fieldName="module" fieldAlias="module"/>
+                    <field fieldName="initialtableref" fieldAlias="functionality"/>
+                    <field fieldName="companyId" fieldAlias="companyId" type="integer"/>
+                    <field fieldName="sourcetype" fieldAlias="sourceType" type="integer"/>
+                </fields>
+            </table>
+            <table tableName="reportrole" alias="reportRole">
+                <fields>
+                    <field fieldName="reportid" fieldAlias="reportRoleId" key="true" type="integer"/>
+                    <field fieldName="roleid" fieldAlias="roleId" key="true" type="integer"/>
+                </fields>
+            </table>
+        </tables>
+        <relationShips>
+            <relationShip>
+                <leftJoin/>
+                <pK>reportRoleId</pK>
+                <fK>reportId</fK>
+            </relationShip>
+        </relationShips>
+        <conditions>
+            <condition fieldReference="companyId" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="module" operator="EQUAL" type="parameter"/>
+            <conector>And</conector>
+            <condition fieldReference="roleId" operator="IN" type="list" value="rolesIdByUser"/>
+        </conditions>
+        <configuration>
+            <columns>
+                <column columnName="id">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportId</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="name">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>reportName</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="functionality">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>functionality</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+                <column columnName="sourceType">
+                    <config>
+                        <fieldsConfig>
+                            <referenceField>sourceType</referenceField>
+                        </fieldsConfig>
+                    </config>
+                </column>
+            </columns>
+            <defaultOrder orderBy="ASC">
+                <columnOrder columnName="name"/>
+                <columnOrder columnName="functionality"/>
+            </defaultOrder>
+        </configuration>
+    </list>
+
+</lists>

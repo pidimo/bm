@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 4.0//EN" "http://www.jboss.org/j2ee/dtd/jboss_4_0.dtd">
+<jboss>
+    <enterprise-beans>
+        <entity>
+            <ejb-name>UserSession</ejb-name>
+            <local-jndi-name>Elwis.UserSession</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>UserSessionParam</ejb-name>
+            <local-jndi-name>Elwis.UserSessionParam</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>SystemConstant</ejb-name>
+            <local-jndi-name>Elwis.SystemConstant</local-jndi-name>
+            <read-only>true</read-only>
+        </entity>
+        <entity>
+            <ejb-name>Sequence</ejb-name>
+            <local-jndi-name>Elwis.Sequence</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>FileFreeText</ejb-name>
+            <local-jndi-name>Elwis.FileFreeText</local-jndi-name>
+        </entity>
+        <entity>
+            <ejb-name>Attachment</ejb-name>
+            <local-jndi-name>Elwis.Attachment</local-jndi-name>
+        </entity>
+    </enterprise-beans>
+</jboss>

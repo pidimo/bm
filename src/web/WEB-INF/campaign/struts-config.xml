@@ -1,0 +1,1774 @@
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+<struts-config>
+    <form-beans>
+        <form-bean name="form" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <!--begin ivan-->
+        <form-bean name="campaignActivityForm" type="com.piramide.elwis.web.campaignmanager.form.CampaignActivityForm"/>
+        <!--        <form-bean name="budgetForm" type="net.java.dev.strutsejb.web.DefaultForm"/>-->
+        <form-bean name="attachForm" type="com.piramide.elwis.web.campaignmanager.form.AttachForm"/>
+        <form-bean name="templateFileForm" type="com.piramide.elwis.web.campaignmanager.form.TemplateFileForm"/>
+        <form-bean name="mainCommunicationForm"
+                   type="com.piramide.elwis.web.contactmanager.form.MainCommunicationForm"/>
+        <!--end ivan-->
+        <!--<form-bean name="campaignContactForm" type="net.java.dev.strutsejb.web.DefaultForm"/>-->
+        <form-bean name="campaignForm" type="com.piramide.elwis.web.campaignmanager.form.CampaignForm"/>
+        <form-bean name="campaignDeleteByRangeForm" type="com.piramide.elwis.web.campaignmanager.form.CampaignDeleteByRangeForm"/>
+        <form-bean name="campaignCriterionForm"
+                   type="com.piramide.elwis.web.campaignmanager.form.CampaignCriterionForm"/>
+        <form-bean name="campaignCriterionUpdateForm"
+                   type="com.piramide.elwis.web.campaignmanager.form.CampaignCriterionForm"/>
+        <form-bean name="listForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="advancedListForm" type="org.alfacentauro.fantabulous.web.form.SearchForm"/>
+        <form-bean name="criterionListForm"
+                   type="com.piramide.elwis.web.campaignmanager.form.CampaignCriterionListForm"/>
+        <form-bean name="recipientForm" type="com.piramide.elwis.web.campaignmanager.form.RecipientExcludeForm"/>
+        <form-bean name="campaignTemplateForm" type="com.piramide.elwis.web.campaignmanager.form.CampaignTemplateForm"/>
+        <form-bean name="generateForm" type="com.piramide.elwis.web.campaignmanager.form.GenerateForm"/>
+        <form-bean name="campaignReportListForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="campaignActivityReportForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+        <form-bean name="reportGeneratorForm" type="com.jatun.titus.web.form.ReportGeneratorForm"/>
+
+        <!--begin miky-->
+        <form-bean name="addCampContactForm" type="com.piramide.elwis.web.campaignmanager.form.CampaignContactAddForm"/>
+        <form-bean name="assignCampContactForm"
+                   type="com.piramide.elwis.web.campaignmanager.form.CampaignContactAssignForm"/>
+        <form-bean name="salesProcessForm" type="com.piramide.elwis.web.salesmanager.form.SalesProcessForm"/>
+        <form-bean name="activityUserForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="automaticAssignForm" type="com.piramide.elwis.web.campaignmanager.form.AutomaticAssignForm"/>
+        <form-bean name="conflictAssignForm" type="net.java.dev.strutsejb.web.DefaultForm"/>
+        <form-bean name="salesProcessManyForm"
+                   type="com.piramide.elwis.web.campaignmanager.form.CampaignSalesProcessForm"/>
+        <form-bean name="campaignTaskForm" type="com.piramide.elwis.web.campaignmanager.form.CampaignTaskForm"/>
+        <form-bean name="activityUserAddForm" type="com.piramide.elwis.web.campaignmanager.form.ActivityUserAddForm"/>
+        <form-bean name="emailSendForm" type="com.piramide.elwis.web.campaignmanager.form.EmailSendForm"/>
+        <form-bean name="documentSendForm" type="com.piramide.elwis.web.campaignmanager.form.DocumentSendForm"/>
+        <form-bean name="reportExecuteForm" type="com.piramide.elwis.web.reports.form.ReportExecuteForm"/>
+        <form-bean name="reportJrxmlExecuteForm" type="com.piramide.elwis.web.reports.form.ReportJrxmlExecuteForm"/>
+        <!--end miky-->
+
+    </form-beans>
+
+    <!--@@globalExceptionsXmlFragment@@-->
+
+    <global-forwards>
+        <forward name="MainSearch" path="/List.do"/>
+        <forward name="CampaignAdvancedSearch" path="/AdvancedSearch.do"/>
+    </global-forwards>
+
+    <action-mappings type="org.apache.struts.config.SecureActionConfig">
+
+        <action path="/ErrorPage" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/ErrorPage.jsp"/>
+
+        <action path="/List" type="com.piramide.elwis.web.common.action.SimpleAdvancedListAction" name="listForm"
+                scope="request" input="/campaign/CampaingList.jsp" validate="false"
+                parameter="campaignList" roles="CAMPAIGN.VIEW">
+            <forward name="Success" path="/CampaignList.jsp"/>
+        </action>
+
+        <action path="/AdvancedSearch" type="com.piramide.elwis.web.campaignmanager.action.CampaignAdvancedListAction"
+                name="advancedListForm"
+                scope="request" input="/AdvancedSearchList.jsp" validate="false"
+                parameter="campaignReportList" roles="CAMPAIGN.VIEW">
+            <forward name="Success" path="/AdvancedSearchList.jsp"/>
+        </action>
+        <!-- List of document by language -->
+        <action path="/Campaign/Result" type="com.piramide.elwis.web.campaignmanager.action.CampaignGenerateAction"
+                scope="request" input="/Template/List.do" validate="false"
+                name="form" roles="CAMPAIGNACTIVITY.EXECUTE">
+            <forward name="Success" path="/ResultList.jsp"/>
+            <forward name="Fail" path="/Template/List.do"/>
+        </action>
+
+        <action path="/Campaign/PopUpDownload" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="/campaign/PopUpDownload.jsp">
+        </action>
+
+        <action path="/Campaign/FailedEmails" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="/campaign/FailedEmails.jsp">
+        </action>
+
+        <action path="/Campaign/SuccessEmails" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="/campaign/SuccessEmails.jsp">
+        </action>
+
+        <action path="/Campaign/Generate"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignDocumentGenerateAction" name="form"
+                scope="request" input="/ResultList.jsp" validate="false" roles="CAMPAIGNACTIVITY.EXECUTE">
+            <forward name="Fail" path="/PopUpClose.jsp"/>
+            <forward name="GoBack" path="/Campaign/Result.do"/>
+            <forward name="NotConfiguration" path="/Template/List.do"/>
+        </action>
+
+        <action path="/Campaign/Cancel" type="com.piramide.elwis.web.campaignmanager.action.CancelGenerateAction"
+                name="form" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" validate="false">
+            <forward name="Cancel" path="/PopUpClose.jsp"/>
+        </action>
+
+        <!--miky generate-->
+        <action path="/Campaign/Template/LoadByType"
+                type="com.piramide.elwis.web.campaignmanager.action.LoadTemplateByTypeAction"
+                name="form" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" validate="false" input="/List.do">
+        </action>
+
+        <!--email send-->
+        <action path="/Campaign/Email/Result"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignGenerateAction"
+                name="emailSendForm" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" input="/GenerateEmailSend" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <set-property property="paramReWrite" value="templateId"/>
+            <forward name="Success" path="/GenerateEmailSend.jsp"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/GenerateEmailSend.jsp"/>
+            <forward name="FailRecipient" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/Email/Generate"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignDocumentGenerateAction" name="emailSendForm"
+                scope="request" input="/Campaign/Email/Result.do" validate="true" roles="CAMPAIGNACTIVITY.EXECUTE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <set-property property="paramReWrite" value="templateId"/>
+            <forward name="Fail" path="/PopUpClose.jsp"/>
+            <forward name="GoBack" path="/Campaign/Email/Result.do"/>
+            <forward name="NotConfiguration" path="/Campaign/Email/Result.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+
+        <!--doc generate-->
+        <action path="/Campaign/Document/Result"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignGenerateAction"
+                name="documentSendForm" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" input="/GenerateDocument" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <set-property property="paramReWrite" value="templateId"/>
+            <forward name="Success" path="/GenerateDocument.jsp"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/GenerateDocument.jsp"/>
+            <forward name="FailRecipient" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/Document/Validation"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignDocumentValidateAction"
+                name="documentSendForm" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" input="/Campaign/Document/Result.do" validate="true"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <set-property property="paramReWrite" value="templateId"/>
+            <forward name="Success" path="/Campaign/Document/Result.do"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/Document/Generate" roles="CAMPAIGNACTIVITY.EXECUTE"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignDocumentGenerateAction"
+                name="documentSendForm"
+                scope="request" input="/ResultList.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <set-property property="paramReWrite" value="templateId"/>
+            <forward name="Fail" path="/PopUpClose.jsp"/>
+            <forward name="GoBack" path="/Campaign/Document/Result.do"/>
+            <forward name="NotConfiguration" path="/Campaign/Document/Result.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <!--end miky generate-->
+
+        <!--new miky generate-->
+        <!--email generation-->
+        <action path="/Email/Send/ProgressBar/Ajax"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignGenerationProgressBarAction"
+                name="form"
+                scope="request"
+                validate="false"/>
+
+        <action path="/Email/Send/BodySize/Ajax"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignGenerationBodySizeAction"
+                name="form"
+                scope="request"
+                validate="false"/>
+
+        <action path="/Campaign/Forward/Email/Send"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignGenerateForwardAction"
+                name="emailSendForm" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" input="/GenerateEmailSend.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/GenerateEmailSend.jsp"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/GenerateEmailSend.jsp"/>
+            <forward name="FailRecipient" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/ResponsibleTelecom"
+                type="com.piramide.elwis.web.campaignmanager.action.LoadResponsibleEmailTelecomAction"
+                name="emailSendForm"
+                scope="request" validate="false" parameter="/campaign/SendResponsibleTelecom.jsp">
+        </action>
+
+        <action path="/Campaign/Email/Send"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignEmailSendAction" name="emailSendForm"
+                scope="request" input="/GenerateEmailSend.jsp" validate="true" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignEmailSendCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/GenerateEmailSendSummary.jsp"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/Email/Recipient/WithoutEmail"
+                type="com.piramide.elwis.web.campaignmanager.action.ViewRecipientWithoutEmailAction" name="form"
+                scope="request" input="/RecipientWithoutEmailPopup.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityRecipientWithoutEmailReadCmd">
+            <forward name="Success" path="/RecipientWithoutEmailPopup.jsp"/>
+            <forward name="Fail" path="/RecipientWithoutEmailPopup.jsp"/>
+        </action>
+
+        <!--retry send email-->
+        <action path="/Campaign/Retry/Forward/Email/Send"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignRetryEmailSendForwardAction"
+                name="emailSendForm" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" input="/SentLogContact/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignGenerationCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="campaignSentLogId"/>
+            <forward name="Success" path="/RetryGenerateEmailSend.jsp"/>
+            <forward name="Cancel" path="/CampaignSentLog/List.do" redirect="true"/>
+            <forward name="Fail" path="/CampaignSentLog/List.do"/>
+        </action>
+
+        <action path="/Campaign/Retry/Email/Send"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignRetryEmailSendAction" name="emailSendForm"
+                scope="request" input="/RetryGenerateEmailSend.jsp" validate="true" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignRetryEmailSendCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="campaignSentLogId"/>
+            <forward name="Success" path="/RetryLightGenerateEmailSendSummary.jsp"/>
+            <forward name="Cancel" path="/SentLogContact/List.do" redirect="true"/>
+            <forward name="Fail" path="/CampaignSentLog/List.do"/>
+        </action>
+
+        <!-- light email generation-->
+        <action path="/Campaign/Light/Forward/Email/Send"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignLightGenerateForwardAction"
+                name="emailSendForm" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" parameter="/campaign/LightGenerateEmailSend.jsp" validate="false">
+        </action>
+
+        <action path="/Campaign/Light/Email/Send"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignLightEmailSendAction" name="emailSendForm"
+                scope="request" input="/LightGenerateEmailSend.jsp" validate="true" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignLightEmailSendCmd">
+            <forward name="Success" path="/LightGenerateEmailSendSummary.jsp"/>
+            <forward name="Cancel" path="/Recipients/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Campaign/Light/Email/Recipient/WithoutEmail"
+                type="com.piramide.elwis.web.campaignmanager.action.ViewCampaignLightRecipientWithoutEmailAction"
+                name="form"
+                scope="request" input="/RecipientWithoutEmailPopup.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityRecipientWithoutEmailReadCmd">
+            <forward name="Success" path="/RecipientWithoutEmailPopup.jsp"/>
+            <forward name="Fail" path="/RecipientWithoutEmailPopup.jsp"/>
+        </action>
+
+        <!--retry light send email-->
+        <action path="/Campaign/Retry/Light/Forward/Email/Send"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignRetryLightEmailSendForwardAction"
+                name="emailSendForm" validate="false" scope="request" roles="CAMPAIGNACTIVITY.EXECUTE"
+                input="/SentLogContact/List.do"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignGenerationCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="campaignSentLogId"/>
+            <forward name="Success" path="/RetryLightGenerateEmailSend.jsp"/>
+            <forward name="Cancel" path="/CampaignSentLog/List.do" redirect="true"/>
+            <forward name="Fail" path="/CampaignSentLog/List.do"/>
+        </action>
+
+        <action path="/Campaign/Retry/Light/Email/Send"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignRetryLightEmailSendAction" name="emailSendForm"
+                scope="request" input="/RetryLightGenerateEmailSend.jsp" validate="true" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignRetryLightEmailSendCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="campaignSentLogId"/>
+            <forward name="Success" path="/RetryLightGenerateEmailSendSummary.jsp"/>
+            <forward name="Cancel" path="/SentLogContact/List.do" redirect="true"/>
+            <forward name="Fail" path="/CampaignSentLog/List.do"/>
+        </action>
+
+        <!--document generation-->
+        <action path="/Campaign/Forward/Generate/Document"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignGenerateForwardAction"
+                name="documentSendForm" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" input="/GenerateDocument.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/GenerateDocument.jsp"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/GenerateDocument.jsp"/>
+            <forward name="FailRecipient" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/Generate/Document"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignGenerateDocumentAction"
+                name="documentSendForm"
+                scope="request" input="/GenerateDocument.jsp" validate="true" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignDocumentValuesReadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/GenerateDocumentSummary.jsp"/>
+            <forward name="Fail" path="/GenerateDocument.jsp"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/Download/Document"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignDocumentDownloadAction" name="form"
+                scope="request" input="/GenerateDocumentSummary.jsp" validate="false">
+        </action>
+
+        <action path="/Download/GenerationCommunication/Document"
+                type="com.piramide.elwis.web.campaignmanager.action.DownloadGenerationCommunicationDocumentAction"
+                name="form"
+                scope="request" input="/GenerateDocumentSummary.jsp" validate="false">
+        </action>
+
+        <!-- light document generation-->
+        <action path="/Campaign/Light/Forward/Generate/Document"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignLightGenerateForwardAction"
+                name="documentSendForm" roles="CAMPAIGNACTIVITY.EXECUTE"
+                scope="request" parameter="/campaign/LightGenerateDocument.jsp" validate="false">
+        </action>
+
+        <action path="/Campaign/Light/Generate/Document"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignLightGenerateDocumentAction"
+                name="documentSendForm"
+                scope="request" input="/LightGenerateDocument.jsp" validate="true" roles="CAMPAIGNACTIVITY.EXECUTE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignLightDocumentValuesReadCmd">
+            <forward name="Success" path="/LightGenerateDocumentSummary.jsp"/>
+            <forward name="Fail" path="/LightGenerateDocument.jsp"/>
+            <forward name="Cancel" path="/Recipients/List.do" redirect="true"/>
+        </action>
+
+
+        <action path="/Mail/ExternalModule/ViewGenMailBody"
+                type="com.piramide.elwis.web.webmail.action.ViewMailBodyAction"
+                name="form"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ReadCampaignGenerationEmailCmd">
+            <forward name="Success" path="/MailBodyDetailForView.jsp"/>
+        </action>
+
+        <action path="/Download/GenerationAttach"
+                type="com.piramide.elwis.web.campaignmanager.action.DownloadGenerationAttachAction"
+                name="form"
+                scope="request" validate="false">
+        </action>
+
+        <!--end new miky generate-->
+
+        <!--recipients-->
+        <action path="/Recipients/List" type="com.piramide.elwis.web.campaignmanager.action.CampaignListAction"
+                name="recipientForm" roles="CAMPAIGNCONTACTS.VIEW"
+                scope="request" input="/campaign/Recipients.jsp" validate="false"
+                parameter="campaignContactList">
+            <forward name="Success" path="/Recipients.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Recipients/Add" type="com.piramide.elwis.web.campaignmanager.action.CampaignListAction"
+                name="listForm" scope="request" input="/campaign/Recipients.jsp" validate="false"
+                parameter="contacts@searchAllAddressList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping">
+            <set-property property="parameterName" value="contactSearchName"/>
+            <forward name="Success" path="/AddressAddList.jsp"/>
+            <forward name="Cancel" path="/Recipients/List.do" redirect="true"/>
+            <forward name="Fail" path="/Recipients/List.do"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <!--for import contacts-->
+        <action path="/Recipients/Import"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignContactImportAction" name="recipientForm"
+                scope="request" input="/AddressAddList.jsp" validate="false" roles="CAMPAIGNCONTACTS.CREATE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.RecipientAddCmd">
+            <forward name="Success" path="/Recipients/List.do" redirect="true"/>
+            <forward name="Fail" path="/Recipients/Add.do"/>
+            <forward name="Cancel" path="/Recipients/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Campaign/Recipients/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignContactDeleteAction" name="recipientForm"
+                scope="request" input="/Recipients/List.do" validate="false" roles="CAMPAIGNCONTACTS.DELETE"
+                parameter="campaignContactList">
+            <forward name="Success" path="/Recipients/List.do"/>
+            <forward name="Cancel" path="/Recipients/List.do" redirect="true"/>
+            <forward name="Fail" path="/Recipients/List.do"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Campaign/Forward/Create" type="com.piramide.elwis.web.common.action.CheckEntriesForwardAction"
+                name="form"
+                scope="request" validate="false" parameter="/campaign/CampaignDetailForCreate.jsp"
+                roles="CAMPAIGN.CREATE"
+                className="com.piramide.elwis.web.common.mapping.CheckEntriesMapping">
+            <set-property property="mainTable" value="campaign"/>
+        </action>
+
+        <action path="/Campaign/Create" type="com.piramide.elwis.web.campaignmanager.action.CampaignCreateAction"
+                name="campaignForm" roles="CAMPAIGN.CREATE"
+                scope="request" input="/CampaignDetailForCreate.jsp" validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCreateCmd">
+            <forward name="Success" path="/Campaign/Forward/Update.do?op=read"/>
+            <forward name="Cancel" path="/List.do" redirect="true"/>
+            <forward name="CopyFail" path="/Campaign/Forward/Create.do"/>
+        </action>
+
+        <action path="/Campaign/Forward/Update"
+                type="com.piramide.elwis.web.common.action.DefaultAction" name="campaignForm"
+                scope="request" input="/List.do" validate="false" roles="CAMPAIGN.VIEW"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignReadCmd">
+            <forward name="Success" path="/CampaignDetailForUpdate.jsp?op=read"/>
+            <forward name="Cancel" path="/List.do" redirect="true"/>
+            <forward name="fail" path="/List.do"/>
+        </action>
+
+        <action path="/Campaign/Update" type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignForm"
+                scope="request" input="/CampaignDetailForUpdate.jsp" validate="true" roles="CAMPAIGN.UPDATE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignUpdateCmd">
+            <forward name="Success" path="/Campaign/Forward/Update.do?dto(operation)=update"/>
+            <forward name="Update" path="/Campaign/Forward/newUpdate.do"/>
+            <forward name="fail" path="/List.do"/>
+        </action>
+
+        <action path="/Campaign/Forward/Delete" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="campaignForm"
+                scope="request" input="/List.do" validate="false" roles="CAMPAIGN.DELETE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignReadCmd">
+            <forward name="Success" path="/CampaignDetailForDelete.jsp"/>
+            <forward name="Cancel" path="/List.do" redirect="true"/>
+            <forward name="fail" path="/List.do?m=2"/>
+        </action>
+
+        <action path="/Campaign/Delete" type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignForm"
+                scope="request" input="/CampaignDetailForDelete.jsp" validate="false" roles="CAMPAIGN.DELETE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignDeleteCmd">
+            <forward name="Success" path="/List.do"/>
+            <forward name="Cancel" path="/List.do" redirect="true"/>
+            <forward name="fail" path="/List.do"/>
+        </action>
+
+        <action path="/Campaign/Forward/Cascade/Delete" type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerForwardAction"
+                name="form"
+                roles="CAMPAIGNCASCADEDELETE.DELETE"
+                scope="request" parameter="/campaign/CampaignCascadeDeleteConfirmation.jsp" validate="false">
+        </action>
+
+        <action path="/Campaign/Cascade/Delete" type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="form"
+                scope="request" input="/CampaignDetailForDelete.jsp" validate="false" roles="CAMPAIGNCASCADEDELETE.DELETE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCascadeDeleteCmd">
+            <forward name="Success" path="/List.do"/>
+            <forward name="Cancel" path="/List.do" redirect="true"/>
+            <forward name="Fail" path="/List.do"/>
+        </action>
+
+        <action path="/Campaign/Forward/Cascade/DeleteByRange" type="org.apache.struts.actions.ForwardAction"
+                name="campaignDeleteByRangeForm"
+                roles="CAMPAIGNCASCADEDELETE.DELETE"
+                scope="request" parameter="/campaign/CampaignCascadeDeleteByRange.jsp" validate="false">
+        </action>
+
+        <action path="/Campaign/DeleteByRange/Confirmation" type="org.apache.struts.actions.ForwardAction"
+                name="campaignDeleteByRangeForm"
+                roles="CAMPAIGNCASCADEDELETE.DELETE"
+                input="/CampaignCascadeDeleteByRange.jsp"
+                parameter="/campaign/CampaignCascadeDeleteByRangeConfirm.jsp"
+                scope="request"  validate="true">
+        </action>
+
+        <action path="/Campaign/Cascade/DeleteByRange" type="com.piramide.elwis.web.common.action.DefaultAction"
+                name="campaignDeleteByRangeForm"
+                scope="request" input="/CampaignCascadeDeleteByRangeConfirm.jsp" validate="false" roles="CAMPAIGNCASCADEDELETE.DELETE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCascadeDeleteCmd">
+            <forward name="Success" path="/List.do"/>
+            <forward name="Cancel" path="/List.do" redirect="true"/>
+            <forward name="Fail" path="/List.do"/>
+        </action>
+
+        <action path="/SearchCity" type="com.piramide.elwis.web.contactmanager.action.SearchCityAction"
+                name="listForm" roles="CITY.VIEW"
+                scope="request" input="/campaign/SearchCity.jsp" validate="false"
+                parameter="contacts@searchCityList">
+            <forward name="Success" path="/SearchCity.jsp"/>
+        </action>
+
+        <!--campaignSelection CampaignCriteria Yumi-->
+
+        <action path="/Campaign/Forward/Copy"
+                type="com.piramide.elwis.web.common.action.ListAction"
+                name="listForm" scope="request" input="/Campaign.jsp" validate="false"
+                parameter="campaignImportList" roles="CAMPAIGN.VIEW">
+            <forward name="Success" path="/CampaignImportList.jsp"/>
+            <forward name="Cancel" path="/Campaign/Forward/Create.do" redirect="true"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <action path="/SelectionCriteria/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignCriterionListAction"
+                name="criterionListForm" roles="CAMPAIGNCRITERION.VIEW"
+                scope="request" input="/campaign/CampaignCriterionList.jsp" validate="false"
+                parameter="campaignCriterionList">
+            <forward name="Success" path="/CampaignCriterionList.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <action path="/CampaignCriterion/LoadValue"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignCriterionValueAction"
+                name="form" scope="request" roles="CAMPAIGN.VIEW"
+                parameter="/campaign/CampaignCriterionDetailForCreate.jsp" validate="false"/>
+
+        <action path="/CampaignCriterion/LoadOperatorValue"
+                type="com.piramide.elwis.web.campaignmanager.action.CriterionOperatorReadValueAction"
+                name="form" scope="request" roles="CAMPAIGN.VIEW"
+                parameter="/campaign/CampaignCriterionDetailForCreate.jsp" validate="false"/>
+
+        <action path="/CampaignCriterion/FieldType"
+                type="com.piramide.elwis.web.campaignmanager.action.FieldTypeForwardAction"
+                name="form" scope="request" roles="CAMPAIGN.VIEW"
+                parameter="/campaign/CampaignCriterionDetailForCreate.jsp" validate="false"/>
+
+        <action path="/CampaignCriterion/Forward/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignCriterionCreateForwardAction"
+                name="campaignCriterionForm"
+                scope="request"
+                parameter="/campaign/CampaignCriterionDetailForCreate.jsp"
+                validate="false"
+                roles="CAMPAIGNCRITERION.CREATE">
+            <forward name="Success" path="/CampaignCriterionDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/CampaignCriterion/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignCriterionCreateAction"
+                name="campaignCriterionForm" roles="CAMPAIGNCRITERION.CREATE"
+                scope="request" validate="false" input="/CampaignCriterionDetailForCreate.jsp"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCriterionCmd">
+            <forward name="Success" path="/SelectionCriteria/List.do"/>
+            <forward name="Cancel" path="/SelectionCriteria/List.do" redirect="true"/>
+            <forward name="Fail" path="/SelectionCriteria/List.do"/>
+            <forward name="redirect" path="/CampaignCriterionDetailForCreate.jsp"/>
+            <forward name="SaveAndNew" path="/CampaignCriterion/Forward/Create.do" redirect="true"/>
+        </action>
+
+        <action path="/Campaign/SelectionCriteria/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignCriterionReadAction"
+                name="campaignCriterionForm"
+                scope="request" roles="CAMPAIGNCRITERION.VIEW"
+                input="/SelectionCriteria/List.do" validate="false">
+            <forward name="Success" path="/CampaignCriterionDetailForUpdate.jsp"/>
+            <forward name="Cancel" path="/SelectionCriteria/List.do" redirect="true"/>
+            <forward name="Fail" path="/SelectionCriteria/List.do"/>
+        </action>
+
+        <action path="/Campaign/SelectionCriteria/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignCriterionCreateAction"
+                name="campaignCriterionForm"
+                scope="request" roles="CAMPAIGNCRITERION.UPDATE"
+                input="/CampaignCriterionDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCriterionCmd" validate="false">
+            <forward name="Success" path="/SelectionCriteria/List.do"/>
+            <forward name="Cancel" path="/SelectionCriteria/List.do" redirect="true"/>
+            <forward name="Fail" path="/SelectionCriteria/List.do"/>
+            <forward name="redirect" path="/CampaignCriterionDetailForUpdate.jsp"/>
+        </action>
+
+        <action path="/Campaign/SelectionCriteria/Forward/Delete" roles="CAMPAIGNCRITERION.DELETE"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignCriterionReadAction"
+                name="campaignCriterionForm"
+                scope="request" input="/SelectionCriteria/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCriterionCmd">
+            <forward name="Success" path="/CampaignCriterionDetailForDelete.jsp"/>
+            <forward name="Fail" path="/SelectionCriteria/List.do"/>
+        </action>
+
+        <action path="/Campaign/SelectionCriteria/Delete" roles="CAMPAIGNCRITERION.DELETE"
+                type="com.piramide.elwis.web.common.action.DefaultAction" name="campaignCriterionForm"
+                scope="request" input="/CampaignCriterionDetailForDelete.jsp" validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCriterionCmd">
+            <forward name="Success" path="/SelectionCriteria/List.do"/>
+            <forward name="Cancel" path="/SelectionCriteria/List.do" redirect="true"/>
+            <forward name="Fail" path="/SelectionCriteria/List.do"/>
+        </action>
+
+        <!-- add aditional criterias -->
+        <action path="/Campaign/AditionalCriteria" roles="CAMPAIGNCONTACTS.CREATE"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignExecuteCriteriasAction"
+                name="criterionListForm" scope="request" input="/SelectionCriteria/List.do"
+                validate="false">
+            <forward name="Success" path="/MessageConfirmDelete.jsp"/>
+            <forward name="Delete" path="/Recipients/List.do?tabKey=Campaign.Tab.recipients"/>
+            <forward name="noDelete" path="/SelectionCriteria/List.do?tabKey=Campaign.Tab.selection"/>
+            <forward name="Cancel" path="/SelectionCriteria/List.do?tabKey=Campaign.Tab.selection" redirect="true"/>
+            <forward name="campContact" path="/Recipients/List.do?tabKey=Campaign.Tab.recipients"/>
+            <forward name="root" path="/List.do"/>
+        </action>
+
+        <!--begin ivan-->
+        <action path="/Communication/List" type="com.piramide.elwis.web.campaignmanager.action.CampaignListAction"
+                name="listForm" roles="COMMUNICATION.VIEW"
+                scope="request" input="/CommunicationList.jsp" validate="false" parameter="communicationList"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(campaignName)"/>
+            <forward name="Success" path="/CommunicationList.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+
+        <action path="/MainCommunication/Forward/Create"
+                type="org.apache.struts.actions.ForwardAction"
+                name="mainCommunicationForm"
+                scope="request"
+                validate="false"
+                parameter="/campaign/CommunicationCampaignCreate.jsp"
+                roles="COMMUNICATION.CREATE"/>
+        <action path="/MainCommunication/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CommunicationCampaignAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationCampaignCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCommunicationCmd"
+                roles="COMMUNICATION.CREATE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+            <forward name="FailSendMail" path="/CommunicationCampaignCreate.jsp"/>
+            <forward name="NoUserMail" path="/webmail/Messages.do?index=0" contextRelative="true"/>
+        </action>
+
+        <action path="/MainCommunication/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CommunicationCampaignAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/Communication/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCommunicationCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationCampaignUpdate.jsp"/>
+        </action>
+        <action path="/MainCommunication/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CommunicationCampaignAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationCampaignUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCommunicationCmd"
+                roles="COMMUNICATION.UPDATE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+            <forward name="Fail_" path="/MainCommunication/Forward/Update.do?dto(op)=read"/>
+        </action>
+        <action path="/MainCommunication/Reply"
+                type="com.piramide.elwis.web.campaignmanager.action.CommunicationCampaignAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationCampaignUpdate.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCommunicationCmd">
+            <forward name="Success" path="/CommunicationCampaignCreate.jsp"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+        <action path="/MainCommunication/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CommunicationCampaignAction"
+                name="mainCommunicationForm"
+                scope="request" input="/Communication/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCommunicationCmd"
+                roles="COMMUNICATION.DELETE">
+            <forward name="Success" path="/CommunicationCampaignDelete.jsp"/>
+        </action>
+        <action path="/MainCommunication/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CommunicationCampaignAction"
+                name="mainCommunicationForm"
+                scope="request"
+                input="/CommunicationCampaignDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCommunicationCmd"
+                roles="COMMUNICATION.DELETE">
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+
+        <action path="/MainCommunication/Download"
+                type="com.piramide.elwis.web.campaignmanager.action.CommunicationCampaignAction"
+                name="mainCommunicationForm" roles="COMMUNICATION.EXECUTE"
+                scope="request" input="/Communication/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.ContactUpdateCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(campaignName)"/>
+            <forward name="Success" path="/Communication/List.do" redirect="true"/>
+            <forward name="Fail" path="/MainCommunication/Forward/Update.do"/>
+        </action>
+
+        <action path="/MainCommunication/Document/Download"
+                type="com.piramide.elwis.web.contactmanager.action.CommunicationDocumentDownloadAction"
+                name="mainCommunicationForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.contactmanager.CommunicationDocumentDownloadCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="COMMUNICATION.VIEW">
+            <set-property property="paramReWrite" value="campaignId"/>
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Fail" path="/Communication/List.do"/>
+        </action>
+
+        <action path="/MainCommunication/ReadToCompose"
+                type="com.piramide.elwis.web.campaignmanager.action.CommunicationCampaignAction"
+                name="mainCommunicationForm"
+                scope="request" input="/Communication/List.do" validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignCommunicationCmd"
+                roles="COMMUNICATION.VIEW">
+            <forward name="Success" path="/CommunicationCampaignCreate.jsp"/>
+        </action>
+
+        <!--<action path="/Communication/Forward/Create" type="org.apache.struts.actions.ForwardAction"
+                name="communicationForm" roles="COMMUNICATION.CREATE"
+                scope="request" validate="false" parameter="/campaign/CommunicationDetailForCreate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(campaignName)"/>
+        </action>-->
+
+        <!--communications from activity-->
+        <action path="/Communication/Forward/CreateFromActivity"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityContactManagerForwardAction"
+                name="mainCommunicationForm" roles="COMMUNICATION.CREATE"
+                scope="request" validate="false" parameter="/campaign/CommunicationCampaignCreate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(campaignName)"/>
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="FailC_" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <!--campaignFreeTextListtemplateList -->
+        <action path="/Template/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignListAction"
+                name="listForm"
+                scope="request" input="/List.do" validate="false"
+                parameter="templateList"
+                roles="CAMPAIGNTEMPLATE.VIEW">
+            <forward name="Success" path="/TemplateList.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Template/Forward/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignTemplateForm"
+                input="/Template/List.do"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateCmd"
+                roles="CAMPAIGNTEMPLATE.CREATE">
+            <forward name="Success" path="/TemplateDetailForCreate.jsp"/>
+        </action>
+        <action path="/Template/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplatePreviewAction"
+                name="campaignTemplateForm"
+                input="/TemplateDetailForCreate.jsp"
+                scope="request"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateCmd"
+                roles="CAMPAIGNTEMPLATE.CREATE">
+            <forward name="Success" path="/Template/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Template/List.do" redirect="true"/>
+            <forward name="Fail" path="/Template/List.do"/>
+            <forward name="Preview" path="/Template/File/Forward/Update.do"/>
+        </action>
+
+        <action path="/Campaign/Forward/BuildPreview"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="form"
+                scope="request"
+                input="/Template/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.BuildTemplatePreviewCmd"
+                roles="CAMPAIGNTEMPLATE.CREATE">
+            <forward name="Success" path="/CampaignTemplatePreview.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Template/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignTemplateForm"
+                input="/Template/List.do"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateCmd"
+                roles="CAMPAIGNTEMPLATE.VIEW">
+            <forward name="Success" path="/TemplateDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Template/List.do"/>
+        </action>
+        <action path="/Template/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignTemplateForm"
+                input="/TemplateDetailForUpdate.jsp"
+                scope="request"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateCmd"
+                roles="CAMPAIGNTEMPLATE.VIEW">
+            <forward name="Success" path="/Template/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Template/List.do" redirect="true"/>
+            <forward name="Fail" path="/Template/List.do"/>
+        </action>
+
+        <action path="/Template/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignTemplateForm"
+                input="/Template/List.do"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateCmd"
+                roles="CAMPAIGNTEMPLATE.DELETE">
+            <forward name="Success" path="/TemplateDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Template/List.do"/>
+        </action>
+        <action path="/Template/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignTemplateForm"
+                input="/TemplateDetailForDelete.jsp"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateCmd"
+                roles="CAMPAIGNTEMPLATE.DELETE">
+            <forward name="Success" path="/Template/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Template/List.do" redirect="true"/>
+            <forward name="Fail" path="/Template/List.do"/>
+        </action>
+
+        <action path="/Template/File/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplateFileListAction"
+                name="listForm"
+                scope="request"
+                input="/Template/Forward/Update.do?dto(op)=read"
+                validate="false"
+                parameter="campaignTemplateList"
+                roles="CAMPAIGNTEMPLATE.VIEW">
+            <forward name="Success" path="/CampaignTemplateFileList.jsp"/>
+            <forward name="MainList" path="/Template/List.do" redirect="true"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+        <action path="/Template/File/Forward/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplateAction"
+                name="templateFileForm"
+                input="/Template/Forward/Update.do?dto(op)=read"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateFileCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CAMPAIGNTEMPLATE.CREATE">
+            <set-property property="paramReWrite" value="templateId"/>
+            <set-property property="paramReWrite" value="documentType"/>
+            <forward name="Success" path="/CampaignTemplateFileDetailForCreate.jsp"/>
+            <forward name="MainList" path="/Template/List.do"/>
+        </action>
+
+        <action path="/Template/File/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplateAction"
+                name="templateFileForm"
+                input="/CampaignTemplateFileDetailForCreate.jsp"
+                scope="request"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateFileCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CAMPAIGNTEMPLATE.CREATE">
+            <set-property property="paramReWrite" value="templateId"/>
+            <set-property property="paramReWrite" value="documentType"/>
+            <set-property property="paramReWrite" value="dto(templateId)"/>
+            <set-property property="paramReWrite" value="dto(documentType)"/>
+
+            <forward name="Success" path="/Template/Forward/Update.do?dto(op)=read"/>
+            <forward name="MainList" path="/Template/List.do"/>
+            <forward name="Cancel" path="/Template/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Preview" path="/Template/File/Forward/Update.do"/>
+        </action>
+
+        <action path="/Template/File/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplateFileUpdateForwardAction"
+                name="templateFileForm"
+                input="/Template/Forward/Update.do?dto(op)=read"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateFileCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CAMPAIGNTEMPLATE.VIEW">
+            <set-property property="paramReWrite" value="templateId"/>
+            <set-property property="paramReWrite" value="documentType"/>
+            <set-property property="paramReWrite" value="dto(templateId)"/>
+            <set-property property="paramReWrite" value="dto(documentType)"/>
+            <forward name="Success" path="/CampaignTemplateFileDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Template/Forward/Update.do?dto(op)=read"/>
+            <forward name="MainList" path="/Template/List.do"/>
+        </action>
+
+        <action path="/Template/File/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplateAction"
+                name="templateFileForm"
+                input="/CampaignTemplateFileDetailForUpdate.jsp"
+                scope="request"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateFileCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CAMPAIGNTEMPLATE.CREATE">
+            <set-property property="paramReWrite" value="templateId"/>
+            <set-property property="paramReWrite" value="documentType"/>
+            <set-property property="paramReWrite" value="dto(templateId)"/>
+            <set-property property="paramReWrite" value="dto(documentType)"/>
+
+            <forward name="Success" path="/Template/Forward/Update.do?dto(op)=read"/>
+            <forward name="MainList" path="/Template/List.do"/>
+            <forward name="Cancel" path="/Template/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/Template/Forward/Update.do?dto(op)=read"/>
+            <forward name="Preview" path="/Template/File/Forward/Update.do"/>
+        </action>
+
+        <action path="/Template/File/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplateAction"
+                name="templateFileForm"
+                input="/Template/Forward/Update.do?dto(op)=read"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateFileCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CAMPAIGNTEMPLATE.DELETE">
+            <set-property property="paramReWrite" value="templateId"/>
+            <set-property property="paramReWrite" value="documentType"/>
+            <set-property property="paramReWrite" value="dto(templateId)"/>
+            <set-property property="paramReWrite" value="dto(documentType)"/>
+            <forward name="Success" path="/CampaignTemplateFileDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Template/Forward/Update.do?dto(op)=read"/>
+            <forward name="MainList" path="/Template/List.do"/>
+        </action>
+        <action path="/Template/File/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplateAction"
+                name="templateFileForm"
+                input="/CampaignTemplateFileDetailForDelete.jsp"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateFileCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CAMPAIGNTEMPLATE.DELETE">
+            <set-property property="paramReWrite" value="templateId"/>
+            <set-property property="paramReWrite" value="documentType"/>
+            <set-property property="paramReWrite" value="dto(templateId)"/>
+            <set-property property="paramReWrite" value="dto(documentType)"/>
+
+            <forward name="Success" path="/Template/Forward/Update.do?dto(op)=read"/>
+            <forward name="MainList" path="/Template/List.do"/>
+            <forward name="Cancel" path="/Template/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/Template/Forward/Update.do?dto(op)=read"/>
+        </action>
+        <action path="/Template/File/Download"
+                type="com.piramide.elwis.web.campaignmanager.action.DownloadFileAction"
+                name="templateFileForm"
+                input="/Template/Forward/Update.do?dto(op)=read"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTemplateFileCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                roles="CAMPAIGNTEMPLATE.VIEW">
+            <set-property property="paramReWrite" value="templateId"/>
+            <set-property property="paramReWrite" value="documentType"/>
+            <set-property property="paramReWrite" value="dto(templateId)"/>
+            <set-property property="paramReWrite" value="dto(documentType)"/>
+
+            <forward name="Success" path="/Template/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail" path="/Template/Forward/Update.do?dto(op)=read"/>
+            <forward name="MainList" path="/Template/List.do"/>
+        </action>
+
+        <action path="/CampaignAvtivity/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignListAction"
+                name="listForm" roles="CAMPAIGNACTIVITY.VIEW"
+                scope="request" input="/List.do" validate="false"
+                parameter="campaignActivityList">
+            <forward name="Success" path="/CampaignActivityList.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <action path="/CampaignActivity/Forward/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignActivityForm"
+                scope="request" roles="CAMPAIGNACTIVITY.CREATE"
+                input="/CampaignAvtivity/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignActivityCmd">
+            <forward name="Success" path="/CampaignActivityDetailForCreate.jsp"/>
+        </action>
+
+        <action path="/CampaignAvtivity/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignActivityForm"
+                scope="request" roles="CAMPAIGNACTIVITY.CREATE"
+                input="/CampaignActivityDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignActivityCmd">
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/CampaignAvtivity/List.do" redirect="true"/>
+            <forward name="Fail" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/CampaignActivity/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignActivityForm"
+                scope="request" roles="CAMPAIGNACTIVITY.VIEW"
+                input="/CampaignAvtivity/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignActivityCmd">
+            <forward name="Success" path="/CampaignActivityDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/CampaignActivity/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityUpdateAction"
+                name="campaignActivityForm"
+                scope="request" roles="CAMPAIGNACTIVITY.UPDATE"
+                input="/CampaignActivityDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignActivityCmd">
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/CampaignAvtivity/List.do" redirect="true"/>
+            <forward name="Fail" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/CampaignActivity/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignActivityForm"
+                scope="request" roles="CAMPAIGNACTIVITY.DELETE"
+                input="/CampaignAvtivity/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignActivityCmd">
+            <forward name="Success" path="/CampaignActivityDetailForDelete.jsp"/>
+            <forward name="Fail" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/CampaignActivity/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="campaignActivityForm"
+                scope="request"
+                input="/CampaignActivityDetailForDelete.jsp"
+                validate="false" roles="CAMPAIGNACTIVITY.DELETE"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignActivityCmd">
+            <forward name="Success" path="/CampaignAvtivity/List.do" redirect="true"/>
+            <forward name="Cancel" path="/CampaignAvtivity/List.do" redirect="true"/>
+            <forward name="Fail" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <!--Attach actions-->
+        <action path="/Attach/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignListAction"
+                name="listForm" roles="CAMPAIGNATTACH.VIEW"
+                scope="request" input="/List.do" validate="false"
+                parameter="attachList">
+            <forward name="Success" path="/AttachList.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+        <action path="/Attach/Forward/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="attachForm" roles="CAMPAIGNATTACH.CREATE"
+                scope="request"
+                input="/Attach/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.AttachCmd">
+            <forward name="Success" path="/AttachDetailForCreate.jsp"/>
+        </action>
+        <action path="/Attach/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="attachForm" roles="CAMPAIGNATTACH.CREATE"
+                scope="request"
+                input="/AttachDetailForCreate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.AttachCmd">
+            <forward name="Success" path="/Attach/List.do"/>
+            <forward name="Cancel" path="/Attach/List.do" redirect="true"/>
+            <forward name="Fail" path="/Attach/List.do"/>
+        </action>
+
+        <action path="/Attach/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="attachForm" roles="CAMPAIGNATTACH.VIEW"
+                scope="request"
+                input="/Attach/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.AttachCmd">
+            <forward name="Success" path="/AttachDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Attach/List.do"/>
+        </action>
+        <action path="/Attach/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="attachForm"
+                scope="request" roles="CAMPAIGNATTACH.UPDATE"
+                input="/AttachDetailForUpdate.jsp"
+                validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.AttachCmd">
+            <forward name="Success" path="/Attach/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Attach/List.do" redirect="true"/>
+            <forward name="Fail" path="/Attach/List.do"/>
+        </action>
+
+        <action path="/Attach/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="attachForm" roles="CAMPAIGNATTACH.DELETE"
+                scope="request"
+                input="/Attach/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.AttachCmd">
+            <forward name="Success" path="/AttachDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Attach/List.do"/>
+        </action>
+        <action path="/Attach/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignManagerAction"
+                name="attachForm" roles="CAMPAIGNATTACH.DELETE"
+                scope="request"
+                input="/AttachDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.AttachCmd">
+            <forward name="Success" path="/Attach/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Attach/List.do" redirect="true"/>
+            <forward name="Fail" path="/Attach/List.do"/>
+        </action>
+
+
+        <action path="/Attach/Download"
+                type="com.piramide.elwis.web.campaignmanager.action.DownloadFileAction"
+                name="attachForm" roles="CAMPAIGNATTACH.VIEW"
+                scope="request"
+                input="/Attach/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.AttachCmd">
+            <forward name="Fail" path="/Attach/List.do"/>
+        </action>
+        <!--end ivan-->
+        <!--Campaign  Templates-->
+        <action path="/Forward/Download"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignTemplateForwardAction" name="form"
+                scope="request" validate="false" roles="CAMPAIGNTEMPLATE.VIEW">
+            <forward name="Fail" path="/Template/List.do"/>
+            <forward name="Success" path="/Download.do"/>
+            <forward name="Success_" path="/Template/List.do"/>
+        </action>
+
+        <action path="/Download" type="com.piramide.elwis.web.common.action.DownloadFreeTextAction" name="form"
+                scope="request" validate="false" roles="CAMPAIGNTEMPLATE.VIEW"
+                parameter="com.piramide.elwis.cmd.common.DownloadFreeTextCmd">
+            <forward name="fail" path="/List.do"/>
+            <forward name="Fail" path="/Template/List.do"/>
+        </action>
+
+        <!--begin miky-->
+        <action path="/Campaign/Activity/Forward/UpdateTest" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/campaign/ActDetailForUpdate.jsp"/>
+
+
+        <!--campcontact activities-->
+        <!-- ?????? verif validation, input, rewrite-->
+        <!--<action path="/Campaign/Activity/CampContact/List" type="com.piramide.elwis.web.common.action.ListAction"
+            name="listForm" scope="request" input="/List.do" validate="false"
+            parameter="ActivityCampaignContactList"
+            className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/ActivityCampContactList.jsp"/>
+        </action>-->
+
+        <action path="/Campaign/Activity/CampContact/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityListAction"
+                name="listForm" scope="request" input="/CampaignAvtivity/List.do" validate="false"
+                parameter="ActivityCampaignContactList" roles="CAMPAIGNCONTACTS.VIEW">
+            <forward name="Success" path="/ActivityCampContactList.jsp"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+        </action>
+        <!--popup recipients copy-->
+        <action path="/Campaign/Recipients/List/Popup" roles="CAMPAIGNCONTACTS.VIEW"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignRecipientImportListAction"
+                name="listForm" scope="request" input="/List.do" validate="false"
+                parameter="campaignContactPopupList">
+            <forward name="Success" path="/RecipientListPopup.jsp"/>
+        </action>
+        <action path="/Campaign/Activity/CampContact/CreateFromRecipients"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityCampContactAddAction"
+                name="addCampContactForm" roles="CAMPAIGNCONTACTS.CREATE"
+                scope="request" input="/Campaign/Recipients/List/Popup.do" validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityCampaignContactAddCmd">
+            <forward name="Success" path="/RecipientListPopup.jsp"/>
+            <forward name="Fail" path="/RecipientListPopup.jsp"/>
+        </action>
+        <!--popup recipients all copy-->
+        <action path="/Campaign/Recipients/Forward/CopyAll" roles="CAMPAIGNCONTACTS.VIEW"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityContactAllImportForwardAction"
+                name="form" scope="request" validate="false" parameter="/campaign/CopyAllRecipientsConfirmation.jsp">
+            <forward name="Fail" path="/CopyAllRecipientsConfirmation.jsp"/>
+        </action>
+        <action path="/Campaign/Activity/CampContact/Create/AllFromRecipients"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityCampContactAddAction"
+                name="form" roles="CAMPAIGNCONTACTS.CREATE"
+                scope="request" input="/Campaign/Recipients/List/Popup.do" validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityCampaignContactAddCmd">
+            <forward name="Success" path="/RecipientListPopup.jsp"/>
+            <forward name="Cancel" path="/Campaign/Recipients/List/Popup.do" redirect="true"/>
+            <forward name="Fail" path="/RecipientListPopup.jsp"/>
+        </action>
+        <!-- activity camp contacts copy-->
+        <action path="/Campaign/Activity/CampContact/CreateFromActivity"
+                type="com.piramide.elwis.web.campaignmanager.action.CampContactCopyFromActivityAction"
+                name="addCampContactForm" roles="CAMPAIGNCONTACTS.CREATE"
+                scope="request" input="/CampaignActivity/Forward/Update.do?dto(op)=read" validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityCampaignContactAddCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <!--popup contact -->
+        <action path="/Campaign/Contact/List/Popup"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityContactImportListAction"
+                name="listForm" scope="request" input="/CampaignAvtivity/List.do" validate="false"
+                parameter="contacts@searchAllAddressList"
+                className="com.piramide.elwis.web.fantabulous.WhiteSpaceToWildcardSearchParameterMapping"
+                roles="CONTACT.VIEW">
+            <set-property property="parameterName" value="contactSearchName"/>
+            <forward name="Success" path="/ContactListPopup.jsp"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+        </action>
+        <action path="/Campaign/Activity/CampContact/CreateFromContact"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityCampContactAddAction"
+                name="addCampContactForm" roles="CAMPAIGNCONTACTS.CREATE"
+                scope="request" input="/Campaign/Contact/List/Popup.do" validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityCampaignContactAddCmd">
+            <forward name="Success" path="/ContactListPopup.jsp"/>
+            <forward name="Fail" path="/ContactListPopup.jsp"/>
+        </action>
+
+        <!--activity campaign contact-->
+        <action path="/Campaign/Activity/CampContact/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="form" roles="CAMPAIGNCONTACTS.VIEW"
+                scope="request" validate="false" input="/CampaignActivity/Forward/Update.do?dto(op)=read"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityCampaignContactCmd">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/ActivityCampContactDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/Activity/CampContact/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="form" roles="CAMPAIGNCONTACTS.UPDATE"
+                scope="request" validate="true" input="/ActivityCampContactDetailForUpdate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityCampaignContactCmd">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/Campaign/Activity/CampContact/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityContactDeleteForwardAction"
+                name="form" roles="CAMPAIGNCONTACTS.DELETE"
+                scope="request" validate="false" input="/CampaignActivity/Forward/Update.do?dto(op)=read"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityCampaignContactCmd">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/ActivityCampContactDetailForDelete.jsp"/>
+            <forward name="Fail" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/Campaign/Activity/CampContact/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="form" roles="CAMPAIGNCONTACTS.DELETE"
+                scope="request" validate="true" input="/ActivityCampContactDetailForDelete.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityCampaignContactCmd">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <!--sales process-->
+        <!---->
+        <action path="/SalesProcess/Forward/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityContactManagerForwardAction"
+                name="salesProcessForm"
+                scope="request" validate="false" parameter="/campaign/SalesProcessDetailForCreate.jsp"
+                roles="SALESPROCESS.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="FailC_" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/SalesProcess/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityCampContactManagerAction"
+                name="salesProcessForm"
+                scope="request" input="/SalesProcessDetailForCreate.jsp" validate="true"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.salesmanager.SalesProcessCmd" roles="SALESPROCESS.CREATE">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="FailC_" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/SalesProcess/Forward/CreateMany"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityManagerForwardAction"
+                name="salesProcessManyForm"
+                scope="request" validate="false" parameter="/campaign/ManySalesProcessDetailForCreate.jsp"
+                roles="SALESPROCESS.CREATE"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/SalesProcess/CreateMany"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="salesProcessManyForm"
+                scope="request" input="/ManySalesProcessDetailForCreate.jsp" validate="true"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignSalesProcessCreateCmd"
+                roles="SALESPROCESS.CREATE">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/SalesProcess/Category/ReadChildCategory"
+                type="com.piramide.elwis.web.catalogmanager.action.ReadSubCategoriesAction"
+                name="salesProcessForm"
+                scope="request"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.catalogmanager.CategoryUtilCmd">
+            <forward name="Success" path="/RenderSubCategory.jsp"/>
+        </action>
+
+        <!--task create-->
+        <action path="/Campaign/Task/Forward/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityManagerForwardAction"
+                name="campaignTaskForm" roles="TASK.CREATE"
+                scope="request" validate="false" parameter="/campaign/TaskDetailForCreate.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Campaign/Task/Create"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="campaignTaskForm" roles="TASK.CREATE"
+                scope="request" input="/TaskDetailForCreate.jsp" validate="true"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignTaskCreateCmd">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <!--assign user to activity-->
+        <action path="/Activity/User/List"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityUserListAction"
+                name="listForm" scope="request" input="/CampaignAvtivity/List.do" validate="false"
+                parameter="activityUserList" roles="ACTIVITYUSER.VIEW">
+            <forward name="Success" path="/ActivityUserList.jsp"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+        </action>
+        <!--add user to activity-->
+
+        <action path="/Activity/Add/UserImportList"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityUserImportListAction"
+                name="listForm" roles="ACTIVITYUSER.CREATE"
+                scope="request" input="/campaign/ActivityUserList.jsp" validate="false"
+                parameter="support@elwisUserList">
+            <forward name="Success" path="/UserImportList.jsp"/>
+        </action>
+        <action path="/Campaign/Activity/User/Add"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityUserAddAction"
+                name="activityUserAddForm"
+                scope="request" input="/Activity/Add/UserImportList.do" validate="true"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserAddCmd">
+            <forward name="Success" path="/UserImportList.jsp"/>
+            <forward name="Fail" path="/UserImportList.jsp"/>
+        </action>
+
+        <action path="/Campaign/Activity/User/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="activityUserForm" roles="ACTIVITYUSER.DELETE"
+                scope="request" validate="false" input="/Activity/User/List.do"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <forward name="Success" path="/ActivityUserDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Activity/User/List.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/Campaign/Activity/User/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="activityUserForm" roles="ACTIVITYUSER.DELETE"
+                scope="request" validate="true" input="/ActivityUserDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <forward name="Success" path="/Activity/User/List.do"/>
+            <forward name="Cancel" path="/Activity/User/List.do" redirect="true"/>
+            <forward name="Fail" path="/Activity/User/List.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/Campaign/Activity/User/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="activityUserForm" roles="ACTIVITYUSER.VIEW"
+                scope="request" validate="false" input="/Activity/User/List.do"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <forward name="Success" path="/ActivityUserDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Activity/User/List.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/Campaign/Activity/User/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="activityUserForm" roles="ACTIVITYUSER.UPDATE"
+                scope="request" validate="true" input="/ActivityUserDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <forward name="Success" path="/Activity/User/List.do"/>
+            <forward name="Cancel" path="/Activity/User/List.do" redirect="true"/>
+            <forward name="Fail" path="/Activity/User/List.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <!--manual assign responsible-->
+        <action path="/Activity/User/Forward/Assign"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="form" roles="ACTIVITYUSER.VIEW"
+                scope="request" validate="false" input="/Activity/User/List.do"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <set-property property="paramReWrite" value="employeeId"/>
+            <set-property property="paramReWrite" value="userId"/>
+            <set-property property="paramReWrite" value="userName"/>
+            <forward name="Success" path="/Activity/User/Assign/List.do"/>
+            <forward name="Fail" path="/Activity/User/List.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/Activity/User/Assign/List"
+                type="com.piramide.elwis.web.campaignmanager.action.ResponsibleAssignListAction"
+                name="listForm" roles="ACTIVITYUSER.VIEW"
+                scope="request" input="/campaign/ActivityUserList.jsp" validate="false"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="AssignCampaignContactList">
+            <set-property property="paramReWrite" value="employeeId"/>
+            <set-property property="paramReWrite" value="userId"/>
+            <set-property property="paramReWrite" value="userName"/>
+            <forward name="Success" path="/ContactResponsibleAssignList.jsp"/>
+            <forward name="Fail" path="/Activity/User/List.do" redirect="true"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Activity/CampContact/User/Assign"
+                type="com.piramide.elwis.web.campaignmanager.action.ResponsibleAssignAction"
+                name="assignCampContactForm" roles="ACTIVITYUSER.VIEW"
+                scope="request" input="/Activity/User/Assign/List.do" validate="true"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityContactResponsibleCmd">
+            <set-property property="paramReWrite" value="employeeId"/>
+            <set-property property="paramReWrite" value="userId"/>
+            <set-property property="paramReWrite" value="userName"/>
+            <forward name="Success" path="/Activity/User/List.do" redirect="true"/>
+            <forward name="Cancel" path="/Activity/User/List.do" redirect="true"/>
+            <forward name="Fail" path="/Activity/User/List.do" redirect="true"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+        </action>
+        <!--automatic assign responsible-->
+        <!--
+                <action path="/Activity/CampContact/User/AutomaticAssign"
+                        type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                        name="automaticAssignForm" roles="ACTIVITYUSER.VIEW"
+                        scope="request" validate="true" input="/Activity/User/List.do"
+                        className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                        parameter="com.piramide.elwis.cmd.campaignmanager.ActivityContactAllResponsibleCmd">
+                    <set-property property="paramReWrite" value="dto(activityId)"/>
+                    <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+                    <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+                    <forward name="Fail" path="/Activity/User/List.do"/>
+                    <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+                </action>
+        -->
+
+        <action path="/Activity/AutomaticAssign/User/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityListAction"
+                name="listForm" scope="request" input="/CampaignAvtivity/List.do" validate="false"
+                parameter="activityUserList" roles="ACTIVITYUSER.VIEW">
+            <forward name="Success" path="/ActivityUserAutomaticAssignList.jsp"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Activity/User/Forward/AutomaticAssign"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityManagerForwardAction"
+                name="automaticAssignForm"
+                scope="request" validate="false" parameter="/campaign/ActivityUserAutomaticAssign.jsp"
+                roles="ACTIVITYUSER.VIEW">
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Activity/CampContact/User/AutomaticAssign"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityUserAutomaticAssignAction"
+                name="automaticAssignForm" roles="ACTIVITYUSER.VIEW"
+                scope="request" validate="true" input="/ActivityUserAutomaticAssign.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityAutomaticAssingResponsibleCmd">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/CampaignActivity/Forward/Update.do?dto(op)=read" redirect="true"/>
+            <forward name="Confirmation" path="/Activity/User/Forward/Confirmation/AutomaticAssign.do"/>
+            <forward name="Fail" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Activity/User/Forward/Confirmation/AutomaticAssign"
+                type="com.piramide.elwis.web.campaignmanager.action.ActivityManagerForwardAction"
+                name="conflictAssignForm"
+                scope="request" validate="false" parameter="/campaign/ConflictUserAutomaticAssign.jsp"
+                roles="ACTIVITYUSER.VIEW">
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Activity/CampContact/User/Confirmation/AutomaticAssign"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="conflictAssignForm" roles="ACTIVITYUSER.VIEW"
+                scope="request" validate="true" input="/ConflictUserAutomaticAssign.jsp"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityAutomaticAssingResponsibleCmd">
+            <set-property property="paramReWrite" value="dto(activityId)"/>
+            <forward name="Success" path="/CampaignActivity/Forward/Update.do?dto(op)=read"/>
+            <forward name="Cancel" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do" redirect="true"/>
+        </action>
+
+        <action path="/Activity/User/AutomaticAssign/Forward/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="activityUserForm" roles="ACTIVITYUSER.VIEW"
+                scope="request" validate="false" input="/Activity/User/Forward/AutomaticAssign.do"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <forward name="Success" path="/ActivityUserAutomaticAssignDetailForUpdate.jsp"/>
+            <forward name="Fail" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/Activity/User/AutomaticAssign/Update"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="activityUserForm" roles="ACTIVITYUSER.UPDATE"
+                scope="request" validate="true" input="/ActivityUserAutomaticAssignDetailForUpdate.jsp"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <forward name="Success" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Cancel" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <action path="/Activity/User/AutomaticAssign/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="activityUserForm" roles="ACTIVITYUSER.DELETE"
+                scope="request" validate="false" input="/Activity/User/Forward/AutomaticAssign.do"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <forward name="Success" path="/ActivityUserAutomaticAssignDetailForDelete.jsp"/>
+            <forward name="Fail" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+        <action path="/Activity/User/AutomaticAssign/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignActivityManagerAction"
+                name="activityUserForm" roles="ACTIVITYUSER.DELETE"
+                scope="request" validate="true" input="/ActivityUserAutomaticAssignDetailForDelete.jsp"
+                parameter="com.piramide.elwis.cmd.campaignmanager.ActivityUserCmd">
+            <forward name="Success" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Cancel" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail" path="/Activity/User/Forward/AutomaticAssign.do"/>
+            <forward name="Fail_" path="/CampaignAvtivity/List.do"/>
+        </action>
+
+        <!--attach import-->
+        <action path="/Attach/Import/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignListAction"
+                name="listForm" roles="CAMPAIGNATTACH.VIEW"
+                scope="request" input="/List.do" validate="false"
+                parameter="attachList">
+            <forward name="Success" path="/AttachImportList.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <!--campaign sent log-->
+        <action path="/CampaignSentLog/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignListAction"
+                name="listForm" roles="CAMPAIGNSENTLOG.VIEW"
+                scope="request" input="/List.do" validate="false"
+                parameter="campaignSentLogList">
+            <forward name="Success" path="/CampaignSentLogList.jsp"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <action path="/CampaignSentLog/Forward/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignSentLogAction"
+                name="form" roles="CAMPAIGNSENTLOG.DELETE"
+                scope="request"
+                input="/CampaignSentLog/List.do"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignSentLogCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="campaignSentLogId"/>
+            <forward name="Success" path="/CampaignSentLogDetailForDelete.jsp"/>
+            <forward name="Fail" path="/CampaignSentLog/List.do"/>
+        </action>
+        <action path="/CampaignSentLog/Delete"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignSentLogAction"
+                name="form" roles="CAMPAIGNSENTLOG.DELETE"
+                scope="request"
+                input="/CampaignSentLogDetailForDelete.jsp"
+                validate="false"
+                parameter="com.piramide.elwis.cmd.campaignmanager.CampaignSentLogCmd"
+                className="org.alfacentauro.fantabulous.web.mapping.URLParameterReWriteMapping">
+
+            <set-property property="paramReWrite" value="campaignSentLogId"/>
+            <forward name="Success" path="/CampaignSentLog/List.do" redirect="true"/>
+            <forward name="Cancel" path="/CampaignSentLog/List.do" redirect="true"/>
+            <forward name="Fail" path="/CampaignSentLog/List.do"/>
+        </action>
+
+        <!--sent log contacts-->
+        <action path="/SentLogContact/List"
+                type="com.piramide.elwis.web.campaignmanager.action.CampaignSentLogListAction"
+                name="listForm" roles="CAMPAIGNSENTLOG.VIEW"
+                scope="request" input="/CampaignSentLog/List.do" validate="false"
+                parameter="sentLogContactList">
+            <forward name="Success" path="/SentLogContactList.jsp"/>
+            <forward name="Fail" path="/CampaignSentLog/List.do" redirect="true"/>
+            <forward name="Fail_" path="/List.do" redirect="true"/>
+        </action>
+
+        <!--end miky-->
+
+        <!--        REPORTES           -->
+        <action path="/Report/CampaignList" type="org.apache.struts.actions.ForwardAction" name="campaignReportListForm"
+                scope="request" parameter="/campaign/report/CampaignReportList.jsp" validate="false"
+                roles="CAMPAIGN.VIEW"/>
+
+        <action path="/Report/CampaignList/Execute" input="/report/CampaignReportList.jsp"
+                type="com.piramide.elwis.web.common.action.report.ReportAction" name="campaignReportListForm"
+                scope="request" parameter="campaignReportList" validate="true" roles="CAMPAIGN.VIEW">
+            <forward name="Success" path="/report/CampaignReportList.jsp"/>
+        </action>
+
+        <action path="/Report/CampaignContactList" type="org.apache.struts.actions.ForwardAction"
+                name="reportGeneratorForm"
+                scope="request" parameter="/campaign/report/CampaignContactReportList.jsp" validate="false"
+                roles="CAMPAIGNCONTACTS.VIEW"/>
+
+        <action path="/Report/CampaignContactList/Execute" input="/report/CampaignContactReportList.jsp"
+                type="com.piramide.elwis.web.campaignmanager.action.report.CampaignContactReportAction"
+                name="reportGeneratorForm"
+                scope="request" parameter="campaignContactReportList" validate="false" roles="CAMPAIGNCONTACTS.VIEW">
+            <forward name="Success" path="/report/CampaignContactReportList.jsp"/>
+        </action>
+
+        <action path="/Report/CampaignActivityList" type="org.apache.struts.actions.ForwardAction"
+                name="campaignActivityReportForm"
+                scope="request" parameter="/campaign/report/CampaignActivityReportList.jsp" validate="false"
+                roles="CAMPAIGNACTIVITY.VIEW"/>
+
+        <action path="/Report/CampaignActivityList/Execute" input="/report/CampaignActivityReportList.jsp"
+                type="com.piramide.elwis.web.common.action.report.ReportAction" name="campaignActivityReportForm"
+                scope="request" parameter="campaignActivityReportList" validate="true" roles="CAMPAIGNACTIVITY.VIEW">
+            <forward name="Success" path="/report/CampaignActivityReportList.jsp"/>
+        </action>
+
+        <action path="/Report/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportExternalExecute.jsp"/>
+
+        <action path="/Report/Blank" type="org.apache.struts.actions.ForwardAction" name="form"
+                scope="request" validate="false" parameter="/common/Blank.jsp"/>
+
+        <action path="/Report/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportExecuteForm" scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+
+        <action path="/Report/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteAction"
+                name="reportExecuteForm" scope="request" validate="true" input="/Report/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailColumn" path="/Report/ExecutePage.do"/>
+            <forward name="FailButStay" path="/Report/ExecutePage.do"/>
+        </action>
+
+        <!--jrxml external report-->
+        <action path="/Report/Jrxml/ExecutePage" type="com.piramide.elwis.web.reports.action.ReportExternalExecuteForwardAction" name="reportJrxmlExecuteForm"
+                scope="request" validate="false" parameter="/reports/ReportJrxmlExternalExecute.jsp"/>
+
+        <action path="/Report/Jrxml/External/Forward/Execute" type="com.piramide.elwis.web.reports.action.ReportExternalManagerAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="false"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+        </action>
+        <action path="/Report/Jrxml/External/Execute" type="com.piramide.elwis.web.reports.action.ReportJrxmlExternalExecuteAction"
+                name="reportJrxmlExecuteForm"
+                scope="request" validate="true" input="/Report/Jrxml/ExecutePage.do"
+                parameter="com.piramide.elwis.cmd.reports.ReportExecuteReadCmd">
+            <forward name="Success" path="/Report/Jrxml/ExecutePage.do"/>
+            <forward name="Fail" path="/Report/Blank.do" redirect="true"/>
+            <forward name="FailButStay" path="/Report/Jrxml/ExecutePage.do"/>
+        </action>
+
+    </action-mappings>
+
+    <controller locale="true" processorClass="com.piramide.elwis.web.common.CustomRequestProcessor"/>
+    <message-resources parameter="com.piramide.elwis.web.resources.ApplicationResources"/>
+
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property property="pathnames"
+                      value="/WEB-INF/common/validator-rules.xml,
+            /WEB-INF/common/validation.xml,
+            /WEB-INF/campaign/validation.xml"/>
+    </plug-in>
+
+    <plug-in className="com.piramide.elwis.web.common.plugin.ModuleParamPlugIn">
+        <set-property property="moduleParams" value="campaignId, index, activityId, advancedListForward"/>
+    </plug-in>
+
+    <plug-in className="org.alfacentauro.fantabulous.web.plugin.struts.FantabulousPlugin">
+        <set-property property="path" value="/WEB-INF/campaign/fantabulous.xml"/>
+        <set-property property="moduleParams" value="campaignId, index, activityId, advancedListForward"/>
+    </plug-in>
+
+</struts-config>

@@ -1,0 +1,1388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE databasestructure PUBLIC "-//Titus/Titus Config DTD 1.0//EN"
+        "http://www.jatun.com/titus-config-1.0.dtd">
+<databasestructure>
+    <database>
+        <table tablename="camptype" resource="Report.functionality.campType">
+            <fields>
+                <field fieldname="camptypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="title" dbtype="string" resource="CampaignType.title"/>
+            </fields>
+            <primarykey fields="camptypeid">
+                <inverserelation relationtype="left-join" tablename="campaign" keys="typeid"
+                                 resource="Report.inverseRelation.campaign"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="Catalogs.CampaignType" filterfieldref="title" showin="select">
+                    <columns>
+                        <column fieldpath="title" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="title" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+
+        <table tablename="actiontype" resource="Report.functionality.actionType">
+            <fields>
+                <field fieldname="actiontypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="probability" dbtype="integer" resource="ActionType.probability"
+                       converter="probabilityConverter" istotalize="true"/>
+                <field fieldname="sequence" dbtype="integer" resource="ActionType.sequence" istotalize="true"/>
+                <field fieldname="typename" dbtype="string" resource="ActionType.name"/>
+            </fields>
+            <primarykey fields="actiontypeid">
+                <inverserelation relationtype="left-join" tablename="action" keys="actiontypeid"
+                                 resource="Report.inverseRelation.action"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="SalesProcessAction.actionType" filterfieldref="typename" showin="select">
+                    <columns>
+                        <column fieldpath="typename" order="asc"/>
+                        <column fieldpath="probability" order="asc"/>
+                        <column fieldpath="sequence" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="typename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="addresssource" resource="Report.functionality.addressSource">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="sourceid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="sourcename" dbtype="string" resource="AddressSource.name"/>
+            </fields>
+            <primarykey fields="sourceid">
+                <inverserelation relationtype="left-join" tablename="customer" keys="sourceid"
+                                 resource="Report.inverseRelation.customer"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="campaign.addressSource" filterfieldref="sourcename" showin="select">
+                    <columns>
+                        <column fieldpath="sourcename" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="sourcename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="articlecategory" resource="Report.functionality.articleCategory">
+            <fields>
+                <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="categoryname" dbtype="string" resource="ArticleCategory.categoryName"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="parentcategoryid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="categoryid">
+                <inverserelation relationtype="left-join" tablename="article" keys="categoryid"
+                                 resource="Report.inverseRelation.article"/>
+                <inverserelation relationtype="left-join" tablename="articlecategory" keys="parentcategoryid"
+                                 resource="Report.inverseRelation.articleCategory.parent"/>
+                <inverserelation relationtype="left-join" tablename="articlequestion" keys="categoryid"
+                                 resource="Report.inverseRelation.articleQuestion"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="articlecategory" relationtype="left-join"
+                            resource="Report.foreignRelation.articleCategory.parent">
+                    <keyref fieldref="parentcategoryid" foreignfieldref="categoryid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="Article.categoryName" filterfieldref="categoryname" showin="select">
+                    <columns>
+                        <column fieldpath="categoryname" order="asc"/>
+                        <column fieldpath="articlecategory>>articlecategory:parentcategoryid.categoryname"
+                                resource="ArticleCategory.parentCategory"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="categoryname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="bank" resource="Report.functionality.bank">
+            <fields>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <!--null bd-->
+                <field fieldname="bankcode" dbtype="string" resource="Bank.code"/>
+                <field fieldname="bankid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="banklabel" dbtype="string" resource="Bank.label"/>
+                <field fieldname="bankname" dbtype="string" resource="BankAccount.bankName"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="internationalcode" dbtype="string" resource="Bank.internationalCode"/>
+            </fields>
+            <primarykey fields="bankid">
+                <inverserelation relationtype="left-join" tablename="bankaccount" keys="bankid"
+                                 resource="Report.inverseRelation.bankAccount"/>
+            </primarykey>
+            <foreignkeys/>
+            <!--<foreignkey foreigntableref="address" relationtype="left-join" resource="Contact">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+            </foreignkeys>-->
+            <filters>
+                <foreignfilter resource="Bank" filterfieldref="bankname" showin="select">
+                    <columns>
+                        <column fieldpath="bankname" order="asc"/>
+                        <column fieldpath="banklabel" order="asc"/>
+                        <column fieldpath="bankcode" order="asc"/>
+                        <column fieldpath="internationalcode" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="bankname" operator="start-with" type="parameter"/>
+                        <andgroup>
+                            <condition fieldpath="bankcode" operator="start-with" type="parameter"/>
+                        </andgroup>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="branch" resource="Report.functionality.branch">
+            <fields>
+                <field fieldname="branchgroup" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="branchid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="branchname" dbtype="string" resource="Branch.name"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="branchid">
+                <inverserelation relationtype="left-join" tablename="supplier" keys="branchid"
+                                 resource="Report.inverseRelation.supplier"/>
+                <inverserelation relationtype="left-join" tablename="customer" keys="branchid"
+                                 resource="Report.inverseRelation.customer"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="branch" relationtype="left-join"
+                            resource="Report.foreignRelation.branch.group">
+                    <keyref fieldref="branchgroup" foreignfieldref="branchid"/>
+                    <overwriteresources>
+                        <overwrite field="branchname" resource="Branch.group"/>
+                    </overwriteresources>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="Customer.branch" filterfieldref="branchname" showin="select">
+                    <columns>
+                        <column fieldpath="branchname" order="asc"/>
+                        <column fieldpath="branch>>branch:branchgroup.branchname" resource="Branch.group"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="branchname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="caseseverity" resource="Report.functionality.caseSeverity">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="sequence" dbtype="integer" resource="CaseSeverity.sequence" istotalize="true"/>
+                <field fieldname="severityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="severityname" dbtype="string" resource="CaseSeverity.name"/>
+            </fields>
+            <primarykey fields="severityid">
+                <inverserelation relationtype="left-join" tablename="supportcase" keys="severityid"
+                                 resource="Report.inverseRelation.supportCase"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="CaseSeverity.title" filterfieldref="severityname" showin="select">
+                    <columns>
+                        <column fieldpath="severityname" order="asc"/>
+                        <column fieldpath="sequence" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="severityname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="casetype" resource="Report.functionality.caseType">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="casetypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="casetypename" dbtype="string" resource="CaseType.Name"/>
+            </fields>
+            <primarykey fields="casetypeid">
+                <inverserelation relationtype="left-join" tablename="supportcase" keys="casetypeid"
+                                 resource="Report.inverseRelation.supportCase"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="CaseType.title" filterfieldref="casetypename" showin="select">
+                    <columns>
+                        <column fieldpath="casetypename" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="casetypename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="caseworklevel" resource="Report.functionality.caseWorkLevel">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="worklevelid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="sequence" dbtype="integer" resource="WorkLevel.sequence" istotalize="true"/>
+                <field fieldname="worklevelname" dbtype="string" resource="WorkLevel.name"/>
+            </fields>
+            <primarykey fields="worklevelid">
+                <inverserelation relationtype="left-join" tablename="caseactivity" keys="worklevelid"
+                                 resource="Report.inverseRelation.caseActivity"/>
+                <inverserelation relationtype="left-join" tablename="supportcase" keys="worklevelid"
+                                 resource="Report.inverseRelation.supportCase"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="WorkLevel.title" filterfieldref="worklevelname" showin="select">
+                    <columns>
+                        <column fieldpath="worklevelname" order="asc"/>
+                        <column fieldpath="sequence" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="worklevelname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="category" resource="Report.functionality.category">
+            <fields>
+                <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="categoryname" dbtype="string" resource="Category.name"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="langtextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="tableid" dbtype="string" resource="Category.label"
+                       converter="categoryLabelConverter"/>
+            </fields>
+            <primarykey fields="categoryid">
+                <!--<inverserelation relationtype="left-join" tablename="supplier" keys="categoryid" resource="Supplier" />
+            <inverserelation relationtype="left-join" tablename="productcategory" keys="categoryid" resource="Product.category"/>
+            <inverserelation relationtype="left-join" tablename="customercategory" keys="categoryid" resource="Customer.CustomerCategory"/>-->
+                <inverserelation relationtype="left-join" tablename="campcriterion" keys="categoryid"
+                                 resource="Report.inverseRelation.campCriterion"/>
+                <inverserelation relationtype="left-join" tablename="categoryvalue" keys="categoryid"
+                                 resource="Report.inverseRelation.categoryValue"/>
+                <!--<inverserelation relationtype="left-join" tablename="categfieldvalue" keys="categoryid" resource="Category.fieldValue"/>-->
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="langtext" relationtype="left-join"
+                            resource="Report.foreignRelation.langText">
+                    <keyref fieldref="langtextid" foreignfieldref="langtextid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <constantfilter fieldref="tableid" resource="Category.label">
+                    <values typevalue="resource">
+                        <value key="1" showvalue="Category.customer"/>
+                        <!--customer-->
+                        <value key="2" showvalue="Category.contactPerson"/>
+                        <!--contactPerson-->
+                        <value key="3" showvalue="Category.product"/>
+                        <!--product-->
+                        <value key="4" showvalue="Category.address"/>
+                        <!--address-->
+                    </values>
+                </constantfilter>
+                <foreignfilter resource="Supplier.category" filterfieldref="categoryname" showin="select">
+                    <columns>
+                        <column fieldpath="categoryname" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="categoryname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="categfieldvalue" resource="Category.fieldValue">
+            <fields>
+                <field fieldname="fieldvalueid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="addressid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="categoryvalueid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contactpersonid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="customerid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="processid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="integervalue" dbtype="integer" resource="Category.integerValue" istotalize="true"/>
+                <field fieldname="filename" dbtype="string"/>
+                <field fieldname="linkvalue" dbtype="string"/>
+                <field fieldname="stringvalue" dbtype="string" resource="Category.stringValue"/>
+                <field fieldname="datevalue" dbtype="integer" columntype="date" resource="Category.dateValue"
+                       converter="integerToDateValue" filterer="dateFilter"/>
+                <field fieldname="decimalvalue" dbtype="decimal" columntype="decimal" resource="Category.decimalValue"
+                       converter="decimalConverter" istotalize="true"/>
+            </fields>
+            <primarykey fields="fieldvalueid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="address" relationtype="left-join" resource="Campaign.address">
+                    <keyref fieldref="addressid" foreignfieldref="addressid"/>
+                </foreignkey>
+                <!--<foreignkey foreigntableref="contactperson" relationtype="left-join" resource="Campaign.contactPerson" >
+                    <keyref fieldref="contactpersonid" foreignfieldref="contactpersonid"/>
+                </foreignkey>-->
+                <foreignkey foreigntableref="customer" relationtype="left-join" resource="Campaign.customer">
+                    <keyref fieldref="customerid" foreignfieldref="customerid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="product" relationtype="left-join" resource="Campaign.product">
+                    <keyref fieldref="productid" foreignfieldref="productid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="categoryvalue" relationtype="left-join"
+                            resource="ReferencedBy.table.categoryvalue">
+                    <keyref fieldref="categoryvalueid" foreignfieldref="categoryvalueid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="category" relationtype="left-join" resource="Supplier.category">
+                    <keyref fieldref="categoryid" foreignfieldref="categoryid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="freetext" relationtype="left-join" resource="Category.stringValue"
+                            strongrelation="true">
+                    <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                    <overwriteresources>
+                        <overwrite field="freetextvalue" resource="Category.stringValue"/>
+                    </overwriteresources>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality/>
+        </table>
+        <table tablename="categoryvalue" resource="Report.functionality.categoryValue">
+            <fields>
+                <field fieldname="categoryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="categoryvalueid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="categoryvaluename" dbtype="string" resource="CategoryValue.name"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="tableid" dbtype="string" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="categoryvalueid">
+                <!--<inverserelation relationtype="left-join" tablename="categfieldvalue" keys="categoryvalueid" resource="Category.fieldValue"/>-->
+                <!--<inverserelation relationtype="left-join" tablename="customercategory" keys="categoryvalueid" resource="Customer.CustomerCategory"/>
+                <inverserelation relationtype="left-join" tablename="productcategory" keys="categoryvalueid" resource="Product.category" />-->
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="category" relationtype="left-join"
+                            resource="Report.foreignRelation.category">
+                    <keyref fieldref="categoryid" foreignfieldref="categoryid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="CategoryValue.name" filterfieldref="categoryvaluename" showin="select">
+                    <columns>
+                        <column fieldpath="categoryvaluename" order="asc"/>
+                        <column fieldpath="categoryvalue>>category:categoryid.categoryname"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="categoryvaluename" operator="start-with" type="parameter"/>
+                        <andcondition fieldpath="categoryid" operator="equal" type="parameter"
+                                      parametername="CATEGORY_ID"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="city" resource="Report.functionality.city">
+            <fields>
+                <field fieldname="cityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="cityname" dbtype="string" resource="City.name"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="countryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="zip" dbtype="string" resource="City.zip"/>
+            </fields>
+            <primarykey fields="cityid">
+                <inverserelation relationtype="left-join" tablename="address" keys="cityid"
+                                 resource="Report.inverseRelation.contact"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="country" relationtype="left-join"
+                            resource="Report.foreignRelation.country">
+                    <keyref fieldref="countryid" foreignfieldref="countryid"/>
+                    <overwriteresources>
+                        <overwrite field="countryname" resource="City.country"/>
+                    </overwriteresources>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+
+        <table tablename="costcenter" resource="Report.functionality.costCenter">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="costcenterid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="costcentername" dbtype="string" resource="CostCenter.name"/>
+                <field fieldname="parentcostcenterid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="costcenterid">
+                <inverserelation relationtype="left-join" tablename="employee" keys="costcenterid"
+                                 resource="Report.inverseRelation.employee"/>
+                <inverserelation relationtype="left-join" tablename="costcenter" keys="parentcostcenterid"
+                                 resource="Report.inverseRelation.costCenter"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="costcenter" relationtype="left-join"
+                            resource="Report.foreignRelation.costCenter.parent">
+                    <keyref fieldref="parentcostcenterid" foreignfieldref="costcenterid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="Contact.Organization.Employee.costCenter" filterfieldref="costcentername"
+                               showin="select">
+                    <columns>
+                        <column fieldpath="costcentername" order="asc"/>
+                        <column fieldpath="costcenter>>costcenter:parentcostcenterid.costcentername"
+                                resource="CostCenter.group"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="costcentername" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="country" resource="Report.functionality.country">
+            <fields>
+                <field fieldname="areacode" dbtype="string" resource="Country.areaCode"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="countryid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="countryname" dbtype="string" resource="Country.name"/>
+                <field fieldname="currencyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="prefix" dbtype="integer" resource="Country.prefix" istotalize="true"/>
+            </fields>
+            <primarykey fields="countryid">
+                <inverserelation relationtype="left-join" tablename="address" keys="countryid"
+                                 resource="Report.inverseRelation.contact"/>
+                <!--<inverserelation relationtype="left-join" tablename="elwisuser" keys="holidaycountryid" resource="User.user" />-->
+                <inverserelation relationtype="left-join" tablename="city" keys="countryid"
+                                 resource="Report.inverseRelation.city"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="currency" relationtype="left-join"
+                            resource="Report.foreignRelation.currency">
+                    <keyref fieldref="currencyid" foreignfieldref="currencyid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="City.country" filterfieldref="countryname">
+                    <columns>
+                        <column fieldpath="countryname" order="asc"/>
+                        <column fieldpath="areacode" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="countryname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="currency" resource="Report.functionality.currency">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="currencyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="isbasiccurrency" dbtype="integer" columntype="boolean"
+                       resource="Currency.isBasicCurrency" converter="basicCurrencyConverter"/>
+                <field fieldname="unit" dbtype="decimal" resource="Currency.unit" converter="decimalConverter"
+                       istotalize="true"/>
+                <field fieldname="symbol" dbtype="string" resource="Currency.symbol"/>
+                <field fieldname="currencyname" dbtype="string" resource="Currency.name"/>
+                <field fieldname="label" dbtype="string" resource="Currency.label"/>
+            </fields>
+            <primarykey fields="currencyid">
+                <inverserelation relationtype="left-join" tablename="country" keys="currencyid"
+                                 resource="Report.inverseRelation.country"/>
+                <inverserelation relationtype="left-join" tablename="productcontract" keys="currencyid"
+                                 resource="Report.inverseRelation.productContract"/>
+                <inverserelation relationtype="left-join" tablename="invoice" keys="currencyid"
+                                 resource="Report.inverseRelation.invoice"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <constantfilter fieldref="isbasiccurrency" resource="Currency.isBasicCurrency">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Common.alternative"/>
+                        <value key="1" showvalue="Currency.isBasicCurrency"/>
+                    </values>
+                </constantfilter>
+                <foreignfilter resource="Country.currency" filterfieldref="currencyname" showin="select">
+                    <columns>
+                        <column fieldpath="currencyname" order="asc"/>
+                        <column fieldpath="symbol" order="asc"/>
+                        <column fieldpath="unit" order="asc"/>
+                        <column fieldpath="label" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="currencyname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="customertype" resource="Report.functionality.customerType">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="customertypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="customertypename" dbtype="string" resource="CustomerType.name"/>
+            </fields>
+            <primarykey fields="customertypeid">
+                <inverserelation relationtype="left-join" tablename="customer" keys="customertypeid"
+                                 resource="Report.inverseRelation.customer"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="campaign.customerType" filterfieldref="customertypename" showin="select">
+                    <columns>
+                        <column fieldpath="customertypename" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="customertypename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+
+        <table tablename="freetext" resource="Report.functionality.freeText">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false" merge="false"/>
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false" merge="false"/>
+                <field fieldname="freetexttype" dbtype="short" resource="Common.type" merge="false"/>
+                <field fieldname="freetextvalue" dbtype="blob" columntype="string" resource="Common.value"
+                       converter="freeTextConverter" filterer="blobReadFilter"/>
+            </fields>
+            <primarykey fields="freetextid">
+                <!--<inverserelation relationtype="left-join" tablename="contact" keys="freetextid" resource="table.inverse.contact" />
+                <inverserelation relationtype="left-join" tablename="campcriterion" keys="valueid" resource="table.inverse.campcriterion" />
+                <inverserelation relationtype="left-join" tablename="articlequestion" keys="detailid" resource="table.inverse.articlequestion" />
+                <inverserelation relationtype="left-join" tablename="templatetext" keys="freetextid" resource="table.inverse.templatetext" />
+                <inverserelation relationtype="left-join" tablename="actionposition" keys="descriptionid" resource="table.inverse.actionposition" />
+                <inverserelation relationtype="left-join" tablename="article" keys="contentid" resource="table.inverse.article" />
+                <inverserelation relationtype="left-join" tablename="address" keys="waydescriptionid" resource="table.inverse.address" />
+                <inverserelation relationtype="left-join" tablename="productpicture" keys="freetextid" resource="table.inverse.productpicture" />
+                <inverserelation relationtype="left-join" tablename="supportattach" keys="freetextid" resource="table.inverse.supportattach" />
+                <inverserelation relationtype="left-join" tablename="caseactivity" keys="freetextid" resource="table.inverse.caseactivity" />
+                <inverserelation relationtype="left-join" tablename="supportcase" keys="descriptionid" resource="table.inverse.supportcase" />
+                <inverserelation relationtype="left-join" tablename="articlecomment" keys="descriptionid" resource="table.inverse.articlecomment" />
+                <inverserelation relationtype="left-join" tablename="campaign" keys="remark" resource="table.inverse.campaign" />
+                <inverserelation relationtype="left-join" tablename="product" keys="descriptionid" resource="table.inverse.product" />
+                <inverserelation relationtype="left-join" tablename="salesprocess" keys="descriptionid" resource="table.inverse.salesprocess" />
+                <inverserelation relationtype="left-join" tablename="role" keys="descriptionid" resource="table.inverse.role" />
+                <inverserelation relationtype="left-join" tablename="campaigntext" keys="freetextid" resource="table.inverse.campaigntext" />
+                <inverserelation relationtype="left-join" tablename="address" keys="freetextid" resource="table.inverse.address" />
+                <inverserelation relationtype="left-join" tablename="address" keys="imageid" resource="table.inverse.address" />
+                <inverserelation relationtype="left-join" tablename="templatetext" keys="freetextid" resource="Template.templateText" />   -->
+            </primarykey>
+            <foreignkeys/>
+        </table>
+        <table tablename="langtext" resource="Report.functionality.langText"> <!--OJO-->
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="isdefault" dbtype="boolean" iscolumnview="false" resource="Common.default"/>
+                <field fieldname="langtextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="languageid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="text" dbtype="string" resource="Common.text"/>
+                <field fieldname="type" dbtype="string" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="langtextid, languageid">
+                <inverserelation relationtype="left-join" tablename="telecomtype" keys="langtextid"
+                                 resource="Report.inverseRelation.telecomType"/>
+                <inverserelation relationtype="left-join" tablename="category" keys="langtextid"
+                                 resource="Report.inverseRelation.category"/>
+                <inverserelation relationtype="left-join" tablename="paycondition" keys="conditiontextid1"
+                                 resource="Report.inverseRelation.payCondition.firstTraslation"/>
+                <inverserelation relationtype="left-join" tablename="paycondition" keys="conditiontextid2"
+                                 resource="Report.inverseRelation.payCondition.secondTraslation"/>
+                <inverserelation relationtype="left-join" tablename="salutation" keys="addresstextid"
+                                 resource="Report.inverseRelation.salutation.addressText"/>
+                <inverserelation relationtype="left-join" tablename="salutation" keys="lettertextid"
+                                 resource="Report.inverseRelation.salutation.letterText"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="language" relationtype="left-join"
+                            resource="Report.foreignRelation.language">
+                    <keyref fieldref="languageid" foreignfieldref="languageid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="language" resource="Report.functionality.language">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <!--<field fieldname="iso" dbtype="string" resource="Language.iso" />-->
+                <field fieldname="languageid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="languagename" dbtype="string" resource="Language.name"/>
+            </fields>
+            <primarykey fields="languageid">
+                <inverserelation relationtype="left-join" tablename="address" keys="languageid"
+                                 resource="Report.inverseRelation.contact"/>
+                <inverserelation relationtype="left-join" tablename="langtext" keys="languageid"
+                                 resource="Report.inverseRelation.langText"/>
+                <!--OJO-->
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="Language" filterfieldref="languagename" showin="select">
+                    <columns>
+                        <column fieldpath="languagename" order="asc"/>
+                        <!--<column fieldpath="iso" order="asc"/>-->
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="languagename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="paycondition" resource="Report.functionality.payCondition">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="conditionname" dbtype="string" resource="PayCondition.name"/>
+                <field fieldname="conditiontextid1" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="conditiontextid2" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="discount" dbtype="decimal" resource="PayCondition.Discount" istotalize="true"
+                       converter="decimalConverter"/>
+                <field fieldname="paydays" dbtype="short" resource="PayCondition.PayDays" istotalize="true"/>
+                <field fieldname="paydaysdisc" dbtype="short" resource="PayCondition.payDaysDiscount"
+                       istotalize="true"/>
+                <field fieldname="payconditionid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="payconditionid">
+                <inverserelation relationtype="left-join" tablename="customer" keys="payconditionid"
+                                 resource="Report.inverseRelation.customer"/>
+                <inverserelation relationtype="left-join" tablename="productcontract" keys="payconditionid"
+                                 resource="Report.inverseRelation.productContract"/>
+                <inverserelation relationtype="left-join" tablename="invoice" keys="payconditionid"
+                                 resource="Report.inverseRelation.invoice"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="langtext" relationtype="left-join"
+                            resource="Report.foreignRelation.langText.firstConditionTraslation"> <!--OJO-->
+                    <keyref fieldref="conditiontextid1" foreignfieldref="langtextid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="langtext" relationtype="left-join"
+                            resource="Report.foreignRelation.langText.secondConditionTraslation">   <!--OJO-->
+                    <keyref fieldref="conditiontextid2" foreignfieldref="langtextid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="Customer.payCondition" filterfieldref="conditionname" showin="select">
+                    <columns>
+                        <column fieldpath="conditionname" order="asc"/>
+                        <column fieldpath="discount" order="asc"/>
+                        <column fieldpath="paydaysdisc" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="conditionname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="paymorality" resource="Report.functionality.payMorality">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="paymoralityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="paymoralityname" dbtype="string" resource="PayMorality.name"/>
+            </fields>
+            <primarykey fields="paymoralityid">
+                <inverserelation relationtype="left-join" tablename="customer" keys="paymoralityid"
+                                 resource="Report.inverseRelation.customer"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="Customer.payMorality" filterfieldref="paymoralityname" showin="select">
+                    <columns>
+                        <column fieldpath="paymoralityname" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="paymoralityname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="persontype" resource="Report.functionality.personType">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="persontypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="persontypename" dbtype="string" resource="PersonType.name"/>
+            </fields>
+            <primarykey fields="persontypeid">
+                <inverserelation relationtype="left-join" tablename="contactperson" keys="persontypeid"
+                                 resource="Report.inverseRelation.contactPerson"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="ContactPerson.personType" filterfieldref="persontypename" showin="select">
+                    <columns>
+                        <column fieldpath="persontypename" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="persontypename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="priority" resource="Report.functionality.priority">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="priorityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="priorityname" dbtype="string" resource="Priority.name"/>
+                <field fieldname="sequence" dbtype="short" resource="Priority.sequence" istotalize="true"/>
+                <field fieldname="type" dbtype="string" resource="Common.type" converter="priorityConverter"/>
+            </fields>
+            <conditions>
+                <condition fieldpath="type" operator="not-equal" type="constant" value="SCHEDULER"/>
+            </conditions>
+            <primarykey fields="priorityid">
+                <inverserelation relationtype="left-join" tablename="customer" keys="priorityid"
+                                 resource="Report.inverseRelation.customer"/>
+                <inverserelation relationtype="left-join" tablename="supportcase" keys="priorityid"
+                                 resource="Report.inverseRelation.supportCase"/>
+                <!--<inverserelation relationtype="left-join" tablename="supplier" keys="priorityid" resource="Contact.supplier" /> ese campo no se usa-->
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <constantfilter fieldref="type" resource="Common.type">
+                    <values typevalue="resource">
+                        <!--<value key="SCHEDULER" showvalue=""/> habilitar cuando se use en scheduler-->
+                        <value key="CUSTOMER" showvalue="Contact.customer"/>
+                        <value key="SUPPORT" showvalue="module.support"/>
+                    </values>
+                </constantfilter>
+                <foreignfilter resource="Priority.title" filterfieldref="priorityname">
+                    <columns>
+                        <column fieldpath="priorityname" order="asc"/>
+                        <column fieldpath="sequence" order="asc"/>
+                        <column fieldpath="type"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="priorityname" operator="start-with" type="parameter"/>
+                        <andcondition fieldpath="type" operator="not-equal" type="constant" value="SCHEDULER"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="processpriority" resource="Report.functionality.processPriority">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="priorityid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="priorityname" dbtype="string" resource="Priority.name"/>
+                <field fieldname="sequence" dbtype="short" resource="Priority.sequence" istotalize="true"/>
+            </fields>
+            <primarykey fields="priorityid">
+                <inverserelation relationtype="left-join" tablename="salesprocess" keys="priorityid"
+                                 resource="Report.inverseRelation.salesProcess"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="Priority.name" filterfieldref="priorityname" showin="select">
+                    <columns>
+                        <column fieldpath="priorityname" order="asc"/>
+                        <column fieldpath="sequence" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="priorityname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="processstatus" resource="Report.functionality.processStatus">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="isfinal" dbtype="integer" columntype="string" resource="Status.isFinal"
+                       converter="finalConverter"/>
+                <field fieldname="statusid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="statusname" dbtype="string" resource="Status.name"/>
+            </fields>
+            <primarykey fields="statusid">
+                <inverserelation relationtype="left-join" tablename="salesprocess" keys="statusid"
+                                 resource="Report.inverseRelation.salesProcess"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <constantfilter fieldref="isfinal" resource="Status.isFinal">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="Common.no"/>
+                        <value key="1" showvalue="Common.yes"/>
+                    </values>
+                </constantfilter>
+                <foreignfilter resource="Customer.payCondition" filterfieldref="statusname" showin="select">
+                    <columns>
+                        <column fieldpath="statusname" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="statusname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="productgroup" resource="Report.functionality.productGroup">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="groupid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="groupname" dbtype="string" resource="ProductGroup.name"/>
+                <field fieldname="parentgroupid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="groupid">
+                <inverserelation relationtype="left-join" tablename="product" keys="productgroupid"
+                                 resource="Report.inverseRelation.product"/>
+                <inverserelation relationtype="left-join" tablename="productgroup" keys="parentgroupid"
+                                 resource="Report.inverseRelation.productGroup.parent"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="productgroup" relationtype="left-join"
+                            resource="Report.foreignRelation.productGroup.parent">
+                    <keyref fieldref="parentgroupid" foreignfieldref="groupid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="ProductGroup.name" filterfieldref="groupname" showin="select">
+                    <columns>
+                        <column fieldpath="groupname" order="asc"/>
+                        <column fieldpath="productgroup>>productgroup:parentgroupid.groupname"
+                                resource="ProductGroup.nameParent"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="groupname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="producttype" resource="Report.functionality.productType">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="typeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="typename" dbtype="string" resource="Common.name" converter="productTypeTypeConverter"/>
+            </fields>
+            <primarykey fields="typeid">
+                <inverserelation relationtype="left-join" tablename="product" keys="producttypeid"
+                                 resource="Report.inverseRelation.product"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="ProductType.typeName" filterfieldref="typename" showin="select">
+                    <columns>
+                        <column fieldpath="typename" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="typename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="productunit" resource="Report.functionality.productUnit">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="unitid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="unitname" dbtype="string" resource="ProductUnit.name"/>
+            </fields>
+            <primarykey fields="unitid">
+                <inverserelation relationtype="left-join" tablename="prodsupplier" keys="unitid"
+                                 resource="Report.inverseRelation.productSupplier"/>
+                <inverserelation relationtype="left-join" tablename="actionposition" keys="unitid"
+                                 resource="Report.inverseRelation.actionPosition"/>
+                <inverserelation relationtype="left-join" tablename="product" keys="unitid"
+                                 resource="Report.inverseRelation.product"/>
+                <inverserelation relationtype="left-join" tablename="saleposition" keys="unitid"
+                                 resource="Report.inverseRelation.salePosition"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="ProductUnit.name" filterfieldref="unitname" showin="select">
+                    <columns>
+                        <column fieldpath="unitname" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="unitname" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="salutation" resource="Report.functionality.salutation">
+            <fields>
+                <field fieldname="addresstextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="lettertextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="salutationid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="salutationlabel" dbtype="string" resource="Salutation.label"/>
+            </fields>
+            <primarykey fields="salutationid">
+                <inverserelation relationtype="left-join" tablename="address" keys="salutationid"
+                                 resource="Report.inverseRelation.contact"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="langtext" relationtype="left-join"
+                            resource="Report.foreignRelation.langText.salutationLetterText"> <!--OJO-->
+                    <keyref fieldref="lettertextid" foreignfieldref="langtextid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="langtext" relationtype="left-join"
+                            resource="Report.foreignRelation.langText.salutationAddressText"> <!--OJO-->
+                    <keyref fieldref="addresstextid" foreignfieldref="langtextid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <foreignfilter resource="Contact.Person.salutation" filterfieldref="salutationlabel" showin="select">
+                    <columns>
+                        <column fieldpath="salutationlabel" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="salutationlabel" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="state" resource="Report.functionality.state">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="stagetype" dbtype="integer" columntype="string" resource="State.stageType"
+                       converter="stageTypeConverter"/>
+                <field fieldname="sequence" dbtype="integer" resource="State.sequence" istotalize="true"/>
+                <field fieldname="stateid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="statename" dbtype="string" resource="State.name"/>
+                <!--<field fieldname="type" dbtype="boolean" resource="Common.type" /> cuando se use en otros modulos descomentar-->
+            </fields>
+            <primarykey fields="stateid">
+                <inverserelation relationtype="left-join" tablename="supportcase" keys="stateid"
+                                 resource="Report.inverseRelation.supportCase"/>
+                <inverserelation relationtype="left-join" tablename="caseactivity" keys="stateid"
+                                 resource="Report.inverseRelation.caseActivity"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <constantfilter fieldref="stagetype" resource="State.stageType">
+                    <values typevalue="resource">
+                        <value key="0" showvalue="State.stage.open"/>
+                        <value key="1" showvalue="State.stage.progress"/>
+                        <value key="2" showvalue="State.stage.close"/>
+                    </values>
+                </constantfilter>
+                <foreignfilter resource="State.title" filterfieldref="statename" showin="select">
+                    <columns>
+                        <column fieldpath="statename" order="asc"/>
+                        <column fieldpath="sequence" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="statename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="suppliertype" resource="Report.functionality.supplierType">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" resource="Company" iscolumnview="false"/>
+                <field fieldname="suppliertypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="suppliertypename" dbtype="string" resource="SupplierType.name"/>
+            </fields>
+            <primarykey fields="suppliertypeid">
+                <inverserelation relationtype="left-join" tablename="supplier" keys="suppliertypeid"
+                                 resource="Report.inverseRelation.supplier"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="SupplierType.name" filterfieldref="suppliertypename" showin="select">
+                    <columns>
+                        <column fieldpath="suppliertypename" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="suppliertypename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="supportuser" resource="Report.functionality.supportUser">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="productid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="userid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="productid, userid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="elwisuser" relationtype="left-join"
+                            resource="Report.foreignRelation.elwisUser.supportUser">
+                    <keyref fieldref="userid" foreignfieldref="userid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="product" relationtype="left-join"
+                            resource="Report.foreignRelation.product">
+                    <keyref fieldref="productid" foreignfieldref="productid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="telecomtype" resource="Report.functionality.telecomType">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="langtextid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="telecomtypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="telecomtypename" dbtype="string" resource="TelecomType.name"/>
+                <field fieldname="telecomtypepos" dbtype="short" columntype="integer" resource="TelecomType.position"
+                       istotalize="true"/>
+                <field fieldname="type" dbtype="string" resource="TelecomType.type" converter="telecomTypeConverter"/>
+            </fields>
+            <primarykey fields="telecomtypeid">
+                <inverserelation relationtype="left-join" tablename="telecom" keys="telecomtypeid"
+                                 resource="Report.inverseRelation.telecom"/>
+            </primarykey>
+            <foreignkeys>
+                <foreignkey foreigntableref="langtext" relationtype="left-join"
+                            resource="Report.foreignRelation.langText"> <!--OJO-->
+                    <keyref fieldref="langtextid" foreignfieldref="langtextid"/>
+                </foreignkey>
+            </foreignkeys>
+            <filters>
+                <constantfilter fieldref="type" resource="TelecomType.type">
+                    <values typevalue="resource">
+                        <value key="PHONE" showvalue="TelecomType.type.phone"/>
+                        <value key="EMAIL" showvalue="TelecomType.type.email"/>
+                        <value key="FAX" showvalue="TelecomType.type.fax"/>
+                        <value key="OTHER" showvalue="TelecomType.type.other"/>
+                        <value key="LINK" showvalue="TelecomType.type.link"/>
+                    </values>
+                </constantfilter>
+                <foreignfilter resource="Telecom.telecomType" filterfieldref="telecomtypename" showin="select">
+                    <columns>
+                        <column fieldpath="telecomtypename" order="asc"/>
+                        <column fieldpath="type" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="telecomtypename" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+
+        <table tablename="template" resource="Report.functionality.template">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="description" dbtype="string" resource="Template.description"/>
+                <field fieldname="templateid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="templateid">
+                <inverserelation relationtype="left-join" tablename="contact" keys="templateid"
+                                 resource="Report.inverseRelation.communication"/>
+                <!--<inverserelation relationtype="left-join" tablename="templatetext" keys="templateid" resource="Template.templateText"/>-->
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="Template.description" filterfieldref="description" showin="select">
+                    <columns>
+                        <column fieldpath="description" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="description" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <!--<table tablename="templatetext" resource="Template.templateText">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="bydefault" dbtype="boolean" columntype="boolean" iscolumnview="false" resource="Common.default" />
+                <field fieldname="freetextid" dbtype="integer" iscolumnview="false" />
+                <field fieldname="languageid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="templateid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="languageid, templateid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="freetext" relationtype="left-join" resource="ReferencedBy.table.freetext">
+                    <keyref fieldref="freetextid" foreignfieldref="freetextid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="template" relationtype="left-join" resource="Document.template">
+                    <keyref fieldref="templateid" foreignfieldref="templateid"/>
+                </foreignkey>
+                <foreignkey foreigntableref="language" relationtype="left-join" resource="ContactMedia.language">
+                    <keyref fieldref="languageid" foreignfieldref="languageid"/>
+                </foreignkey>
+            </foreignkeys>
+        </table>-->
+        <table tablename="title" resource="Report.functionality.title">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="titleid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="titletext" dbtype="string" resource="Title.name"/>
+            </fields>
+            <primarykey fields="titleid">
+                <inverserelation relationtype="left-join" tablename="address" keys="titleid"
+                                 resource="Report.inverseRelation.contact"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="Common.title" filterfieldref="titletext" showin="select">
+                    <columns>
+                        <column fieldpath="titletext" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="titletext" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="vat" resource="Report.functionality.vat">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="description" dbtype="string" resource="Vat.description"/>
+                <field fieldname="label" dbtype="string" resource="Vat.name"/>
+                <field fieldname="vatid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="vatid">
+                <inverserelation relationtype="left-join" tablename="vatrate" keys="vatid"
+                                 resource="Report.inverseRelation.vatRate"/>
+                <inverserelation relationtype="left-join" tablename="productcontract" keys="vatid"
+                                 resource="Report.inverseRelation.productContract"/>
+                <inverserelation relationtype="left-join" tablename="invoice" keys="vatid"
+                                 resource="Report.inverseRelation.invoice"/>
+                <inverserelation relationtype="left-join" tablename="invoiceposition" keys="vatid"
+                                 resource="Report.inverseRelation.invoicePosition"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter resource="VatRate.vat" filterfieldref="label" showin="select">
+                    <columns>
+                        <column fieldpath="label" order="asc"/>
+                        <column fieldpath="description" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="label" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="vatrate" resource="Report.functionality.vatRate">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="validfrom" dbtype="integer" resource="VatRate.validFrom" columntype="date"
+                       converter="integerToDateValue" filterer="dateFilter"/>
+                <field fieldname="vatid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="vatrate" dbtype="decimal" resource="VatRate.vatRate" converter="decimalConverter"/>
+                <field fieldname="vatrateid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="vatrateid"/>
+            <foreignkeys>
+                <foreignkey foreigntableref="vat" relationtype="left-join" resource="Report.foreignRelation.vat">
+                    <keyref fieldref="vatid" foreignfieldref="vatid"/>
+                </foreignkey>
+            </foreignkeys>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="contracttype" resource="Report.functionality.contractType">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="contracttypeid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="name" dbtype="string" resource="ContractType.name"/>
+                <field fieldname="tobeinvoiced" dbtype="integer" columntype="boolean" converter="booleanConverter"
+                       resource="ContractType.tobeInvoiced"/>
+            </fields>
+            <primarykey fields="contracttypeid">
+                <inverserelation relationtype="left-join" tablename="productcontract" keys="contracttypeid"
+                                 resource="Report.inverseRelation.productContract"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <constantfilter fieldref="tobeinvoiced" resource="ContractType.tobeInvoiced">
+                    <values typevalue="resource">
+                        <value key="1" showvalue="Common.yes"/>
+                        <value key="0" showvalue="Common.no"/>
+                    </values>
+                </constantfilter>
+                <foreignfilter resource="ContractType.name" filterfieldref="name" showin="select">
+                    <columns>
+                        <column fieldpath="name" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="name" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <!--finance-->
+        <table tablename="invoicetemplate" resource="Report.functionality.invoiceTemplate">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="templateid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="title" dbtype="string" resource="InvoiceTemplate.title"/>
+            </fields>
+            <primarykey fields="templateid">
+                <inverserelation relationtype="left-join" tablename="invoice" keys="templateid"
+                                 resource="Report.inverseRelation.invoice"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter filterfieldref="title" resource="InvoiceTemplate.title" showin="select">
+                    <columns>
+                        <column fieldpath="title" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="title" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="reminderlevel" resource="Report.functionality.reminderLevel">
+            <fields>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="fee" dbtype="decimal" columntype="decimal" resource="ReminderLevel.fee"
+                       istotalize="true" converter="decimalConverter"/>
+                <field fieldname="level" dbtype="integer" columntype="integer" resource="ReminderLevel.level"/>
+                <field fieldname="name" dbtype="string" resource="ReminderLevel.name"/>
+                <field fieldname="numberofdays" dbtype="integer" columntype="integer"
+                       resource="ReminderLevel.numberOfDays"/>
+                <field fieldname="reminderlevelid" dbtype="integer" iscolumnview="false"/>
+            </fields>
+            <primarykey fields="reminderlevelid">
+                <inverserelation relationtype="left-join" tablename="invoicereminder" keys="reminderlevelid"
+                                 resource="Report.inverseRelation.invoiceReminder"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter filterfieldref="name" resource="ReminderLevel.name" showin="select">
+                    <columns>
+                        <column fieldpath="name" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="name" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+        <table tablename="account" resource="Report.functionality.account">
+            <fields>
+                <field fieldname="accountid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="companyid" dbtype="integer" iscolumnview="false"/>
+                <field fieldname="name" dbtype="string" resource="Account.name"/>
+                <field fieldname="number" dbtype="string" resource="Account.number"/>
+            </fields>
+            <primarykey fields="accountid">
+                <inverserelation relationtype="left-join" tablename="invoiceposition" keys="accountid"
+                                 resource="Report.inverseRelation.invoicePosition"/>
+                <inverserelation relationtype="left-join" tablename="product" keys="accountid"
+                                 resource="Report.inverseRelation.product"/>
+                <inverserelation relationtype="left-join" tablename="invoiceposition" keys="accountid"
+                                 resource="Report.inverseRelation.invoicePosition"/>
+            </primarykey>
+            <foreignkeys/>
+            <filters>
+                <foreignfilter filterfieldref="name" resource="Account.name" showin="select">
+                    <columns>
+                        <column fieldpath="name" order="asc"/>
+                    </columns>
+                    <conditions>
+                        <condition fieldpath="name" operator="start-with" type="parameter"/>
+                    </conditions>
+                </foreignfilter>
+            </filters>
+            <modulefunctionality>
+                <functionality module="catalogs"/>
+            </modulefunctionality>
+        </table>
+
+    </database>
+</databasestructure>
+

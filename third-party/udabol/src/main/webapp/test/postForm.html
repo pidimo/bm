@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Send form as POST</title>
+</head>
+<body>
+<form method="post" action="http://localhost:8080/bm-udabol/services/supportcase/create">
+    Company: <input type="text" name="company"> <br>
+    Title: <input type="text" name="title"> <br>
+    caseTypeId: <input type="text" name="caseTypeId"> <br>
+    productId: <input type="text" name="productId"> <br>
+    assignedUserCode admin: <input type="text" name="assignedUserCode"> <br>
+    stateId: <input type="text" name="stateId"> <br>
+    openDate YYYYMMDD: <input type="text" name="openDate"> <br>
+    expireDate YYYYMMDD: <input type="text" name="expireDate"> <br>
+    openUserCode admin: <input type="text" name="openUserCode"> <br>
+    personTypeId (student) : <input type="text" name="personTypeId"> <br>
+    Contact code (student): <input type="text" name="contactCode"> <br>
+    severityId: <input type="text" name="severityId"> <br>
+    priorityId: <input type="text" name="priorityId"> <br>
+    workLevelId: <input type="text" name="workLevelId"> <br>
+
+
+    Description: <textarea name="description" rows="30" cols="60"></textarea>
+    <br>
+    <input type="submit" value="send">
+</form>
+</body>
+</html>
