@@ -127,6 +127,10 @@
                 <field-name>invoiceMailTemplateId</field-name>
                 <column-name>invmailtemplatid</column-name>
             </cmp-field>
+             <cmp-field>
+                <field-name>xinvoiceMailTemplateId</field-name>
+                <column-name>xrechtemplateid</column-name>
+            </cmp-field>
             <cmp-field>
                 <field-name>mobileActive</field-name>
                 <column-name>mobileactive</column-name>
@@ -142,6 +146,10 @@
             <cmp-field>
                 <field-name>mobileUserAllowed</field-name>
                 <column-name>mobileuserallowed</column-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>vatId</field-name>
+                <column-name>vatid</column-name>
             </cmp-field>
         </entity>
         <entity>

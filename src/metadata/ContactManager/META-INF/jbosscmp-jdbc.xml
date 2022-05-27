@@ -629,6 +629,10 @@
                 <field-name>invoiceShipping</field-name>
                 <column-name>invoiceshipping</column-name>
             </cmp-field>
+            <cmp-field>
+                <field-name>referenceId</field-name>
+                <column-name>referenceid</column-name>
+            </cmp-field>
         </entity>
         <entity>
             <ejb-name>Supplier</ejb-name>

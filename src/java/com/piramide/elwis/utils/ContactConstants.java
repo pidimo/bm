@@ -297,7 +297,8 @@ public abstract class ContactConstants {
 
     public static enum CustomerInvoiceShipping {
         VIA_LETTER(1, "Customer.invoiceShipping.viaLetter"),
-        VIA_EMAIL(2, "Customer.invoiceShipping.viaEmail");
+        VIA_EMAIL(2, "Customer.invoiceShipping.viaEmail"),
+    	VIA_XRECHNUNG(3, "Customer.invoiceShipping.xRechnung");
 
         private final int constant;
         private final String resource;

@@ -98,4 +98,8 @@ public interface Customer extends EJBLocalObject {
     Integer getInvoiceShipping();
 
     void setInvoiceShipping(Integer invoiceShipping);
+    
+    String getReferenceId();
+
+    void setReferenceId(String referenceId);
 }

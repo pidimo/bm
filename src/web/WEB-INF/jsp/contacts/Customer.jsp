@@ -398,7 +398,21 @@
                             <span class="glyphicon form-control-feedback iconValidation"></span>
                         </div>
                     </div>
+					<div class="${app2:getFormGroupClasses()}">
+                        <label class="${app2:getFormLabelRenderCategory()}" for="referenceId">
+                            <fmt:message key="Customer.referenceid"/>
+                        </label>
 
+                        <div class="${app2:getFormContainRenderCategory(null)}">
+                            <html:text property="dto(referenceId)"
+                                            styleId="referenceId"
+                                            styleClass="numberText form-control"
+                                            maxlength="40"
+                                            tabindex="15"/>
+                            <span class="glyphicon form-control-feedback iconValidation"></span>
+                        </div>
+                    </div>
+                    
                     <div class="${app2:getFormGroupClasses()}">
                         <label class="${app2:getFormLabelRenderCategory()}" for="discount_name">
                             <fmt:message key="Customer.defaultDiscount"/>
@@ -413,7 +427,7 @@
                                             maxInt="10"
                                             maxFloat="2"
                                             view="${op == 'delete'}"
-                                            tabindex="15"/>
+                                            tabindex="16"/>
                             <span class="glyphicon form-control-feedback iconValidation"></span>
                         </div>
                     </div>

@@ -406,6 +406,9 @@
             <cmp-field>
                 <field-name>invoiceMailTemplateId</field-name>
             </cmp-field>
+             <cmp-field>
+                <field-name>xinvoiceMailTemplateId</field-name>
+            </cmp-field>
             <cmp-field>
                 <field-name>mobileActive</field-name>
             </cmp-field>
@@ -417,6 +420,9 @@
             </cmp-field>
             <cmp-field>
                 <field-name>mobileUserAllowed</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>vatId</field-name>
             </cmp-field>
             <primkey-field>companyId</primkey-field>
             <query>

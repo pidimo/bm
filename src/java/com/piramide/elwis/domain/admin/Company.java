@@ -158,4 +158,12 @@ public interface Company extends EJBLocalObject {
     Integer getMobileUserAllowed();
 
     void setMobileUserAllowed(Integer mobileUserAllowed);
+    
+    String getVatId();
+    
+    void setVatId(String vatId);
+    
+    Integer getXinvoiceMailTemplateId();
+
+    void setXinvoiceMailTemplateId(Integer xinvoiceMailTemplateId);
 }

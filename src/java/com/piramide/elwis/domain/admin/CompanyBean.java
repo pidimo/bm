@@ -199,4 +199,12 @@ public abstract class CompanyBean implements EntityBean {
     public abstract Integer getMobileUserAllowed();
 
     public abstract void setMobileUserAllowed(Integer mobileUserAllowed);
+    
+    public abstract String getVatId();
+    
+    public abstract void setVatId(String vatId);
+    
+    public abstract Integer getXinvoiceMailTemplateId();
+
+    public abstract void setXinvoiceMailTemplateId(Integer xinvoiceMailTemplateId);
 }

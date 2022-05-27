@@ -1075,6 +1075,9 @@
                 <field-name>defaultDiscount</field-name>
             </cmp-field>
             <cmp-field>
+                <field-name>defaultDiscount</field-name>
+            </cmp-field>
+            <cmp-field>
                 <field-name>invoiceAddressId</field-name>
             </cmp-field>
             <cmp-field>
@@ -1085,6 +1088,9 @@
             </cmp-field>
             <cmp-field>
                 <field-name>invoiceShipping</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>referenceId</field-name>
             </cmp-field>
             <primkey-field>customerId</primkey-field>
             <!--<query>
