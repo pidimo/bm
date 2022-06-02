@@ -143,4 +143,8 @@ public abstract class CustomerBean implements EntityBean {
     public abstract Integer getInvoiceShipping();
 
     public abstract void setInvoiceShipping(Integer invoiceShipping);
+    
+    public abstract String getReferenceId();
+
+    public abstract void setReferenceId(String referenceId);
 }

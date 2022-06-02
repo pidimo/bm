@@ -692,6 +692,7 @@ public class Functions {
 
         list.add(new LabelValueBean(JSPHelper.getMessage(request, ContactConstants.CustomerInvoiceShipping.VIA_EMAIL.getResource()), ContactConstants.CustomerInvoiceShipping.VIA_EMAIL.getConstantAsString()));
         list.add(new LabelValueBean(JSPHelper.getMessage(request, ContactConstants.CustomerInvoiceShipping.VIA_LETTER.getResource()), ContactConstants.CustomerInvoiceShipping.VIA_LETTER.getConstantAsString()));
+        list.add(new LabelValueBean(JSPHelper.getMessage(request, ContactConstants.CustomerInvoiceShipping.VIA_XRECHNUNG.getResource()), ContactConstants.CustomerInvoiceShipping.VIA_XRECHNUNG.getConstantAsString()));
         return list;
     }
 

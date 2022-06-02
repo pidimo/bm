@@ -272,6 +272,20 @@
                                     <fmt:message key="Company.preferences.finance"/>
                                 </legend>
                                 <div class="${app2:getFormGroupClasses()}">
+                                    <label class="${app2:getFormLabelRenderCategory()}" for="vatId">
+                                        <fmt:message key="Company.vatid"/>
+                                    </label>
+
+                                    <div class="${app2:getFormContainRenderCategory(null)}">
+                                        <html:text property="dto(vatId)"
+                                                   styleId="vatId"
+                                                   styleClass="mediumText ${app2:getFormInputClasses()}"
+                                                   maxlength="40"
+                                                   tabindex="9"/>
+                                        <span class="glyphicon form-control-feedback iconValidation"></span>
+                                    </div>
+                                </div>
+                                <div class="${app2:getFormGroupClasses()}">
                                     <label class="${app2:getFormLabelRenderCategory()}" for="invoiceDaysSend_id">
                                         <fmt:message key="Company.dayToSendInvoice"/>
                                     </label>
@@ -281,7 +295,7 @@
                                                    styleId="invoiceDaysSend_id"
                                                    styleClass="mediumText ${app2:getFormInputClasses()}"
                                                    maxlength="5"
-                                                   tabindex="9"/>
+                                                   tabindex="10"/>
                                         <span class="glyphicon form-control-feedback iconValidation"></span>
                                     </div>
                                 </div>
@@ -299,7 +313,7 @@
                                                       styleClass="mediumSelect ${app2:getFormSelectClasses()}"
                                                       firstEmpty="true"
                                                       module="/catalogs"
-                                                      tabIndex="10">
+                                                      tabIndex="11">
                                             <fanta:parameter field="companyId"
                                                              value="${sessionScope.user.valueMap['companyId']}"/>
                                             <fanta:parameter field="type" value="${voucherType}"/>
@@ -321,7 +335,7 @@
                                                       styleClass="mediumSelect ${app2:getFormSelectClasses()}"
                                                       firstEmpty="true"
                                                       module="/catalogs"
-                                                      tabIndex="11">
+                                                      tabIndex="12">
                                             <fanta:parameter field="companyId"
                                                              value="${sessionScope.user.valueMap['companyId']}"/>
                                             <fanta:parameter field="type" value="${voucherType}"/>
@@ -341,7 +355,7 @@
                                                      styleId="netGross_id"
                                                      styleClass="mediumSelect ${app2:getFormSelectClasses()}"
                                                      readonly="false"
-                                                     tabindex="12">
+                                                     tabindex="13">
                                             <html:option value=""/>
                                             <html:options collection="netGrossOptions"
                                                           property="value"
@@ -360,7 +374,7 @@
                                                    styleId="emailContract_id"
                                                    styleClass="mediumText ${app2:getFormInputClasses()}"
                                                    maxlength="200"
-                                                   tabindex="12"/>
+                                                   tabindex="14"/>
                                         <span class="glyphicon form-control-feedback iconValidation"></span>
                                     </div>
                                 </div>
@@ -380,7 +394,7 @@
                                                       valueProperty="id"
                                                       firstEmpty="true"
                                                       styleClass="mediumSelect ${app2:getFormSelectClasses()}"
-                                                      tabIndex="13">
+                                                      tabIndex="14">
                                             <fanta:parameter field="companyId"
                                                              value="${sessionScope.user.valueMap['companyId']}"/>
                                             <fanta:parameter field="mediaType" value="${mediatype_HTML}"/>
@@ -388,6 +402,32 @@
                                         <span class="glyphicon form-control-feedback iconValidation"></span>
                                     </div>
                                 </div>
+                                
+                                <div class="${app2:getFormGroupClasses()}">
+                                    <label class="${app2:getFormLabelRenderCategory()}" for="xinvoiceMailTemplateId_id">
+                                        <fmt:message key="Company.xinvoiceMailTemplate"/>
+                                    </label>
+
+                                    <div class="${app2:getFormContainRenderCategory(null)}">
+                                        <c:set var="mediatype_HTML"
+                                               value="<%=CatalogConstants.MediaType.HTML.getConstantAsString()%>"/>
+                                        <fanta:select property="dto(xinvoiceMailTemplateId)"
+                                                      styleId="xinvoiceMailTemplateId_id"
+                                                      listName="templateList"
+                                                      module="/catalogs"
+                                                      labelProperty="description"
+                                                      valueProperty="id"
+                                                      firstEmpty="true"
+                                                      styleClass="mediumSelect ${app2:getFormSelectClasses()}"
+                                                      tabIndex="14">
+                                            <fanta:parameter field="companyId"
+                                                             value="${sessionScope.user.valueMap['companyId']}"/>
+                                            <fanta:parameter field="mediaType" value="${mediatype_HTML}"/>
+                                        </fanta:select>
+                                        <span class="glyphicon form-control-feedback iconValidation"></span>
+                                    </div>
+                                </div>
+                                
                             </c:if>
                         </fieldset>
                     </div>
@@ -400,7 +440,7 @@
                                              functionality="COMPANYLOGO"
                                              property="dto(save)"
                                              styleClass="button ${app2:getFormButtonClasses()}"
-                                             tabindex="14">
+                                             tabindex="15">
                             <c:out value="${save}"/>
                         </app2:securitySubmit>
                         <c:if test="${not empty logoId}">
@@ -408,7 +448,7 @@
                                                  functionality="COMPANYLOGO"
                                                  property="dto(logoDelete)"
                                                  styleClass="button ${app2:getFormButtonClasses()}"
-                                                 tabindex="15">
+                                                 tabindex="16">
                                 <fmt:message key="Common.delete"/>
                             </app2:securitySubmit>
                         </c:if>

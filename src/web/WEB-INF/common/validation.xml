@@ -124,6 +124,11 @@
                 <arg1 key="table=template"/>
                 <arg2 key="column=templateid"/>
             </field>
+            <field property="xinvoiceMailTemplateId" depends="foreignKey">
+                <arg0 key="Company.xinvoiceMailTemplate" resource="true"/>
+                <arg1 key="table=template"/>
+                <arg2 key="column=templateid"/>
+            </field>
         </form>
 
         <form name="logonForm">

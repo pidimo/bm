@@ -81,6 +81,7 @@ public class CompanyCreateCmd extends EJBCommand {
         companyDTO.put("copyTemplate", paramDTO.get("copyTemplate"));
         companyDTO.put("language", paramDTO.get("favoriteLanguage"));
         companyDTO.put("invoiceDaysSend", 0);
+        companyDTO.put("vatId", paramDTO.get("vatId"));
         companyDTO.put("maxMaxAttachSize", paramDTO.get("maxMaxAttachSize"));
         companyDTO.put("maxAttachSize", paramDTO.get("maxMaxAttachSize"));
         companyDTO.put("rowsPerPage", 10);
