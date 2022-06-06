@@ -163,4 +163,12 @@ public interface ProductContract extends EJBLocalObject {
     Boolean getCancelledContract();
 
     void setCancelledContract(Boolean cancelledContract);
+    
+    String getReferenceId();
+
+    void setReferenceId(String referenceId);
+    
+    String getXrechmailaddress();
+
+    void setXrechmailaddress(String Xrechmailaddress);
 }

@@ -470,6 +470,14 @@
                 <field-name>cancelledContract</field-name>
                 <column-name>cancelled</column-name>
             </cmp-field>
+            <cmp-field>
+                <field-name>referenceId</field-name>
+                <column-name>referenceid</column-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>xrechmailaddress</field-name>
+                <column-name>xrechmailaddress</column-name>
+            </cmp-field>
         </entity>
         <entity>
             <ejb-name>Sale</ejb-name>

@@ -513,7 +513,41 @@
                             <span class="glyphicon form-control-feedback iconValidation"></span>
                         </div>
                     </div>
+					
+					<div class="form-group col-xs-12 paddingRemove">
+                        <label class="${app2:getFormLabelClassesTwoColumns()}" for="referenceId_id">
+                            Reference Id
+                        </label>
 
+                        <div class="${app2:getFormContainClassesTwoColumns(isReadOnly)}">
+                            <app:numberText property="dto(referenceId)"
+                                                    styleClass="${app2:getFormInputClasses()} numberText"
+                                                    maxlength="40"
+                                                    numberType="decimal"
+                                                    maxInt="10"
+                                                    maxFloat="2"
+                                                    styleId="referenceId_id"
+                                                    tabindex="8"/>
+                            <span class="glyphicon form-control-feedback iconValidation"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group col-xs-12 paddingRemove">
+                        <label class="${app2:getFormLabelClassesTwoColumns()}" for="xrechmailaddress_id">
+                            XRechnungen mail address
+                        </label>
+
+                        <div class="${app2:getFormContainClassesTwoColumns(isReadOnly)}">
+                            <app:text  property="dto(xrechmailaddress)"
+                                      styleClass="${app2:getFormInputClasses()} mediumText"
+                                      maxlength="100"
+                                      styleId="xrechmailaddress_id"
+                                      view="${isReadOnly}"
+                                      tabindex="9"/>
+                            <span class="glyphicon form-control-feedback iconValidation"></span>
+                        </div>
+                    </div>
+                    
                     <div class="form-group col-xs-12 paddingRemove">
                         <label class="${app2:getFormLabelClassesTwoColumns()}" for="sellerId_id">
                             <fmt:message key="ProductContract.seller"/>
@@ -529,7 +563,7 @@
                                           module="/contacts"
                                           styleId="sellerId_id"
                                           readOnly="${isReadOnly}"
-                                          tabIndex="8">
+                                          tabIndex="10">
                                 <fanta:parameter field="companyId" value="${sessionScope.user.valueMap['companyId']}"/>
                             </fanta:select>
                             <span class="glyphicon form-control-feedback iconValidation"></span>
@@ -558,7 +592,7 @@
                                          styleId="payMethodId"
                                          readonly="${isReadOnly || 'true' == productContractForm.dtoMap['hasInvoicePositions']}"
                                          onchange="javascript:selectPayMethodUI(this);"
-                                         tabindex="9">
+                                         tabindex="11">
                                 <html:option value=""/>
                                 <html:options collection="payMethodList"
                                               property="value"
@@ -579,7 +613,7 @@
                             <html:select property="dto(netGross)"
                                          styleClass="${app2:getFormSelectClasses()} mediumSelect"
                                          readonly="${isReadOnly || ('update' == op && 'true' == productContractForm.dtoMap['hasInvoicePositions'])}"
-                                         tabindex="10"
+                                         tabindex="12"
                                          styleId="netGross_id"
                                          onchange="javascript:selectNetGross();">
                                 <html:option value=""/>
@@ -607,7 +641,7 @@
                                                     maxFloat="2"
                                                     styleId="field_price"
                                                     view="${isReadOnly  || ('update' == op && 'true' == productContractForm.dtoMap['hasInvoicePositions'] && single == productContractForm.dtoMap['payMethod'])}"
-                                                    tabindex="11"/>
+                                                    tabindex="13"/>
                                     <span class="glyphicon form-control-feedback iconValidation"></span>
                                 </div>
                             </div>
@@ -625,7 +659,7 @@
                                                     styleId="pricePeriod_id"
                                                     numberType="integer"
                                                     view="${isReadOnly}"
-                                                    tabindex="11"/>
+                                                    tabindex="14"/>
                                     <span class="glyphicon form-control-feedback iconValidation"></span>
                                 </div>
                             </div>
@@ -642,7 +676,7 @@
                                                     numberType="decimal"
                                                     maxInt="10"
                                                     styleId="pricePerMonth_id"
-                                                    tabindex="5"
+                                                    tabindex="15"
                                                     maxFloat="2"
                                                     view="true"/>
                                     <span class="glyphicon form-control-feedback iconValidation"></span>
@@ -665,7 +699,7 @@
                                                     maxFloat="2"
                                                     styleId="field_price"
                                                     view="${isReadOnly  || ('update' == op && 'true' == productContractForm.dtoMap['hasInvoicePositions'] && single == productContractForm.dtoMap['payMethod'])}"
-                                                    tabindex="11"/>
+                                                    tabindex="16"/>
                                     <span class="glyphicon form-control-feedback iconValidation"></span>
                                 </div>
                             </div>
@@ -697,7 +731,7 @@
                                             styleId="discount_id"
                                             maxFloat="2"
                                             view="${isReadOnly || ('true' == productContractForm.dtoMap['hasInvoicePositions'] && single == productContractForm.dtoMap['payMethod'])}"
-                                            tabindex="12"/>
+                                            tabindex="17"/>
 
                             <span class="glyphicon form-control-feedback iconValidation"></span>
                         </div>
@@ -718,7 +752,7 @@
                                           styleClass="${app2:getFormSelectClasses()} mediumSelect"
                                           module="/catalogs"
                                           readOnly="${isReadOnly}"
-                                          tabIndex="13">
+                                          tabIndex="18">
                                 <fanta:parameter field="companyId" value="${sessionScope.user.valueMap['companyId']}"/>
                             </fanta:select>
                             <span class="glyphicon form-control-feedback iconValidation"></span>
@@ -740,7 +774,7 @@
                                           module="/catalogs"
                                           firstEmpty="true"
                                           readOnly="${isReadOnly}"
-                                          tabIndex="14">
+                                          tabIndex="19">
                                 <fanta:parameter field="companyId" value="${sessionScope.user.valueMap['companyId']}"/>
                             </fanta:select>
                             <span class="glyphicon form-control-feedback iconValidation"></span>
@@ -762,7 +796,7 @@
                                           firstEmpty="true"
                                           module="/catalogs"
                                           readOnly="${isReadOnly}"
-                                          tabIndex="15">
+                                          tabIndex="20">
                                 <fanta:parameter field="companyId" value="${sessionScope.user.valueMap['companyId']}"/>
                             </fanta:select>
                             <span class="glyphicon form-control-feedback iconValidation"></span>
@@ -785,7 +819,7 @@
                                               currentDate="${'create' == op}"
                                               view="${isReadOnly}"
                                               mode="bootstrap"
-                                              tabindex="16"/>
+                                              tabindex="21"/>
                             </div>
                             <span class="glyphicon form-control-feedback iconValidation"></span>
                         </div>

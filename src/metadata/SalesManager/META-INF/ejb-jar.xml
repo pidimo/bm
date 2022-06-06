@@ -126,6 +126,12 @@
             <cmp-field>
                 <field-name>cancelledContract</field-name>
             </cmp-field>
+            <cmp-field>
+                <field-name>referenceId</field-name>
+            </cmp-field>
+            <cmp-field>
+                <field-name>xrechmailaddress</field-name>
+            </cmp-field>
             <primkey-field>contractId</primkey-field>
             <query>
                 <query-method>

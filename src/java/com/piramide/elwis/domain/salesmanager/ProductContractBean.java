@@ -206,4 +206,12 @@ public abstract class ProductContractBean implements EntityBean {
     public abstract Boolean getCancelledContract();
 
     public abstract void setCancelledContract(Boolean cancelledContract);
+    
+    public abstract String getReferenceId();
+
+    public abstract void setReferenceId(String referenceId);
+    
+    public abstract String getXrechmailaddress();
+
+    public abstract void setXrechmailaddress(String Xrechmailaddress);
 }
